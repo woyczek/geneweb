@@ -1,3 +1,0 @@
-* Version francaise: tapez "fr"
-* English version: type "en"
-? 
