@@ -1,2 +1,0 @@
-setup.cmo: ../src/version.cmo ../wserver/wserver.cmi 
-setup.cmx: ../src/version.cmx ../wserver/wserver.cmx 
