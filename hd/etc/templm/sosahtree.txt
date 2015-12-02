@@ -1,73 +1,123 @@
+%let;h3;27%in; %let;h5;27%in; %let;h7;27%in;
+%let;w3;19%in; %let;w5;23%in; %let;w7;27%in;
 %define;bg(xx)
   %apply;nth%with;
-    //FFC8E3/F0CBFE/FFA8D3/E7A9FE/FF86C2/DD88FD/FF62B0
+    /FFC8E3/F0CBFE/DDCEFF/FFA8D3/E7A9FE/FF86C2/DD88FD/FF62B0/C4ABFE
   %and;xx%end;
 %end;
 %define;top3(xx)
   %apply;nth%with;
-     /28/0/56/0/0/56/56/
+    /1/0/2/0/0/2/2/
   %and;xx%end;
-%end;
-%define;top5(xx)
-   %apply;nth%with;
-      /81/27/135/27/27/135/135/0/54/0/54/108/162/108/162/0/0/54/54/0/0/54/54/108/108/162/162/108/108/162/162/
-   %and;xx%end;
 %end;
 %define;left3(xx)
   %apply;nth%with;
-     /29/29/29/10/48/10/48/
+    /1/1/1/0/2/0/2/
+  %and;xx%end;
+%end;
+%define;top5(xx)
+  %apply;nth%with;
+    /3/1/5/1/1/5/5/0/2/0/2/4/6/4/6/0/0/2/2/0/0/2/2/4/4/6/6/4/4/6/6/
   %and;xx%end;
 %end;
 %define;left5(xx)
-   %apply;nth%with;
-     /82/82/82/34/130/34/130/34/34/130/130/34/34/130/130/10/58/10/58/106/154/106/154/10/58/10/58/106/154/106/154/
-   %and;xx%end;
+  %apply;nth%with;
+    /3/3/3/1/5/1/5/1/1/5/5/1/1/5/5/0/2/0/2/4/6/4/6/0/2/0/2/4/6/4/6/
+  %and;xx%end;
 %end;
-%define;top51(xx)
-   %apply;nth%with;
-      //54/108/27/27/135/135/
-   %and;xx%end;
+%define;top5_(xx)
+  %apply;nth%with;
+    //2/4/1/1/5/5/
+  %and;xx%end;
 %end;
-%define;left51(xx)
-   %apply;nth%with;
-     //82/82/58/106/58/106/
-   %and;xx%end;
+%define;left5_(xx)
+  %apply;nth%with;
+    //3/3/2/4/2/4/
+  %and;xx%end;
+%end;
+%define;top7(xx)
+  %apply;nth%with;
+    /7/3/11/3/3/11/11/1/5/1/5/9/13/9/13/1/1/5/5/1/1/5/5/9/9/13/13/9/9/13/13/0/2/0/2/4/6/4/6/0/2/0/2/4/6/4/6/8/10/8/10/12/14/12/14/8/10/8/10/12/14/12/14/0/0/2/2/0/0/2/2/4/4/6/6/4/4/6/6/0/0/2/2/0/0/2/2/4/4/6/6/4/4/6/6/8/8/10/10/8/8/10/10/12/12/14/14/12/12/14/14/8/8/10/10/8/8/10/10/12/12/14/14/12/12/14/14/
+  %and;xx%end;
+%end;
+%define;left7(xx)
+  %apply;nth%with;
+    /7/7/7/3/11/3/11/3/3/11/11/3/3/11/11/1/5/1/5/9/13/9/13/1/5/1/5/9/13/9/13/1/1/5/5/1/1/5/5/9/9/13/13/9/9/13/13/1/1/5/5/1/1/5/5/9/9/13/13/9/9/13/13/0/2/0/2/4/6/4/6/0/2/0/2/4/6/4/6/8/10/8/10/12/14/12/14/8/10/8/10/12/14/12/14/0/2/0/2/4/6/4/6/0/2/0/2/4/6/4/6/8/10/8/10/12/14/12/14/8/10/8/10/12/14/12/14/
+  %and;xx%end;
+%end;
+%define;top7_(xx)
+  %apply;nth%with;
+    //4/8/3/3/11/11/2/4/2/4/10/12/10/12/1/1/5/5/1/1/5/5/9/9/13/13/9/9/13/13/
+  %and;xx%end;
+%end;
+%define;left7_(xx)
+  %apply;nth%with;
+    //7/7/4/8/4/8/3/3/11/11/3/3/11/11/2/4/2/4/10/12/10/12/2/4/2/4/10/12/10/12/
+  %and;xx%end;
 %end;
 <h3>H-tree 3 [generation/generations]1</h3>
 <div style="position:relative;width:140px;height:90px;">
   %foreach;ancestor_level(3)
     %foreach;ancestor;
-      %let;l1;%apply;top3(ancestor.anc_sosa.v)%in;
-      %let;l2;%apply;left3(ancestor.anc_sosa.v)%in;
-      %let;l3;%apply;bg(level)%in;
-      <a style="position:absolute;top:%l1;px;left:%l2;px;background-color:#%l3;;padding:5px;" href="%prefix;%ancestor.access;" title="%ancestor.first_name; %ancestor.surname; (%ancestor.occ) - [*generation/generations]0 %level;">%ancestor.anc_sosa;</a>
+      %let;top;%expr(top3(ancestor.anc_sosa.v)*h3)%in;
+      %let;left;%expr(10+left3(ancestor.anc_sosa.v)*w3)%in;
+      %let;bg;%apply;bg(level)%in;
+      <a style="position:absolute;top:%top;px;left:%left;px;background-color:#%bg;;padding:5px" href="%prefix;%ancestor.access;" title="%ancestor.first_name; %ancestor.surname; (%ancestor.occ) - [*generation/generations]0 %level;"><small>%ancestor.anc_sosa;</small></a>
     %end;
   %end;
 </div>
 <h3>H-tree 5 [generation/generations]1</h3>
-<div class="menu" style="position:relative;width:140px;height:210px;">
-   %foreach;ancestor_level(5)
-     %foreach;ancestor;
-      %let;l1;%apply;top5(ancestor.anc_sosa.v)%in;
-      %let;l12;%apply;top51(ancestor.anc_sosa.v)%in;
-      %let;l2;%apply;left5(ancestor.anc_sosa.v)%in;
-      %let;l22;%apply;left51(ancestor.anc_sosa.v)%in;
-      %let;l3;%apply;bg(level)%in;
-      <a style="position:absolute;top:%l1;px;left:%l2;px;background-color:#%l3;;padding:5px;"
+<div class="menu" style="position:relative;width:120px;height:210px;">
+  %foreach;ancestor_level(5)
+    %foreach;ancestor;
+      %let;top;%expr(top5(ancestor.anc_sosa.v)*h5)%in;
+      %let;left;%expr(10+left5(ancestor.anc_sosa.v)*w5)%in;
+      %let;top_;%expr(top5_(ancestor.anc_sosa.v)*h5)%in;
+      %let;left_;%expr(10+left5_(ancestor.anc_sosa.v)*w5)%in;
+      %let;bg;%apply;bg(level)%in;
+      <a style="position:absolute;top:%top;px;left:%left;px;background-color:#%bg;;padding:5px;"
       href="%prefix;%ancestor.access;"
       title="Sosa %ancestor.anc_sosa;[:] %if;(ancestor.is_male)♂%else;♀%end; %ancestor.first_name; %ancestor.surname; (%ancestor.occ) – [*generation/generations]0 %level;"><small>%ancestor.anc_sosa;</small></a>
       %if;(ancestor.anc_sosa.v=2)
-         <div style="position:absolute;top:%l12;px;left:%l22;px;padding:5px;">↑</div>
+         <div style="position:absolute;top:%top_;px;left:%left_;px;padding:5px;">↑</div>
       %end;
       %if;(ancestor.anc_sosa.v=3)
-         <div style="position:absolute;top:%l12;px;left:%l22;px;padding:5px;">↓</div>
+         <div style="position:absolute;top:%top_;px;left:%left_;px;padding:5px;">↓</div>
       %end;
       %if;(ancestor.anc_sosa.v=4 or ancestor.anc_sosa.v=6)
-         <div style="position:absolute;top:%l12;px;left:%l22;px;padding:5px;">←</div>
+         <div style="position:absolute;top:%top_;px;left:%left_;px;padding:5px;">←</div>
       %end;
       %if;(ancestor.anc_sosa.v=5 or ancestor.anc_sosa.v=7)
-         <div style="position:absolute;top:%l12;px;left:%l22;px;padding:5px;">→</div>
+         <div style="position:absolute;top:%top_;px;left:%left_;px;padding:5px;">→</div>
       %end;
-     %end;
-   %end;
+    %end;
+  %end;
+</div>
+<h3>H-tree 7 [generation/generations]1</h3>
+<div style="position:relative;width:240px;height:420px;">
+  %foreach;ancestor_level(7)
+    %foreach;ancestor;
+      %let;top;%expr(top7(ancestor.anc_sosa.v)*h7)%in;
+      %let;left;%expr(10+left7(ancestor.anc_sosa.v)*w7)%in;
+      %let;top_;%expr(top7_(ancestor.anc_sosa.v)*h7)%in;
+      %let;left_;%expr(10+left7_(ancestor.anc_sosa.v)*w7)%in;
+      %let;bg;%apply;bg(level)%in;
+      <a style="position:absolute;top:%top;px;left:%left;px;background-color:#%bg;;padding:5px;"
+      href="%prefix;%ancestor.access;"
+      title="Sosa %ancestor.anc_sosa;[:] %if;(ancestor.is_male)♂%else;♀%end; %ancestor.first_name; %ancestor.surname; (%ancestor.occ) – [*generation/generations]0 %level;"><small>%ancestor.anc_sosa;</small></a>
+      %if;(ancestor.anc_sosa.v=2 or ancestor.anc_sosa.v=3)
+         <div style="position:absolute;top:%top_;px;left:%left_;px;padding:5px 10px">│<br />│<br />│<br />│</div>
+      %end;
+      %if;(ancestor.anc_sosa.v=4 or ancestor.anc_sosa.v=5 or ancestor.anc_sosa.v=6 or ancestor.anc_sosa.v=7)
+         <div style="position:absolute;top:%top_;px;left:%left_;px;padding:5px 0px">───────</div>
+      %end;
+      %if;(ancestor.anc_sosa.v=8 or ancestor.anc_sosa.v=9 or ancestor.anc_sosa.v=10 or ancestor.anc_sosa.v=11 or ancestor.anc_sosa.v=12 or ancestor.anc_sosa.v=13 or ancestor.anc_sosa.v=14 or ancestor.anc_sosa.v=15)
+         <div style="position:absolute;top:%top_;px;left:%left_;px;padding:5px 10px">│</div>
+      %end;
+      %if;(ancestor.anc_sosa.v=16 or ancestor.anc_sosa.v=17 or ancestor.anc_sosa.v=18 or ancestor.anc_sosa.v=19 or ancestor.anc_sosa.v=20 or ancestor.anc_sosa.v=21 or ancestor.anc_sosa.v=22 or ancestor.anc_sosa.v=23 
+           or ancestor.anc_sosa.v=24 or ancestor.anc_sosa.v=25 or ancestor.anc_sosa.v=26 or ancestor.anc_sosa.v=27 or ancestor.anc_sosa.v=28 or ancestor.anc_sosa.v=29 or ancestor.anc_sosa.v=30 or ancestor.anc_sosa.v=31)
+         <div style="position:absolute;top:%top_;px;left:%left_;px;padding:5px 0px">──</div>
+      %end;
+    %end;
+  %end;
 </div>
