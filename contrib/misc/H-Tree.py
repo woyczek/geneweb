@@ -26,7 +26,7 @@ def InitTable (n) :
 		Table = Table + [Col]
 		x += 1		
 
-def DoOneGen (basex, basey, size, n, sosa, sens, mode, Q) :
+def DoOneGen (basex, basey, size, n, sosa, sens, mode, Q, HI) :
 	# basex basey : coordonnées du milieu du carré en construction
 	# n : nombre de générations restant
 	# sosa : sosa du centre du carré
@@ -61,16 +61,30 @@ def DoOneGen (basex, basey, size, n, sosa, sens, mode, Q) :
 		
 	#print ("Sosa=", sosa, "Mode=", mode, "Sens=", sens, "Basex=", basex, "Basey=", basey)
 
-		
-	i = basex
-	j = basey - sens*(t2+1)
+	if HI == "I" :	
+		i  = basex
+		j  = basey - sens*(t2+1)
+		il = i
+		jl = basey - t2
+	else :
+		i  = basex - sens*(t2+1)
+		j  = basey
+		il = basex - t2
+		jl = j
 	Table [i][j]   = sosa*2                     # father
 	DictSosa[sosa*2] = [i, j]
-	y=basey-t2
-	while y < basey :
-		Table [basex][y] = "|"   
-		y += 1
-	DictLines[sosa*2] = [basex, basey-t2]
+	if HI == "I" :	
+		y = jl
+		while y < basey :
+			Table [basex][y] = "|"
+			y += 1
+	else :
+		print ("Doing mode H")
+		x = il
+		while x < basex :
+			Table [x][basey] = "-"
+			x += 1
+	DictLines[sosa*2] = [il, jl]
 
 	i = basex
 	j = basey
@@ -79,26 +93,51 @@ def DoOneGen (basex, basey, size, n, sosa, sens, mode, Q) :
 	DictLines[sosa] = [i, j]
 
 	if sosa != 1 :
-		if Q == 00 or Q == 01 :
-			x = basex + 1
-			xm = basex + (size-1)/2 
+		if HI == "I" :
+			if Q == 00 or Q == 01 :
+				x = basex + 1
+				xm = basex + (size-1)/2 
+			else :
+				x = basex - (size-1)/2
+				xm = basex -1
+			while x <= xm :
+				Table [x][basey] = "-"   
+				x += 1
 		else :
-			x = basex - (size-1)/2
-			xm = basex -1
-		while x <= xm :
-			Table [x][basey] = "-"   # to the right
-			x += 1
-
-	y=basey+1
-	while y < basey+t2+1 :
-		Table [basex][y] = "|"     
-		y += 1	
-	DictLines[sosa*2+1] = [basex, basey+1]
-
-	i = basex
-	j = basey + sens*(t2+1)
-	Table [i][j] = sosa*2+1                    # mother
+			if Q == 00 or Q == 10 :
+				y = basey + 1
+				ym = basey + (size-1)/2 
+			else :
+				y = basey - (size-1)/2
+				ym = basey - 1 
+			while y <= ym :
+				Table [basex][y] = "|"  
+				y += 1
+		
+	if HI == "I" :	
+		i  = basex
+		j  = basey + sens*(t2+1)
+		il = i
+		jl = basey+1
+	else :
+		i  = basex + sens*(t2+1)
+		j  = basey
+		il = basex+1
+		jl = j
+	Table [i][j] = sosa*2 + 1                    # mother
 	DictSosa[sosa*2+1] = [i, j]
+	if HI == "I" :	
+		y = jl
+		while y < basey+ t2 + 1 :
+			Table [basex][y] = "|"
+			y += 1
+	else :
+		x = il
+		while x < basex + t2 + 1 :
+			Table [x][basey] = "-"
+			x += 1
+	DictLines[sosa*2+1] = [il, jl]
+	
 	if n == 3 :
 		i = basex - sens*1
 		j = basey - sens*1
@@ -127,14 +166,20 @@ def DoOneGen (basex, basey, size, n, sosa, sens, mode, Q) :
 		Q10 = sosa*4+1 # grand mère paternel
 		Q11 = sosa*4+2 # grand père maternel
 		Q01 = sosa*4+3 # grand mère maternelle
-	DoOneGen (basex-(t2+1), basey-(t2+1), (size-1)/2, n-2, Q00, sens00, mode, 00)   # paternal grand father
-	DoOneGen (basex+(t2+1), basey-(t2+1), (size-1)/2, n-2, Q10, sens10, mode, 10)   # paternal grand mother
-	DoOneGen (basex-(t2+1), basey+(t2+1), (size-1)/2, n-2, Q01, sens01, mode, 01)   # maternal grand father
-	DoOneGen (basex+(t2+1), basey+(t2+1), (size-1)/2, n-2, Q11, sens11, mode, 11)   # maternal grand mother
+	if HI == "I" :
+		DoOneGen (basex-(t2+1), basey-(t2+1), (size-1)/2, n-2, Q00, sens00, mode, 00, HI)   # paternal grand father
+		DoOneGen (basex+(t2+1), basey-(t2+1), (size-1)/2, n-2, Q10, sens10, mode, 10, HI)   # paternal grand mother
+		DoOneGen (basex-(t2+1), basey+(t2+1), (size-1)/2, n-2, Q01, sens01, mode, 01, HI)   # maternal grand father
+		DoOneGen (basex+(t2+1), basey+(t2+1), (size-1)/2, n-2, Q11, sens11, mode, 11, HI)   # maternal grand mother
+	else :
+		DoOneGen (basex-(t2+1), basey-(t2+1), (size-1)/2, n-2, Q00, sens00, mode, 00, HI)   # paternal grand father
+		DoOneGen (basex+(t2+1), basey-(t2+1), (size-1)/2, n-2, Q10, sens10, mode, 10, HI)   # paternal grand mother
+		DoOneGen (basex-(t2+1), basey+(t2+1), (size-1)/2, n-2, Q01, sens01, mode, 01, HI)   # maternal grand father
+		DoOneGen (basex+(t2+1), basey+(t2+1), (size-1)/2, n-2, Q11, sens11, mode, 11, HI)   # maternal grand mother
 
 def usage () :
 	Usage = """
-./H-tree.py [-g|--generations] [-m|--mode] [-x|--offsetx] [-y|--offsety] [-w|--width] [-h|--height]
+./H-tree.py [-g|--generations] [-m|--mode] [-x|--offsetx] [-y|--offsety] [-w|--width] [-h|--height] [-o|--orientation]
 -g : nombred e générations (défaut 5)
 -m :
   e = organisé en escalier (père à gauche) (défaut)
@@ -144,6 +189,7 @@ def usage () :
 -w : largeur de la cellule (défaut 15)
 -h : hauteur de la cellule (défaut 15)
 -i : indices ou offset [oui|non](défaul oui)
+-o : orientation en "H" (2-1-3 vertical) ou en "I" (2-1-3 horizontal)(défault)
 """
 	print (Usage)
 
@@ -154,10 +200,10 @@ Oy = 10
 Dx = 15
 Dy = 15
 Idx = "oui"
-
+HI = "I"
 
 try:
-	opts, args = getopt.getopt(sys.argv[1:], "m:g:x:y:w:h:x", ["mode=", "generations=", "offsetx=", "offsety=", "width=", "height=", "indices="])
+	opts, args = getopt.getopt(sys.argv[1:], "m:g:x:y:w:h:i:o:x", ["mode=", "generations=", "offsetx=", "offsety=", "width=", "height=", "indices=", "orientation"])
 except getopt.GetoptError as err:
 	# print help information and exit:
 	print(str(err)) # will print something like "option -a not recognized"
@@ -181,9 +227,13 @@ for o, a in opts :
 		Dy = int(a)
 	elif o in ("-i", "--indices"):
 		Idx = a
+	elif o in ("-o", "--orientation"):
+		HI = a
 	else:
 		usage()
 		exit(3)
+
+if HI == "H" : Mode = "e" # pour l'instant !!
 
 if Mode == "e" : 
 	BMode = "escalier"
@@ -198,7 +248,7 @@ if Gen % 2 == -1 :
 	print ("Nombre de générations impaires seulement")
 	sys.exit()
 
-print ("H-Tree for %s Generations in mode %s"%(Gen, BMode))
+print ('H-Tree for %s Generations in mode %s orientation "%s"'%(Gen, BMode, HI))
 
 i = 0
 if Gen % 2 == 0 : i = 1
@@ -207,7 +257,7 @@ InitTable (Gen + i)
 size = 2**(int((Gen+2)/2))-1
 sens = 1
 
-DoOneGen ((size+1)/2-1, (size+1)/2-1, size, Gen, 1, 1, Mode, -1)
+DoOneGen ((size+1)/2-1, (size+1)/2-1, size, Gen, 1, 1, Mode, -1, HI)
 
 di = (Gen+1)%2 # 1 si Gen est pair
 for j in range(size) :
@@ -223,6 +273,10 @@ for j in range(size) :
 				strg = strg + "lllll"
 			elif Table[i][j] == "r" :
 				strg = strg + "rrrrr"
+			elif Table[i][j] == "t" :
+				strg = strg + "ttttt"
+			elif Table[i][j] == "b" :
+				strg = strg + "bbbbb"
 			elif Table[i][j] == 0 :
 				strg = strg + "     "
 			else :
