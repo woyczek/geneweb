@@ -71,7 +71,7 @@ def DoOneGen (basex, basey, size, n, sosa, sens, mode, Q, HI) :
 		j  = basey
 		il = basex - t2
 		jl = j
-	Table [i][j]   = sosa*2                     # father
+	Table [i][j]   = sosa*2              # father
 	DictSosa[sosa*2] = [i, j]
 	if HI == "I" :	
 		y = jl
@@ -83,28 +83,12 @@ def DoOneGen (basex, basey, size, n, sosa, sens, mode, Q, HI) :
 		while x < basex :
 			Table [x][basey] = "-"
 			x += 1
-	DictLines[sosa*2] = [il, jl]
+	DictLines[sosa*2] = [il, jl]         # line to father
 
 	i = basex
 	j = basey
-	Table [i][j]   = sosa                       # sosa
+	Table [i][j]   = sosa                # sosa
 	DictSosa[sosa] = [i, j]
-	if HI == "I" :
-		if Q == 00 or Q == 01 :
-			il = basex + 1
-			jl = basey
-		else :
-			il = basex - 2*t2 - 1 
-			jl = basey
-	else :
-		if Q == 00 or Q == 10 :
-			il = basex
-			jl = basey + 1
-		else :
-			il = basex 
-			jl = basey - t2 - 1
-	DictLines[sosa] = [il, jl]
-		
 
 	if sosa != 1 :
 		if HI == "I" :
@@ -138,7 +122,7 @@ def DoOneGen (basex, basey, size, n, sosa, sens, mode, Q, HI) :
 		j  = basey
 		il = basex+1
 		jl = j
-	Table [i][j] = sosa*2 + 1                    # mother
+	Table [i][j] = sosa*2 + 1            # mother
 	DictSosa[sosa*2+1] = [i, j]
 	if HI == "I" :	
 		y = jl
@@ -150,7 +134,7 @@ def DoOneGen (basex, basey, size, n, sosa, sens, mode, Q, HI) :
 		while x < basex + t2 + 1 :
 			Table [x][basey] = "-"
 			x += 1
-	DictLines[sosa*2+1] = [il, jl]
+	DictLines[sosa*2+1] = [il, jl]      # line to mother
 	
 	if n == 3 :
 		i = basex - sens*1
@@ -174,13 +158,13 @@ def DoOneGen (basex, basey, size, n, sosa, sens, mode, Q, HI) :
 		if HI == "I" :
 			Q00 = sosa*4   # grand père paternel
 			Q10 = sosa*4+1 # grand mère paternel
-			Q01 = sosa*4+2 # grand père maternel
+			Q01 = sosa*4+2 # grand père maternelle
 			Q11 = sosa*4+3 # grand mère maternelle
 		else :
 			Q00 = sosa*4   # grand père paternel
-			Q10 = sosa*4+3 # grand mère paternel
-			Q01 = sosa*4+1 # grand père maternel
-			Q11 = sosa*4+2 # grand mère maternelle
+			Q10 = sosa*4+2 # grand mère maternelle
+			Q01 = sosa*4+1 # grand mère paternelle
+			Q11 = sosa*4+3 # grand père maternel
 		
 	else :        # in mode colimacon, 
 		Q00 = sosa*4   # grand père paternel
@@ -188,14 +172,30 @@ def DoOneGen (basex, basey, size, n, sosa, sens, mode, Q, HI) :
 		Q11 = sosa*4+2 # grand père maternel
 		Q01 = sosa*4+1 # grand mère maternelle
 	if HI == "I" :
+		# do h line from father to grand father
+		DictLines[sosa*4] = [basex-(t2+1)+1 , basey-(t2+1)]
 		DoOneGen (basex-(t2+1), basey-(t2+1), (size-1)/2, n-2, Q00, sens00, mode, 00, HI)   # paternal grand father
+		# do h line from father to grand mother
+		DictLines[sosa*4+1] = [basex+1 , basey-(t2+1)]
 		DoOneGen (basex+(t2+1), basey-(t2+1), (size-1)/2, n-2, Q10, sens10, mode, 10, HI)   # paternal grand mother
+		# do h line from mother to grand father
+		DictLines[sosa*4+2] = [basex-(t2+1)+1 , basey+(t2+1)]
 		DoOneGen (basex-(t2+1), basey+(t2+1), (size-1)/2, n-2, Q01, sens01, mode, 01, HI)   # maternal grand father
+		# do h line from mother to grand mother
+		DictLines[sosa*4+3] = [basex+1 , basey+(t2+1)]
 		DoOneGen (basex+(t2+1), basey+(t2+1), (size-1)/2, n-2, Q11, sens11, mode, 11, HI)   # maternal grand mother
 	else :
+		# do v line from father to grand father
+		DictLines[sosa*4]   = [basex-(t2+1) , basey-(t2+1)+1]
 		DoOneGen (basex-(t2+1), basey-(t2+1), (size-1)/2, n-2, Q00, sens00, mode, 00, HI)   # paternal grand father
+		# do v line from mother to grand mother
+		DictLines[sosa*4+3] = [basex+(t2+1) , basey-(t2+1)+1]
 		DoOneGen (basex+(t2+1), basey-(t2+1), (size-1)/2, n-2, Q10, sens10, mode, 10, HI)   # paternal grand mother
+		# do v line from father to grand mother
+		DictLines[sosa*4+1] = [basex-(t2+1) , basey+1]
 		DoOneGen (basex-(t2+1), basey+(t2+1), (size-1)/2, n-2, Q01, sens01, mode, 01, HI)   # maternal grand father
+		# do v line from mother to grand father
+		DictLines[sosa*4+2] = [basex+(t2+1) , basey+1]
 		DoOneGen (basex+(t2+1), basey+(t2+1), (size-1)/2, n-2, Q11, sens11, mode, 11, HI)   # maternal grand mother
 
 def usage () :
