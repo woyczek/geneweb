@@ -90,7 +90,22 @@ def DoOneGen (basex, basey, size, n, sosa, sens, mode, Q, HI) :
 	j = basey
 	Table [i][j]   = sosa                       # sosa
 	DictSosa[sosa] = [i, j]
-	DictLines[sosa] = [i, j]
+	if HI == "I" :
+		if Q == 00 or Q == 01 :
+			il = basex + 1
+			jl = basey
+		else :
+			il = basex - t2 - 1 
+			jl = basey
+	else :
+		if Q == 00 or Q == 10 :
+			il = basex
+			jl = basey + 1
+		else :
+			il = basex 
+			jl = basey - t2 - 1
+	DictLines[sosa] = [il, jl]
+		
 
 	if sosa != 1 :
 		if HI == "I" :
@@ -235,6 +250,10 @@ for o, a in opts :
 
 if HI == "H" : Mode = "e" # pour l'instant !!
 
+if int(Gen) > 16 :
+	print ("Plus de 16 générations, pas raisonnable!!")
+	sys.exit()
+
 if Mode == "e" : 
 	BMode = "escalier"
 	Mode = 1
@@ -318,7 +337,7 @@ while l <= 0 :
 	l += 1
 	
 strgx = "left%s : /"%Gen
-strgy = "top%s : /"%Gen
+strgy = "top%s  : /"%Gen
 i = 1
 while i < 2**(Gen) :
 	if Gen%2 == 0 :
@@ -332,7 +351,7 @@ print (strgy)
 
 DictLines[1] = [0, 0]
 strgx = "left%s_ : /"%Gen
-strgy = "top%s_ : /"%Gen
+strgy = "top%s_  : /"%Gen
 i = 1
 while i < 2**(Gen-2) :
 	if Gen%2 == 0 :
