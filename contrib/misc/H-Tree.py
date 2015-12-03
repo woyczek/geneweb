@@ -37,11 +37,12 @@ def DoOneGen (basex, basey, size, n, sosa, sens, mode, Q) :
 	global Table, DictSosa
 	global Gen
 
-	if n < 0  or n < 3:
-		print ("Nbr of Gen should be odd and greater or equal to 3")
+	if n < 2:
+		#print ("Nbr of Gen should be odd and greater or equal to 3", size, n)
 		return
 	#t1 = int ((2**((n+1)/2)-1)/2)   # t1 offset du sosa	
 	t2 = (size-3)/4
+	#print (Gen, size, n, t2)
 	# quartiers, sens 1 = up (mère en bas), -1 = down (mère en haut)
 	# 00 10
 	# 01 11
@@ -191,35 +192,40 @@ if Mode == "c" :
 	#print ("Le mode colimacon ne fonctionne pas (encore), mais ça viendra!!")
 	#sys.exit()
 
-if Gen % 2 == 0 :
+if Gen % 2 == -1 :
 	print ("Nombre de générations impaires seulement")
 	sys.exit()
 
 print ("H-Tree for %s Generations in mode %s"%(Gen, BMode))
 
-InitTable (Gen)
+i = 0
+if Gen % 2 == 0 : i = 1
+InitTable (Gen + i)
 
-size = int (2**((Gen+1)/2)-1)
+size = 2**(int((Gen+2)/2))-1
 sens = 1
-#print ("Size=", size)
 
 DoOneGen ((size+1)/2-1, (size+1)/2-1, size, Gen, 1, 1, Mode, -1)
 
+di = (Gen+1)%2 # 1 si Gen est pair
 for j in range(size) :
 	strg = ""
-	for i in range (size) :
-		if   Table[i][j] == "|" :
-			strg = strg + "  |  "
-		elif Table[i][j] == "-" :
-			strg = strg + "-----"
-		elif Table[i][j] == "l" :
-			strg = strg + "lllll"
-		elif Table[i][j] == "r" :
-			strg = strg + "rrrrr"
-		elif Table[i][j] == 0 :
-			strg = strg + "     "
-		else :
-			strg = strg + " "+("{:0>3d}".format(Table[i][j])) + " "
+	i = 0
+	while i < size :
+		if ((Gen+1)%2)*((i+1)%2) == 0 :
+			if   Table[i][j] == "|" :
+				strg = strg + "  |  "
+			elif Table[i][j] == "-" :
+				strg = strg + "-----"
+			elif Table[i][j] == "l" :
+				strg = strg + "lllll"
+			elif Table[i][j] == "r" :
+				strg = strg + "rrrrr"
+			elif Table[i][j] == 0 :
+				strg = strg + "     "
+			else :
+				strg = strg + " "+("{:0>3d}".format(Table[i][j])) + " "
+		i = i + 1
 	strg = "["+strg[1:len(strg)-1]+"]"
 	print (strg)
 
@@ -259,8 +265,10 @@ strgx = "left%s : /"%Gen
 strgy = "top%s : /"%Gen
 i = 1
 while i < 2**(Gen) :
-	#print (Gen, 2**Gen, i)
-	strgx = strgx + str(DictSosa[i][0]) + "/"
+	if Gen%2 == 0 :
+		strgx = strgx + str((DictSosa[i][0]-1)/2) + "/"
+	else :
+		strgx = strgx + str(DictSosa[i][0]) + "/"
 	strgy = strgy + str(DictSosa[i][1]) + "/"
 	i += 1
 print (strgx)
