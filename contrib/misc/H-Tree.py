@@ -191,6 +191,10 @@ if Mode == "c" :
 	#print ("Le mode colimacon ne fonctionne pas (encore), mais ça viendra!!")
 	#sys.exit()
 
+if Gen % 2 == 0 :
+	print ("Nombre de générations impaires seulement")
+	sys.exit()
+
 print ("H-Tree for %s Generations in mode %s"%(Gen, BMode))
 
 InitTable (Gen)
@@ -221,19 +225,18 @@ for j in range(size) :
 
 print ("")
 if Idx == "oui" :
-	print ("Indices in a %s x %s array containing available sosa in H-Tree formation"%(size, size))
-	print ('Indices begin at "0"')
+	s1 = "Indexes"
 else :
-	print ("Offsets in a %s x %s array containing available sosa in H-Tree formation"%(size, size))
-print ("for %s generations."%Gen)
-print ("dx = list of indices or offsets in x, dy list of indices or offsets in y, 0,0 is top left corner,")
-print ("positive x to the right positive y to the bottom")
-print ("Ng is the number of generations to be considered")
-print ("lN is the list for one level of sosa, starting at 1 (sosa=1) to Ng (sosa 2**(Ng-1) to 2**Ng-1)")
-print ("Table is offset by %s in X and %s in Y"%(Ox, Oy))
-print ("Cells dimentions are %s x %s"%(Dx, Dy))
+	s1 = "Offsets"
+print ("%s for %s generations."%(s1, Gen))
+print ("0,0 is top left corner, positive x to the right positive y to the bottom")
+#print ("Ng is the number of generations to be considered")
+#print ("lN is the list for one level of sosa, starting at 1 (sosa=1) to Ng (sosa 2**(Ng-1) to 2**Ng-1)")
+#print ("Table is offset by %s in X and %s in Y"%(Ox, Oy))
+#print ("Cells dimentions are %s x %s"%(Dx, Dy))
 l = 1
-while l <= Gen :
+#while l <= Gen :
+while l <= 0 :
 	strgx = "dx-%sg-l%s : /"%(Gen, l)
 	strgy = "dy-%sg-l%s : /"%(Gen, l)
 	s0 = 2**(l-1)
@@ -241,6 +244,7 @@ while l <= Gen :
 	i=1
 	while i <= sl :
 		if Idx == "oui" :
+			print (sl, l, i, 2**(l-1)-1+i)
 			strgx = strgx + str(DictSosa[2**(l-1)-1+i][0]) + "/"
 			strgy = strgy + str(DictSosa[2**(l-1)-1+i][1]) + "/"
 		else :
@@ -251,7 +255,18 @@ while l <= Gen :
 	print (strgy)
 	l += 1
 	
-print ("Done computing offsets")
+strgx = "left%s : /"%Gen
+strgy = "top%s : /"%Gen
+i = 1
+while i < 2**(Gen) :
+	#print (Gen, 2**Gen, i)
+	strgx = strgx + str(DictSosa[i][0]) + "/"
+	strgy = strgy + str(DictSosa[i][1]) + "/"
+	i += 1
+print (strgx)
+print (strgy)
+	
+print ("Done")
 
 
 sys.exit(0)
