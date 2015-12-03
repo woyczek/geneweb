@@ -26,7 +26,7 @@ def InitTable (n) :
 		Table = Table + [Col]
 		x += 1		
 
-def DoOneGen (basex, basey, size, n, sosa, sens, mode) :
+def DoOneGen (basex, basey, size, n, sosa, sens, mode, Q) :
 	# basex basey : coordonnées du milieu du carré en construction
 	# n : nombre de générations restant
 	# sosa : sosa du centre du carré
@@ -42,6 +42,9 @@ def DoOneGen (basex, basey, size, n, sosa, sens, mode) :
 		return
 	#t1 = int ((2**((n+1)/2)-1)/2)   # t1 offset du sosa	
 	t2 = (size-3)/4
+	# quartiers, sens 1 = up (mère en bas), -1 = down (mère en haut)
+	# 00 10
+	# 01 11
 	if mode == 1 :
 		sens00 = 1
 		sens01 = 1
@@ -49,9 +52,9 @@ def DoOneGen (basex, basey, size, n, sosa, sens, mode) :
 		sens11 = 1
 	elif mode == -1 :
 		sens00 = -1
-		sens01 = 1
-		sens10 = 1
-		sens11= -1
+		sens01 = -1
+		sens10 =  1
+		sens11 =  1
 	else :
 		print ("Wrong mode %s"%mode)
 		
@@ -59,7 +62,7 @@ def DoOneGen (basex, basey, size, n, sosa, sens, mode) :
 
 		
 	i = basex
-	j = basey - (t2+1)
+	j = basey - sens*(t2+1)
 	Table [i][j]   = sosa*2                     # father
 	DictSosa[sosa*2] = [i, j]
 	y=basey-t2
@@ -73,56 +76,58 @@ def DoOneGen (basex, basey, size, n, sosa, sens, mode) :
 	DictSosa[sosa] = [i, j]
 
 	if sosa != 1 :
-		if ((sosa % 4) % 2 == 0) : #sosa pair
+		if Q == 00 or Q == 01 :
 			x = basex + 1
-			while x <= basex + (size-1)/2 :
-				Table [x][basey] = "-"   # to the right
-				DictLines[str(x)+str(basey)] = "-"
-				x += 1
+			xm = basex + (size-1)/2 
 		else :
 			x = basex - (size-1)/2
-			while x <= basex -1:
-				Table [x][basey] = "-"   # to the left
-				DictLines[str(x)+str(basey)] = "-"
-				x += 1
+			xm = basex -1
+		while x <= xm :
+			Table [x][basey] = "-"   # to the right
+			DictLines[str(x)+str(basey)] = "-"
+			x += 1
+
 	y=basey+1
 	while y < basey+t2+1 :
 		Table [basex][y] = "|"     
 		DictLines[str(basex)+str(y)] = "|"
 		y += 1	
 	i = basex
-	j = basey + (t2+1)
+	j = basey + sens*(t2+1)
 	Table [i][j] = sosa*2+1                    # mother
 	DictSosa[sosa*2+1] = [i, j]
 	if n == 3 :
-		i = basex-1
-		j = basey-1
-		Table [i][j] = sosa*4 # paternal grand father
+		i = basex - sens*1
+		j = basey - sens*1
+		Table [i][j] = sosa*4           # paternal grand father
 		DictSosa[sosa*4] = [i, j]
-		i = basex+1
-		j = basey-1
-		Table [i][j] = sosa*4+1 # paternal grand mother
+		i = basex + sens*1
+		Table [i][j] = sosa*4+1         # paternal grand mother
 		DictSosa[sosa*4+1] = [i, j]
-		i = basex-1
-		j = basey+1
-		Table [i][j] = sosa*4+2 # maternal grand father
+		i = basex - sens*mode*1
+		j = basey + sens*1
+		Table [i][j] = sosa*4+2         # maternal grand father
 		DictSosa[sosa*4+2] = [i, j]
-		i = basex+1
-		j = basey+1
-		Table [i][j] = sosa*4+3 # maternal grand mother
+		i = basex + sens*mode*1
+		j = basey + sens*1
+		Table [i][j] = sosa*4+3         # maternal grand mother
 		DictSosa[sosa*4+3] = [i, j]
 		return
-	#size = 8
-	#for i in range(size) :
-	#	print (Table[i])	
-	#print ("paternal grand father", father, mother)
-	DoOneGen (basex-(t2+1), basey-sens*(t2+1), (size-1)/2, n-2, sosa*4, sens00, mode)   # paternal grand father
-	#print ("paternal grand mother", father, mother)
-	DoOneGen (basex+(t2+1), basey-(t2+1), (size-1)/2, n-2,    sosa*4+1, sens10, mode)   # paternal grand mother
-	#print ("maternal grand father", father, mother)
-	DoOneGen (basex-(t2+1), basey+(t2+1), (size-1)/2, n-2,    sosa*4+2, sens01, mode)   # maternal grand father
-	#print ("maternal grand father", father, mother)
-	DoOneGen (basex+(t2+1), basey+(t2+1), (size-1)/2, n-2,    sosa*4+3, sens11, mode)   # maternal grand mother
+
+	if mode == 1 : 
+		Q00 = sosa*4   # grand père paternel
+		Q10 = sosa*4+1 # grand mère paternel
+		Q01 = sosa*4+2 # grand père maternel
+		Q11 = sosa*4+3 # grand mère maternelle
+	else :        # in mode colimacon, 
+		Q00 = sosa*4   # grand père paternel
+		Q10 = sosa*4+1 # grand mère paternel
+		Q11 = sosa*4+2 # grand père maternel
+		Q01 = sosa*4+3 # grand mère maternelle
+	DoOneGen (basex-(t2+1), basey-(t2+1), (size-1)/2, n-2, Q00, sens00, mode, 00)   # paternal grand father
+	DoOneGen (basex+(t2+1), basey-(t2+1), (size-1)/2, n-2, Q10, sens10, mode, 10)   # paternal grand mother
+	DoOneGen (basex-(t2+1), basey+(t2+1), (size-1)/2, n-2, Q01, sens01, mode, 01)   # maternal grand father
+	DoOneGen (basex+(t2+1), basey+(t2+1), (size-1)/2, n-2, Q11, sens11, mode, 11)   # maternal grand mother
 
 def usage () :
 	Usage = """
@@ -183,8 +188,8 @@ if Mode == "e" :
 if Mode == "c" : 
 	BMode = "colimaçon"
 	Mode = -1
-	print ("Le mode colimacon ne fonctionne pas (encore)!!")
-	sys.exit()
+	#print ("Le mode colimacon ne fonctionne pas (encore), mais ça viendra!!")
+	#sys.exit()
 
 print ("H-Tree for %s Generations in mode %s"%(Gen, BMode))
 
@@ -194,7 +199,7 @@ size = int (2**((Gen+1)/2)-1)
 sens = 1
 #print ("Size=", size)
 
-DoOneGen ((size+1)/2-1, (size+1)/2-1, size, Gen, 1, 1, Mode)
+DoOneGen ((size+1)/2-1, (size+1)/2-1, size, Gen, 1, 1, Mode, -1)
 
 for j in range(size) :
 	strg = ""
@@ -213,8 +218,6 @@ for j in range(size) :
 			strg = strg + " "+("{:0>3d}".format(Table[i][j])) + " "
 	strg = "["+strg[1:len(strg)-1]+"]"
 	print (strg)
-
-sys.exit()
 
 print ("")
 if Idx == "oui" :
