@@ -59,7 +59,7 @@ def DoOneGen (basex, basey, size, n, sosa, sens, mode, Q, HI) :
 	else :
 		print ("Wrong mode %s"%mode)
 		
-	#print ("Sosa=", sosa, "Mode=", mode, "Sens=", sens, "Basex=", basex, "Basey=", basey)
+	#print ("Sosa=", sosa, "Mode=", mode, "Sens=", sens, "Basex=", basex, "Basey=", basey, "T2=", t2)
 
 	if HI == "I" :	
 		i  = basex
@@ -79,7 +79,6 @@ def DoOneGen (basex, basey, size, n, sosa, sens, mode, Q, HI) :
 			Table [basex][y] = "|"
 			y += 1
 	else :
-		print ("Doing mode H")
 		x = il
 		while x < basex :
 			Table [x][basey] = "-"
@@ -95,7 +94,7 @@ def DoOneGen (basex, basey, size, n, sosa, sens, mode, Q, HI) :
 			il = basex + 1
 			jl = basey
 		else :
-			il = basex - t2 - 1 
+			il = basex - 2*t2 - 1 
 			jl = basey
 	else :
 		if Q == 00 or Q == 10 :
@@ -172,15 +171,22 @@ def DoOneGen (basex, basey, size, n, sosa, sens, mode, Q, HI) :
 		return
 
 	if mode == 1 : 
-		Q00 = sosa*4   # grand père paternel
-		Q10 = sosa*4+1 # grand mère paternel
-		Q01 = sosa*4+2 # grand père maternel
-		Q11 = sosa*4+3 # grand mère maternelle
+		if HI == "I" :
+			Q00 = sosa*4   # grand père paternel
+			Q10 = sosa*4+1 # grand mère paternel
+			Q01 = sosa*4+2 # grand père maternel
+			Q11 = sosa*4+3 # grand mère maternelle
+		else :
+			Q00 = sosa*4   # grand père paternel
+			Q10 = sosa*4+3 # grand mère paternel
+			Q01 = sosa*4+1 # grand père maternel
+			Q11 = sosa*4+2 # grand mère maternelle
+		
 	else :        # in mode colimacon, 
 		Q00 = sosa*4   # grand père paternel
-		Q10 = sosa*4+1 # grand mère paternel
+		Q10 = sosa*4+3 # grand mère paternel
 		Q11 = sosa*4+2 # grand père maternel
-		Q01 = sosa*4+3 # grand mère maternelle
+		Q01 = sosa*4+1 # grand mère maternelle
 	if HI == "I" :
 		DoOneGen (basex-(t2+1), basey-(t2+1), (size-1)/2, n-2, Q00, sens00, mode, 00, HI)   # paternal grand father
 		DoOneGen (basex+(t2+1), basey-(t2+1), (size-1)/2, n-2, Q10, sens10, mode, 10, HI)   # paternal grand mother
