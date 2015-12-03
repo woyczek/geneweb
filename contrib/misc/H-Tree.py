@@ -69,12 +69,14 @@ def DoOneGen (basex, basey, size, n, sosa, sens, mode, Q) :
 	y=basey-t2
 	while y < basey :
 		Table [basex][y] = "|"   
-		DictLines[str(basex)+str(y)] = "|"
 		y += 1
+	DictLines[sosa*2] = [basex, basey-t2]
+
 	i = basex
 	j = basey
 	Table [i][j]   = sosa                       # sosa
 	DictSosa[sosa] = [i, j]
+	DictLines[sosa] = [i, j]
 
 	if sosa != 1 :
 		if Q == 00 or Q == 01 :
@@ -85,14 +87,14 @@ def DoOneGen (basex, basey, size, n, sosa, sens, mode, Q) :
 			xm = basex -1
 		while x <= xm :
 			Table [x][basey] = "-"   # to the right
-			DictLines[str(x)+str(basey)] = "-"
 			x += 1
 
 	y=basey+1
 	while y < basey+t2+1 :
 		Table [basex][y] = "|"     
-		DictLines[str(basex)+str(y)] = "|"
 		y += 1	
+	DictLines[sosa*2+1] = [basex, basey+1]
+
 	i = basex
 	j = basey + sens*(t2+1)
 	Table [i][j] = sosa*2+1                    # mother
@@ -270,6 +272,20 @@ while i < 2**(Gen) :
 	else :
 		strgx = strgx + str(DictSosa[i][0]) + "/"
 	strgy = strgy + str(DictSosa[i][1]) + "/"
+	i += 1
+print (strgx)
+print (strgy)
+
+DictLines[1] = [0, 0]
+strgx = "left%s_ : /"%Gen
+strgy = "top%s_ : /"%Gen
+i = 1
+while i < 2**(Gen-2) :
+	if Gen%2 == 0 :
+		strgx = strgx + str((DictLines[i][0]-1)/2) + "/"
+	else :
+		strgx = strgx + str(DictLines[i][0]) + "/"
+	strgy = strgy + str(DictLines[i][1]) + "/"
 	i += 1
 print (strgx)
 print (strgy)
