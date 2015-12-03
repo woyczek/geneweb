@@ -342,9 +342,9 @@ while l <= 0 :
 	print (strgy)
 	l += 1
 	
-strgx = "left%s : /"%Gen
-strgy = "top%s  : /"%Gen
-i = 1
+strgx = "left%s : //"%Gen
+strgy = "top%s  : //"%Gen
+i = 2
 while i < 2**(Gen) :
 	if Gen%2 == 0 :
 		strgx = strgx + str((DictSosa[i][0]-1)/2) + "/"
@@ -356,11 +356,11 @@ print (strgx)
 print (strgy)
 
 DictLines[1] = [0, 0]
-strgx = "left%s_ : /"%Gen
-strgy = "top%s_  : /"%Gen
-i = 1
+strgx = "left%s_ : //"%Gen
+strgy = "top%s_  : //"%Gen
+i = 2
 while i < 2**(Gen-2) :
-	if Gen%2 == 0 :
+	if Gen%2 == 0 and i != 1 :
 		strgx = strgx + str((DictLines[i][0]-1)/2) + "/"
 	else :
 		strgx = strgx + str(DictLines[i][0]) + "/"
