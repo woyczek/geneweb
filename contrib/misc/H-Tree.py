@@ -28,7 +28,7 @@ def InitTable (n) :
 
 def set_grd_parents (m, HI, sosa, v) : # pour dernier niveau
 
-	# viens du nord=0, est=1, sud=2, ouest=3
+	# v vient du nord=0, est=1, sud=2, ouest=3
 	# mode 0 = colimaçon, 1 = escalier
 	# orientation 0 = H; 1 = I
 	# résultat : Qxx ou xx est le quartier (00 haut/gauche, 01, haut/droite, 10 bas/gauche, 11 bas/droit)
@@ -37,108 +37,66 @@ def set_grd_parents (m, HI, sosa, v) : # pour dernier niveau
 	Viens = [
 			 [
 			  [ # H, colimaçon
-			   [[sosa*4+3, sosa*4, sosa*4+2, sosa*4+1], [2, 2, 0, 0]],  # nord                                                     # H, colimaçon, nord
+			   [[sosa*4+3, sosa*4, sosa*4+2, sosa*4+1], [2, 2, 0, 0], 1],  # nord                                                     # H, colimaçon, nord
 			   [[]], 	  # est
-			   [[sosa*4+1, sosa*4+3, sosa*4, sosa*4+2], [2, 2, 0, 0]],  # sud
+			   [[sosa*4+1, sosa*4+3, sosa*4, sosa*4+2], [2, 2, 0, 0], -1],  # sud
 			   [[]] # ouest
 			  ],   
 			   [ # H, escalier
-			   [[sosa*4, sosa*4+2, sosa*4+1, sosa*4+3], [2, 2, 0, 0]],
+			   [[sosa*4, sosa*4+2, sosa*4+1, sosa*4+3], [2, 2, 0, 0], -1],
 			   [[]],
-			   [[sosa*4, sosa*4+2, sosa*4+1, sosa*4+3], [2, 2, 0, 0]],
+			   [[sosa*4, sosa*4+2, sosa*4+1, sosa*4+3], [2, 2, 0, 0], -1],
 			   [[]]
 			  ]
 			 ],
 			 [
 			  [ # I, colimaçon
 			   [[]],
-			   [[sosa*4+2, sosa*4+3, sosa*4+1, sosa*4], [1, 3, 1, 3]],
+			   [[sosa*4+2, sosa*4+3, sosa*4+1, sosa*4], [1, 3, 1, 3], 1],
 			   [[]],
-			   [[sosa*4, sosa*4+1, sosa*4+3, sosa*4+2], [1, 3, 1, 3]]
+			   [[sosa*4, sosa*4+1, sosa*4+3, sosa*4+2], [1, 3, 1, 3], -1]
 			  ],
 			  [ # I, escalier
 			   [[]],
-			   [[sosa*4, sosa*4+1, sosa*4+2, sosa*4+3], [1, 3, 1, 3]],
+			   [[sosa*4, sosa*4+1, sosa*4+2, sosa*4+3], [1, 3, 1, 3], -1],
 			   [[]],
-			   [[sosa*4, sosa*4+1, sosa*4+2, sosa*4+3], [1, 3, 1, 3]]
+			   [[sosa*4, sosa*4+1, sosa*4+2, sosa*4+3], [1, 3, 1, 3], -1]
 			  ]
 			 ]
 			]		
-	dum = """
-	print (Viens[0])
-	print (Viens[1])
-	print (Viens[0][0])
-	print (Viens[0][1])
-	print (Viens[0][0][0])
-	print (Viens[0][0][1])
-	print (Viens[0][0][2])
-	print (Viens[0][0][3])
-	print (Viens[0][1][0])
-	print (Viens[0][1][1])
-	print (Viens[0][1][2])
-	print (Viens[0][1][3])
-	print (Viens[1][0])
-	print (Viens[1][1])
-	print (Viens[1][0][0])
-	print (Viens[1][0][1])
-	print (Viens[1][0][2])
-	print (Viens[1][0][3])
-	print (Viens[1][1][0])
-	print (Viens[1][1][1])
-	print (Viens[1][1][2])
-	print (Viens[1][1][3])
-	"""	
-	#sys.exit()
 	o=0
 	if HI == "I" : o=1
-
-	if len (Viens[o][m][v]) != 2 :
-			print (sosa, o, m, v)
 	Q = Viens[o][m][v][0]
 	S = Viens[o][m][v][1]
 	return (Viens[o][m][v])
 
-def DoOneGen (basex, basey, size, n, sosa, sens, mode, Q, HI, viens) :
+def DoOneGen (basex, basey, size, n, sosa, mode, Q, HI, vient) :
 	# basex basey : coordonnées du milieu du carré en construction
 	# n : nombre de générations restant
 	# sosa : sosa du centre du carré
     # Attention Table[y][x]
     # sens = 1 -> up
     # mode = 1 -> escalier
-        
 	global Table, DictSosa
 	global Gen
 
-	#if sosa%4 == 0 or sosa%4 == 3 : sens = -1
-	#else : sens = 1
-	#print (sens)
-	
 	if n < 2:
 		#print ("Nbr of Gen should be odd and greater or equal to 3", size, n)
 		return
-	#t1 = int ((2**((n+1)/2)-1)/2)   # t1 offset du sosa	
 	t2 = (size-3)/4
-	# sens dit d'où on vient :
-	# en mode H, d'en haut (+1)(2 et 3) ou d'en bas (-1)(0 et 1)
-	# en mode I, de droite (-1)(0 et 2) ou de gauche (+1)(1 et 3)
-	sosaq = sosa%4
-	if mode == 0 : # colimacon
-		if HI == "I" :
-			sensx = 1
-			if sosaq == 2 or sosaq == 3 : sensy = 1
-			else                        : sensy = -1
-		else :
-			if sosaq == 1 or sosaq == 3 : sensx = 1
-			else                        : sensx = -1
-			sensy = 1			
-		
+	# vient dit d'où on vient :
+	# en mode H, d'en haut (0) ou d'en bas (2)
+	# en mode I, de droite (1) ou de gauche (3)
+	Sgp = set_grd_parents(mode, HI, sosa, vient)
+
+	sens = Sgp[2]
 	if HI == "I" :	
 		i  = basex
-		j  = basey - sens*(t2+1)
+		j  = basey + sens*(t2+1)
 		il = i
 		jl = basey - t2
 	else :
-		i  = basex - sens*(t2+1)
+		i  = basex + sens*(t2+1)
 		j  = basey
 		il = basex - t2
 		jl = j
@@ -162,7 +120,9 @@ def DoOneGen (basex, basey, size, n, sosa, sens, mode, Q, HI, viens) :
 	Table [i][j]   = sosa                # sosa
 	DictSosa[sosa] = [i, j]              # remember that sosa is at i, j 
 	if sosa != 1 :
-		# draw lines between sosa and father
+		# draw lines between sosa and where we come from
+		# vient should help there
+			
 		if HI == "I" :
 			if Q == 00 or Q == 01 :
 				x = basex + 1
@@ -186,11 +146,11 @@ def DoOneGen (basex, basey, size, n, sosa, sens, mode, Q, HI, viens) :
 		
 	if HI == "I" :	
 		i  = basex
-		j  = basey + sens*(t2+1)
+		j  = basey - sens*(t2+1)
 		il = i
 		jl = basey+1
 	else :
-		i  = basex + sens*(t2+1)
+		i  = basex - sens*(t2+1)
 		j  = basey
 		il = basex+1
 		jl = j
@@ -210,7 +170,6 @@ def DoOneGen (basex, basey, size, n, sosa, sens, mode, Q, HI, viens) :
 	DictLines[sosa*2+1] = [il, jl]      # line to mother
 	
 	if n == 3 :
-		Sgp = set_grd_parents(mode, HI, sosa, viens)
 		i = basex - 1
 		j = basey - 1
 		Table [i][j] = Sgp[0][0]
@@ -227,7 +186,6 @@ def DoOneGen (basex, basey, size, n, sosa, sens, mode, Q, HI, viens) :
 		DictSosa[Sgp[0][3]] = [i, j]
 		return
 	
-	Sgp = set_grd_parents(mode, HI, sosa, viens)
 	x = basex-(t2+1)
 	y = basey-(t2+1)
 	# lines ignore Escalier/Colimacon
@@ -236,7 +194,7 @@ def DoOneGen (basex, basey, size, n, sosa, sens, mode, Q, HI, viens) :
 		DictLines[Sgp[0][0]] = [x+1, y]
 	else :
 		DictLines[Sgp[0][0]] = [x , y+1]
-	DoOneGen (x, y, (size-1)/2, n-2, Sgp[0][0], 1, mode, 00, HI, Sgp[1][0])   # paternal grand father
+	DoOneGen (x, y, (size-1)/2, n-2, Sgp[0][0], mode, 00, HI, Sgp[1][0])   # paternal grand father
 	# top right
 	x = basex+(t2+1)
 	y = basey-(t2+1)
@@ -245,7 +203,7 @@ def DoOneGen (basex, basey, size, n, sosa, sens, mode, Q, HI, viens) :
 		DictLines[Sgp[0][1]] = [basex+1 , y]
 	else :
 		DictLines[Sgp[0][1]] = [x , y+1]
-	DoOneGen (x, y, (size-1)/2, n-2, Sgp[0][1], 1, mode, 10, HI, Sgp[1][1])   # paternal grand mother
+	DoOneGen (x, y, (size-1)/2, n-2, Sgp[0][1], mode, 10, HI, Sgp[1][1])   # paternal grand mother
 	# bottom left
 	x = basex-(t2+1)
 	y = basey+(t2+1)
@@ -254,7 +212,7 @@ def DoOneGen (basex, basey, size, n, sosa, sens, mode, Q, HI, viens) :
 		DictLines[Sgp[0][2]] = [x+1 , y]
 	else :
 		DictLines[Sgp[0][2]] = [x , basey+1]
-	DoOneGen (x, y, (size-1)/2, n-2, Sgp[0][2], 1, mode, 01, HI, Sgp[1][2])   # maternal grand father
+	DoOneGen (x, y, (size-1)/2, n-2, Sgp[0][2], mode, 01, HI, Sgp[1][2])   # maternal grand father
 	# bottom right
 	x = basex+(t2+1)
 	y = basey+(t2+1)
@@ -263,7 +221,7 @@ def DoOneGen (basex, basey, size, n, sosa, sens, mode, Q, HI, viens) :
 		DictLines[Sgp[0][3]] = [basex+1 , y]
 	else :
 		DictLines[Sgp[0][3]] = [x , basey+1]
-	DoOneGen (x, y, (size-1)/2, n-2, Sgp[0][3], 1, mode, 11, HI, Sgp[1][3])   # maternal grand mother
+	DoOneGen (x, y, (size-1)/2, n-2, Sgp[0][3], mode, 11, HI, Sgp[1][3])   # maternal grand mother
 
 def usage () :
 	Usage = """
@@ -353,15 +311,15 @@ size = 2**(int((Gen+2)/2))-1
 sens = 1
 
 if HI == "H" :
-	viens = 2
+	vient = 2
 else :
 	if Mode == 1 : # escalier
-		viens = 1
+		vient = 1
 	else :
-		viens = 3
+		vient = 3
 
 # Start recursion **************	
-DoOneGen ((size+1)/2-1, (size+1)/2-1, size, Gen, 1, 1, Mode, -1, HI, viens)
+DoOneGen ((size+1)/2-1, (size+1)/2-1, size, Gen, 1, Mode, -1, HI, vient)
 
 j = 0
 jl = size
