@@ -26,6 +26,33 @@ def InitTable (n) :
 		Table = Table + [Col]
 		x += 1		
 
+def set_grd_parents (mode, HI, sosa) : # pour dernier niveau
+	if mode == 1 : # mode escalier
+		if HI == "I" : # grand père à gauche
+			Q00 = sosa*4   # grand père paternel (4)
+			Q01 = sosa*4+1 # grand père maternelle (6)
+			Q10 = sosa*4+2 # grand mère paternel (5)
+			Q11 = sosa*4+3 # grand mère maternelle (7)
+		else :         # grand père en haut
+			Q00 = sosa*4   # grand père paternel (4)
+			Q01 = sosa*4+2 # grand mère paternelle (5)
+			Q10 = sosa*4+1 # grand père maternel (6)
+			Q11 = sosa*4+3 # grand mère maternelle (7)
+	else :        # in mode colimacon, 
+		if sosa%4 == 0 or sosa%4 == 3 :
+			Q00 = sosa*4+2   # grand père paternel
+			Q01 = sosa*4+3 # grand mère paternelle
+			Q10 = sosa*4+1 # grand mère paternelle
+			Q11 = sosa*4   # grand père maternel		
+		else :
+			Q00 = sosa*4   # grand père paternel
+			Q01 = sosa*4+1 # grand mère paternelle
+			Q10 = sosa*4+3 # grand mère paternelle
+			Q11 = sosa*4+2 # grand père maternel
+		
+	return [Q00, Q01, Q10, Q11]
+
+
 def DoOneGen (basex, basey, size, n, sosa, sens, mode, Q, HI) :
 	# basex basey : coordonnées du milieu du carré en construction
 	# n : nombre de générations restant
@@ -137,66 +164,73 @@ def DoOneGen (basex, basey, size, n, sosa, sens, mode, Q, HI) :
 	DictLines[sosa*2+1] = [il, jl]      # line to mother
 	
 	if n == 3 :
-		i = basex - sens*1
-		j = basey - sens*1
-		Table [i][j] = sosa*4           # paternal grand father
-		DictSosa[sosa*4] = [i, j]
-		i = basex + sens*1
-		Table [i][j] = sosa*4+1         # paternal grand mother
-		DictSosa[sosa*4+1] = [i, j]
-		i = basex - sens*mode*1
-		j = basey + sens*1
-		Table [i][j] = sosa*4+2         # maternal grand father
-		DictSosa[sosa*4+2] = [i, j]
-		i = basex + sens*mode*1
-		j = basey + sens*1
-		Table [i][j] = sosa*4+3         # maternal grand mother
-		DictSosa[sosa*4+3] = [i, j]
+		Sgp = set_grd_parents(mode, HI, sosa)
+		i = basex - 1
+		j = basey - 1
+		Q = Sgp[0]   # top left 00
+		Table [i][j] = Q
+		DictSosa[Q] = [i, j]
+		i = basex + 1
+		Q = Sgp[1]   # top right 01
+		Table [i][j] = Q
+		DictSosa[Q] = [i, j]
+		i = basex - 1
+		j = basey + 1
+		Q = Sgp[2]   # bottom left 10
+		Table [i][j] = Q
+		DictSosa[Q] = [i, j]
+		i = basex + 1
+		Q = Sgp[3]   # bottom right 11
+		Table [i][j] = Q
+		DictSosa[Q] = [i, j]
 		return
-
-	if mode == 1 : 
-		if HI == "I" :
-			Q00 = sosa*4   # grand père paternel
-			Q10 = sosa*4+1 # grand mère paternel
-			Q01 = sosa*4+2 # grand père maternelle
-			Q11 = sosa*4+3 # grand mère maternelle
-		else :
-			Q00 = sosa*4   # grand père paternel
-			Q10 = sosa*4+2 # grand mère maternelle
-			Q01 = sosa*4+1 # grand mère paternelle
-			Q11 = sosa*4+3 # grand père maternel
-		
-	else :        # in mode colimacon, 
-		Q00 = sosa*4   # grand père paternel
-		Q10 = sosa*4+3 # grand mère paternel
-		Q11 = sosa*4+2 # grand père maternel
-		Q01 = sosa*4+1 # grand mère maternelle
+	
+	Sgp = set_grd_parents(mode, HI, sosa)
+	Q = Sgp[0]
+	x = basex-(t2+1)
+	y = basey-(t2+1)
+	# top left
 	if HI == "I" :
-		# do h line from father to grand father
-		DictLines[sosa*4] = [basex-(t2+1)+1 , basey-(t2+1)]
-		DoOneGen (basex-(t2+1), basey-(t2+1), (size-1)/2, n-2, Q00, sens00, mode, 00, HI)   # paternal grand father
-		# do h line from father to grand mother
-		DictLines[sosa*4+1] = [basex+1 , basey-(t2+1)]
-		DoOneGen (basex+(t2+1), basey-(t2+1), (size-1)/2, n-2, Q10, sens10, mode, 10, HI)   # paternal grand mother
-		# do h line from mother to grand father
-		DictLines[sosa*4+2] = [basex-(t2+1)+1 , basey+(t2+1)]
-		DoOneGen (basex-(t2+1), basey+(t2+1), (size-1)/2, n-2, Q01, sens01, mode, 01, HI)   # maternal grand father
-		# do h line from mother to grand mother
-		DictLines[sosa*4+3] = [basex+1 , basey+(t2+1)]
-		DoOneGen (basex+(t2+1), basey+(t2+1), (size-1)/2, n-2, Q11, sens11, mode, 11, HI)   # maternal grand mother
+		DictLines[Q] = [x+1, y]
 	else :
-		# do v line from father to grand father
-		DictLines[sosa*4]   = [basex-(t2+1) , basey-(t2+1)+1]
-		DoOneGen (basex-(t2+1), basey-(t2+1), (size-1)/2, n-2, Q00, sens00, mode, 00, HI)   # paternal grand father
-		# do v line from mother to grand mother
-		DictLines[sosa*4+3] = [basex+(t2+1) , basey-(t2+1)+1]
-		DoOneGen (basex+(t2+1), basey-(t2+1), (size-1)/2, n-2, Q10, sens10, mode, 10, HI)   # paternal grand mother
-		# do v line from father to grand mother
-		DictLines[sosa*4+1] = [basex-(t2+1) , basey+1]
-		DoOneGen (basex-(t2+1), basey+(t2+1), (size-1)/2, n-2, Q01, sens01, mode, 01, HI)   # maternal grand father
-		# do v line from mother to grand father
-		DictLines[sosa*4+2] = [basex+(t2+1) , basey+1]
-		DoOneGen (basex+(t2+1), basey+(t2+1), (size-1)/2, n-2, Q11, sens11, mode, 11, HI)   # maternal grand mother
+		DictLines[Q] = [x , y+1]
+	DoOneGen (x, y, (size-1)/2, n-2, Q, sens00, mode, 00, HI)   # paternal grand father
+	Q = Sgp[1]
+	# do h line from father to grand mother
+	#DictLines[sosa*4+1] = [basex+1 , basey-(t2+1)]
+	# top right
+	x = basex+(t2+1)
+	y = basey-(t2+1)
+	# top left
+	if HI == "I" :
+		DictLines[Q] = [basex+1 , y]
+	else :
+		DictLines[Q] = [x , y+1]
+	DoOneGen (x, y, (size-1)/2, n-2, Q, sens10, mode, 10, HI)   # paternal grand mother
+	Q = Sgp[2]
+	# do h line from mother to grand father
+	#DictLines[sosa*4+2] = [basex-(t2+1)+1 , basey+(t2+1)]
+	# bottom left
+	x = basex-(t2+1)
+	y = basey+(t2+1)
+	# top left
+	if HI == "I" :
+		DictLines[Q] = [x+1 , y]
+	else :
+		DictLines[Q] = [x , basey+1]
+	DoOneGen (x, y, (size-1)/2, n-2, Q, sens01, mode, 01, HI)   # maternal grand father
+	Q = Sgp[3]
+	# do h line from mother to grand mother
+	#DictLines[sosa*4+3] = [basex+1 , basey+(t2+1)]
+	# bottom right
+	x = basex+(t2+1)
+	y = basey+(t2+1)
+	# top left
+	if HI == "I" :
+		DictLines[Q] = [basex+1 , y]
+	else :
+		DictLines[Q] = [x , basey+1]
+	DoOneGen (basex+(t2+1), basey+(t2+1), (size-1)/2, n-2, Q, sens11, mode, 11, HI)   # maternal grand mother
 
 def usage () :
 	Usage = """
@@ -210,7 +244,7 @@ def usage () :
 -w : largeur de la cellule (défaut 15)
 -h : hauteur de la cellule (défaut 15)
 -i : indices ou offset [oui|non](défaul oui)
--o : orientation en "H" (2-1-3 vertical) ou en "I" (2-1-3 horizontal)(défault)
+-o : orientation en "H" ("h") (2-1-3 vertical) ou en "I" ("i")(2-1-3 horizontal)(défault)
 """
 	print (Usage)
 
@@ -253,6 +287,9 @@ for o, a in opts :
 	else:
 		usage()
 		exit(3)
+		
+if HI == "h" : HI = "H"
+if HI == "i" : HI = "I"
 
 if HI == "H" : Mode = "e" # pour l'instant !!
 
@@ -284,8 +321,13 @@ sens = 1
 
 DoOneGen ((size+1)/2-1, (size+1)/2-1, size, Gen, 1, 1, Mode, -1, HI)
 
-di = (Gen+1)%2 # 1 si Gen est pair
-for j in range(size) :
+if Gen%2 == 0 : # skip first and last line
+	j = 1
+	jl = size-1
+else : 
+	j = 0
+	jl = size
+while j < jl :
 	strg = ""
 	i = 0
 	while i < size :
@@ -309,6 +351,7 @@ for j in range(size) :
 		i = i + 1
 	strg = "["+strg[1:len(strg)-1]+"]"
 	print (strg)
+	j += 1
 
 print ("")
 if Idx == "oui" :
@@ -327,11 +370,14 @@ while l <= 0 :
 	strgx = "dx-%sg-l%s : /"%(Gen, l)
 	strgy = "dy-%sg-l%s : /"%(Gen, l)
 	s0 = 2**(l-1)
-	sl = s0 # do sosa from s0 to sl-1
-	i=1
+	if Gen%2 == 0 : # skip first and last line
+		i = 2
+		sl = 2**(l-1)-1
+	else : 
+		i = 1
+		sl = 2**(l-1)
 	while i <= sl :
 		if Idx == "oui" :
-			print (sl, l, i, 2**(l-1)-1+i)
 			strgx = strgx + str(DictSosa[2**(l-1)-1+i][0]) + "/"
 			strgy = strgy + str(DictSosa[2**(l-1)-1+i][1]) + "/"
 		else :
@@ -341,30 +387,35 @@ while l <= 0 :
 	print (strgx)
 	print (strgy)
 	l += 1
-	
-strgx = "left%s : //"%Gen
-strgy = "top%s  : //"%Gen
-i = 2
-while i < 2**(Gen) :
+
+if HI == "I" : O = "0"
+else         : O = "1"
+
+strgx = "left%s_%s : /"%(Gen, O)
+strgy = "top%s_%s  : /"%(Gen, O)
+i = 1
+while i < 2**(Gen-(Gen+1)%2) :
 	if Gen%2 == 0 :
-		strgx = strgx + str((DictSosa[i][0]-1)/2) + "/"
+		strgx = strgx + str(int(DictSosa[i][0]+0.01-1)/2) + "/"
+		strgy = strgy + str(DictSosa[i][1]-1) + "/"
 	else :
 		strgx = strgx + str(DictSosa[i][0]) + "/"
-	strgy = strgy + str(DictSosa[i][1]) + "/"
+		strgy = strgy + str(DictSosa[i][1]) + "/"
 	i += 1
 print (strgx)
 print (strgy)
 
 DictLines[1] = [0, 0]
-strgx = "left%s_ : //"%Gen
-strgy = "top%s_  : //"%Gen
+strgx = "left%s_%s_ : //"%(Gen, O)
+strgy = "top%s_%s_  : //"%(Gen, O)
 i = 2
-while i < 2**(Gen-2) :
+while i < 2**(int(Gen/2)*2-1) :
 	if Gen%2 == 0 and i != 1 :
 		strgx = strgx + str((DictLines[i][0]-1)/2) + "/"
+		strgy = strgy + str(DictLines[i][1]-1) + "/"
 	else :
 		strgx = strgx + str(DictLines[i][0]) + "/"
-	strgy = strgy + str(DictLines[i][1]) + "/"
+		strgy = strgy + str(DictLines[i][1]) + "/"
 	i += 1
 print (strgx)
 print (strgy)
