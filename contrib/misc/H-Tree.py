@@ -301,14 +301,20 @@ if Gen % 2 == -1 :
 	print ("Nombre de générations impaires seulement")
 	sys.exit()
 
-print ('H-Tree for %s Generations in mode %s orientation "%s"'%(Gen, BMode, HI))
-
 i = 0
 if Gen % 2 == 0 : i = 1
 InitTable (Gen + i)
 
-size = 2**(int((Gen+2)/2))-1
-sens = 1
+size = 2**(int(Gen/2)+1)-1
+if Gen%2 == 0 :
+	H = 2**(int((Gen-2)/2)+1)-1
+else :
+	H = 2**(int(Gen/2)+1)-1
+W = 2**(int(Gen/2)+1)-1
+
+print ('%s-Tree for %s Generations in mode %s orientation "%s"'%(HI, Gen, BMode, HI))
+
+print ('Matrice %s x %s'%(H, W))
 
 if HI == "H" :
 	vient = 2
@@ -327,7 +333,7 @@ jl = size
 while j < jl :
 	strg = ""
 	i = 0
-	while i < size and (Gen%2 != 0 or j%2 == 1) :
+	while i < size :
 		if ((Gen+1)%2)*((i+1)%2) == 0 :
 			if   Table[i][j] == "|" :
 				strg = strg + "  |  "
@@ -358,33 +364,6 @@ else :
 	s1 = "Offsets"
 print ("%s for %s generations."%(s1, Gen))
 print ("0,0 is top left corner, positive x to the right positive y to the bottom")
-#print ("Ng is the number of generations to be considered")
-#print ("lN is the list for one level of sosa, starting at 1 (sosa=1) to Ng (sosa 2**(Ng-1) to 2**Ng-1)")
-#print ("Table is offset by %s in X and %s in Y"%(Ox, Oy))
-#print ("Cells dimentions are %s x %s"%(Dx, Dy))
-l = 1
-#while l <= Gen :
-while l <= 0 :
-	strgx = "dx-%sg-l%s : /"%(Gen, l)
-	strgy = "dy-%sg-l%s : /"%(Gen, l)
-	s0 = 2**(l-1)
-	if Gen%2 == 0 : # skip first and last line
-		i = 2
-		sl = 2**(l-1)-1
-	else : 
-		i = 1
-		sl = 2**(l-1)
-	while i <= sl :
-		if Idx == "oui" :
-			strgx = strgx + str(DictSosa[2**(l-1)-1+i][0]) + "/"
-			strgy = strgy + str(DictSosa[2**(l-1)-1+i][1]) + "/"
-		else :
-			strgx = strgx + str(DictSosa[2**(l-1)-1+i][0]*Dx+Ox) + "/"
-			strgy = strgy + str(DictSosa[2**(l-1)-1+i][1]*Dy+Oy) + "/"
-		i += 1
-	print (strgx)
-	print (strgy)
-	l += 1
 
 if HI == "I" : O = "0"
 else         : O = "1"
@@ -392,29 +371,45 @@ else         : O = "1"
 strgx = "left%s_%s : /"%(Gen, O)
 strgy = "top%s_%s  : /"%(Gen, O)
 i = 1
-while i < 2**(Gen-(Gen+1)%2) :
+while i < 2**Gen :
 	if Gen%2 == 0 :
 		strgx = strgx + str(int(DictSosa[i][0]+0.01-1)/2) + "/"
-		strgy = strgy + str(DictSosa[i][1]-1) + "/"
 	else :
 		strgx = strgx + str(DictSosa[i][0]) + "/"
+	i += 1
+
+i = 1
+while i < 2**Gen :
+	if Gen%2 == 0 :
+		strgy = strgy + str(DictSosa[i][1]) + "/"
+	else :
 		strgy = strgy + str(DictSosa[i][1]) + "/"
 	i += 1
+
 print (strgx)
 print (strgy)
 
 DictLines[1] = [0, 0]
 strgx = "left%s_%s_ : //"%(Gen, O)
 strgy = "top%s_%s_  : //"%(Gen, O)
+
 i = 2
-while i < 2**(int(Gen/2)*2-1) :
+while i < 2**(Gen-2) :
 	if Gen%2 == 0 and i != 1 :
 		strgx = strgx + str((DictLines[i][0]-1)/2) + "/"
-		strgy = strgy + str(DictLines[i][1]-1) + "/"
 	else :
 		strgx = strgx + str(DictLines[i][0]) + "/"
+	i += 1
+
+i = 2
+	
+while i < 2**(Gen-2) :
+	if Gen%2 == 0 and i != 1 :
+		strgy = strgy + str(DictLines[i][1]-1) + "/"
+	else :
 		strgy = strgy + str(DictLines[i][1]) + "/"
 	i += 1
+
 print (strgx)
 print (strgy)
 	
