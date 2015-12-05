@@ -318,7 +318,7 @@ else :
 	H = 2**(int(Gen/2)+1)-1
 W = 2**(int(Gen/2)+1)-1
 
-print ('%s-Tree for %s Generations in mode %s orientation "%s"'%(HI, Gen, BMode, HI))
+print ('%s-Tree %s for %s Generations in mode %s orientation "%s"'%(HI, version, Gen, BMode, HI))
 
 print ('Matrice %s x %s'%(H, W))
 
