@@ -223,7 +223,7 @@ def DoOneGen (basex, basey, size, n, sosa, mode, Q, HI, vient) :
 		DictLines[Sgp[0][3]] = [x , basey+1]
 	DoOneGen (x, y, (size-1)/2, n-2, Sgp[0][3], mode, 11, HI, Sgp[1][3])   # maternal grand mother
 
-def usage () :
+def usage (version) :
 	Usage = """
 ./H-tree.py [-g|--generations] [-m|--mode] [-x|--offsetx] [-y|--offsety] [-w|--width] [-h|--height] [-o|--orientation]
 -g : nombred e générations (défaut 5)
@@ -236,7 +236,9 @@ def usage () :
 -h : hauteur de la cellule (défaut 15)
 -i : indices ou offset [oui|non](défaul oui)
 -o : orientation en "H" ("h") (2-1-3 vertical) ou en "I" ("i")(2-1-3 horizontal)(défault)
+-v : version number
 """
+	print ("H-Tree version %s"%version)
 	print (Usage)
 
 Mode = "e"
@@ -247,14 +249,15 @@ Dx = 15
 Dy = 15
 Idx = "oui"
 HI = "I"
-
+version = "2.0"
 try:
-	opts, args = getopt.getopt(sys.argv[1:], "m:g:x:y:w:h:i:o:x", ["mode=", "generations=", "offsetx=", "offsety=", "width=", "height=", "indices=", "orientation"])
+	opts, args = getopt.getopt(sys.argv[1:], "m:g:x:y:w:h:i:o:vx", 
+	  ["mode=", "generations=", "offsetx=", "offsety=", "width=", "height=", "indices=", "orientation", "version"])
 except getopt.GetoptError as err:
 	# print help information and exit:
 	print(str(err)) # will print something like "option -a not recognized"
-	print ('Funny option', sys.argv)
-	usage()
+	#print ('Funny option', sys.argv)
+	usage(version)
 	sys.exit(2)
 
 for o, a in opts :
@@ -275,8 +278,11 @@ for o, a in opts :
 		Idx = a
 	elif o in ("-o", "--orientation"):
 		HI = a
+	elif o in ("-v", "--version"):
+		print ("H-Tree version %s"%version)
+		sys.exit()
 	else:
-		usage()
+		usage(version)
 		exit(3)
 		
 if HI == "h" : HI = "H"
