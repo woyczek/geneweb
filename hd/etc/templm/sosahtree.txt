@@ -410,9 +410,18 @@
       %let;top_;%expr(top5_0_(ancestor.anc_sosa.v)*h5)%in;
       %let;left_;%expr(10+left5_0_(ancestor.anc_sosa.v)*w5)%in;
       %let;bg;%apply;bg(level)%in;
-      <a style="position:absolute;top:%top;px;left:%left;px;background-color:#%bg;;padding:5px;"
+      %if;(ancestor.same != "") 
+      	<a style="position:absolute;top:%top;px;left:%left;px;background-color:#CBFECE;padding:%pad;;font-family:monospace;font-size:%font;"
+      %else;
+      	<a style="position:absolute;top:%top;px;left:%left;px;background-color:#%bg;;padding:%pad;;font-family:monospace;font-size:%font;"
+	  %end;
       href="%prefix;%ancestor.access;"
-      title="Sosa %ancestor.anc_sosa;[:] %if;(ancestor.is_male)♂%else;♀%end; %ancestor.first_name; %ancestor.surname; (%ancestor.occ) – [*generation/generations]0 %level;"><small>%ancestor.anc_sosa;</small></a>
+      title="Sosa %ancestor.anc_sosa;[:] %if;(ancestor.is_male)♂%else;♀%end; %ancestor.first_name; %ancestor.surname; (%ancestor.occ) – [*generation/generations]0 %level;">
+        <small>%if;(ancestor.same != "")
+          %ancestor.same;</a>
+        %else;
+          %ancestor.anc_sosa;</a>
+        %end;</small></a>
       %if;(ancestor.anc_sosa.v=2 or ancestor.anc_sosa.v=3)
          <div style="position:absolute;top:%top_;px;left:%left_;px;padding:5px;">↑</div>
       %end;
@@ -443,9 +452,18 @@
            %elseif;(ancestor.anc_sosa < 100) 5px 5px 5px 4px  %else; 5px 2px 5px 2px %end;%in;
       %let;font;%if;(ancestor.anc_sosa < 8)  14px
             %elseif;(ancestor.anc_sosa < 16) 12px %else; 10px %end;%in;
-      <a style="position:absolute;top:%top;px;left:%left;px;background-color:#%bg;;padding:%pad;;font-family:monospace;font-size:%font;"
+            %if;(ancestor.same != "") 
+      			<a style="position:absolute;top:%top;px;left:%left;px;background-color:#CBFECE;padding:%pad;;font-family:monospace;font-size:%font;"
+      		%else;
+      			<a style="position:absolute;top:%top;px;left:%left;px;background-color:#%bg;;padding:%pad;;font-family:monospace;font-size:%font;"
+			%end;
       href="%prefix;%ancestor.access;"
-      title="Sosa %ancestor.anc_sosa;[:] %if;(ancestor.is_male)♂%else;♀%end; %ancestor.first_name; %ancestor.surname; (%ancestor.occ) – [*generation/generations]0 %level;">%ancestor.anc_sosa;</a>
+      title="Sosa %ancestor.anc_sosa;[:] %if;(ancestor.is_male)♂%else;♀%end; %ancestor.first_name; %ancestor.surname; (%ancestor.occ) – [*generation/generations]0 %level;">
+        %if;(ancestor.same != "")
+          %ancestor.same;</a>
+        %else;
+          %ancestor.anc_sosa;</a>
+        %end;      
       %if;(ancestor.anc_sosa.v=2 or ancestor.anc_sosa.v=3)
          <div style="position:absolute;top:%top_;px;left:%left_;px;padding:4px 5px;font-family:monospace;font-size:26px">│<br />│</div>
       %elseif;(ancestor.anc_sosa.v>3 and ancestor.anc_sosa.v<8)
