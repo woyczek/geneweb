@@ -249,7 +249,7 @@ Dx = 15
 Dy = 15
 Idx = "oui"
 HI = "I"
-version = "2.2"
+version = "2.3"
 try:
 	opts, args = getopt.getopt(sys.argv[1:], "m:g:x:y:w:h:i:o:vx", 
 	  ["mode=", "generations=", "offsetx=", "offsety=", "width=", "height=", "indices=", "orientation", "version"])
@@ -284,7 +284,10 @@ for o, a in opts :
 	else:
 		usage(version)
 		exit(3)
-		
+
+Bwidth = [1, 100, 100, 20, 20, 5, 5, 1, 1] # in pixels
+Bheight = [1, 20, 20, 10, 10, 5, 5, 1, 1]
+
 if HI == "h" : HI = "H"
 if HI == "i" : HI = "I"
 
@@ -390,18 +393,26 @@ strgx = "left%s_%s : /"%(Gen, O)
 strgy = "top%s_%s  : /"%(Gen, O)
 i = 1
 while i < 2**Gen :
-	if Gen%2 == 0 :
-		strgx = strgx + str(int(DictSosa[i][0]+0.01-1)/2) + "/"
+	if HI == "I" :
+		if Gen%2 == 0 :
+			ix = int(DictSosa[i][0]+0.01-1)/2
+		else :
+			ix = DictSosa[i][0]
 	else :
-		strgx = strgx + str(DictSosa[i][0]) + "/"
+		ix = DictSosa[i][0]
+	strgx = strgx + str(ix) + "/"
 	i += 1
 
 i = 1
 while i < 2**Gen :
-	if Gen%2 == 0 :
-		strgy = strgy + str(DictSosa[i][1]) + "/"
-	else :
-		strgy = strgy + str(DictSosa[i][1]) + "/"
+	if HI == "I" :
+		ix = DictSosa[i][1]
+	else :	
+		if Gen%2 == 0 :
+			ix = int(DictSosa[i][1]+0.01-1)/2
+		else :
+			ix = DictSosa[i][1]
+	strgy = strgy + str(ix) + "/"
 	i += 1
 
 print (strgx)
@@ -415,26 +426,28 @@ i = 2
 while i < 2**(Gen-2) :
 	if HI == "I" :
 		if Gen%2 == 0 and i != 1 :
-			strgx = strgx + str((DictLines[i][0]-1)/2) + "/"
+			ix = (DictLines[i][0]-1)/2
 		else :
-			strgx = strgx + str((DictLines[i][0])) + "/"
+			ix = (DictLines[i][0])
 	else :
 		if Gen%2 == 0 and i != 1 :
-			strgx = strgx + str((DictLines[i][0])) + "/"
+			ix = (DictLines[i][0])
 		else :
-			strgx = strgx + str((DictLines[i][0]-1)/2) + "/"
+			ix = (DictLines[i][0]-1)/2
+	strgx = strgx + str(ix) + "/"
 	i += 1
 
 i = 2
 	
 while i < 2**(Gen-2) :
 	if HI == "I" :
-		strgy = strgy + str((DictLines[i][1])) + "/"
+		iy = (DictLines[i][1])
 	else :
 		if Gen%2 == 0 and i != 1 :
-			strgy = strgy + str((DictLines[i][1]-1)/2) + "/"
+			iy = (DictLines[i][1]-1)/2
 		else :
-			strgy = strgy + str((DictLines[i][1])) + "/"
+			iy = (DictLines[i][1])
+	strgy = strgy + str(iy) + "/"
 	i += 1
 
 print (strgx)
