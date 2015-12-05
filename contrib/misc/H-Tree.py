@@ -72,7 +72,7 @@ def set_grd_parents (m, HI, sosa, v) : # pour dernier niveau
 
 def DoOneLevel (basex, basey, wx, wy, Q, g, sosa, m) :
 	# fixed for 9 Gen, table of size 22 [0...21]
-	global Table9, DictSosa
+	global Table9, DictSosa, DictLines
 
 	dx = (wx+1)/4
 	dy = (wy+1)/4
@@ -80,40 +80,51 @@ def DoOneLevel (basex, basey, wx, wy, Q, g, sosa, m) :
 		dx = dx
 	# position center sosa
 	Table[basex+1][basey] = [sosa, sosa+1] # 2, 3
+	DictSosa[sosa] = [basex+1, basey]
 	# position grd parents of father
 	if g == m :
 		Table[basex-dx+1][basey] = "*"
+		DictSosa[sosa*2] = [basex-dx+1, basey]
 		Table[basex+dx+1][basey] = "*"
+		DictSosa[(sosa+1)*2] = [basex+dx+1, basey]
 	else :
 		Table[basex-dx+1][basey] = [sosa*2, sosa*2+1] # 4, 5
+		DictSosa[sosa*2] = [basex-dx+1, basey]
 		Table[basex+dx+1][basey] = [(sosa+1)*2, (sosa+1)*2+1] # 6, 7
+		DictSosa[(sosa+1)*2] = [basex+dx+1, basey]
 	# do lines
 	x = basex-dx+2
 	while x <= basex and g <= 4 :
 		Table[x][basey] = "-"
 		x += 1
+	DictLines[sosa*2] = [basex-dx+2, basey] # to GP
 	x = basex+2
 	while x <= basex+dx and g <= 4 :
 		Table[x][basey] = "-"
 		x += 1
+	DictLines[(sosa+1)*2] = [basex+2, basey] # to GM
 	x = basex-dx+1
 	y = basey-dy+1
 	while y < basey and g <=4 :
 		Table[x][y] = "|"
 		y += 1
+	DictLines[(sosa*2)*2] = [basex-dx+1, basey-dy+1] # to GPP
 	y = basey+1
 	while y < basey+dy and g <= 4 :
 		Table[x][y] = "|"
 		y += 1
+	DictLines[(sosa*2+1)*2] = [basex-dx+1, basey-dy+1] # to GPM
 	x = basex+dx+1
 	y = basey-dy+1
 	while y < basey and g <=4 :
 		Table[x][y] = "|"
 		y += 1
+	DictLines[(sosa*2+2)*2] = [basex+dx+1, basey-dy+1] # to GMP
 	y = basey+1
 	while y < basey+dy and g <=4 :
 		Table[x][y] = "|"
 		y += 1
+	DictLines[(sosa*2+3)*2] = [basex+dx+1, basey+1] # to GMM
 		
 	if g == 222 :
 		dy = dy+1
@@ -304,7 +315,7 @@ Dx = 15
 Dy = 15
 Idx = "oui"
 HI = "I"
-version = "2.4"
+version = "2.5"
 try:
 	opts, args = getopt.getopt(sys.argv[1:], "m:g:x:y:w:h:i:o:vx", 
 	  ["mode=", "generations=", "offsetx=", "offsety=", "width=", "height=", "indices=", "orientation", "version"])
@@ -397,7 +408,37 @@ if HI == "m" :
 			strg = strg[28:]
 			k += 1
 		print ("[" + str2 + "]")
-		j += 1		
+		j += 1
+
+	strgx = "left9m : //"
+	strgy = "top9m  : //"
+	i = 2
+	while i < 511 :
+		ix = DictSosa[i][0]
+		strgx = strgx + str(ix) + "//"
+		i += 2
+	i = 2
+	while i < 511 :
+		ix = DictSosa[i][1]
+		strgy = strgy + str(ix) + "//"
+		i += 2
+	print (strgx)
+	print (strgy)
+	
+	strgx = "left9m_ : //"
+	strgy = "top9m_  : //"
+	i = 2
+	while i < 63 :
+		ix = DictSosa[i][0]
+		strgx = strgx + str(ix) + "//"
+		i += 2
+	i = 2
+	while i < 63 :
+		ix = DictSosa[i][1]
+		strgy = strgy + str(ix) + "//"
+		i += 2
+	print (strgx)
+	print (strgy)
 	sys.exit()
 
 i = 0
