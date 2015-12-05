@@ -1,0 +1,44 @@
+  <style type="text/css">
+    #itree{position:relative;font-family:monospace;font-size:10pt;line-height:10pt;width:28cm;height:20cm;border:solid 1px #000;}
+    #itree a{position:absolute;border:solid 1px #333;margin:-1px;text-align:center;width:4cm;height:2cm;background-color:#DDD;}
+    #itree span{position:absolute;}
+    #s32,#s36,#s48,#s52{top:0cm}
+    #s32,#s36,#s48,#s52{top:0cm}
+    #s16,#s8,#s18,#s24,#s12,#s26{top:3cm}
+    #s34,#s38,#s50,#s54{top:6cm}
+    #s4,#s2,#s6{top:9cm;}
+    #s40,#s44,#s56,#s60{top:12cm}
+    #s20,#s10,#s22,#s28,#s14,#s30{top:15cm}
+    #s42,#s46,#s58,#s62{top:18cm}
+    #s32,#s16,#s34,#s40,#s20,#s42{left:0cm}
+    #s8,#s4,#s10{left:4.5cm;}
+    #s36,#s18,#s38,#s44,#s22,#s46{left:9cm}
+    #s2{left:12cm}
+    #s48,#s24,#s50,#s56,#s28,#s58{left:15cm}
+    #s12,#s6,#s14{left:19.5cm;}
+    #s52,#s26,#s54,#s60,#s30,#s62{left:24cm}
+    #b4,#b6{top:1cm;}
+    #b4,#b6{width:3.5cm;height:1cm;border-top:solid 1px #333;} 
+    #b4{left:4cm}
+    #b6{right:4cm}
+    #b8,#b12{border-left:solid 1px #333;width:0.5cm;height:4cm;left:2cm;top:2cm;}
+    #b10,#b14{border-left:solid 1px #333;width:0.5cm;height:4cm;left:2cm;bottom:2cm;}
+    #b16,#b18,#b24,#b26,#b20,#b22,#b28,#b30{border-top:solid 1px #333;width:0.5cm;height:1cm;top:1cm}
+    #b16,#b20,#b24,#b28{left:4cm}
+    #b18,#b22,#b26,#b30{right:4cm}
+    #b32,#b36,#b48,#b52,#b40,#b44,#b56,#b60,#b34,#b38,#b50,#b54,#b42,#b46,#b58,#b62{border-left:solid 1px #333;width:0.5cm;height:1cm;left:2cm}
+    #b32,#b36,#b48,#b52,#b40,#b44,#b56,#b60{top:2cm;}    
+    #b34,#b38,#b50,#b54,#b42,#b46,#b58,#b62{bottom:2cm;}
+  </style>
+
+<div id="itree">
+  %foreach;ancestor_level(6)
+    %foreach;ancestor
+      %if;(ancestor.anc_sosa.v %2 = 0)
+        <a href="%prefix;%ancestor.access;" id="s%ancestor.anc_sosa.v;"
+        >%ancestor.anc_sosa.v; <br%/> %ancestor; &amp; %ancestor.spouse;<span id="b%ancestor.anc_sosa.v;"></span></a>
+      %end;
+    %end;
+  %end;
+</div>
+
