@@ -70,6 +70,61 @@ def set_grd_parents (m, HI, sosa, v) : # pour dernier niveau
 	S = Viens[o][m][v][1]
 	return (Viens[o][m][v])
 
+def DoOneLevel (basex, basey, wx, wy, Q, g, sosa, m) :
+	# fixed for 9 Gen, table of size 22 [0...21]
+	global Table9, DictSosa
+
+	dx = (wx+1)/4
+	dy = (wy+1)/4
+	if Q == 01 or Q == 11 :
+		dx = dx
+	# position center sosa
+	Table[basex+1][basey] = [sosa, sosa+1] # 2, 3
+	# position grd parents of father
+	if g == m :
+		Table[basex-dx+1][basey] = "*"
+		Table[basex+dx+1][basey] = "*"
+	else :
+		Table[basex-dx+1][basey] = [sosa*2, sosa*2+1] # 4, 5
+		Table[basex+dx+1][basey] = [(sosa+1)*2, (sosa+1)*2+1] # 6, 7
+	# do lines
+	x = basex-dx+2
+	while x <= basex and g <= 4 :
+		Table[x][basey] = "-"
+		x += 1
+	x = basex+2
+	while x <= basex+dx and g <= 4 :
+		Table[x][basey] = "-"
+		x += 1
+	x = basex-dx+1
+	y = basey-dy+1
+	while y < basey and g <=4 :
+		Table[x][y] = "|"
+		y += 1
+	y = basey+1
+	while y < basey+dy and g <= 4 :
+		Table[x][y] = "|"
+		y += 1
+	x = basex+dx+1
+	y = basey-dy+1
+	while y < basey and g <=4 :
+		Table[x][y] = "|"
+		y += 1
+	y = basey+1
+	while y < basey+dy and g <=4 :
+		Table[x][y] = "|"
+		y += 1
+		
+	if g == 222 :
+		dy = dy+1
+		wy = wy-2
+	if g >= m : return
+	DoOneLevel (basex-dx, basey-dy, (wx+1)/2, (wy+1)/2, 00, g+2, (sosa*2)*2, m)   # 8, 9
+	DoOneLevel (basex-dx, basey+dy, (wx+1)/2, (wy+1)/2, 10, g+2, (sosa*2+1)*2, m) # 10, 11
+	DoOneLevel (basex+dx, basey-dy, (wx+1)/2, (wy+1)/2, 01, g+2, (sosa*2+2)*2, m) # 12, 13
+	DoOneLevel (basex+dx, basey+dy, (wx+1)/2, (wy+1)/2, 11, g+2, (sosa*2+3)*2, m) # 14, 15
+	return
+
 def DoOneGen (basex, basey, size, n, sosa, mode, Q, HI, vient) :
 	# basex basey : coordonnées du milieu du carré en construction
 	# n : nombre de générations restant
@@ -249,7 +304,7 @@ Dx = 15
 Dy = 15
 Idx = "oui"
 HI = "I"
-version = "2.3"
+version = "2.4"
 try:
 	opts, args = getopt.getopt(sys.argv[1:], "m:g:x:y:w:h:i:o:vx", 
 	  ["mode=", "generations=", "offsetx=", "offsety=", "width=", "height=", "indices=", "orientation", "version"])
@@ -303,11 +358,46 @@ if Mode == "e" :
 if Mode == "c" : 
 	BMode = "colimaçon"
 	Mode = 0
-	#print ("Le mode colimacon ne fonctionne pas (encore), mais ça viendra!!")
-	#sys.exit()
 
-if Gen % 2 == -1 :
-	print ("Nombre de générations impaires seulement")
+W = 31 # 8 # width
+H = 16 # 6 # height
+M = 8  # 4  # max gen
+
+if HI == "m" :
+	InitTable (M+1)
+	DoOneLevel (W/2-1, H/2-1, W, H, 00, 2, 2, M)
+	
+	print ("Table for 9 générations")
+	j = 0
+	while j < H-1 :
+		strg = ""
+		i = 0
+		while i < W :
+			if   Table[i][j] == "|" :
+				strg = strg + "   |   "
+			elif Table[i][j] == "-" :
+				strg = strg + "-------"
+			elif Table[i][j] == "*" :
+				if (i/2)%2 == 1 :
+					strg = strg + " *     "
+				else :
+					strg = strg + "     * "
+			elif Table[i][j] == 0 :
+				if i == 0 :
+					strg = strg + "       "
+				else :
+					strg = strg + "       "
+			else :
+				strg = strg + ""+("{:0>3d}".format(Table[i][j][0])+"/"+"{:0>3d}".format(Table[i][j][1])) + ""
+			i += 1
+		k = 0
+		str2 = ""
+		while k <= 15 :
+			str2 = str2 + strg[5:5+11] + strg [5+15:5+24]
+			strg = strg[28:]
+			k += 1
+		print ("[" + str2 + "]")
+		j += 1		
 	sys.exit()
 
 i = 0
