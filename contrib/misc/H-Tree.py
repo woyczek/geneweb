@@ -249,7 +249,7 @@ Dx = 15
 Dy = 15
 Idx = "oui"
 HI = "I"
-version = "2.0"
+version = "2.1"
 try:
 	opts, args = getopt.getopt(sys.argv[1:], "m:g:x:y:w:h:i:o:vx", 
 	  ["mode=", "generations=", "offsetx=", "offsety=", "width=", "height=", "indices=", "orientation", "version"])
@@ -411,7 +411,7 @@ i = 2
 	
 while i < 2**(Gen-2) :
 	if Gen%2 == 0 and i != 1 :
-		strgy = strgy + str(DictLines[i][1]-1) + "/"
+		strgy = strgy + str(DictLines[i][1]) + "/"
 	else :
 		strgy = strgy + str(DictLines[i][1]) + "/"
 	i += 1
