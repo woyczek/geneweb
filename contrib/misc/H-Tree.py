@@ -249,7 +249,7 @@ Dx = 15
 Dy = 15
 Idx = "oui"
 HI = "I"
-version = "2.1"
+version = "2.2"
 try:
 	opts, args = getopt.getopt(sys.argv[1:], "m:g:x:y:w:h:i:o:vx", 
 	  ["mode=", "generations=", "offsetx=", "offsety=", "width=", "height=", "indices=", "orientation", "version"])
@@ -312,11 +312,16 @@ if Gen % 2 == 0 : i = 1
 InitTable (Gen + i)
 
 size = 2**(int(Gen/2)+1)-1
-if Gen%2 == 0 :
+if Gen%2 == 0 and HI == "I" :
 	H = 2**(int((Gen-2)/2)+1)-1
 else :
 	H = 2**(int(Gen/2)+1)-1
-W = 2**(int(Gen/2)+1)-1
+
+if Gen%2 == 0 and HI == "I" :		
+	W = 2**(int(Gen/2)+1)-1
+else :
+	W = 2**(int((Gen-2)/2)+1)-1
+
 
 print ('%s-Tree %s for %s Generations in mode %s orientation "%s"'%(HI, version, Gen, BMode, HI))
 
@@ -336,31 +341,38 @@ DoOneGen ((size+1)/2-1, (size+1)/2-1, size, Gen, 1, Mode, -1, HI, vient)
 j = 0
 jl = size
 
+skipx = ((Gen+1)%2)*((i+1)%2)
+
 while j < jl :
 	strg = ""
 	i = 0
 	while i < size :
-		if ((Gen+1)%2)*((i+1)%2) == 0 :
+		if HI == "I" :
+			if ((Gen+1)%2)*((i+1)%2) == 0 :
+				if   Table[i][j] == "|" :
+					strg = strg + "  |  "
+				elif Table[i][j] == "-" :
+					strg = strg + "-----"
+				elif Table[i][j] == 0 :
+					strg = strg + "     "
+				else :
+					strg = strg + " "+("{:0>3d}".format(Table[i][j])) + " "
+		else :
 			if   Table[i][j] == "|" :
 				strg = strg + "  |  "
 			elif Table[i][j] == "-" :
 				strg = strg + "-----"
-			elif Table[i][j] == "l" :
-				strg = strg + "lllll"
-			elif Table[i][j] == "r" :
-				strg = strg + "rrrrr"
-			elif Table[i][j] == "t" :
-				strg = strg + "ttttt"
-			elif Table[i][j] == "b" :
-				strg = strg + "bbbbb"
 			elif Table[i][j] == 0 :
 				strg = strg + "     "
 			else :
 				strg = strg + " "+("{:0>3d}".format(Table[i][j])) + " "
 		i = i + 1
 	if len(strg) != 0 :
-		strg = "["+strg[1:len(strg)-1]+"]"
-		print (strg)
+		if HI == "H" and Gen%2 == 0 and j%2 == 0 :
+			dum = 0
+		else :
+			strg = "["+strg[1:len(strg)-1]+"]"
+			print (strg)
 	j += 1
 
 print ("")
@@ -401,19 +413,28 @@ strgy = "top%s_%s_  : //"%(Gen, O)
 
 i = 2
 while i < 2**(Gen-2) :
-	if Gen%2 == 0 and i != 1 :
-		strgx = strgx + str((DictLines[i][0]-1)/2) + "/"
+	if HI == "I" :
+		if Gen%2 == 0 and i != 1 :
+			strgx = strgx + str((DictLines[i][0]-1)/2) + "/"
+		else :
+			strgx = strgx + str((DictLines[i][0])) + "/"
 	else :
-		strgx = strgx + str(DictLines[i][0]) + "/"
+		if Gen%2 == 0 and i != 1 :
+			strgx = strgx + str((DictLines[i][0])) + "/"
+		else :
+			strgx = strgx + str((DictLines[i][0]-1)/2) + "/"
 	i += 1
 
 i = 2
 	
 while i < 2**(Gen-2) :
-	if Gen%2 == 0 and i != 1 :
-		strgy = strgy + str(DictLines[i][1]) + "/"
+	if HI == "I" :
+		strgy = strgy + str((DictLines[i][1])) + "/"
 	else :
-		strgy = strgy + str(DictLines[i][1]) + "/"
+		if Gen%2 == 0 and i != 1 :
+			strgy = strgy + str((DictLines[i][1]-1)/2) + "/"
+		else :
+			strgy = strgy + str((DictLines[i][1])) + "/"
 	i += 1
 
 print (strgx)
