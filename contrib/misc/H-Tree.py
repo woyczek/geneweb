@@ -315,7 +315,7 @@ Dx = 15
 Dy = 15
 Idx = "oui"
 HI = "I"
-version = "2.6"
+version = "2.7"
 try:
 	opts, args = getopt.getopt(sys.argv[1:], "m:g:x:y:w:h:i:o:vx", 
 	  ["mode=", "generations=", "offsetx=", "offsety=", "width=", "height=", "indices=", "orientation", "version"])
@@ -423,6 +423,7 @@ if HI == "m" :
 		ix = DictSosa[i][1]+1
 		strgy = strgy + str(ix) + "//"
 		i += 2
+	print ("")
 	print ("%define;left9m(xx)")
 	print ("  %apply;nth%with;")
 	print (strgx)
@@ -434,25 +435,26 @@ if HI == "m" :
 	print ("  %and;xx%end;")
 	print ("%end;")
 	
-
-	w2 = 300 
+	w1 = 200
+	w2 = 200 
 	w3 = w2 
 	w4 = w3 
-	w5 = 40  
+	w5 = 30  
 	w6 = w5 
-	w7 = 30  
+	w7 = 25  
 	w8 = w7  
 	w9 = 0 
 
 	h0 = 0
-	h2 = 80 
+	h1 = 0
+	h2 = 120 
 	h3 = h2 
 	h4 = h2 
 	h5 = h2
-	h6 = 40 
+	h6 = 20 
 	h7 = h6 
-	h8 = 30  
-	h9 = 0
+	h8 = 20  
+	h9 = 20
 	
 	l0 = 0
 	l1 = w8
@@ -476,15 +478,15 @@ if HI == "m" :
 	y1 = y0 + h8
 	y2 = y1 + h6
 	y3 = y2 + h8
-	y4 = y3 + h4
+	y4 = y3 + h2
 	y5 = y4 + h8
 	y6 = y5 + h6
 	y7 = y6 + h8
-	y8 = y7 + h3
+	y8 = y7 + h2
 	y9 = y8 + h8
 	y10 = y9 + h6
 	y11 = y10 + h8
-	y12 = y11 + h4
+	y12 = y11 + h2
 	y13 = y12 + h8
 	y14 = y13 + h6
 	y15 = y14 + h8
@@ -505,7 +507,18 @@ if HI == "m" :
 	print ("      /%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/"%(w7,w6,w7,w3,w7,w6,w7,w2,w7,w6,w7 ,w3 ,w7 ,w6 ,w7 ,00 ,00 ))
 	print ("  %and;xx%end;")
 	print ("%end;")	
-	
+	print ("%define;bhig9l(xx)")
+	print ("  %apply;nth%with;")
+	print ("    /%s/%s/%s/%s/%s/%s/%s/%s/%s/"%(h1,h2,h3,h4,h5,h6,h7,h8,h9))
+	print ("  %and;xx%end;")
+	print ("%end;")
+	print ("%define;bwid9l(xx)")
+	print ("  %apply;nth%with;")
+	print ("    /%s/%s/%s/%s/%s/%s/%s/%s/%s/"%(w1,w2,w3,w4,w5,w6,w7,w8,w9))
+	print ("  %and;xx%end;")
+	print ("%end;")
+	print ("")
+
 	sys.exit()
 
 i = 0
