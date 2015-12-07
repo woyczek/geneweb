@@ -79,52 +79,52 @@ def DoOneLevel (basex, basey, wx, wy, Q, g, sosa, m) :
 	if Q == 01 or Q == 11 :
 		dx = dx
 	# position center sosa
-	Table[basex+1][basey] = [sosa, sosa+1] # 2, 3
-	DictSosa[sosa] = [basex+1, basey]
+	Table[basex][basey] = [sosa, sosa+1] # 2, 3
+	DictSosa[sosa] = [basex, basey]
 	# position grd parents of father
-	if g == m :
-		Table[basex-dx+1][basey] = "*"
-		DictSosa[sosa*2] = [basex-dx+1, basey]
-		Table[basex+dx+1][basey] = "*"
-		DictSosa[(sosa+1)*2] = [basex+dx+1, basey]
+	if g == m+100 :
+		Table[basex-dx][basey] = "*"
+		DictSosa[sosa*2] = [basex-dx, basey]
+		Table[basex+dx][basey] = "*"
+		DictSosa[(sosa+1)*2] = [basex+dx, basey]
 	else :
-		Table[basex-dx+1][basey] = [sosa*2, sosa*2+1] # 4, 5
-		DictSosa[sosa*2] = [basex-dx+1, basey]
-		Table[basex+dx+1][basey] = [(sosa+1)*2, (sosa+1)*2+1] # 6, 7
-		DictSosa[(sosa+1)*2] = [basex+dx+1, basey]
+		Table[basex-dx][basey] = [sosa*2, sosa*2+1] # 4, 5
+		DictSosa[sosa*2] = [basex-dx, basey]
+		Table[basex+dx][basey] = [(sosa+1)*2, (sosa+1)*2+1] # 6, 7
+		DictSosa[(sosa+1)*2] = [basex+dx, basey]
 	# do lines
-	x = basex-dx+2
-	while x <= basex and g <= 4 :
-		Table[x][basey] = "-"
-		x += 1
-	DictLines[sosa*2] = [basex-dx+2, basey] # to GP
-	x = basex+2
-	while x <= basex+dx and g <= 4 :
-		Table[x][basey] = "-"
-		x += 1
-	DictLines[(sosa+1)*2] = [basex+2, basey] # to GM
 	x = basex-dx+1
+	while x < basex and g <= 4 :
+		Table[x][basey] = "-"
+		x += 1
+	DictLines[sosa*2] = [basex-dx+1, basey] # to GP
+	x = basex+1
+	while x < basex+dx and g <= 4 :
+		Table[x][basey] = "-"
+		x += 1
+	DictLines[(sosa+1)*2] = [basex+1, basey] # to GM
+	x = basex-dx
 	y = basey-dy+1
 	while y < basey and g <=4 :
 		Table[x][y] = "|"
 		y += 1
-	DictLines[(sosa*2)*2] = [basex-dx+1, basey-dy+1] # to GPP
+	DictLines[(sosa*2)*2] = [basex-dx, basey-dy+1] # to GPP
 	y = basey+1
 	while y < basey+dy and g <= 4 :
 		Table[x][y] = "|"
 		y += 1
-	DictLines[(sosa*2+1)*2] = [basex-dx+1, basey-dy+1] # to GPM
-	x = basex+dx+1
+	DictLines[(sosa*2+1)*2] = [basex-dx, basey-dy+1] # to GPM
+	x = basex+dx
 	y = basey-dy+1
 	while y < basey and g <=4 :
 		Table[x][y] = "|"
 		y += 1
-	DictLines[(sosa*2+2)*2] = [basex+dx+1, basey-dy+1] # to GMP
+	DictLines[(sosa*2+2)*2] = [basex+dx, basey-dy+1] # to GMP
 	y = basey+1
 	while y < basey+dy and g <=4 :
 		Table[x][y] = "|"
 		y += 1
-	DictLines[(sosa*2+3)*2] = [basex+dx+1, basey+1] # to GMM
+	DictLines[(sosa*2+3)*2] = [basex+dx, basey+1] # to GMM
 		
 	if g == 222 :
 		dy = dy+1
@@ -370,24 +370,25 @@ if Mode == "c" :
 	BMode = "colimaçon"
 	Mode = 0
 
-W = 31 # 8 # width
-H = 16 # 6 # height
-M = 8  # 4  # max gen
+
 
 if HI == "m" :
+	W = 14 # width
+	H = 14 # height
+	M = 8  # max gen
 	InitTable (M+1)
-	DoOneLevel (W/2-1, H/2-1, W, H, 00, 2, 2, M)
+	DoOneLevel (W/2, H/2, W+1, H+1, 00, 2, 2, M)
 	
 	print ("Table for 9 générations")
 	j = 0
-	while j < H-1 :
+	while j <= H :
 		strg = ""
 		i = 0
-		while i < W :
+		while i <= W :
 			if   Table[i][j] == "|" :
-				strg = strg + "   |   "
+				strg = strg + "    |    "
 			elif Table[i][j] == "-" :
-				strg = strg + "-------"
+				strg = strg + "---------"
 			elif Table[i][j] == "*" :
 				if (i/2)%2 == 1 :
 					strg = strg + " *     "
@@ -395,50 +396,116 @@ if HI == "m" :
 					strg = strg + "     * "
 			elif Table[i][j] == 0 :
 				if i == 0 :
-					strg = strg + "       "
+					strg = strg + "         "
 				else :
-					strg = strg + "       "
+					strg = strg + "         "
 			else :
-				strg = strg + ""+("{:0>3d}".format(Table[i][j][0])+"/"+"{:0>3d}".format(Table[i][j][1])) + ""
+				strg = strg + " "+("{:0>3d}".format(Table[i][j][0])+"/"+"{:0>3d}".format(Table[i][j][1])) + " "
 			i += 1
-		k = 0
-		str2 = ""
-		while k <= 15 :
-			str2 = str2 + strg[5:5+11] + strg [5+15:5+24]
-			strg = strg[28:]
-			k += 1
-		print ("[" + str2 + "]")
+		#k = 0
+		#str2 = ""
+		#while k <= 15 :
+		#	str2 = str2 + strg[5:5+11] + strg [5+15:5+24]
+		#	strg = strg[28:]
+		#	k += 1
+		print ("[" + strg + "]")
 		j += 1
 
-	strgx = "left9m : //"
-	strgy = "top9m  : //"
+	strgx = "       //"
+	strgy = "       //"
 	i = 2
 	while i < 511 :
-		ix = DictSosa[i][0]
+		ix = DictSosa[i][0]+1
 		strgx = strgx + str(ix) + "//"
 		i += 2
 	i = 2
 	while i < 511 :
-		ix = DictSosa[i][1]
+		ix = DictSosa[i][1]+1
 		strgy = strgy + str(ix) + "//"
 		i += 2
+	print ("%define;left9m(xx)")
+	print ("  %apply;nth%with;")
 	print (strgx)
+	print ("  %and;xx%end;")
+	print ("%end;")
+	print ("%define;top9m(xx)")
+	print ("  %apply;nth%with;")
 	print (strgy)
+	print ("  %and;xx%end;")
+	print ("%end;")
 	
-	strgx = "left9m_ : //"
-	strgy = "top9m_  : //"
-	i = 2
-	while i < 63 :
-		ix = DictSosa[i][0]
-		strgx = strgx + str(ix) + "//"
-		i += 2
-	i = 2
-	while i < 63 :
-		ix = DictSosa[i][1]
-		strgy = strgy + str(ix) + "//"
-		i += 2
-	print (strgx)
-	print (strgy)
+
+	w2 = 300 
+	w3 = w2 
+	w4 = w3 
+	w5 = 40  
+	w6 = w5 
+	w7 = 30  
+	w8 = w7  
+	w9 = 0 
+
+	h0 = 0
+	h2 = 80 
+	h3 = h2 
+	h4 = h2 
+	h5 = h2
+	h6 = 40 
+	h7 = h6 
+	h8 = 30  
+	h9 = 0
+	
+	l0 = 0
+	l1 = w8
+	l2 = l1 + w6
+	l3 = l2 + w8
+	l4 = l3 + w3
+	l5 = l4 + w8
+	l6 = l5 + w6
+	l7 = l6 + w8
+	l8 = l7 + w2
+	l9 = l8 + w8
+	l10 = l9 + w6
+	l11 = l10 + w8
+	l12 = l11 + w3
+	l13 = l12 + w8
+	l14 = l13 + w6
+	l15 = l14 + w8
+	l16 = l15
+	
+	y0 = 0
+	y1 = y0 + h8
+	y2 = y1 + h6
+	y3 = y2 + h8
+	y4 = y3 + h4
+	y5 = y4 + h8
+	y6 = y5 + h6
+	y7 = y6 + h8
+	y8 = y7 + h3
+	y9 = y8 + h8
+	y10 = y9 + h6
+	y11 = y10 + h8
+	y12 = y11 + h4
+	y13 = y12 + h8
+	y14 = y13 + h6
+	y15 = y14 + h8
+	y16 = y15
+	
+	print ("%define;left9mw(xx)")
+	print ("  %apply;nth%with;") 
+	print ("      /%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/"%(l0,l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,l13,l14,l15,l16))
+	print ("  %and;xx%end;")
+	print ("%end;")	
+	print ("%define;top9mh(xx)")
+	print ("  %apply;nth%with;")
+	print ("      /%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/"%(y0,y1,y2,y3,y4,y5,y6,y7,y8,y9,y10,y11,y12,y13,y14,y15,y16))
+	print ("  %and;xx%end;")
+	print ("%end;")	
+	print ("%define;top9mw(xx)")
+	print ("  %apply;nth%with;")
+	print ("      /%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/"%(w7,w6,w7,w3,w7,w6,w7,w2,w7,w6,w7 ,w3 ,w7 ,w6 ,w7 ,00 ,00 ))
+	print ("  %and;xx%end;")
+	print ("%end;")	
+	
 	sys.exit()
 
 i = 0
@@ -557,14 +624,14 @@ i = 2
 while i < 2**(Gen-2) :
 	if HI == "I" :
 		if Gen%2 == 0 and i != 1 :
-			ix = (DictLines[i][0]-1)/2
+			ix = (int(DictLines[i][0]+2))/2-1
 		else :
 			ix = (DictLines[i][0])
 	else :
 		if Gen%2 == 0 and i != 1 :
 			ix = (DictLines[i][0])
 		else :
-			ix = (DictLines[i][0]-1)/2
+			ix = (int(DictLines[i][0]+2))/2-1
 	strgx = strgx + str(ix) + "/"
 	i += 1
 
@@ -575,7 +642,7 @@ while i < 2**(Gen-2) :
 		iy = (DictLines[i][1])
 	else :
 		if Gen%2 == 0 and i != 1 :
-			iy = (DictLines[i][1]-1)/2
+			iy = (int(DictLines[i][1]+2))/2-1
 		else :
 			iy = (DictLines[i][1])
 	strgy = strgy + str(iy) + "/"
