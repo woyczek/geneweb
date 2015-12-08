@@ -332,38 +332,37 @@
 %define;left12_1_(xx)%apply;top12_0_(xx)%end;
 %define;top12_1_(xx)%apply;left12_0_(xx)%end;
 
-%define;0boxchar(x,y)
-   %if;(x=1)┼
-   %elseif;((x>1 and x<4) or (x>7 and x<16) or (x>31 and x<64) or (x>127 and x<256) or (x>511 and x<1024)or (x>2047 and x<4096))
-     %if;(x%2=0)
-       %if;(not y)╷%else;┬%end;
-     %else;
-       %if;(not y)╵%else;┴%end;
-     %end;
-   %elseif;((x>3 and x<8) or (x>15 and x<32) or (x>63 and x<128) or (x>255 and x<512) or (x>1023 and x<2048) or (x>4095 and x<8192))
-     %if;(x%2=0)
-       %if;(not y)╶%else;├%end;
-     %else;
-       %if;(not y)╴%else;┤%end;
-     %end;
-   %end;
-%end;
-
-%define;1boxchar(x,y)
-   %if;(x=1)┼
-   %elseif;((x>1 and x<4) or (x>7 and x<16) or (x>31 and x<64) or (x>127 and x<256) or (x>511 and x<1024) or (x>2047 and x<4096) or (x>8191 and x<16383))
-     %if;(x%2=0)
-       %if;(not y)╶%else;├%end;
-     %else;
-       %if;(not y)╴%else;┤%end;
-     %end;
-   %elseif;((x>3 and x<8) or (x>15 and x<32) or (x>63 and x<128) or (x>255 and x<512) or (x>1023 and x<2048) or (x>4095 and x<8192) or (x>16382 and x<32767))
-     %if;(x%2=0)
-       %if;(not y)╷%else;┬%end;
-     %else;
-       %if;(not y)╵%else;┴%end;
-     %end;
-   %end;
+%define;boxchar(x,y)
+  %if;(x=1)┼
+  %elseif;((x>1 and x<4) or (x>7 and x<16) or (x>31 and x<64) or (x>127 and x<256) or (x>511 and x<1024)or (x>2047 and x<4096))
+    %if;(y=0)
+      %if;(x%2=0)
+        %if;(not ancestor.has_parents)╷%else;┬%end;
+      %else;
+        %if;(not ancestor.has_parents)╵%else;┴%end;
+      %end;
+    %else;
+       %if;(x%2=0)
+         %if;(not ancestor.has_parents)╶%else;├%end;
+       %else;
+         %if;(not ancestor.has_parents)╴%else;┤%end;
+       %end;
+    %end;
+  %elseif;((x>3 and x<8) or (x>15 and x<32) or (x>63 and x<128) or (x>255 and x<512) or (x>1023 and x<2048) or (x>4095 and x<8192))
+    %if;(y=0)
+      %if;(x%2=0)
+        %if;(not ancestor.has_parents)╶%else;├%end;
+      %else;
+        %if;(not ancestor.has_parents)╴%else;┤%end;
+      %end;
+    %else;
+      %if;(x%2=0)
+        %if;(not ancestor.has_parents)╷%else;┬%end;
+      %else;
+        %if;(not ancestor.has_parents)╵%else;┴%end;
+      %end;
+    %end;
+  %end;
 %end;
 
 %define;graph(xx,yy,zz)
@@ -388,7 +387,7 @@
             %if;(ancestor.spouse.birth_date.year != "" and ancestor.spouse.is_dead) – %end;
             %if;(ancestor.spouse.birth_date.year = "" and ancestor.spouse.death_date.year != "")†%else;%ancestor.spouse.death_date.year;%end;&#013;
             %if;(not ancestor.spouse.has_parents) [*missing parents].%end;">
-          %if;(ancestor.same != "")╳%else;%apply;yyboxchar(anc_sosahalf,ancestor.has_parents)%end;</a></tt>
+          %if;(ancestor.same != "")╳%else;%apply;boxchar(anc_sosahalf,yy)%end;</a></tt>
         %end;
       %end;
     %end;
@@ -415,7 +414,7 @@
           %if;(ancestor.birth_date.year != "" and ancestor.is_dead) – %end;
           %if;(ancestor.birth_date.year = "" and ancestor.death_date.year != "")†%else;%ancestor.death_date.year;%end;&#013;
           %if;(not ancestor.has_parents) [*missing parents].%end;">
-        %if;(ancestor.same != "")╳%else;%apply;yyboxchar(ancestor.anc_sosa.v,ancestor.has_parents)%end;</a></tt>
+        %if;(ancestor.same != "")╳%else;%apply;boxchar(ancestor.anc_sosa.v,yy)%end;</a></tt>
       %end;
     %end;
     %foreach;ancestor_level(leveldown)
@@ -438,293 +437,189 @@
   %end;
 %end;
 
-%define;graphlinks4(xx)
-  %foreach;ancestor_level(2)
+%define;graphlinks(xx,yy)
+  %let;linklevel;%expr(xx-2)%in;
+  %foreach;ancestor_level(linklevel)
     %foreach;ancestor;
-      %let;top_;%expr(top4_xx_(ancestor.anc_sosa.v)*hb)%in;
-      %let;left_;%expr(left4_xx_(ancestor.anc_sosa.v)*wb)%in;
+      %let;top_;%expr(topxx_yy_(ancestor.anc_sosa.v)*hb)%in;
+      %let;left_;%expr(leftxx_yy_(ancestor.anc_sosa.v)*wb)%in;
       %if;(ancestor.anc_sosa.v=2 or ancestor.anc_sosa.v=3)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)│%else;─%end;</tt>
-      %end;
-    %end;
-  %end;
-%end;
-
-%define;graphlinks5(xx)
-  %foreach;ancestor_level(3)
-    %foreach;ancestor;
-        %let;top_;%expr(top5_xx_(ancestor.anc_sosa.v)*hb)%in;
-        %let;left_;%expr(left5_xx_(ancestor.anc_sosa.v)*wb)%in;
-      %if;(ancestor.anc_sosa.v=2 or ancestor.anc_sosa.v=3)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)│%else;─%end;</tt>
+        %if;(xx=4 or xx=5)
+          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│%else;─%end;</tt>
+        %elseif;(xx=6 or xx=7)
+          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│<br />│<br />│%else;───%end;</tt>
+        %elseif;(xx=8 or xx=9)
+          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│<br />│<br />│<br />│<br />│<br />│<br />│%else;───────%end;</tt>
+        %elseif;(xx=10 or xx=11)
+          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│%else;───────────────%end;</tt>
+        %elseif;(xx=12)
+          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│%else;───────────────────────────────%end;</tt>
+        %end;
       %elseif;(ancestor.anc_sosa.v>3 and ancestor.anc_sosa.v<8)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)─%else;│%end;</tt>
-      %end;
-    %end;
-  %end;
-%end;
-
-%define;graphlinks6(xx)
-  %foreach;ancestor_level(4)
-    %foreach;ancestor;
-      %let;top_;%expr(top6_xx_(ancestor.anc_sosa.v)*hb)%in;
-      %let;left_;%expr(left6_xx_(ancestor.anc_sosa.v)*wb)%in;
-      %if;(ancestor.anc_sosa.v=2 or ancestor.anc_sosa.v=3)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)│<br />│<br />│%else;───%end;</tt>
-      %elseif;(ancestor.anc_sosa.v >3 and ancestor.anc_sosa.v < 8)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)─%else;│%end;</tt>
+        %if;(xx=5 or xx=6)
+          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)─%else;│%end;</tt>
+        %elseif;(xx=7 or xx=8)
+          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)───%else;│<br />│<br />│%end;</tt>
+        %elseif;(xx=9 or xx=10)
+          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)───────%else;│<br />│<br />│<br />│<br />│<br />│<br />│%end;</tt>
+        %elseif;(xx=11 or xx=12)
+          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)───────────────%else;│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│%end;</tt>
+        %end;
       %elseif;(ancestor.anc_sosa.v >7 and ancestor.anc_sosa.v < 16)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)│%else;─%end;</tt>
-      %end;
-    %end;
-  %end;
-%end;
-
-%define;graphlinks7(xx)
-  %foreach;ancestor_level(5)
-    %foreach;ancestor;
-      %let;top_;%expr(top7_xx_(ancestor.anc_sosa.v)*hb)%in;
-      %let;left_;%expr(left7_xx_(ancestor.anc_sosa.v)*wb)%in;
-      %if;(ancestor.anc_sosa.v=2 or ancestor.anc_sosa.v=3)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)│<br />│<br />│%else;───%end;</tt>
-      %elseif;(ancestor.anc_sosa.v>3 and ancestor.anc_sosa.v<8)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)───%else;│<br />│<br />│%end;</tt>
-      %elseif;(ancestor.anc_sosa.v>7 and ancestor.anc_sosa.v<16)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(xx=0)│%else;─%end;</tt>
+        %if;(xx=6 or xx=7)
+          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│%else;─%end;</tt>
+        %elseif;(xx=8 or xx=9)
+          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│<br />│<br />│%else;───%end;</tt>
+        %elseif;(xx=10 or xx=11)
+          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│<br />│<br />│<br />│<br />│<br />│<br />│<br />%else;───────%end;</tt>
+        %elseif;(xx=12)
+          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│%else;───────────────%end;</tt>
+        %end;
       %elseif;(ancestor.anc_sosa.v>15 and ancestor.anc_sosa.v<32)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(xx=0)─%else;│%end;</tt>
-      %end;
-    %end;
-  %end;
-%end;
-
-%define;graphlinks8(xx)
-  %foreach;ancestor_level(6)
-    %foreach;ancestor;
-      %let;top_;%expr(top8_xx_(ancestor.anc_sosa.v)*hb)%in;
-      %let;left_;%expr(left8_xx_(ancestor.anc_sosa.v)*wb)%in;
-      %if;(ancestor.anc_sosa.v=2 or ancestor.anc_sosa.v=3)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(xx=0)│<br />│<br />│<br />│<br />│<br />│<br />│%else;───────%end;</tt>
-      %elseif;(ancestor.anc_sosa.v>3 and ancestor.anc_sosa.v<8)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)───%else;│<br />│<br />│%end;</tt>
-      %elseif;(ancestor.anc_sosa.v>7 and ancestor.anc_sosa.v<16)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)│<br />│<br />│%else;───%end;</tt>
-      %elseif;(ancestor.anc_sosa.v>15 and ancestor.anc_sosa.v<32)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)─%else;│%end;</tt>
+        %if;(xx=7 or xx=8)
+          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)─%else;│%end;</tt>
+        %elseif;(xx=9 or xx=10)
+          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)───%else;│<br />│<br />│%end;</tt>
+        %elseif;(xx=11 or xx=12)
+          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)───────%else;│<br />│<br />│<br />│<br />│<br />│<br />│%end;</tt>
+        %end;
       %elseif;(ancestor.anc_sosa.v>31 and ancestor.anc_sosa.v<64)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)│%else;─%end;</tt>
-      %end;
-    %end;
-  %end;
-%end;
-
-%define;graphlinks9(xx)
-  %foreach;ancestor_level(7)
-    %foreach;ancestor;
-      %let;top_;%expr(top9_xx_(ancestor.anc_sosa.v)*hb)%in;
-      %let;left_;%expr(left9_xx_(ancestor.anc_sosa.v)*wb)%in;
-      %if;(ancestor.anc_sosa.v=2 or ancestor.anc_sosa.v=3)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)│<br />│<br />│<br />│<br />│<br />│<br />│%else;───────%end;</tt>
-      %elseif;(ancestor.anc_sosa.v>3 and ancestor.anc_sosa.v<8)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(xx=0)───────%else;│<br />│<br />│<br />│<br />│<br />│<br />│%end;</tt>
-      %elseif;(ancestor.anc_sosa.v>7 and ancestor.anc_sosa.v<16)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)│<br />│<br />│%else;───%end;</tt>
-      %elseif;(ancestor.anc_sosa.v>15 and ancestor.anc_sosa.v<32)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)───%else;│<br />│<br />│%end;</tt>
-      %elseif;(ancestor.anc_sosa.v>31 and ancestor.anc_sosa.v<64)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)│%else;─%end;</tt>
+        %if;(xx=8 or xx=9)
+          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│%else;─%end;</tt>
+        %elseif;(xx=10 or xx=11)
+          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│<br />│<br />│%else;───%end;</tt>
+        %elseif;(xx=12)
+          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│<br />│<br />│<br />│<br />│<br />│<br />│%else;───────%end;</tt>
+        %end;
       %elseif;(ancestor.anc_sosa.v>63 and ancestor.anc_sosa.v<128)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)─%else;│%end;</tt>
-      %end;
-    %end;
-  %end;
-%end;
-
-%define;graphlinks10(xx)
-  %foreach;ancestor_level(8)
-    %foreach;ancestor;
-      %let;top_;%expr(top10_xx_(ancestor.anc_sosa.v)*hb)%in;
-      %let;left_;%expr(left10_xx_(ancestor.anc_sosa.v)*wb)%in;
-      %if;(ancestor.anc_sosa.v=2 or ancestor.anc_sosa.v=3)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│%else;───────────────%end;</tt>
-      %elseif;(ancestor.anc_sosa.v>3 and ancestor.anc_sosa.v<8)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(xx=0)───────%else;│<br />│<br />│<br />│<br />│<br />│<br />│%end;</tt>
-      %elseif;(ancestor.anc_sosa.v>7 and ancestor.anc_sosa.v<16)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)│<br />│<br />│<br />│<br />│<br />│<br />│<br />%else;───────%end;</tt>
-      %elseif;(ancestor.anc_sosa.v>15 and ancestor.anc_sosa.v<32)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)───%else;│<br />│<br />│%end;</tt>
-      %elseif;(ancestor.anc_sosa.v>31 and ancestor.anc_sosa.v<64)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)│<br />│<br />│%else;───%end;</tt>
-      %elseif;(ancestor.anc_sosa.v>63 and ancestor.anc_sosa.v<128)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)─%else;│%end;</tt>
+        %if;(xx=9 or xx=10)
+          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)─%else;│%end;</tt>
+        %elseif(xx=11 or xx=12)
+          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)───%else;│<br />│<br />│%end;</tt>
+        %end;
       %elseif;(ancestor.anc_sosa.v>127 and ancestor.anc_sosa.v<256)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)│%else;─%end;</tt>
-      %end;
-    %end;
-  %end;
-%end;
-
-%define;graphlinks11(xx)
-  %foreach;ancestor_level(9)
-    %foreach;ancestor;
-      %let;top_;%expr(top11_xx_(ancestor.anc_sosa.v)*hb)%in;
-      %let;left_;%expr(left11_xx_(ancestor.anc_sosa.v)*wb)%in;
-      %if;(ancestor.anc_sosa.v=2 or ancestor.anc_sosa.v=3)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│%else;───────────────%end;</tt>
-      %elseif;(ancestor.anc_sosa.v>3 and ancestor.anc_sosa.v<8)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(xx=0)───────────────%else;│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│%end;</tt>
-      %elseif;(ancestor.anc_sosa.v>7 and ancestor.anc_sosa.v<16)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)│<br />│<br />│<br />│<br />│<br />│<br />│%else;───────%end;</tt>
-      %elseif;(ancestor.anc_sosa.v>15 and ancestor.anc_sosa.v<32)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)───────%else;│<br />│<br />│<br />│<br />│<br />│<br />│%end;</tt>
-      %elseif;(ancestor.anc_sosa.v>31 and ancestor.anc_sosa.v<64)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)│<br />│<br />│%else;───%end;</tt>
-      %elseif;(ancestor.anc_sosa.v>63 and ancestor.anc_sosa.v<128)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)───%else;│<br />│<br />│%end;</tt>
-      %elseif;(ancestor.anc_sosa.v>127 and ancestor.anc_sosa.v<256)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)│%else;─%end;</tt>
+        %if;(xx=10 or xx=11)
+          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│%else;─%end;</tt>
+        %elseif;(xx=12)
+          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│<br />│<br />│%else;───%end;</tt>
+        %end;
       %elseif;(ancestor.anc_sosa.v>255 and ancestor.anc_sosa.v<512)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)─%else;│%end;</tt>
-      %end;
-    %end;
-  %end;
-%end;
-
-%define;graphlinks12(xx)
-  %foreach;ancestor_level(10)
-    %foreach;ancestor;
-      %let;top_;%expr(top12_xx_(ancestor.anc_sosa.v)*hb)%in;
-      %let;left_;%expr(left12_xx_(ancestor.anc_sosa.v)*wb)%in;
-      %if;(ancestor.anc_sosa.v=2 or ancestor.anc_sosa.v=3)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│%else;───────────────────────────────%end;</tt>
-      %elseif;(ancestor.anc_sosa.v>3 and ancestor.anc_sosa.v<8)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(xx=0)───────────────%else;│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│%end;</tt>
-      %elseif;(ancestor.anc_sosa.v>7 and ancestor.anc_sosa.v<16)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│%else;───────────────%end;</tt>
-      %elseif;(ancestor.anc_sosa.v>15 and ancestor.anc_sosa.v<32)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)───────%else;│<br />│<br />│<br />│<br />│<br />│<br />│%end;</tt>
-      %elseif;(ancestor.anc_sosa.v>31 and ancestor.anc_sosa.v<64)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)│<br />│<br />│<br />│<br />│<br />│<br />│%else;───────%end;</tt>
-      %elseif;(ancestor.anc_sosa.v>63 and ancestor.anc_sosa.v<128)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)───%else;│<br />│<br />│%end;</tt>
-      %elseif;(ancestor.anc_sosa.v>127 and ancestor.anc_sosa.v<256)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)│<br />│<br />│%else;───%end;</tt>
-      %elseif;(ancestor.anc_sosa.v>255 and ancestor.anc_sosa.v<512)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)─%else;│%end;</tt>
+        %if;(xx=11 or xx=12)
+          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)─%else;│%end;</tt>
+        %end;
       %elseif;(ancestor.anc_sosa.v>511 and ancestor.anc_sosa.v<1024)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px;">%if;(xx=0)│%else;─%end;</tt>
+        %if;(xx=12)
+         <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│%else;─%end;</tt>
+        %end;
       %end;
     %end;
   %end;
 %end;
 
-<h3><tt>├H-trees┤ and ┴I-trees┬ </tt></h3>
-<table border=1>
-<tr><td>h</td><td>├3┤</td><td>├4┤</td><td>├5┤</td><td>├6┤</td><td>├7┤</td><td>├7┤%%2</td><td>├8┤</td><td>├9┤</td><td>├10┤</td></tr>
-<tr><td>g</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>9</td><td>10</td><td>11</td></tr>
-<tr><td>#</td><td>15</td><td>31</td><td>63</td><td>127</td><td>255</td><td>510</td><td>511</td><td>1023</td><td>2047</td></tr>
-<tr><td>@</td><td>7</td><td>15</td><td>31</td><td>63</td><td>127</td><td>127</td><td>255</td><td>511</td><td>1023</td></tr>
-<tr><td><tt>H</tt></td><td>
+<h2><tt>├H-trees┤ and ┴I-trees┬ </tt></h2>
+<table>
+<tr align=center><td colspan=2>4</td><td colspan=2>5</td><td colspan=2>6</td><td colspan=2>7</td><td colspan=2>8</td><td>9</td><td>9</td><td>10</td><td>11</td></tr>
+<tr><td colspan=2>15</td><td colspan=2>31</td><td colspan=2>63</td><td colspan=2>127</td><td colspan=2>255</td><td>510</td><td>511</td><td>1023</td><td>2047</td></tr>
+<tr><td colspan=2>7</td><td colspan=2>15</td><td colspan=2>31</td><td colspan=2>63</td><td colspan=2>127</td><td>127</td><td>255</td><td>511</td><td>1023</td></tr>
+<tr><td valign=top><h3><tt>H3</tt></h3>
 <div style="position:relative;width:40px;height:60px;">
       %apply;graph(3,1,1)
 </div>
-</td><td>
-<div style="position:relative;width:70px;height:60px;">
-      %apply;graph(4,1,1)
-      %apply;graphlinks4(1)
-</div>
-</td><td>
-<div id="tree" style="position:relative;width:80px;height:120px;">
-      %apply;graph(5,1,1)
-      %apply;graphlinks5(1)
-</div>
-</td><td>
-<div style="position:relative;width:144px;height:240px;">
-      %apply;graph(6,1,1)
-      %apply;graphlinks6(1)
-</div>
-</td><td>
-<div style="position:relative;width:144px;height:240px;">
-      %apply;graph(7,1,1)
-      %apply;graphlinks7(1)
-</div>
-</td><td>
-<div style="position:relative;width:144px;height:240px;">
-      %apply;graph(7,1,2)
-      %apply;graphlinks7(1)
-</div>
-</td>
-<td>h8</td><td>h9</td><td>h10</td></tr>
-<tr ><td><tt>I</tt></td><td>
+</td><td valign=top><h3><tt>I3</tt></h3>
 <div style="position:relative;width:40px;height:60px;">
       %apply;graph(3,0,1)
 </div>
-</td><td>
+</td><td valign=top><h3><tt>H4</tt></h3>
+<div style="position:relative;width:70px;height:60px;">
+      %apply;graph(4,1,1)
+      %apply;graphlinks(4,1)
+</div>
+</td><td valign=top><h3><tt>I4</tt></h3>
 <div style="position:relative;width:40px;height:120px;">
       %apply;graph(4,0,1)
-      %apply;graphlinks4(0)
+      %apply;graphlinks(4,0)
 </div>
-</td><td>
+</td><td valign=top><h3><tt>H5</tt></h3>
+<div id="tree" style="position:relative;width:80px;height:120px;">
+      %apply;graph(5,1,1)
+      %apply;graphlinks(5,1)
+</div>
+</td><td valign=top><h3><tt>I5</tt></h3>
 <div style="position:relative;width:80px;height:120px;">
       %apply;graph(5,0,1)
-      %apply;graphlinks5(0)
+      %apply;graphlinks(5,0)
 </div>
-</td><td>
-<div style="position:relative;width:72px;height:240px;">
+</td><td valign=top><h3><tt>H6</tt></h3>
+<div style="position:relative;width:144px;height:70px;">
+      %apply;graph(6,1,1)
+      %apply;graphlinks(6,1)
+</div>
+</td><td valign=top><h3><tt>I6</tt></h3>
+<div style="position:relative;width:72px;height:200px;">
       %apply;graph(6,0,1)
-      %apply;graphlinks6(0)
+      %apply;graphlinks(6,0)
 </div>
-</td><td>
-<div style="position:relative;width:144px;height:240px;">
+</td><td valign=top><h3><tt>H7</tt></h3>
+<div style="position:relative;width:144px;height:200px;">
+      %apply;graph(7,1,1)
+      %apply;graphlinks(7,1)
+</div>
+</td><td valign=top><h3><tt>I7</tt></h3>
+<div style="position:relative;width:144px;height:200px;">
       %apply;graph(7,0,1)
-      %apply;graphlinks7(0)
+      %apply;graphlinks(7,0)
 </div>
-</td><td></td><td>i8</td><td>i9</td><td>i10</a></tr></TABLE>
+</td><td valign=top><h3><tt>H7 couple</tt></h3>
+<div style="position:relative;width:144px;height:200px;">
+      %apply;graph(7,1,2)
+      %apply;graphlinks(7,1)
+</div>
+</td></tr></table>
 
 <table><tr><td><h3><tt>H-tree 8</tt></h3>
 <div style="position:relative;width:280px;height:420px;">
       %apply;graph(8,1,1)
-      %apply;graphlinks8(1)
+      %apply;graphlinks(8,1)
 </div></td><td>
 <h3><tt>I-tree 8</tt></h3>
 <div style="position:relative;width:150px;height:420px;">
       %apply;graph(8,0,1)
-      %apply;graphlinks8(0)
+      %apply;graphlinks(8,0)
 </div>
 <td><h3><tt>H-tree 9</tt></h3>
 <div style="position:relative;width:280px;height:420px;">
       %apply;graph(9,1,1)
-      %apply;graphlinks9(1)
+      %apply;graphlinks(9,1)
 </div></td><td><h3><tt>I-tree 9</tt></h3>
 <div style="position:relative;width:280px;height:420px;">
       %apply;graph(9,0,1)
-      %apply;graphlinks9(0)
+      %apply;graphlinks(9,0)
 </div></td></tr></table>
 
 <table><tr><td><h3><tt>H-tree and I-tree 10</tt></h3>
 <div style="position:relative;width:550px;height:820px;">
       %apply;graph(10,1,1)
-      %apply;graphlinks10(1)
+      %apply;graphlinks(10,1)
 </div></td><td><h3><tt>I-tree 10</tt></h3>
 <div style="position:relative;width:400px;height:820px;">
       %apply;graph(10,0,1)
-      %apply;graphlinks10(0)
+      %apply;graphlinks(10,0)
 </div></td></tr></table>
 
 <table><tr><td><h3><tt>H-tree 11</tt></h3>
 <div style="position:relative;width:600px;height:820px;">
       %apply;graph(11,1,1)
-      %apply;graphlinks11(1)
+      %apply;graphlinks(11,1)
 </div></td><td><h3><tt>I-tree 11</tt></h3>
 <div style="position:relative;width:600px;height:820px;">
       %apply;graph(11,0,1)
-      %apply;graphlinks11(0)
+      %apply;graphlinks(11,0)
 </div></td></tr></table>
 
 <h3><tt>H-tree 12 – 8 191 ind. à 13 gén. ou couples à 14 soit max 16 383 ind.</tt></h3>
-<div style="position:relative;width:1800px;height:900px;">
+<div style="position:relative;width:1200px;height:800px;">
       %apply;graph(12,1,1)
-      %apply;graphlinks12(1)
+      %apply;graphlinks(12,1)
 </div>
 
 <h3><tt>Sosa I-tree 5</tt></h3>
