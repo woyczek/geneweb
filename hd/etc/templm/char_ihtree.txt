@@ -1,10 +1,10 @@
-%let;hb;13%in; %let;h5;27%in; %let;h7;22%in;
-%let;wb;8%in;  %let;w5;23%in; %let;w7;22%in;
+﻿%let;hb;13%in;
+%let;wb;8%in;
 %let;ttstyle;position:absolute;font-family:monospace;font-size:10pt;line-height:10pt;%in;
 
-%define;bg(xx)
+%define;size(xx)
   %apply;nth%with;
-    /FFC8E3/F0CBFE/DDCEFF/FFA8D3/E7A9FE/FF86C2/DD88FD/FF62B0/C4ABFE
+    ///50/105/105/215/215/410/410/840/840/1650/
   %and;xx%end;
 %end;
 
@@ -387,7 +387,7 @@
             %if;(ancestor.spouse.birth_date.year != "" and ancestor.spouse.is_dead) – %end;
             %if;(ancestor.spouse.birth_date.year = "" and ancestor.spouse.death_date.year != "")†%else;%ancestor.spouse.death_date.year;%end;&#013;
             %if;(not ancestor.spouse.has_parents) [*missing parents].%end;">
-          %if;(ancestor.same != "")╳%else;%apply;boxchar(anc_sosahalf,yy)%end;</a></tt>
+          %if;(ancestor.same != "")x%else;%apply;boxchar(anc_sosahalf,yy)%end;</a></tt>
         %end;
       %end;
     %end;
@@ -398,7 +398,7 @@
           %let;left4;%expr(leftxx_yy(ancestor.anc_sosa.v)*wb)%in;
           <tt><a style="%ttstyle;top:%top4;px;left:%left4;px;" href="%prefix;m=ADD_PAR;ip=%ancestor.index;" 
           title="[*missing sosa] %expr(ancestor.anc_sosa.v*2) & %expr(ancestor.anc_sosa.v*2+1) – [*generation/generations]0 %expr(level+1)&#013;
-          [*add] %apply;a_of_b%with;[the parents]%and;Sosa %ancestor.anc_sosa.v;%end; %ancestor;">·</a></tt>
+          [*add] %apply;a_of_b%with;[the parents]%and;Sosa %ancestor.anc_sosa.v;%end; %ancestor;"> </a></tt>
         %end;
       %end;
     %end;
@@ -414,7 +414,7 @@
           %if;(ancestor.birth_date.year != "" and ancestor.is_dead) – %end;
           %if;(ancestor.birth_date.year = "" and ancestor.death_date.year != "")†%else;%ancestor.death_date.year;%end;&#013;
           %if;(not ancestor.has_parents) [*missing parents].%end;">
-        %if;(ancestor.same != "")╳%else;%apply;boxchar(ancestor.anc_sosa.v,yy)%end;</a></tt>
+        %if;(ancestor.same != "")x%else;%apply;boxchar(ancestor.anc_sosa.v,yy)%end;</a></tt>
       %end;
     %end;
     %foreach;ancestor_level(leveldown)
@@ -425,12 +425,12 @@
           <tt><a style="%ttstyle;top:%top2;px;left:%left2;px;" 
           href="%prefix;m=ADD_PAR;ip=%ancestor.index;" 
           title="[missing sosa] %expr(ancestor.anc_sosa.v*2) & %expr(ancestor.anc_sosa.v*2+1) – [*generation/generations]0 %expr(level+1)&#013;
-          [*add] %apply;a_of_b%with;[the parents]%and;Sosa %ancestor.anc_sosa.v; %ancestor;%end;">·</a></tt>
+          [*add] %apply;a_of_b%with;[the parents]%and;Sosa %ancestor.anc_sosa.v; %ancestor;%end;"> </a></tt>
           %let;top3;%expr(topxx_yy(ancestor.anc_sosa.v*2+1)*hb)%in;
           %let;left3;%expr(leftxx_yy(ancestor.anc_sosa.v*2+1)*wb)%in;
           <tt><a style="%ttstyle;top:%top3;px;left:%left3;px;" href="%prefix;m=ADD_PAR;ip=%ancestor.index;" 
           title="[missing sosa] %expr(ancestor.anc_sosa.v*2) & %expr(ancestor.anc_sosa.v*2+1) – [*generation/generations]0 %expr(level+1)&#013;
-          [*add] %apply;a_of_b%with;[the parents]%and;%ancestor; Sosa %ancestor.anc_sosa.v;%end;">·</a></tt>
+          [*add] %apply;a_of_b%with;[the parents]%and;%ancestor; Sosa %ancestor.anc_sosa.v;%end;"> </a></tt>
         %end;
       %end;
     %end;
@@ -516,168 +516,18 @@
   %end;
 %end;
 
-<h2><tt>├H-trees┤ and ┴I-trees┬ </tt></h2>
-<table>
-<tr align=center><td colspan=2>4</td><td colspan=2>5</td><td colspan=2>6</td><td colspan=2>7</td><td colspan=2>8</td><td>9</td><td>9</td><td>10</td><td>11</td></tr>
-<tr><td colspan=2>15</td><td colspan=2>31</td><td colspan=2>63</td><td colspan=2>127</td><td colspan=2>255</td><td>510</td><td>511</td><td>1023</td><td>2047</td></tr>
-<tr><td colspan=2>7</td><td colspan=2>15</td><td colspan=2>31</td><td colspan=2>63</td><td colspan=2>127</td><td>127</td><td>255</td><td>511</td><td>1023</td></tr>
-<tr><td valign=top><h3><tt>H3</tt></h3>
-<div style="position:relative;width:40px;height:60px;">
-      %apply;graph(3,1,1)
-</div>
-</td><td valign=top><h3><tt>I3</tt></h3>
-<div style="position:relative;width:40px;height:60px;">
-      %apply;graph(3,0,1)
-</div>
-</td><td valign=top><h3><tt>H4</tt></h3>
-<div style="position:relative;width:70px;height:60px;">
-      %apply;graph(4,1,1)
-      %apply;graphlinks(4,1)
-</div>
-</td><td valign=top><h3><tt>I4</tt></h3>
-<div style="position:relative;width:40px;height:120px;">
-      %apply;graph(4,0,1)
-      %apply;graphlinks(4,0)
-</div>
-</td><td valign=top><h3><tt>H5</tt></h3>
-<div id="tree" style="position:relative;width:80px;height:120px;">
-      %apply;graph(5,1,1)
-      %apply;graphlinks(5,1)
-</div>
-</td><td valign=top><h3><tt>I5</tt></h3>
-<div style="position:relative;width:80px;height:120px;">
-      %apply;graph(5,0,1)
-      %apply;graphlinks(5,0)
-</div>
-</td><td valign=top><h3><tt>H6</tt></h3>
-<div style="position:relative;width:144px;height:70px;">
-      %apply;graph(6,1,1)
-      %apply;graphlinks(6,1)
-</div>
-</td><td valign=top><h3><tt>I6</tt></h3>
-<div style="position:relative;width:72px;height:200px;">
-      %apply;graph(6,0,1)
-      %apply;graphlinks(6,0)
-</div>
-</td><td valign=top><h3><tt>H7</tt></h3>
-<div style="position:relative;width:144px;height:200px;">
-      %apply;graph(7,1,1)
-      %apply;graphlinks(7,1)
-</div>
-</td><td valign=top><h3><tt>I7</tt></h3>
-<div style="position:relative;width:144px;height:200px;">
-      %apply;graph(7,0,1)
-      %apply;graphlinks(7,0)
-</div>
-</td><td valign=top><h3><tt>H7 couple</tt></h3>
-<div style="position:relative;width:144px;height:200px;">
-      %apply;graph(7,1,2)
-      %apply;graphlinks(7,1)
-</div>
-</td></tr></table>
-
-<table><tr><td><h3><tt>H-tree 8</tt></h3>
-<div style="position:relative;width:280px;height:420px;">
-      %apply;graph(8,1,1)
-      %apply;graphlinks(8,1)
-</div></td><td>
-<h3><tt>I-tree 8</tt></h3>
-<div style="position:relative;width:150px;height:420px;">
-      %apply;graph(8,0,1)
-      %apply;graphlinks(8,0)
-</div>
-<td><h3><tt>H-tree 9</tt></h3>
-<div style="position:relative;width:280px;height:420px;">
-      %apply;graph(9,1,1)
-      %apply;graphlinks(9,1)
-</div></td><td><h3><tt>I-tree 9</tt></h3>
-<div style="position:relative;width:280px;height:420px;">
-      %apply;graph(9,0,1)
-      %apply;graphlinks(9,0)
-</div></td></tr></table>
-
-<table><tr><td><h3><tt>H-tree and I-tree 10</tt></h3>
-<div style="position:relative;width:550px;height:820px;">
-      %apply;graph(10,1,1)
-      %apply;graphlinks(10,1)
-</div></td><td><h3><tt>I-tree 10</tt></h3>
-<div style="position:relative;width:400px;height:820px;">
-      %apply;graph(10,0,1)
-      %apply;graphlinks(10,0)
-</div></td></tr></table>
-
-<table><tr><td><h3><tt>H-tree 11</tt></h3>
-<div style="position:relative;width:600px;height:820px;">
-      %apply;graph(11,1,1)
-      %apply;graphlinks(11,1)
-</div></td><td><h3><tt>I-tree 11</tt></h3>
-<div style="position:relative;width:600px;height:820px;">
-      %apply;graph(11,0,1)
-      %apply;graphlinks(11,0)
-</div></td></tr></table>
-
-<h3><tt>H-tree 12 – 8 191 ind. à 13 gén. ou couples à 14 soit max 16 383 ind.</tt></h3>
-<div style="position:relative;width:1200px;height:800px;">
-      %apply;graph(12,1,1)
-      %apply;graphlinks(12,1)
-</div>
-
-<h3><tt>Sosa I-tree 5</tt></h3>
-<div class="menu" style="position:relative;width:120px;height:210px;">
-  %foreach;ancestor_level(5)
-    %foreach;ancestor;
-      %let;top;%expr(top5_0(ancestor.anc_sosa.v)*h5)%in;
-      %let;left;%expr(10+left5_0(ancestor.anc_sosa.v)*w5)%in;
-      %let;top_;%expr(top5_0_(ancestor.anc_sosa.v)*h5)%in;
-      %let;left_;%expr(10+left5_0_(ancestor.anc_sosa.v)*w5)%in;
-      %let;bg;%if;(ancestor.same != "")CBFECE;%else;%apply;bg(level)%end;%in;
-      <a style="position:absolute;top:%top;px;left:%left;px;background-color:#%bg;;padding:%pad;;font-family:monospace;font-size:%font;"
-      href="%prefix;%ancestor.access;"
-      title="Sosa %ancestor.anc_sosa;[:] %if;(ancestor.is_male)♂%else;♀%end; %ancestor.first_name; %ancestor.surname; (%ancestor.occ) – [*generation/generations]0 %level;">
-      %if;(ancestor.same != "")%ancestor.same;%else;%ancestor.anc_sosa;%end;</a>
-      %if;(ancestor.anc_sosa.v=2 or ancestor.anc_sosa.v=3)
-         <div style="position:absolute;top:%top_;px;left:%left_;px;padding:5px;">↑</div>
-      %end;
-      %if;(ancestor.anc_sosa.v=3)
-         <div style="position:absolute;top:%top_;px;left:%left_;px;padding:5px;">↓</div>
-      %end;
-      %if;(ancestor.anc_sosa.v=4 or ancestor.anc_sosa.v=6)
-         <div style="position:absolute;top:%top_;px;left:%left_;px;padding:5px;">←</div>
-      %end;
-      %if;(ancestor.anc_sosa.v=5 or ancestor.anc_sosa.v=7)
-         <div style="position:absolute;top:%top_;px;left:%left_;px;padding:5px;">→</div>
-      %end;
-    %end;
-  %end;
-</div>
-<h3><tt>Sosa I-tree 7</tt></h3>
-<div class="menu" style="position:relative;width:240px;height:420px;">
-  %foreach;ancestor_level(7)
-    %foreach;ancestor;
-      %let;top;%expr(top7_0(ancestor.anc_sosa.v)*h7)%in;
-      %let;left;%expr(10+left7_0(ancestor.anc_sosa.v)*w7)%in;
-      %let;top_;%expr(top7_0_(ancestor.anc_sosa.v)*h7)%in;
-      %let;left_;%expr(10+left7_0_(ancestor.anc_sosa.v)*w7)%in;
-      %let;pad;%if;(ancestor.anc_sosa < 8)  3px 6px 3px 7px
-           %elseif;(ancestor.anc_sosa < 10) 4px 8px 4px 7px
-           %elseif;(ancestor.anc_sosa < 16) 4px 4px 4px 4px
-           %elseif;(ancestor.anc_sosa < 100) 5px 5px 5px 4px  %else; 5px 2px 5px 2px %end;%in;
-      %let;font;%if;(ancestor.anc_sosa < 8)  14px
-            %elseif;(ancestor.anc_sosa < 16) 12px %else; 10px %end;%in;
-        %let;bg;%if;(ancestor.same != "")CBFECE;%else;%apply;bg(level)%end;%in;
-      <a style="position:absolute;top:%top;px;left:%left;px;background-color:#%bg;;padding:%pad;;font-family:monospace;font-size:%font;"
-      href="%prefix;%ancestor.access;"
-      title="Sosa %ancestor.anc_sosa;[:] %if;(ancestor.is_male)♂%else;♀%end; %ancestor.first_name; %ancestor.surname; (%ancestor.occ) – [*generation/generations]0 %level;">
-      %if;(ancestor.same != "")%ancestor.same;%else;%ancestor.anc_sosa;%end;</a>
-      %if;(ancestor.anc_sosa.v=2 or ancestor.anc_sosa.v=3)
-         <div style="position:absolute;top:%top_;px;left:%left_;px;padding:4px 5px;font-family:monospace;font-size:26px">│<br />│</div>
-      %elseif;(ancestor.anc_sosa.v>3 and ancestor.anc_sosa.v<8)
-         <div style="position:absolute;top:%top_;px;left:%left_;px;padding:0px 2px;font-family:monospace;font-size:21px">─────</div>
-      %elseif;(ancestor.anc_sosa.v>7 and ancestor.anc_sosa.v<16)
-         <div style="position:absolute;top:%top_;px;left:%left_;px;padding:1px 8px;font-family:monospace;font-size:17px">│</div>
-      %elseif;(ancestor.anc_sosa.v>15 and ancestor.anc_sosa.v<32)
-         <div style="position:absolute;top:%top_;px;left:%left_;px;padding:0px 1px;font-family:monospace;font-size:17px">──</div>
-      %end;
-    %end;
-  %end;
-</div>
+<body%body_prop; id="char_ihtree">
+%message_to_wizard;
+%let;size1;%apply;size(evar.v-1)%in;
+%let;size2;%apply;size(evar.v-2)%in;
+ %if;(evar.t="F" and evar.v<14 and evar.v>3 and evar.tf1="ht")
+   <div style="position:relative;width:%size1;px;height:%size2;px">
+           %apply;graph(evar.v-1,1,1)
+           %apply;graphlinks(evar.v-1,1)
+   </div>
+ %elseif;(evar.t="F" and evar.v<14 and evar.v>3 and evar.tf1="it")
+   <div style="position:relative;width:%size1;px;height:%size1;px">
+           %apply;graph(evar.v-1,0,1)
+           %apply;graphlinks(evar.v-1,0)
+   </div>
+ %end;
