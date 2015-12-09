@@ -148,7 +148,14 @@
       <label><input type="radio" id="tMM" name="tf1" value="mm" %l_on1; %l_on;
              %/>[year/month/day]1 [birth] = [year/month/day]1 [death] ?</label><br%/>
       <label><input type="radio" id="tARS" name="tf1" value="ars" %l_on1; %l_on;
-             %/>αἰθήρ</label>
+             %/>αἰθήρ</label><br%/>
+      <label><input type="radio" id="tHT" name="tf1" value="ht" %l_on1; %l_on;
+             %/>H-[*tree]</label><br%/>
+      <label><input type="radio" id="tIT" name="tf1" value="it" %l_on1; %l_on;
+             %/>I-[*tree]</label>
+    </legend>
+    </fieldset>
+             
     </fieldset>
     %if;(wizard)
       <fieldset>
