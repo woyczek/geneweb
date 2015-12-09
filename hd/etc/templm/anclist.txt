@@ -96,10 +96,10 @@
                   %if;(evar.tf1 = "ht") checked="checked"%end;%/>H-Tree (4 to 13 gen.)</label>
         <label><input type="radio" name="tf1" value="it" %l_on;
                   %if;(evar.tf1 = "it") checked="checked"%end;%/>I-Tree (4 to 13 gen.)</label>
-        <label><input type="radio" name="tf1" value="sit7" %l_on;
-                 %if;(evar.tf1 = "sit7") checked="checked"%end;%/>Sosa I-Tree 5/7 (6/8 gen.)</label>
-        <label><input type="radio" name="tf1" value="sht7" %l_on;
-                 %if;(evar.tf1 = "sht7") checked="checked"%end;%/>Sosa H-Tree 6 couple (8 gen.)</label>
+        <label><input type="radio" name="tf1" value="sit57" %l_on;
+                 %if;(evar.tf1 = "sit57") checked="checked"%end;%/>Sosa I-Tree 5/7 (6/8 gen.)</label>
+        <label><input type="radio" name="tf1" value="sht6" %l_on;
+                 %if;(evar.tf1 = "sht6") checked="checked"%end;%/>Sosa H-Tree 6 couple (8 gen.)</label>
                 <label><input type="radio" name="tf1" value="smt" %l_on;
                  %if;(evar.tf1 = "smt") checked="checked"%end;%/>Sosa M-Tree 9 gen (3 nm +5 sosa)</label></fieldset>
         <label>[*generation/generations]0 <code>(X)</code> <input id="v" name="v" class="number" size="1" value="%l_v;"
@@ -246,9 +246,9 @@
   %include.anclist_sb;
 %elseif;(evar.t = "F" and (evar.tf1 = "ht" or evar.tf1 = "it"))
   %include.char_ihtree;
-%elseif;(evar.t = "F" and evar.tf1 = "sit7")
+%elseif;(evar.t = "F" and evar.tf1 = "sit57")
   %include.sosa_itree57;
-%elseif;(evar.t = "F" and evar.tf1 = "sht7")
+%elseif;(evar.t = "F" and evar.tf1 = "sht6")
   %include.htree;
 %elseif;(evar.t = "F" and evar.tf1 = "smt")
   %include.sosamtree;
