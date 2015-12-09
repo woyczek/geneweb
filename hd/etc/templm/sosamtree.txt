@@ -58,7 +58,7 @@
 <h3><tt>Sosa M-tree 8 générations (256 sosa) et indication de la génération 9</tt></h3>
 <h3>%first_name; %surname;</h3>
 &nbsp;&nbsp;
-<div class="menu" style="position:relative;width:1500px;height:620px;">
+<div style="position:relative;width:1500px;height:620px;">
   %foreach;ancestor_level(0)
     %foreach;ancestor;
      %if;ancestor.is_male;
