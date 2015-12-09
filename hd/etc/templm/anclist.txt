@@ -105,11 +105,10 @@
         <label>[*generation/generations]0 <code>(X)</code> <input id="v" name="v" class="number" size="1" value="%l_v;"
           autocomplete="off" title="[generation/generations]0 (X)" accesskey="X" %/> / %l_maxv;</label>
         %if;(evar.fam7 != "on" and evar.t != "H" and evar.t != "L")
-          <label><input type="checkbox" name="only" value="on" %l_on;
+        <label><input type="checkbox" name="only" value="on" %l_on;
             %if;(evar.only = "on") checked="checked"%end;%/>[only the generation selected]</label>
         %end;
-      </p>
-      <p>
+        <label><input type="checkbox" name="implx" value="on" %l_on;%/>[display implex links]</label>
         <label><input type="checkbox" name="cgl" value="on" %l_on;
                %if;(evar.cgl = "on") checked="checked"%end;%/>[cancel GeneWeb links]</label>
         %if;(evar.t = "H")
