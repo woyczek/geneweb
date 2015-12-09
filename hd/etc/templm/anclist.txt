@@ -108,7 +108,8 @@
         <label><input type="checkbox" name="only" value="on" %l_on;
             %if;(evar.only = "on") checked="checked"%end;%/>[only the generation selected]</label>
         %end;
-        <label><input type="checkbox" name="implx" value="on" %l_on;%/>[display implex links]</label>
+        <label><input type="checkbox" name="implx" value="on" %l_on;
+               %if;(evar.implx = "on") checked="checked"%end;%/>[display implex links]</label>
         <label><input type="checkbox" name="cgl" value="on" %l_on;
                %if;(evar.cgl = "on") checked="checked"%end;%/>[cancel GeneWeb links]</label>
         %if;(evar.t = "H")
