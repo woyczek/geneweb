@@ -1,0 +1,122 @@
+<!-- $Id: anctree_m.txt,v 7.00 2015/12/10 16:13:17 Exp $ -->
+
+%define;left9m(xx)
+  %apply;nth%with;
+       //8//4//12//4//4//12//12//2//6//2//6//10//14//10//14//2//2//6//6//2//2//6//6//10//10//14//14//10//10//14//14//1//3//1//3//5//7//5//7//1//3//1//3//5//7//5//7//9//11//9//11//13//15//13//15//9//11//9//11//13//15//13//15//1//1//3//3//1//1//3//3//5//5//7//7//5//5//7//7//1//1//3//3//1//1//3//3//5//5//7//7//5//5//7//7//9//9//11//11//9//9//11//11//13//13//15//15//13//13//15//15//9//9//11//11//9//9//11//11//13//13//15//15//13//13//15//15//1//1//1//1//3//3//3//3//1//1//1//1//3//3//3//3//5//5//5//5//7//7//7//7//5//5//5//5//7//7//7//7//1//1//1//1//3//3//3//3//1//1//1//1//3//3//3//3//5//5//5//5//7//7//7//7//5//5//5//5//7//7//7//7//9//9//9//9//11//11//11//11//9//9//9//9//11//11//11//11//13//13//13//13//15//15//15//15//13//13//13//13//15//15//15//15//9//9//9//9//11//11//11//11//9//9//9//9//11//11//11//11//13//13//13//13//15//15//15//15//13//13//13//13//15//15//15//15//
+  %and;xx%end;
+%end;
+%define;top9m(xx)
+  %apply;nth%with;
+       //8//8//8//4//12//4//12//4//4//12//12//4//4//12//12//2//6//2//6//10//14//10//14//2//6//2//6//10//14//10//14//2//2//6//6//2//2//6//6//10//10//14//14//10//10//14//14//2//2//6//6//2//2//6//6//10//10//14//14//10//10//14//14//1//3//1//3//5//7//5//7//1//3//1//3//5//7//5//7//9//11//9//11//13//15//13//15//9//11//9//11//13//15//13//15//1//3//1//3//5//7//5//7//1//3//1//3//5//7//5//7//9//11//9//11//13//15//13//15//9//11//9//11//13//15//13//15//1//1//3//3//1//1//3//3//5//5//7//7//5//5//7//7//1//1//3//3//1//1//3//3//5//5//7//7//5//5//7//7//9//9//11//11//9//9//11//11//13//13//15//15//13//13//15//15//9//9//11//11//9//9//11//11//13//13//15//15//13//13//15//15//1//1//3//3//1//1//3//3//5//5//7//7//5//5//7//7//1//1//3//3//1//1//3//3//5//5//7//7//5//5//7//7//9//9//11//11//9//9//11//11//13//13//15//15//13//13//15//15//9//9//11//11//9//9//11//11//13//13//15//15//13//13//15//15//
+  %and;xx%end;
+%end;
+%define;left9mw(xx)
+  %apply;nth%with;
+      /0/25/55/80/280/305/335/360/560/585/615/640/840/865/895/920/920/
+  %and;xx%end;
+%end;
+%define;top9mh(xx)
+  %apply;nth%with;
+      /0/20/40/60/180/200/220/240/360/380/400/420/540/560/580/600/600/
+  %and;xx%end;
+%end;
+%define;top9mw(xx)
+  %apply;nth%with;
+      /25/30/25/200/25/30/25/200/25/30/25/200/25/30/25/0/0/
+  %and;xx%end;
+%end;
+%define;bhig9l(xx)
+  %apply;nth%with;
+    /0/120/120/120/120/20/20/20/20/
+  %and;xx%end;
+%end;
+%define;bwid9l(xx)
+  %apply;nth%with;
+    /200/200/200/200/30/30/25/25/0/
+  %and;xx%end;
+%end;
+
+%( ----- %)
+
+%define;top9m_(xx)
+  %apply;nth%with;
+ //7//7//7//3//11//3//
+  %and;xx%end;
+%end;
+%define;left9m_(xx)
+  %apply;nth%with;
+     //15//7//23//7//7//23//
+  %and;xx%end;
+%end;
+
+%define;bg(xx)
+  %apply;nth%with;
+    /FFC8E3/F0CBFE/DDCEFF/FFA8D3/E7A9FE/FF86C2/DD88FD/FF62B0/C4ABFE
+  %and;xx%end;
+%end;
+
+
+<h3><tt>Sosa M-tree 8 générations (256 sosa) et indication de la génération 9</tt></h3>
+<h3>%first_name; %surname;</h3>
+&nbsp;&nbsp;
+<div style="position:relative;width:1500px;height:620px;">
+  %foreach;ancestor_level(0)
+    %foreach;ancestor;
+     %if;ancestor.is_male;
+		%ancestor.sosa; %ancestor.first_name %ancestor.surname; <br>
+	 %end;
+	%end;
+  %end;
+
+  %foreach;ancestor_level(8)
+    %foreach;ancestor;
+     %if;ancestor.is_male;
+      %let;top;%apply;top9mh%with;%apply;top9m(ancestor.anc_sosa.v)%end;%in;
+      %let;left;%apply;left9mw%with;%apply;left9m(ancestor.anc_sosa.v)%end;%in;
+      %let;wid;%apply;bwid9l(level)%in;
+      %let;hig;%apply;bhig9l(level)%in;
+      %let;font;%if;(level>1 and level<5) 14px
+            %elseif;(level> 4 and level<7) 8px %else; 5px %end;%in;
+      %let;bg;
+        %if;(level>7)
+           %if;(ancestor.has_parents)
+             %if;(ancestor.same != "")CBFECE%else;FF62B0%end;
+           %else;FF62B0%end;
+        %else;
+           %if;(ancestor.same != "")CBFECE%else;%apply;bg(level)%end;
+      %end;%in;
+      <div style="position:absolute;top:%top;px;left:%left;px;background-color:#%bg;;
+      width:%wid;px;padding:0px;text-align:center;border:solid 0px;font-family:monospace;font-size:%font;">
+      <div style="position:relative;width:%wid;px;height:%hig;px;border:solid 0px;">
+      %if;(level>1)
+      <br>
+      %end;
+      %if;(level>1 and level<5) 
+		  <a href="%prefix;%ancestor.access;;htree=%evar.htree;"
+		  title="Sosa %if;(ancestor.same != "")%ancestor.same;%else;%ancestor.anc_sosa;%end;[:] ♂ 
+			%ancestor.first_name; %ancestor.surname; (%ancestor.occ) – [*generation/generations]0 %level;">
+		  %ancestor.first_name; %ancestor.surname;</a>
+		  <br>&amp;<br>
+		  <a href="%prefix;%ancestor.spouse.access;;htree=%evar.htree;"
+		  title="Sosa %expr(ancestor.anc_sosa+1)[:] ♀ 
+			%ancestor.spouse.first_name; %ancestor.spouse.surname; (%ancestor.spouse.occ) – [*generation/generations]0 %level;">
+		  %ancestor.spouse.first_name; %ancestor.spouse.surname;</a>
+      %end;
+      %if;(level> 4 and level<8)
+		  <a href="%prefix;%ancestor.access;;htree=%evar.htree;"
+		  title="Sosa %if;(ancestor.same != "")%ancestor.same;%else;%ancestor.anc_sosa;%end;[:] ♂ 
+			%ancestor.first_name; %ancestor.surname; (%ancestor.occ) – [*generation/generations]0 %level;">
+		  %if;(ancestor.same != "")%ancestor.same;%else;%ancestor.anc_sosa;%end;</a><br>  
+	  %end; 
+      %if;(level>7)
+          <a href="%prefix;%ancestor.access;;htree=%evar.htree;"
+		  title="Sosa %if;(ancestor.same != "")%ancestor.same;%else;%ancestor.anc_sosa;%end;[:] ♂ 
+			%ancestor.first_name; %ancestor.surname; (%ancestor.occ) – [*generation/generations]0 %level;">
+		  %if;(ancestor.same != "")%ancestor.same;%else;%ancestor.anc_sosa;%end;</a>
+	  %end;
+      </div>
+      </div>
+     %end; %( is_male %)
+    %end;
+  %end;
+</div>

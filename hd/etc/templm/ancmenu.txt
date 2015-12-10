@@ -1,7 +1,7 @@
 %doctype;
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <!-- $Id: ancmenu.txt,v 7.00 2015/01/05 14:30:03 mr Exp $ -->
+  <!-- $Id: ancmenu.txt,v 7.00 2015/12/10 21:58:18 mr Exp $ -->
   <title>%nn;
     %apply;a_of_b%with;
       [*ancestors]%nn;
@@ -75,9 +75,9 @@
         99%nn;
       %end;
     %in;
-    %let;l_mal1;%if;(l_mal0 != 99)([maximum] %l_mal0; [generation/generations]1)%end;%in;
-    <legend><input type="submit" value="OK"%/></legend>
-    <label>[*specify::generation/generations]0 %l_mal1;[:]<br%/>
+    %let;l_mal1;%if;(l_mal0 != 99)([maximum] %l_mal0; [generation/generations]1)%end;%in;
+    <legend><input type="submit" value="Ok"%/></legend>
+    <label>[*specify::generation/generations]0 %l_mal1; :<br%/>
       <select style="text-align:center" name="v" size="%expr(max_anc_level-1)">
         %foreach;ancestor_level;
           %if;(level != 1)
@@ -104,9 +104,9 @@
       </select>
     </label>
     <br%/>
-    <label>    <input type="checkbox" name="only" value="on" %l_on;
+    <label><input type="checkbox" name="only" value="on" %l_on;
            %/>[only the generation selected]</label><br%/>
-    <label>    <input type="checkbox" name="cgl" value="on" %l_on;
+    <label><input type="checkbox" name="cgl" value="on" %l_on;
            %/>[cancel GeneWeb links]</label><br%/>
     <label><input type="radio" id="tZ" name="t" value="Z" %l_on;
            %/>[table]</label><br%/>
@@ -121,15 +121,14 @@
       <label><input type="radio" id="tF" name="t" value="F" %l_on;%/>[*list/list (ancestors)]0</label>
     </legend>
     <fieldset>
-      <legend>[*list eclair]0</legend>
       <label><input type="radio" id="tSB" name="tf1" value="sb" %l_on1; %l_on;
              %/>[surnames branch]</label><br%/>
       <label><input type="radio" id="tSURN" name="tf1" value="surn" %l_on1; %l_on;
-             %/>[surname/surnames]1 -- [places] ([event/events]1)</label><br%/>
+             %/>[list eclair]0 - [surname/surnames]1 / [places]</label><br%/>
       <label><input type="radio" id="tPLACE" name="tf1" value="place" %l_on1; %l_on;
-             %/>[places] ([event/events]1)</label><br%/>
+             %/>[list eclair]0 - [places]</label><br%/>
       <label><input type="radio" id="tTAG" name="tf1" value="tag" %l_on1; %l_on;
-             %/>[label]</label><br%/>
+             %/>étiquette</label><br%/>
     </fieldset>
     <fieldset>
       <legend>[*statistics]</legend>
@@ -148,10 +147,7 @@
       <label><input type="radio" id="tMM" name="tf1" value="mm" %l_on1; %l_on;
              %/>[year/month/day]1 [birth] = [year/month/day]1 [death] ?</label><br%/>
       <label><input type="radio" id="tARS" name="tf1" value="ars" %l_on1; %l_on;
-             %/>αἰθήρ</label><br%/>
-    </legend>
-    </fieldset>
-             
+             %/>Αἰθήρ</label>
     </fieldset>
     %if;(wizard)
       <fieldset>
@@ -165,45 +161,61 @@
     %end;
   </fieldset>
   <fieldset>
-    %let;l_on1;onchange="valid('tT')"%in;
     <legend>
       <label>
-        <input type="radio" id="tT" name="t" value="T" %l_on;%/>[*full tree]
+        <input type="radio" id="tT" name="t" value="T" %l_on;%/>
+        [*tree]
         %if;(bvar.max_anc_tree = "" and max_anc_level >= 7)
-          ([maximum] 7 [generation/generations]1)
+          ([maximum] 7 [generation/generations]1)
         %elseif;(bvar.max_anc_tree != "" and max_anc_level >= bvar.max_anc_tree)
-          ([maximum] %bvar.max_anc_tree; [generation/generations]1)
+          ([maximum] %bvar.max_anc_tree; [generation/generations]1)
         %end;
-      </label><br%/>
-      <label>
-        <input type="checkbox" id="t1ht" name="t1" value="ht" %l_on1;%/>[*compact tree]
-        %if;(bvar.max_anc_tree = "" and max_anc_level >= 7)
-          ([maximum] 7 [generation/generations]1)
-        %elseif;(bvar.max_anc_tree != "" and (max_anc_level >= bvar.max_anc_tree or max_anc_level >=12))
-          ([maximum] 12 [generation/generations]1)
-        %end;
-      </label><br%/>
-    <label><input type="radio" name="t" value="A" %l_on;
-           %/>[*male line/female line]0</label><br%/>
-    <label><input type="radio" name="t" value="C" %l_on;
-           %/>[*male line/female line]1</label>
-    </legend><br%/><br%/><br%/><br%/><br%/>
-    <label>      <input type="checkbox" name="dag" value="on" %l_on1; %l_on;
-           %/>dag=on</label><br%/>
-    <label>      <input type="checkbox" name="marriage" value="on" %l_on1; %l_on;
-           %/>[marriage/marriages]0</label><br%/>
-    <label>      <input type="checkbox" name="image" value="on" %l_on1; %l_on;
-           %/>[image/images]1</label><br%/>
-    <label>[border]<input name="bd" size="1" maxlength="2" value="0" %l_on1; %/></label><br%/>
-    <table summary="colors" cellspacing="0" cellpadding="0">
-      <tr>
-        <td align="%left;">[color] </td>
-        <td align="%left;"><input type="radio" name="color" value="" checked="checked" %l_on1; %l_on;%/></td>
-        %for;i;1;7;
-          <td class="bg%i;"><input type="radio" name="color"  value="bg%i;" %l_on1; %l_on;%/></td>
-        %end;
-      </tr>
-    </table>
+      </label>
+    </legend>
+    <fieldset>
+      %let;l_on1;onchange="valid('tT')"%in;
+      <label><input type="radio" name="t1" value="T" %l_on; %l_on1;
+             %if;(evar.t1 = "T") checked="checked"%end;%/>[*full tree]</label><br%/>
+      <label><input type="radio" name="t" value="A" %l_on;
+             %/>[male line/female line]0</label><br%/>
+      <label><input type="radio" name="t" value="C" %l_on;
+             %/>[male line/female line]1</label><br%/>
+      <label><input type="checkbox" name="dag" value="on" %l_on1; %l_on;
+             %/>dag=on</label><br%/>
+      <label><input type="checkbox" name="marriage" value="on" %l_on1; %l_on;
+             %/>[marriage/marriages]0</label><br%/>
+      <label><input type="checkbox" name="image" value="on" %l_on1; %l_on;
+             %/>[image/images]1</label><br%/>
+      <label>[border]<input name="bd" size="1" maxlength="2" value="0" %l_on1; %/></label><br%/>
+      <table summary="colors" cellspacing="0" cellpadding="0">
+        <tr>
+          <td align="%left;">[color] </td>
+          <td align="%left;"><input type="radio" name="color" value="" checked="checked" %l_on1; %l_on;%/></td>
+          %for;i;1;7;
+            <td class="bg%i;"><input type="radio" name="color"  value="bg%i;" %l_on1; %l_on;%/></td>
+          %end;
+        </tr>
+      </table>
+    </fieldset>
+    <fieldset>
+      <legend><label>[*compact tree]</label></legend>
+        <label><input type="radio" name="t1" value="i" %l_on; %l_on1;
+          %if;(evar.t1 = "i") checked="checked"%end;%/>[itree] [with] [n° Sosa] (6 [and] 8 gen.)</label>
+        <label><input type="radio" name="t1" value="h" %l_on; %l_on1;
+          %if;(evar.t1 = "h") checked="checked"%end;%/>[htree] [with] [n° Sosa] couple (8 gen.)</label>
+        <label><input type="radio" name="t1" value="m" %l_on; %l_on1;
+          %if;(evar.t1 = "m") checked="checked"%end;%/>[tree] mix (9 gen.)</label><br%/>
+        <label><input type="radio" id="t1hi" name="t1" value="hi" %l_on; %l_on1;
+          %if;(evar.t1 = "hi") checked="checked"%end;%/>[itree]/[htree]</label>
+        <label>     <input type="radio" name="t2" value="h" %l_on; %l_on2;
+          %if;(evar.t2 = "h") checked="checked"%end;%/>[htree]</label>
+        <label>     <input type="radio" name="t2" value="i" %l_on; %l_on2;
+          %if;(evar.t2 = "i") checked="checked"%end;%/>[itree]</label>
+        <label>     <input type="checkbox" name="implx" value="on" %l_on; %l_on1;
+          %if;(evar.implx = "on") checked="checked"%end;%/>[display implex links]</label>
+        <label>     <input type="checkbox" name="cpl" value="on" %l_on; %l_on1;
+          %if;(evar.cpl = "on") checked="checked"%end;%/>mode couple (not working)</label>
+    </fieldset>
   </fieldset>
   <fieldset>
     %let;l_on1;onchange="valid('tG')"%in;
@@ -230,7 +242,7 @@
     <label><input type="checkbox" name="upd" value="on" %l_on1; %l_on;
            %/>[update]</label><br%/>
     <label><input type="checkbox" name="hide" value="on" %l_on1; %l_on;
-           %/>[visualize/show/hide/summary]2… </label>
+           %/>[visualize/show/hide/summary]2 … </label>
   </fieldset>
   <fieldset>
     %let;l_on1;onchange="valid('tM');valid('tM1')"%in;
