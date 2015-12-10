@@ -500,7 +500,7 @@
           %elseif;(xx=10 or xx=11)
             <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│%else;───────────────%end;</tt>
           %elseif;(xx=12)
-            <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│%else;───────────────────────────────%end;</tt>
+            <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│%else;───────────────────────────────%end;</tt>
           %end;
         %elseif;(ancestor.anc_sosa.v>3 and ancestor.anc_sosa.v<8)
           %if;(xx=5 or xx=6)
