@@ -340,41 +340,53 @@
   %elseif;((x>1 and x<4) or (x>7 and x<16) or (x>31 and x<64) or (x>127 and x<256) or (x>511 and x<1024)or (x>2047 and x<4096))
     %if;(y=0)
       %if;(x%2=0)
-        %if;(evar.cpl="on" and not ancestor.spouse.has_parents)┐
-        %elseif;(evar.cpl="on" and not ancestor.has_parents)┌
+        %if;(evar.cpl="on" and not ancestor.spouse.has_parents  and ancestor.has_parents)┐
+        %elseif;(evar.cpl="on" and not ancestor.has_parents and ancestor.spouse.has_parents)┌
         %elseif;(not ancestor.has_parents)╷
         %else;┬%end;
       %else;
-        %if;(evar.cpl="on" and not ancestor.spouse.has_parents)└
-        %elseif;(evar.cpl="on" and not ancestor.has_parents)┘
+        %if;(evar.cpl="on" and not ancestor.spouse.has_parents  and ancestor.has_parents)┘
+        %elseif;(evar.cpl="on" and not ancestor.has_parents and ancestor.spouse.has_parents)└
         %elseif;(not ancestor.has_parents)╵
         %else;┴%end;
       %end;
     %else;
        %if;(x%2=0)
-         %if;(evar.cpl="on" and not ancestor.spouse.has_parents)└
-         %elseif;(evar.cpl="on" and not ancestor.has_parents)┌
+         %if;(evar.cpl="on" and not ancestor.spouse.has_parents  and ancestor.has_parents)└
+         %elseif;(evar.cpl="on" and not ancestor.has_parents and ancestor.spouse.has_parents)┌
          %elseif;(not ancestor.has_parents)╶
          %else;├%end;
        %else;
-         %if;(not ancestor.has_parents)╴
-         %elseif;(evar.cpl="on" and not ancestor.spouse.has_parents)┘
-         %elseif;(evar.cpl="on" and not ancestor.has_parents)┐
+         %if;(evar.cpl="on" and not ancestor.spouse.has_parents  and ancestor.has_parents)┘
+         %elseif;(evar.cpl="on" and not ancestor.has_parents and ancestor.spouse.has_parents)┐
+         %elseif;(not ancestor.has_parents)╴
          %else;┤%end;
        %end;
     %end;
   %elseif;((x>3 and x<8) or (x>15 and x<32) or (x>63 and x<128) or (x>255 and x<512) or (x>1023 and x<2048) or (x>4095 and x<8192))
     %if;(y=0)
       %if;(x%2=0)
-        %if;(not ancestor.has_parents)╶%else;├%end;
+        %if;(evar.cpl="on" and not ancestor.spouse.has_parents and ancestor.has_parents)└
+        %elseif;(evar.cpl="on" and not ancestor.has_parents and ancestor.spouse.has_parents)┌
+        %elseif;(not ancestor.has_parents)╶
+        %else;├%end;
       %else;
-        %if;(not ancestor.has_parents)╴%else;┤%end;
+        %if;(evar.cpl="on" and not ancestor.spouse.has_parents and ancestor.has_parents)┘
+        %elseif;(evar.cpl="on" and not ancestor.has_parents and ancestor.spouse.has_parents)┐
+        %elseif;(not ancestor.has_parents)╴
+        %else;┤%end;
       %end;
     %else;
       %if;(x%2=0)
-        %if;(not ancestor.has_parents)╷%else;┬%end;
+        %if;(evar.cpl="on" and not ancestor.spouse.has_parents and ancestor.has_parents)┐
+        %elseif;(evar.cpl="on" and not ancestor.has_parents and ancestor.spouse.has_parents)┌
+        %elseif;(not ancestor.has_parents)╷
+        %else;┬%end;
       %else;
-        %if;(not ancestor.has_parents)╵%else;┴%end;
+        %if;(evar.cpl="on" and not ancestor.spouse.has_parents and ancestor.has_parents)┘
+        %elseif;(evar.cpl="on" and not ancestor.has_parents and ancestor.spouse.has_parents)└
+        %elseif;(not ancestor.has_parents)╵
+        %else;┴%end;
       %end;
     %end;
   %end;
@@ -423,7 +435,7 @@
           %let;left4;%expr(leftxx_yy(ancestor.anc_sosa.v)*wb)%in;
           <tt><a style="%ttstyle;top:%top4;px;left:%left4;px;" href="%prefix;m=ADD_PAR;ip=%ancestor.index;" 
           title="[*missing sosa] %expr(ancestor.anc_sosa.v*2) & %expr(ancestor.anc_sosa.v*2+1) – [*generation/generations]0 %expr(level+1)&#013;
-          [*add] %apply;a_of_b%with;[the parents]%and;Sosa %ancestor.anc_sosa.v;%end; %ancestor;"> </a></tt>
+          [*add] %apply;a_of_b%with;[the parents]%and;Sosa %ancestor.anc_sosa.v;%end; %ancestor;">·</a></tt>
         %end;
       %end;
     %end;
@@ -551,26 +563,28 @@
 %let;size1;%apply;size(evar.v-1)%in;
 %let;size2;%apply;size(evar.v-2)%in;
 %let;size3;%apply;size(evar.v-3)%in;
- %if;(evar.t = "T" and evar.v < 14 and evar.v > 3 and evar.t1 = "ht")
-      %if;(evar.cpl = "on")
-   <div id="ih-tree1" style="position:relative;width:%size2;px;height:%size3;px">
-           %apply;graph(evar.v-2,1,2)
-           %apply;graphlinks(evar.v-2,1)
-     %else;
-   <div id="ih-tree1" style="position:relative;width:%size1;px;height:%size2;px">
-           %apply;graph(evar.v-1,1,1)
-           %apply;graphlinks(evar.v-1,1)
-     %end;
-   </div>
- %elseif;(evar.t = "T" and evar.v < 14 and evar.v > 3 and evar.t1 = "it")
-     %if;(evar.cpl = "on")
-   <div id="ih-tree1" style="position:relative;width:%size2;px;height:%size2;px">
-           %apply;graph(evar.v-2,0,2)
-           %apply;graphlinks(evar.v-2,0)
-     %else;
-   <div id="ih-tree1" style="position:relative;width:%size1;px;height:%size1;px">
-           %apply;graph(evar.v-1,0,1)
-           %apply;graphlinks(evar.v-1,0)
-     %end;
-   </div>
- %end;
+%if;(evar.t = "T" and evar.v > 3)
+  %if;(evar.t1 = "ht")
+    %if;(evar.v < 15 and evar.cpl = "on")
+      <div id="ih-tree1" style="position:relative;width:%size2;px;height:%size3;px">
+      %apply;graph(evar.v-2,1,2)
+      %apply;graphlinks(evar.v-2,1)
+    %elseif;(evar.v < 14 and evar.cpl != "on")
+      <div id="ih-tree1" style="position:relative;width:%size1;px;height:%size2;px">
+      %apply;graph(evar.v-1,1,1)
+      %apply;graphlinks(evar.v-1,1)
+    %end;
+    </div>
+  %elseif;(evar.t1 = "it")
+    %if;(evar.v < 15 and evar.cpl = "on")
+      <div id="ih-tree1" style="position:relative;width:%size2;px;height:%size2;px">
+      %apply;graph(evar.v-2,0,2)
+      %apply;graphlinks(evar.v-2,0)
+    %elseif;(evar.v < 14 and evar.cpl != "on")
+      <div id="ih-tree1" style="position:relative;width:%size1;px;height:%size1;px">
+      %apply;graph(evar.v-1,0,1)
+      %apply;graphlinks(evar.v-1,0)
+    %end;
+    </div>
+  %end;
+%end;
