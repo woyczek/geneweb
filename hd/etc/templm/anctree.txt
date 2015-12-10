@@ -167,8 +167,11 @@
       %end;
         %let;l_emaxv;%if;(evar.t != "T")%evar.maxv;%elseif;(bvar.max_anc_tree = "")7%else;%bvar.max_anc_tree;%end;%in;
         <input type="hidden" name="maxv" value="%evar.maxv;"/>
-        <label><code>(X)</code> [*generation/generations]1<input id="v" name="v" maxlength="3" style="font-weight:bold;text-align:right;font-size:15px;width:1.6em;" value="%l_v;"
-          autocomplete="off" title="[generation/generations]0 (X)" accesskey="X"/> ([maximum] [full tree] %l_emaxv;, [compact tree] 13, mode couple 14)</label><br/>
+        <label><code>(X)</code> [*generation/generations]1<input type="number" id="v" name="v" style="font-weight:bold;text-align:right;font-size:13px;width:2.4em;" value="%l_v;"
+          autocomplete="off" autofocus="on" 
+          min="%if;(evar.t1!="" and evar.cpl="on")5%elseif;(evar.t1!="" and evar.cpl="")4%else;2%end;" 
+          max="%if;(evar.t1!="" and evar.cpl="on")14%elseif;(evar.t1!="" and evar.cpl="")13%else;%l_emaxv;%end;"
+          title="[generation/generations]0 (X)" accesskey="X"/> ([maximum] [full tree] %l_emaxv;, [compact tree] 13, mode couple 14)</label><br/>
        <table><tr><td>
         <label><input type="radio" name="t" value="T" %l_on;
                  %if;(evar.t = "T") checked="checked"%end;%/>[*full tree]</label>
