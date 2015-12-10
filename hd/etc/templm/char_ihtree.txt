@@ -405,6 +405,7 @@
 %end;
 
 %define;graph(xx,yy,zz)
+  %let;nav;;m=A;v=%evar.v;;t=T;t1=%evar.t1;;nav=on;%if;(evar.clp != "")clp=%evar.clp;%end;%in;
   %let;levelup;%expr(xx+1)%in;
   %let;leveldown;%expr(xx-1)%in;
   %if;(zz=2)
@@ -414,7 +415,8 @@
           %let;anc_sosahalf;%expr(ancestor.anc_sosa.v/2)%in;
           %let;top;%expr(topxx_yy(anc_sosahalf)*hb)%in;
           %let;left;%expr(leftxx_yy(anc_sosahalf)*wb)%in;
-          <tt><a style="%ttstyle;top:%top;px;left:%left;px;" href="%prefix;%ancestor.access;"
+          <tt><a style="%ttstyle;top:%top;px;left:%left;px;"
+          href="%prefix;%ancestor.access;%if;(evar.nav="on")%nav;%end;"
           title="[*generation/generations]0 %level; – Sosa %if;(ancestor.interval != "") = Sosa %ancestor.interval;%else;%ancestor.anc_sosa; & %expr(ancestor.anc_sosa+1)%end;&#013;
             %if;(ancestor.is_male) ♂%else; ♀%end; %ancestor; (%ancestor.occ)&#013;
             %if;(ancestor.birth_date.year != "")° %ancestor.birth_date.year;%end;
@@ -450,7 +452,8 @@
         %let;left1;%expr(leftxx_yy(ancestor.anc_sosa.v)*wb+4)%in;
         %let;top2;%expr(topxx_yy(ancestor.same.v)*hb+6)%in;
         %let;left2;%expr(leftxx_yy(ancestor.same.v)*wb+4)%in;
-        <tt><a style="%ttstyle;top:%top;px;left:%left;px;" href="%prefix;%ancestor.access;"
+        <tt><a style="%ttstyle;top:%top;px;left:%left;px;"
+        href="%prefix;%ancestor.access;%if;(evar.nav="on")%nav;%end;"
         title="Sosa %ancestor.anc_sosa;%if;(ancestor.same != "") = Sosa %ancestor.same;%end; – [*generation/generations]0 %level;&#013;
           %if;(ancestor.is_male) ♂%else; ♀%end; %ancestor; (%ancestor.occ)&#013;
           %if;(ancestor.birth_date.year != "")° %ancestor.birth_date.year;%end;
