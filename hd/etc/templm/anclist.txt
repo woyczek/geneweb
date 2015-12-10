@@ -13,8 +13,6 @@
     %elseif;(evar.t = "F" and evar.tf1 = "place") - [*list eclair]0 - [places] 
     %elseif;(evar.t = "F" and evar.tf1 = "aad") - [*age at death] ([M/F]0, [M/F]1) 
     %elseif;(evar.t = "F" and evar.tf1 = "afm") - [*age] ([father/mother]0, [father/mother]1) 
-    %elseif;(evar.t = "F" and evar.tf1 = "ht") - [tree] fractal H%expr(evar.v-1)
-    %elseif;(evar.t = "F" and evar.tf1 = "it") - [tree] fractal I%expr(evar.v-1)
     %else; - [*ancestors] - 
     %end;
   </title>
@@ -75,7 +73,7 @@
   <hr style="clear:both;" %/>
   <form id="tools" name="tools" method="get" action="%action;">
     <fieldset>
-    <legend>[*tools]0 <input type="submit" value="Ok"%/></legend>
+      <legend>[*tools]0 <input type="submit" value="Ok"%/></legend>
       %hidden;
       <input type="hidden" name="m" value="A"%/>
       <input type="hidden" name="t" value="%evar.t;"%/>
@@ -87,29 +85,19 @@
       %if;(evar.i != "")
         <input type="hidden" name="i" value="%evar.i;"%/>
       %end;
+      <p>
         %let;l_bmaxv;%if;(bvar.max_anc_level = "")%evar.maxv;%else;%bvar.max_anc_level;%end;%in;
         %let;l_emaxv;%if;(evar.maxv = "")%l_bmaxv;%elseif;(evar.maxv < l_bmaxv)%evar.maxv;%else;%l_bmaxv;%end;%in;
-        %let;l_maxv;%if;((evar.fam7 = "on") and l_v > 4)4%elseif;(evar.tf1 = "ht" or evar.tf1 = "it")13%else;%l_emaxv;%end;%in;
+        %let;l_maxv;%if;((evar.fam7 = "on") and l_v > 4)4%else;%l_emaxv;%end;%in;
         <input type="hidden" name="maxv" value="%evar.maxv;"%/>
-        <p><fieldset><legend>Fractals trees</legend>
-        <label><input type="radio" name="tf1" value="ht" %l_on;
-                  %if;(evar.tf1 = "ht") checked="checked"%end;%/>H-Tree (4 to 13 gen.)</label>
-        <label><input type="radio" name="tf1" value="it" %l_on;
-                  %if;(evar.tf1 = "it") checked="checked"%end;%/>I-Tree (4 to 13 gen.)</label>
-        <label><input type="radio" name="tf1" value="sit57" %l_on;
-                 %if;(evar.tf1 = "sit57") checked="checked"%end;%/>Sosa I-Tree 5/7 (6/8 gen.)</label>
-        <label><input type="radio" name="tf1" value="sht6" %l_on;
-                 %if;(evar.tf1 = "sht6") checked="checked"%end;%/>Sosa H-Tree 6 couple (8 gen.)</label>
-                <label><input type="radio" name="tf1" value="smt" %l_on;
-                 %if;(evar.tf1 = "smt") checked="checked"%end;%/>Sosa M-Tree 9 gen (3 nm +5 sosa)</label></fieldset>
         <label>[*generation/generations]0 <code>(X)</code> <input id="v" name="v" class="number" size="1" value="%l_v;"
           autocomplete="off" title="[generation/generations]0 (X)" accesskey="X" %/> / %l_maxv;</label>
         %if;(evar.fam7 != "on" and evar.t != "H" and evar.t != "L")
-        <label><input type="checkbox" name="only" value="on" %l_on;
+          <label><input type="checkbox" name="only" value="on" %l_on;
             %if;(evar.only = "on") checked="checked"%end;%/>[only the generation selected]</label>
         %end;
-        <label><input type="checkbox" name="implx" value="on" %l_on;
-               %if;(evar.implx = "on") checked="checked"%end;%/>[display implex links]</label>
+      </p>
+      <p>
         <label><input type="checkbox" name="cgl" value="on" %l_on;
                %if;(evar.cgl = "on") checked="checked"%end;%/>[cancel GeneWeb links]</label>
         %if;(evar.t = "H")
@@ -185,10 +173,7 @@
 <h1>%nn;
   %if;(evar.tf1 != "csv")
     %apply;a_of_b%with;
-      %if;(evar.fam7 = "on")7 [family/families]1
-      %elseif;(evar.tf1 = "ht") [*tree] H%expr(evar.v-1)
-      %elseif;(evar.tf1 = "it") [*tree] I%expr(evar.v-1)
-      %else;[*ancestors]%end;
+      %if;(evar.fam7 = "on")7 [family/families]1%else;[*ancestors]%end;
     %and;
       %if;(not cancel_links)<a href="%prefix;%access;">%end;
         %if;(public_name != "")%public_name;%else;%first_name;%end;
@@ -244,14 +229,6 @@
   %include.ancdes_ars;
 %elseif;(evar.t = "F" and evar.tf1 = "sb")
   %include.anclist_sb;
-%elseif;(evar.t = "F" and (evar.tf1 = "ht" or evar.tf1 = "it"))
-  %include.char_ihtree;
-%elseif;(evar.t = "F" and evar.tf1 = "sit57")
-  %include.sosa_itree57;
-%elseif;(evar.t = "F" and evar.tf1 = "sht6")
-  %include.htree;
-%elseif;(evar.t = "F" and evar.tf1 = "smt")
-  %include.sosamtree;
 %elseif;(evar.t = "F")
   %( list tf1 = ? %)
   %let;l_url;%prefix;m=A;t=F;i=%index;;v=%l_v;;only=%evar.only;;maxv=%evar.maxv;%in;

@@ -424,11 +424,11 @@
         %if;(ancestor.same != "")x
           %if;(evar.implx="on")
             <script type="text/javascript">
-			$(function() {
-      		  $('#h-tree1').line(%left1;, %top1;, %left2;, %top2;, {color:"red", stroke:1, opacity:0.3, zindex:1});
-			  });
-		    </script>
-		  %end;
+            $(function() {
+              $('#h-tree1').line(%left1;, %top1;, %left2;, %top2;, {color:"red", stroke:1, opacity:0.3, zindex:1});
+              });
+            </script>
+          %end;
         %else;%apply;boxchar(ancestor.anc_sosa.v,yy)%end;</a></tt>
       %end;
     %end;
@@ -535,13 +535,13 @@
 %message_to_wizard;
 %let;size1;%apply;size(evar.v-1)%in;
 %let;size2;%apply;size(evar.v-2)%in;
- %if;(evar.t="F" and evar.v<14 and evar.v>3 and evar.tf1="ht")
+ %if;(evar.t="T" and evar.v<14 and evar.v>3 and evar.t1="ht")
    <div id="h-tree1" style="position:relative;width:%size1;px;height:%size2;px">
            %apply;graph(evar.v-1,1,1)
            %apply;graphlinks(evar.v-1,1)
    </div>
- %elseif;(evar.t="F" and evar.v<14 and evar.v>3 and evar.tf1="it")
-   <div id="h-tree1" style="position:relative;width:%size1;px;height:%size1;px">
+ %elseif;(evar.t="T" and evar.v<14 and evar.v>3 and evar.t1="it")
+   <div id="i-tree1" style="position:relative;width:%size1;px;height:%size1;px">
            %apply;graph(evar.v-1,0,1)
            %apply;graphlinks(evar.v-1,0)
    </div>

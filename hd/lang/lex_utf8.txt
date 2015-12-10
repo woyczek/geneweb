@@ -3163,7 +3163,7 @@ eo: nuligi GeneWeb-ajn ligilojn
 es: anular los lazos GeneWeb
 et: ilma GeneWebi viideteta
 fi: ei GeneWeb-linkkejä
-fr: annuler les liens GeneWeb
+fr: masquer les liens internes
 he:  בטל קשרי GeneWeb
 is: án GeneWeb tengla
 it: annullare i links
@@ -4509,7 +4509,7 @@ de: rahmen in den Bäumen zeigen
 en: display frame
 es: editar los marcos a los árboles
 fi: näytä rajat
-fr: afficher les bordures aux arbres
+fr: afficher les bordures
 it: visualizzare i bordi degli alberi
 nl: rand van de stambomen tonen
 no: vis kantlinje
@@ -4605,7 +4605,7 @@ de: Porträt zeigen
 en: display family picture
 es: editar retrato
 fi: näytä kuvat
-fr: afficher les photos
+fr: afficher les images
 it: visualizzare il ritratto
 nl: de foto's tonen
 no: vis bilder
@@ -8123,10 +8123,10 @@ sv: Saknade föräldrar
 
     missing sosa
 de: Fehlende SOSA
-en: Sosa Number
+en: missing Sosa numbers
 es: falta sosa
 fi: Sosa-numero
-fr: sosa manquants
+fr: Sosa manquants
 it: sosa mancante
 nl: ontbrekende sosa's
 no: Sosa-nummer
@@ -13944,3 +13944,27 @@ it: etichetta
 fr: étiquette
 nl: etiketje
 pt: etiqueta
+
+    full tree
+en: full tree
+fr: arbre complet
+
+    compact tree
+en: compact tree
+fr: arbre compact
+
+    display implex links
+en: display links between implexes
+fr: afficher les liens entre les implexes
+
+    dag
+en: fusion implexes
+fr: fusionner les implexes
+
+    htree
+en: H-Tree
+fr: arbre en H
+
+    itree
+en: I-Tree
+fr: arbre en I

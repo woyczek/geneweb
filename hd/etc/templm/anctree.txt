@@ -151,59 +151,49 @@
 
 %define;tools()
   %let;l_on;onclick="this.focus()" onkeydown="if (event.keyCode == 13) javascript:document.tools.submit();"%in;
-  <hr %/>
+  <hr style="clear:both;" %/>
   <form id="tools" name="tools" method="get" action="%action;">
     <fieldset>
-      <legend>[*tools]0 <input type="submit" value="Ok"%/></legend>
+      <legend>[*tools]0 [ascendants tree] <input type="submit" value="Ok"/></legend>
       %hidden;
-      <input type="hidden" name="m" value="A"%/>
+      <input type="hidden" name="m" value="A"/>
       %if;(evar.p != "" or evar.n != "" or evar.oc != "")
-        <input type="hidden" name="p" value="%evar.p;"%/>
-        <input type="hidden" name="n" value="%evar.n;"%/>
-        <input type="hidden" name="oc" value="%evar.oc;"%/>
+        <input type="hidden" name="p" value="%evar.p;"/>
+        <input type="hidden" name="n" value="%evar.n;"/>
+        <input type="hidden" name="oc" value="%evar.oc;"/>
       %end;
       %if;(evar.i != "")
-        <input type="hidden" name="i" value="%evar.i;"%/>
+        <input type="hidden" name="i" value="%evar.i;"/>
       %end;
-      <p>
         %let;l_emaxv;%if;(evar.t != "T")%evar.maxv;%elseif;(bvar.max_anc_tree = "")7%else;%bvar.max_anc_tree;%end;%in;
-        <input type="hidden" name="maxv" value="%evar.maxv;"%/>
-        <label>[*generation/generations]0 <code>(X)</code> <input id="v" name="v" class="number" size="1" value="%l_v;"
-          autocomplete="off" autocomplete="off" title="[generation/generations]0 (X)" accesskey="X" %/> / %l_emaxv;</label>
-      </p>
-      %if;(evar.t = "T")
-      <p>
-        &bull; <a href="%prefix;m=A;t=T;v=%l_v;;%access;;dag=on;notab=on" accesskey="/" 
-           title="[display by slices/slice width/overlap/total width]0 (/)"
-           >[*display by slices/slice width/overlap/total width]0</a>
-      </p>
-      %end;
-      <p>
-        <label><input type="checkbox" name="cgl" value="on" %l_on;
-               %if;(evar.cgl = "on") checked="checked"%end;%/>[cancel GeneWeb links]</label>
-        %if;(bvar.no_image_for_visitor != "yes" or friend or wizard)
-          <label><input type="checkbox" name="image" value="on" %l_on;
-                 %if;(evar.image = "on") checked="checked"%end;%/>[image/images]1</label>
-        %end;
-      </p>
-      <fieldset>
-        <legend>
-          <label><input type="radio" name="t" value="T" %l_on;
-                 %if;(evar.t = "T") checked="checked"%end;%/>[*tree]</label>
-        </legend>
+        <input type="hidden" name="maxv" value="%evar.maxv;"/>
+        <label><code>(X)</code> [*generation/generations]1<input id="v" name="v" maxlength="3" style="font-weight:bold;text-align:right;font-size:15px;width:1.6em;" value="%l_v;"
+          autocomplete="off" title="[generation/generations]0 (X)" accesskey="X"/> ([maximum] %l_emaxv;, ou 4-13 si [compact tree])</label><br/>
+       <table><tr><td>
+        <label><input type="radio" name="t" value="T" %l_on;
+                 %if;(evar.t = "T") checked="checked"%end;%/>[*full tree]</label>
+                    %if;(evar.t = "T")
+                               <a href="%prefix;m=A;t=T;v=%l_v;;%access;;dag=on;notab=on" accesskey="/" 
+                     title="[display by slices/slice width/overlap/total width]0 (/)"
+                     >[display by slices/slice width/overlap/total width]0</a>
+                   %end;
+        <label>     <input type="checkbox" name="marriage" value="on" %l_on;
+               %if;(evar.marriage = "on") checked="checked"%end;%/>[display marriage date]</label>
+        <label>     <input type="checkbox" name="dag" value="on" %l_on;
+               %if;(evar.dag = "on") checked="checked"%end;%/>[dag]</label>
         <label><input type="radio" name="t" value="A" %l_on;
-               %if;(evar.t = "A") checked="checked"%end;%/>[male line/female line]0</label>
+               %if;(evar.t = "A") checked="checked"%end;%/>[*male line/female line]0</label>
         <label><input type="radio" name="t" value="C" %l_on;
-               %if;(evar.t = "C") checked="checked"%end;%/>[male line/female line]1</label>
-        <label><input type="checkbox" name="marriage" value="on" %l_on;
-               %if;(evar.marriage = "on") checked="checked"%end;%/>[marriage/marriages]0</label>
-        <label><input type="checkbox" name="dag" value="on" %l_on;
-               %if;(evar.dag = "on") checked="checked"%end;%/>dag=on</label>
-        <label>[border]<input name="bd" size="1" maxlength="2" style="width:1em;" value="%evar.bd;" %/></label>
-        <table summary="colors" cellspacing="0" cellpadding="0">
-          <tr>
-            <td align="%left;">[color] </td>
-            <td align="%left;">
+               %if;(evar.t = "C") checked="checked"%end;%/>[*male line/female line]1</label>
+        %if;(bvar.no_image_for_visitor != "yes" or friend or wizard)
+          <label>     <input type="checkbox" name="image" value="on" %l_on;
+                 %if;(evar.image = "on") checked="checked"%end;%/>[display picture]</label>
+        %end;
+        <label>     <input type="checkbox" name="cgl" value="on" %l_on;
+               %if;(evar.cgl = "on") checked="checked"%end;%/>[cancel GeneWeb links]</label>
+        <label>      [border]<input name="bd" size="1" maxlength="2" style="width:1.05em;" value="%evar.bd;" %/></label><table summary="colors" cellspacing="0" cellpadding="0">
+          <tr><td align="%left;">      [color] </td>
+              <td align="%left;">
               <input type="radio" name="color" value=""
                 %if;(evar.color="") checked="checked"%end;%/></td>
             %for;i;1;7;
@@ -213,7 +203,24 @@
             %end;
           </tr>
         </table>
-      </fieldset>
+        </td><td>
+       %let;l_on1;onchange="valid('tT')"%in;
+       <legend><label>[*compact tree]</label></legend>
+        <label><input type="checkbox" name="t1" value="ht" %l_on1; %l_on;
+               %if;(evar.t1 = "ht") checked="checked"%end;%/>[htree]</label>
+        <label><input type="checkbox" name="t1" value="it" %l_on1; %l_on;
+               %if;(evar.t1 = "it") checked="checked"%end;%/>[itree]</label>
+        <label>     <input type="checkbox" name="implx" value="on" onchange="valid('t1ht')" %l_on; %l_on1;
+               %if;(evar.implx = "on") checked="checked"%end;%/>[display implex links]</label>
+        <label>     <input type="checkbox" name="cpl" value="on" onchange="valid('t1cpl')" %l_on; %l_on1;
+               %if;(evar.cpl = "on") checked="checked"%end;%/>mode couple (not working)</label>
+        <label><input type="radio" name="t2" value="sit57" %l_on; %l_on1;
+               %if;(evar.t2 = "sit57") checked="checked"%end;%/>[itree] [with] [n° Sosa] (6 [and] 8 gen.)</label>
+        <label><input type="radio" name="t2" value="sht6" %l_on; %l_on1;
+               %if;(evar.t2 = "sht6") checked="checked"%end;%/>[htree] [with] [n° Sosa] couple (8 gen.)</label>
+         <label><input type="radio" name="t2" value="smt" %l_on; %l_on1;
+                %if;(evar.t2 = "smt") checked="checked"%end;%/>[tree] mix (9 gen.)</label><br%/>
+  </td></tr></table>
     </fieldset>
   </form>
 %end;
@@ -240,7 +247,15 @@
   </div>
 %end;
 
-%if;(evar.t = "T")
+%if;(evar.t = "T" and (evar.t1 = "ht" or evar.t1 = "it"))
+  %include.char_ihtree;
+%elseif;(evar.t = "T" and evar.t2 = "sit57")
+  %include.sosa_itree57;
+%elseif;(evar.t = "T" and evar.t2 = "sht6")
+  %include.htree;
+%elseif;(evar.t = "T" and evar.t2 = "smt")
+  %include.sosamtree;
+%elseif;(evar.t = "T")
   %apply;tree(l_v)
 %elseif;(evar.t = "A")
   <div style="text-align: center">%apply;male_line("self",l_v0)</div>
