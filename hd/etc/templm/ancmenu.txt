@@ -1,7 +1,7 @@
 %doctype;
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <!-- $Id: ancmenu.txt,v 7.00 2015/12/10 21:58:18 mr Exp $ -->
+  <!-- $Id: ancmenu.txt,v 7.00 2015/12/10 22:43:36 mr Exp $ -->
   <title>%nn;
     %apply;a_of_b%with;
       [*ancestors]%nn;
@@ -174,6 +174,7 @@
     </legend>
     <fieldset>
       %let;l_on1;onchange="valid('tT')"%in;
+      %let;l_on2;onchange="valid('tT'),valid('t1hi')"%in;
       <label><input type="radio" name="t1" value="T" %l_on; %l_on1;
              %if;(evar.t1 = "T") checked="checked"%end;%/>[*full tree]</label><br%/>
       <label><input type="radio" name="t" value="A" %l_on;
@@ -200,19 +201,19 @@
     <fieldset>
       <legend><label>[*compact tree]</label></legend>
         <label><input type="radio" name="t1" value="i" %l_on; %l_on1;
-          %if;(evar.t1 = "i") checked="checked"%end;%/>[itree] [with] [n° Sosa] (6 [and] 8 gen.)</label>
+          %if;(evar.t1 = "i") checked="checked"%end;%/>[itree] [with] [n° Sosa] (6 [and] 8 gen.)</label><br%/>
         <label><input type="radio" name="t1" value="h" %l_on; %l_on1;
-          %if;(evar.t1 = "h") checked="checked"%end;%/>[htree] [with] [n° Sosa] couple (8 gen.)</label>
+          %if;(evar.t1 = "h") checked="checked"%end;%/>[htree] [with] [n° Sosa] couple (8 gen.)</label><br%/>
         <label><input type="radio" name="t1" value="m" %l_on; %l_on1;
           %if;(evar.t1 = "m") checked="checked"%end;%/>[tree] mix (9 gen.)</label><br%/>
         <label><input type="radio" id="t1hi" name="t1" value="hi" %l_on; %l_on1;
-          %if;(evar.t1 = "hi") checked="checked"%end;%/>[itree]/[htree]</label>
+          %if;(evar.t1 = "hi") checked="checked"%end;%/>[itree]/[htree]</label><br%/>
         <label>     <input type="radio" name="t2" value="h" %l_on; %l_on2;
-          %if;(evar.t2 = "h") checked="checked"%end;%/>[htree]</label>
+          %if;(evar.t2 = "h") checked="checked"%end;%/>[htree]</label><br%/>
         <label>     <input type="radio" name="t2" value="i" %l_on; %l_on2;
-          %if;(evar.t2 = "i") checked="checked"%end;%/>[itree]</label>
+          %if;(evar.t2 = "i") checked="checked"%end;%/>[itree]</label><br%/>
         <label>     <input type="checkbox" name="implx" value="on" %l_on; %l_on1;
-          %if;(evar.implx = "on") checked="checked"%end;%/>[display implex links]</label>
+          %if;(evar.implx = "on") checked="checked"%end;%/>[display implex links]</label><br%/>
         <label>     <input type="checkbox" name="cpl" value="on" %l_on; %l_on1;
           %if;(evar.cpl = "on") checked="checked"%end;%/>mode couple (not working)</label>
     </fieldset>
