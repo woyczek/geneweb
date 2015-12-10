@@ -425,7 +425,7 @@
           %if;(evar.implx="on")
             <script type="text/javascript">
             $(function() {
-              $('#h-tree1').line(%left1;, %top1;, %left2;, %top2;, {color:"red", stroke:1, opacity:0.3, zindex:1});
+              $('#ih-tree1').line(%left1;, %top1;, %left2;, %top2;, {color:"red", stroke:1, opacity:0.3, zindex:1});
               });
             </script>
           %end;
@@ -535,22 +535,27 @@
 %message_to_wizard;
 %let;size1;%apply;size(evar.v-1)%in;
 %let;size2;%apply;size(evar.v-2)%in;
+%let;size3;%apply;size(evar.v-3)%in;
  %if;(evar.t = "T" and evar.v < 14 and evar.v > 3 and evar.t1 = "ht")
-   <div id="h-tree1" style="position:relative;width:%size1;px;height:%size2;px">
-     %if;(evar.cpl = "on")
-           %apply;graph(evar.v-1,1,2)
+      %if;(evar.cpl = "on")
+   <div id="ih-tree1" style="position:relative;width:%size2;px;height:%size3;px">
+           %apply;graph(evar.v-2,1,2)
+           %apply;graphlinks(evar.v-2,1)
      %else;
+   <div id="ih-tree1" style="position:relative;width:%size1;px;height:%size2;px">
            %apply;graph(evar.v-1,1,1)
-     %end;
            %apply;graphlinks(evar.v-1,1)
+     %end;
    </div>
  %elseif;(evar.t = "T" and evar.v < 14 and evar.v > 3 and evar.t1 = "it")
-   <div id="i-tree1" style="position:relative;width:%size1;px;height:%size1;px">
      %if;(evar.cpl = "on")
-           %apply;graph(evar.v-1,0,2)
+   <div id="ih-tree1" style="position:relative;width:%size2;px;height:%size2;px">
+           %apply;graph(evar.v-2,0,2)
+           %apply;graphlinks(evar.v-2,0)
      %else;
+   <div id="ih-tree1" style="position:relative;width:%size1;px;height:%size1;px">
            %apply;graph(evar.v-1,0,1)
-     %end;
            %apply;graphlinks(evar.v-1,0)
+     %end;
    </div>
  %end;
