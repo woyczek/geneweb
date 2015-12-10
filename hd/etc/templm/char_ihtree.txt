@@ -405,7 +405,7 @@
 %end;
 
 %define;graph(xx,yy,zz)
-  %let;nav;;m=A;v=%evar.v;;t=T;t1=%evar.t1;;nav=on;%if;(evar.cpl != "")cpl=%evar.cpl;%end;%in;
+  %let;nav;;m=A;v=%evar.v;;t=T;t1=%evar.t1;;nav=on;%if;(evar.cpl != "")cpl=%evar.cpl;%end;;%if;(evar.sms != "")sms=%evar.sms;%end;%in;
   %let;levelup;%expr(xx+1)%in;
   %let;leveldown;%expr(xx-1)%in;
   %if;(zz=2)
@@ -439,7 +439,7 @@
           %let;left4;%expr(leftxx_yy(ancestor.anc_sosa.v)*wb)%in;
           <tt><a style="%ttstyle;top:%top4;px;left:%left4;px;" href="%prefix;m=ADD_PAR;ip=%ancestor.index;" 
           title="[*missing sosa] %expr(ancestor.anc_sosa.v*2) & %expr(ancestor.anc_sosa.v*2+1) – [*generation/generations]0 %expr(level+1)&#013;
-          [*add] %apply;a_of_b%with;[the parents]%and;Sosa %ancestor.anc_sosa.v;%end; %ancestor;">·</a></tt>
+          [*add] %apply;a_of_b%with;[the parents]%and;Sosa %ancestor.anc_sosa.v;%end; %ancestor;">%if;(evar.sms="on")·%else; %end;</a></tt>
         %end;
       %end;
     %end;
@@ -477,7 +477,7 @@
           %let;left3;%expr(leftxx_yy(ancestor.anc_sosa.v*2+1)*wb)%in;
           <tt><a style="%ttstyle;top:%top3;px;left:%left3;px;" href="%prefix;m=ADD_PAR;ip=%ancestor.index;" 
           title="[missing sosa] %expr(ancestor.anc_sosa.v*2) & %expr(ancestor.anc_sosa.v*2+1) – [*generation/generations]0 %expr(level+1)&#013;
-          [*add] %apply;a_of_b%with;[the parents]%and;%ancestor; Sosa %ancestor.anc_sosa.v;%end;"> </a></tt>
+          [*add] %apply;a_of_b%with;[the parents]%and;%ancestor; Sosa %ancestor.anc_sosa.v;%end;">%if;(evar.sms="on")·%else; %end;</a></tt>
         %end;
       %end;
     %end;

@@ -214,6 +214,10 @@
                %if;(evar.implx = "on") checked="checked"%end;%/>[display implex links]</label>
         <label>     <input type="checkbox" name="cpl" value="on" onchange="valid('t1cpl')" %l_on; %l_on1;
                %if;(evar.cpl = "on") checked="checked"%end;%/>mode couple</label>
+        <label>     <input type="checkbox" name="nav" value="on" onchange="valid('t1nav')" %l_on; %l_on1;
+               %if;(evar.nav = "on") checked="checked"%end;%/>mode navigation</label>
+        <label>     <input type="checkbox" name="sms" value="on" onchange="valid('t1sms')" %l_on; %l_on1;
+               %if;(evar.sms = "on") checked="checked"%end;%/>[visualize/show/hide/summary]1 · [missing sosa]</label>
         <label><input type="radio" name="t2" value="sit57" %l_on; %l_on1;
                %if;(evar.t2 = "sit57") checked="checked"%end;%/>[itree] [with] [n° Sosa] (6 [and] 8 gen.)</label>
         <label><input type="radio" name="t2" value="sht6" %l_on; %l_on1;
