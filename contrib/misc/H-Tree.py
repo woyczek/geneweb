@@ -518,6 +518,32 @@ if HI == "m" :
 	print ("  %and;xx%end;")
 	print ("%end;")
 	print ("")
+	# level 3, sosa 4 et 6
+	strgdx = "////" +str(w3)  +"//"+str(w7+w5+w7)+"//"
+	strgdy = "////" +str(h3/2)+"//"+str(h3/2)    +"//" 
+	# level 4, sosa 8, 10, 12, 14
+	strgdx = strgdx +str(w4/2)+"//"+str(w4/2)    +"//"+ str(w4/2)+"//"+str(w4/2)+"//"  
+	strgdy = strgdy +str(h4)+"//"+str(h8+h6+h8)+"//"+ str(h4)+"//"+str(h8+h6+h8)+"//"  
+	# # level 5, 16 à 30
+	strgdx = strgdx +str(w5)+"//"+str(w7)+"//"+str(w5)+"//"+str(w7)+"//"+str(w5)+"//"+str(w7)+"//"+str(w5)+"//"+str(w7)+"//"
+	strgdy = strgdy +str(h4/2)+"//"+str(h4/2)+"//"+str(h4/2)+"//"+str(h4/2)+"//"+str(h4/2)+"//"+str(h4/2)+"//"+str(h4/2)+"//"+str(h4/2)+"//"
+	# level 6, 32 à 62
+	strgdx = strgdx +str(w6/2)+"//"+str(w6/2)+"//"+str(w6/2)+"//"+str(w6/2)+"//"+str(w6/2)+"//"+str(w6/2)+"//"+str(w6/2)+"//"+str(w6/2)+"//" 
+	strgdx = strgdx +str(w6/2)+"//"+str(w6/2)+"//"+str(w6/2)+"//"+str(w6/2)+"//"+str(w6/2)+"//"+str(w6/2)+"//"+str(w6/2)+"//"+str(w6/2)+"//"
+	strgdy = strgdy +str(h6)+"//"+str(h8)+"//"+str(h6)+"//"+str(h8)+"//"+str(h6)+"//"+str(h8)+"//"+str(h6)+"//"+str(h8)+"//"
+	strgdy = strgdy +str(h6)+"//"+str(h8)+"//"+str(h6)+"//"+str(h8)+"//"+str(h6)+"//"+str(h8)+"//"+str(h6)+"//"+str(h8)+"//"
+	
+	print ("%define;left9mdx(xx)")
+	print ("  %apply;nth%with;") 
+	print ("      %s"%strgdx)
+	print ("  %and;xx%end;")
+	print ("%end;")	
+	print ("%define;top9mdy(xx)")
+	print ("  %apply;nth%with;") 
+	print ("      %s"%strgdy)
+	print ("  %and;xx%end;")
+	print ("%end;")	
+	print ("")
 
 	sys.exit()
 

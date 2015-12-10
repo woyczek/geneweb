@@ -35,6 +35,17 @@
   %and;xx%end;
 %end;
 
+%define;left9mdx(xx)
+  %apply;nth%with;
+      ////200//80//100//100//100//100//30//25//30//25//30//25//30//25//15//15//15//15//15//15//15//15//15//15//15//15//15//15//15//15//
+  %and;xx%end;
+%end;
+%define;top9mdy(xx)
+  %apply;nth%with;
+      ////60//60//120//60//120//60//60//60//60//60//60//60//60//60//20//20//20//20//20//20//20//20//20//20//20//20//20//20//20//20//
+  %and;xx%end;
+%end;
+
 %( ----- %)
 
 %define;top9m_(xx)
@@ -45,6 +56,17 @@
 %define;left9m_(xx)
   %apply;nth%with;
      //15//7//23//7//7//23//
+  %and;xx%end;
+%end;
+
+%define;wl(xx)
+	%apply;nth%with;
+	  ///80/2/25/2/
+  %and;xx%end;
+%end;
+%define;hl(xx)
+	%apply;nth%with;
+	  ///2/60/2/20/
   %and;xx%end;
 %end;
 
@@ -70,22 +92,42 @@
   %foreach;ancestor_level(8)
     %foreach;ancestor;
      %if;ancestor.is_male;
-      %let;top;%apply;top9mh%with;%apply;top9m(ancestor.anc_sosa.v)%end;%in;
       %let;left;%apply;left9mw%with;%apply;left9m(ancestor.anc_sosa.v)%end;%in;
+      %let;top;%apply;top9mh%with;%apply;top9m(ancestor.anc_sosa.v)%end;%in;
+      %let;dx;%apply;left9mdx(ancestor.anc_sosa.v)%in;
+      %let;dy;%apply;top9mdy(ancestor.anc_sosa.v)%in;
+      %let;leftl;%if;(ancestor.anc_sosa.v=6 or 
+                      ancestor.anc_sosa.v=18 or ancestor.anc_sosa.v=22 or
+                      ancestor.anc_sosa.v=26 or ancestor.anc_sosa.v=30)%expr(left-dx)%else;%expr(left+dx)%end;%in;
+      %let;topl;%if;(ancestor.anc_sosa.v=10 or ancestor.anc_sosa.v=14 or
+                      ancestor.anc_sosa.v=34 or ancestor.anc_sosa.v=38 or
+                      ancestor.anc_sosa.v=42 or ancestor.anc_sosa.v=46 or
+                      ancestor.anc_sosa.v=50 or ancestor.anc_sosa.v=54 or
+                      ancestor.anc_sosa.v=58 or ancestor.anc_sosa.v=62
+      				)%expr(top-dy)%else;%expr(top+dy)%end;%in;
       %let;wid;%apply;bwid9l(level)%in;
       %let;hig;%apply;bhig9l(level)%in;
+      %let;widl;%apply;wl(level)%in;
+      %let;higl;%apply;hl(level)%in;
       %let;font;%if;(level>1 and level<5) 14px
             %elseif;(level> 4 and level<7) 8px %else; 5px %end;%in;
       %let;bg;
         %if;(level>7)
            %if;(ancestor.has_parents)
              %if;(ancestor.same != "")CBFECE%else;FF62B0%end;
-           %else;FF62B0%end;
+           %else;FF0F0F%end;
         %else;
            %if;(ancestor.same != "")CBFECE%else;%apply;bg(level)%end;
       %end;%in;
-      <div style="position:absolute;top:%top;px;left:%left;px;background-color:#%bg;;
-      width:%wid;px;padding:0px;text-align:center;border:solid 0px;font-family:monospace;font-size:%font;">
+	  %( draw lines %)
+     %if;(level>2 and level<7)
+      <div style="position:absolute;top:%topl;px;left:%leftl;px;width:%widl;px;height:%higl;px;
+                  background-color:#FF00FF;">
+      </div>
+      %end;
+	  %(draw box %)
+      <div style="position:absolute;top:%top;px;left:%left;px;width:%wid;px;
+      background-color:#%bg;;padding:0px;text-align:center;border:solid 0px;font-family:monospace;font-size:%font;">
       <div style="position:relative;width:%wid;px;height:%hig;px;border:solid 0px;">
       %if;(level>1)
       <br>
