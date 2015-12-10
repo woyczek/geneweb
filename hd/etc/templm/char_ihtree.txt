@@ -535,14 +535,22 @@
 %message_to_wizard;
 %let;size1;%apply;size(evar.v-1)%in;
 %let;size2;%apply;size(evar.v-2)%in;
- %if;(evar.t="T" and evar.v<14 and evar.v>3 and evar.t1="ht")
+ %if;(evar.t = "T" and evar.v < 14 and evar.v > 3 and evar.t1 = "ht")
    <div id="h-tree1" style="position:relative;width:%size1;px;height:%size2;px">
+     %if;(evar.cpl = "on")
+           %apply;graph(evar.v-1,1,2)
+     %else;
            %apply;graph(evar.v-1,1,1)
+     %end;
            %apply;graphlinks(evar.v-1,1)
    </div>
- %elseif;(evar.t="T" and evar.v<14 and evar.v>3 and evar.t1="it")
+ %elseif;(evar.t = "T" and evar.v < 14 and evar.v > 3 and evar.t1 = "it")
    <div id="i-tree1" style="position:relative;width:%size1;px;height:%size1;px">
+     %if;(evar.cpl = "on")
+           %apply;graph(evar.v-1,0,2)
+     %else;
            %apply;graph(evar.v-1,0,1)
+     %end;
            %apply;graphlinks(evar.v-1,0)
    </div>
  %end;
