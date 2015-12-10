@@ -405,7 +405,7 @@
 %end;
 
 %define;graph(xx,yy,zz)
-  %let;nav;;m=A;v=%evar.v;;t=T;t1=%evar.t1;;nav=on;%if;(evar.clp != "")clp=%evar.clp;%end;%in;
+  %let;nav;;m=A;v=%evar.v;;t=T;t1=%evar.t1;;nav=on;%if;(evar.cpl != "")cpl=%evar.cpl;%end;%in;
   %let;levelup;%expr(xx+1)%in;
   %let;leveldown;%expr(xx-1)%in;
   %if;(zz=2)
