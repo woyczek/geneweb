@@ -340,15 +340,27 @@
   %elseif;((x>1 and x<4) or (x>7 and x<16) or (x>31 and x<64) or (x>127 and x<256) or (x>511 and x<1024)or (x>2047 and x<4096))
     %if;(y=0)
       %if;(x%2=0)
-        %if;(not ancestor.has_parents)╷%else;┬%end;
+        %if;(evar.cpl="on" and not ancestor.spouse.has_parents)┐
+        %elseif;(evar.cpl="on" and not ancestor.has_parents)┌
+        %elseif;(not ancestor.has_parents)╷
+        %else;┬%end;
       %else;
-        %if;(not ancestor.has_parents)╵%else;┴%end;
+        %if;(evar.cpl="on" and not ancestor.spouse.has_parents)└
+        %elseif;(evar.cpl="on" and not ancestor.has_parents)┘
+        %elseif;(not ancestor.has_parents)╵
+        %else;┴%end;
       %end;
     %else;
        %if;(x%2=0)
-         %if;(not ancestor.has_parents)╶%else;├%end;
+         %if;(evar.cpl="on" and not ancestor.spouse.has_parents)└
+         %elseif;(evar.cpl="on" and not ancestor.has_parents)┌
+         %elseif;(not ancestor.has_parents)╶
+         %else;├%end;
        %else;
-         %if;(not ancestor.has_parents)╴%else;┤%end;
+         %if;(not ancestor.has_parents)╴
+         %elseif;(evar.cpl="on" and not ancestor.spouse.has_parents)┘
+         %elseif;(evar.cpl="on" and not ancestor.has_parents)┐
+         %else;┤%end;
        %end;
     %end;
   %elseif;((x>3 and x<8) or (x>15 and x<32) or (x>63 and x<128) or (x>255 and x<512) or (x>1023 and x<2048) or (x>4095 and x<8192))
@@ -365,6 +377,16 @@
         %if;(not ancestor.has_parents)╵%else;┴%end;
       %end;
     %end;
+  %end;
+%end;
+
+%define;implex()
+  %if;(evar.implx="on")
+    <script type="text/javascript">
+    $(function() {
+      $('#ih-tree1').line(%left1;, %top1;, %left2;, %top2;, {color:"red", stroke:1, opacity:0.3, zindex:1});
+      });
+    </script>
   %end;
 %end;
 
@@ -411,9 +433,9 @@
         %let;top;%expr(topxx_yy(ancestor.anc_sosa.v)*hb)%in;
         %let;left;%expr(leftxx_yy(ancestor.anc_sosa.v)*wb)%in;
         %let;top1;%expr(topxx_yy(ancestor.anc_sosa.v)*hb+6)%in;
-        %let;left1;%expr(leftxx_yy(ancestor.anc_sosa.v)*wb+4)%in;       
+        %let;left1;%expr(leftxx_yy(ancestor.anc_sosa.v)*wb+4)%in;
         %let;top2;%expr(topxx_yy(ancestor.same.v)*hb+6)%in;
-        %let;left2;%expr(leftxx_yy(ancestor.same.v)*wb+4)%in;       
+        %let;left2;%expr(leftxx_yy(ancestor.same.v)*wb+4)%in;
         <tt><a style="%ttstyle;top:%top;px;left:%left;px;" href="%prefix;%ancestor.access;"
         title="Sosa %ancestor.anc_sosa;%if;(ancestor.same != "") = Sosa %ancestor.same;%end; – [*generation/generations]0 %level;&#013;
           %if;(ancestor.is_male) ♂%else; ♀%end; %ancestor; (%ancestor.occ)&#013;
@@ -421,14 +443,7 @@
           %if;(ancestor.birth_date.year != "" and ancestor.is_dead) – %end;
           %if;(ancestor.birth_date.year = "" and ancestor.death_date.year != "")†%else;%ancestor.death_date.year;%end;&#013;
           %if;(not ancestor.has_parents) [*missing parents].%end;">
-        %if;(ancestor.same != "")x
-          %if;(evar.implx="on")
-            <script type="text/javascript">
-            $(function() {
-              $('#ih-tree1').line(%left1;, %top1;, %left2;, %top2;, {color:"red", stroke:1, opacity:0.3, zindex:1});
-              });
-            </script>
-          %end;
+        %if;(ancestor.same != "")x %apply;implex()
         %else;%apply;boxchar(ancestor.anc_sosa.v,yy)%end;</a></tt>
       %end;
     %end;
