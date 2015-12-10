@@ -485,78 +485,79 @@
 %end;
 
 %define;graphlinks(xx,yy)
-  %let;linklevel;%expr(xx-2)%in;
-  %foreach;ancestor_level(linklevel)
+  %foreach;ancestor_level(xx-2)
     %foreach;ancestor;
       %let;top_;%expr(topxx_yy_(ancestor.anc_sosa.v)*hb)%in;
       %let;left_;%expr(leftxx_yy_(ancestor.anc_sosa.v)*wb)%in;
-      %if;(ancestor.has_parents and (ancestor.anc_sosa.v=2 or ancestor.anc_sosa.v=3))
-        %if;(xx=4 or xx=5)
-          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│%else;─%end;</tt>
-        %elseif;(xx=6 or xx=7)
-          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│<br />│<br />│%else;───%end;</tt>
-        %elseif;(xx=8 or xx=9)
-          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│<br />│<br />│<br />│<br />│<br />│<br />│%else;───────%end;</tt>
-        %elseif;(xx=10 or xx=11)
-          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│%else;───────────────%end;</tt>
-        %elseif;(xx=12)
-          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│%else;───────────────────────────────%end;</tt>
-        %end;
-      %elseif;(ancestor.has_parents and ancestor.has_parents and ancestor.anc_sosa.v>3 and ancestor.anc_sosa.v<8)
-        %if;(xx=5 or xx=6)
-          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)─%else;│%end;</tt>
-        %elseif;(xx=7 or xx=8)
-          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)───%else;│<br />│<br />│%end;</tt>
-        %elseif;(xx=9 or xx=10)
-          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)───────%else;│<br />│<br />│<br />│<br />│<br />│<br />│%end;</tt>
-        %elseif;(xx=11 or xx=12)
-          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)───────────────%else;│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│%end;</tt>
-        %end;
-      %elseif;(ancestor.has_parents and ancestor.anc_sosa.v>7 and ancestor.anc_sosa.v<16)
-        %if;(xx=6 or xx=7)
-          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│%else;─%end;</tt>
-        %elseif;(xx=8 or xx=9)
-          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│<br />│<br />│%else;───%end;</tt>
-        %elseif;(xx=10 or xx=11)
-          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│<br />│<br />│<br />│<br />│<br />│<br />│<br />%else;───────%end;</tt>
-        %elseif;(xx=12)
-          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│%else;───────────────%end;</tt>
-        %end;
-      %elseif;(ancestor.has_parents and ancestor.anc_sosa.v>15 and ancestor.anc_sosa.v<32)
-        %if;(xx=7 or xx=8)
-          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)─%else;│%end;</tt>
-        %elseif;(xx=9 or xx=10)
-          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)───%else;│<br />│<br />│%end;</tt>
-        %elseif;(xx=11 or xx=12)
-          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)───────%else;│<br />│<br />│<br />│<br />│<br />│<br />│%end;</tt>
-        %end;
-      %elseif;(ancestor.has_parents and ancestor.anc_sosa.v>31 and ancestor.anc_sosa.v<64)
-        %if;(xx=8 or xx=9)
-          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│%else;─%end;</tt>
-        %elseif;(xx=10 or xx=11)
-          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│<br />│<br />│%else;───%end;</tt>
-        %elseif;(xx=12)
-          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│<br />│<br />│<br />│<br />│<br />│<br />│%else;───────%end;</tt>
-        %end;
-      %elseif;(ancestor.has_parents and ancestor.anc_sosa.v>63 and ancestor.anc_sosa.v<128)
-        %if;(xx=9 or xx=10)
-          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)─%else;│%end;</tt>
-        %elseif(xx=11 or xx=12)
-          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)───%else;│<br />│<br />│%end;</tt>
-        %end;
-      %elseif;(ancestor.has_parents and ancestor.anc_sosa.v>127 and ancestor.anc_sosa.v<256)
-        %if;(xx=10 or xx=11)
-          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│%else;─%end;</tt>
-        %elseif;(xx=12)
-          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│<br />│<br />│%else;───%end;</tt>
-        %end;
-      %elseif;(ancestor.has_parents and ancestor.anc_sosa.v>255 and ancestor.anc_sosa.v<512)
-        %if;(xx=11 or xx=12)
-          <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)─%else;│%end;</tt>
-        %end;
-      %elseif;(ancestor.has_parents and ancestor.anc_sosa.v>511 and ancestor.anc_sosa.v<1024)
-        %if;(xx=12)
-         <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│%else;─%end;</tt>
+      %if;((evar.cpl="on" and ancestor.has_parents) or (evar.cpl!="on" and ancestor!=""))
+        %if;(ancestor.anc_sosa.v=2 or ancestor.anc_sosa.v=3)
+          %if;(xx=4 or xx=5)
+            <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│%else;─%end;</tt>
+          %elseif;(xx=6 or xx=7)
+            <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│<br />│<br />│%else;───%end;</tt>
+          %elseif;(xx=8 or xx=9)
+            <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│<br />│<br />│<br />│<br />│<br />│<br />│%else;───────%end;</tt>
+          %elseif;(xx=10 or xx=11)
+            <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│%else;───────────────%end;</tt>
+          %elseif;(xx=12)
+            <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│%else;───────────────────────────────%end;</tt>
+          %end;
+        %elseif;(ancestor.anc_sosa.v>3 and ancestor.anc_sosa.v<8)
+          %if;(xx=5 or xx=6)
+            <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)─%else;│%end;</tt>
+          %elseif;(xx=7 or xx=8)
+            <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)───%else;│<br />│<br />│%end;</tt>
+          %elseif;(xx=9 or xx=10)
+            <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)───────%else;│<br />│<br />│<br />│<br />│<br />│<br />│%end;</tt>
+          %elseif;(xx=11 or xx=12)
+            <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)───────────────%else;│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│%end;</tt>
+          %end;
+        %elseif;(ancestor.anc_sosa.v>7 and ancestor.anc_sosa.v<16)
+          %if;(xx=6 or xx=7)
+            <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│%else;─%end;</tt>
+          %elseif;(xx=8 or xx=9)
+            <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│<br />│<br />│%else;───%end;</tt>
+          %elseif;(xx=10 or xx=11)
+            <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│<br />│<br />│<br />│<br />│<br />│<br />│<br />%else;───────%end;</tt>
+          %elseif;(xx=12)
+            <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│<br />│%else;───────────────%end;</tt>
+          %end;
+        %elseif;(ancestor.anc_sosa.v>15 and ancestor.anc_sosa.v<32)
+          %if;(xx=7 or xx=8)
+            <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)─%else;│%end;</tt>
+          %elseif;(xx=9 or xx=10)
+            <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)───%else;│<br />│<br />│%end;</tt>
+          %elseif;(xx=11 or xx=12)
+            <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)───────%else;│<br />│<br />│<br />│<br />│<br />│<br />│%end;</tt>
+          %end;
+        %elseif;(ancestor.anc_sosa.v>31 and ancestor.anc_sosa.v<64)
+          %if;(xx=8 or xx=9)
+            <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│%else;─%end;</tt>
+          %elseif;(xx=10 or xx=11)
+            <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│<br />│<br />│%else;───%end;</tt>
+          %elseif;(xx=12)
+            <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│<br />│<br />│<br />│<br />│<br />│<br />│%else;───────%end;</tt>
+          %end;
+        %elseif;(ancestor.anc_sosa.v>63 and ancestor.anc_sosa.v<128)
+          %if;(xx=9 or xx=10)
+            <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)─%else;│%end;</tt>
+          %elseif(xx=11 or xx=12)
+            <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)───%else;│<br />│<br />│%end;</tt>
+          %end;
+        %elseif;(ancestor.anc_sosa.v>127 and ancestor.anc_sosa.v<256)
+          %if;(xx=10 or xx=11)
+            <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│%else;─%end;</tt>
+          %elseif;(xx=12)
+            <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│<br />│<br />│%else;───%end;</tt>
+          %end;
+        %elseif;(ancestor.anc_sosa.v>255 and ancestor.anc_sosa.v<512)
+          %if;(xx=11 or xx=12)
+            <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)─%else;│%end;</tt>
+          %end;
+        %elseif;(ancestor.anc_sosa.v>511 and ancestor.anc_sosa.v<1024)
+          %if;(xx=12)
+           <tt style="%ttstyle;top:%top_;px;left:%left_;px">%if;(yy=0)│%else;─%end;</tt>
+          %end;
         %end;
       %end;
     %end;
