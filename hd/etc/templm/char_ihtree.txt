@@ -1,5 +1,17 @@
-﻿<script type="text/javascript" src="/templm/jquery.1.10.2.js"></script>
+﻿%if;(evar.implx = "on")
+<script type="text/javascript" src="/templm/jquery.1.10.2.js"></script>
 <script type="text/javascript" src="/templm/jquery.line.js"></script>
+%end;
+
+%define;implex()
+  %if;(evar.implx="on")
+    <script type="text/javascript">
+    $(function() {
+      $('#ih-tree1').line(%left1;, %top1;, %left2;, %top2;, {color:"red", stroke:1, opacity:0.3, zindex:1});
+      });
+    </script>
+  %end;
+%end;
 
 %let;hb;13%in;
 %let;wb;8%in;
@@ -389,16 +401,6 @@
         %else;┴%end;
       %end;
     %end;
-  %end;
-%end;
-
-%define;implex()
-  %if;(evar.implx="on")
-    <script type="text/javascript">
-    $(function() {
-      $('#ih-tree1').line(%left1;, %top1;, %left2;, %top2;, {color:"red", stroke:1, opacity:0.3, zindex:1});
-      });
-    </script>
   %end;
 %end;
 
