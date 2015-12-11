@@ -152,11 +152,12 @@
 %define;tools()
   %let;l_on;onclick="this.focus()" onkeydown="if (event.keyCode == 13) javascript:document.tools.submit();"%in;
   %let;l_on1;onchange="valid('tT')"%in;
-  %let;l_on2;onchange="valid('tT'),valid('t1hi')"%in;
   <hr style="clear:both;" %/>
   <form id="tools" style="display:block;" name="tools" method="get" action="%action;">
     <fieldset>
-      <legend>[*tools]0 <input type="submit" value="Ok"/></legend>
+    <input type="hidden" name="t" value="T" %l_on; 
+               %if;(evar.t = "T") checked="checked"%end;%/>
+      <legend>[*tools]0 [ascendants tree]<input type="submit" value="Ok"/></legend>
       %hidden;
       <input type="hidden" name="m" value="A"/>
       %if;(evar.p != "" or evar.n != "" or evar.oc != "")
@@ -169,18 +170,16 @@
       %end;
         %let;l_emaxv;%if;(evar.t != "T")%evar.maxv;%elseif;(bvar.max_anc_tree = "")7%else;%bvar.max_anc_tree;%end;%in;
         <input type="hidden" name="maxv" value="%evar.maxv;"/>
-        <label><code>(X)</code> [*generation/generations]1<input type="number" id="v" name="v" style="font-weight:bold;text-align:right;font-size:13px;width:2.4em;" value="%l_v0;"
+        <label><code>(X)</code> [*generation/generations]1<input type="number" id="v" name="v" style="font-weight:bold;text-align:right;font-size:13px;width:2.4em;" value="%evar.v;"
           autocomplete="off" autofocus="on" 
           min="%if;(evar.t1!="" and evar.cpl="on")5%elseif;(evar.t1!="" and evar.cpl="")4%else;2%end;" 
           max="%if;(evar.t1!="" and evar.cpl="on")14%elseif;(evar.t1!="" and evar.cpl="")13%else;%l_emaxv;%end;"
           title="[generation/generations]0 (X)" accesskey="X"/> ([maximum] [full tree] %l_emaxv;, [compact tree] 13, mode couple 14)</label><br/>
         <fieldset style="float:left;border:0;">
-          <legend><label><input style="display:none;" type="radio" id="tT" name="t" value="T" %l_on;
-                 %if;(evar.t = "T") checked="checked"%end;%/>[*ascendants tree]</label></legend>
         <label><input type="radio" name="t1" value="T" %l_on; %l_on1;
               %if;(evar.t1 = "T") checked="checked"%end;%/>[*full tree]</label>
-         %if;(evar.t = "T")
-                     <a href="%prefix;m=A;t=T;v=%l_v0;;%access;;dag=on;notab=on" accesskey="/" 
+         %if;(evar.t1 = "ft")
+                     <a href="%prefix;m=A;t=T;v=%l_v;;%access;;dag=on;notab=on" accesskey="/" 
            title="[display by slices/slice width/overlap/total width]0 (/)"
            >[display by slices/slice width/overlap/total width]0</a>
          %end;
@@ -188,10 +187,10 @@
                %if;(evar.marriage = "on") checked="checked"%end;%/>[display marriage date]</label>
         <label>     <input type="checkbox" name="dag" value="on" %l_on;
                %if;(evar.dag = "on") checked="checked"%end;%/>[dag]</label>
-        <label><input type="radio" name="t" value="A" %l_on;
-               %if;(evar.t = "A") checked="checked"%end;%/>[*male line/female line]0</label>
-        <label><input type="radio" name="t" value="C" %l_on;
-               %if;(evar.t = "C") checked="checked"%end;%/>[*male line/female line]1</label>
+        <label><input type="radio" name="t1" value="A" %l_on; onchange="valid('tA')"
+               %if;(evar.t1 = "A") checked="checked"%end;%/>[*male line/female line]0</label>
+        <label><input type="radio" name="t1" value="C" %l_on; onchange="valid('tC')"
+               %if;(evar.t1 = "C") checked="checked"%end;%/>[*male line/female line]1</label>
         %if;(bvar.no_image_for_visitor != "yes" or friend or wizard)
           <label>     <input type="checkbox" name="image" value="on" %l_on;
                  %if;(evar.image = "on") checked="checked"%end;%/>[display picture]</label>
@@ -214,18 +213,17 @@
         </table>
       </fieldset>
       <fieldset style="border:0">
-          <legend><label>[*compact tree]</label></legend>
-          <label><input type="radio" name="t1" value="hi" %l_on; %l_on2;
-            %if;(evar.t1 = "hi") checked="checked"%end;%/>[*htree]</label>
-          <label><input type="radio" name="t1" value="ih" %l_on; %l_on2;
-            %if;(evar.t1 = "ih") checked="checked"%end;%/>[*itree]</label>
+          <label><input type="radio" name="t1" value="it" %l_on; %l_on1;
+            %if;(evar.t1 = "it") checked="checked"%end;%/>[*htree]</label>
+          <label><input type="radio" name="t1" value="ht" %l_on; %l_on1;
+            %if;(evar.t1 = "ht") checked="checked"%end;%/>[*itree]</label>
           <label>     <input type="checkbox" name="implx" value="on" %l_on; %l_on1;
             %if;(evar.implx = "on") checked="checked"%end;%/>[display implex links]</label>
           <label>     <input type="checkbox" name="cpl" value="on" %l_on; %l_on1;
             %if;(evar.cpl = "on") checked="checked"%end;%/>mode couple</label>
-          <label>     <input type="checkbox" name="nav" value="on" onchange="valid('t1nav')" %l_on; %l_on1;
+          <label>     <input type="checkbox" name="nav" value="on" %l_on; %l_on1;
             %if;(evar.nav = "on") checked="checked"%end;%/>mode navigation</label>
-          <label>     <input type="checkbox" name="sms" value="on" onchange="valid('t1sms')" %l_on; %l_on1;
+          <label>     <input type="checkbox" name="sms" value="on" %l_on; %l_on1;
             %if;(evar.sms = "on") checked="checked"%end;%/>[visualize/show/hide/summary]1 [missing sosa]</label><br />
           <label><input type="radio" name="t1" value="i" %l_on; %l_on1;
             %if;(evar.t1 = "i") checked="checked"%end;%/>[*itree] [with] [n° Sosa] (6 [and] 8 gen.)</label>
@@ -265,14 +263,16 @@
   %include.anctree_z1;
 %end;
 
-%if;(evar.t = "T" and evar.t1 != "" and evar.t1 != "T")
-  %apply;show_templ(evar.t1)
-%elseif;(evar.t = "T")
+%if;(evar.t1 = "T")
   %apply;tree(l_v)
-%elseif;(evar.t = "A")
+%elseif;(evar.t1 = "A")
   <div style="text-align: center">%apply;male_line("self",l_v0)</div>
-%elseif;(evar.t = "C")
+%elseif;(evar.t1 = "C")
   <div style="text-align: center">%apply;female_line("self",l_v0)</div>
+%elseif;(evar.t1 = "it" or evar.t1= "ht")
+  %include.anctree_hi;
+%else;
+  %apply;show_templ(evar.t1)
 %end;
   %if;not cancel_links;%apply;tools()%end;
   %base_trailer;
