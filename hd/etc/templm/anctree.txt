@@ -263,7 +263,6 @@
 %end;
 
 %define;show_templ(z1)
-  %if;(z1 = "ih" or z1 = "hi");%let;z1;hi%in;%end;
   %include.anctree_z1;
 %end;
 
