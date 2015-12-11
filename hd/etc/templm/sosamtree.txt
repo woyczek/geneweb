@@ -80,10 +80,12 @@
 
 <h3><tt>Sosa M-tree 8 générations (256 sosa) et indication de la génération 9 (☐)</tt></h3>
 <div style="position:relative; left:20px; width:920px; text-align: center;">
-<h3>%first_name; %surname;<br>
+<h3>
+<a href="%prefix;%access;">%first_name; %surname;<br>
 %if;(birth_date.year != "")%birth_date.year;%end
 %if;(birth_date.year != "" and is_dead) – %end;
 %if;(birth_date.year = "" and death_date.year != "")†%else;%death_date.year;%end;&#013;
+</a>
 </h3>
 
 </div>
