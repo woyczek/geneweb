@@ -315,7 +315,7 @@ Dx = 15
 Dy = 15
 Idx = "oui"
 HI = "I"
-version = "2.7"
+version = "2.8"
 try:
 	opts, args = getopt.getopt(sys.argv[1:], "m:g:x:y:w:h:i:o:vx", 
 	  ["mode=", "generations=", "offsetx=", "offsety=", "width=", "height=", "indices=", "orientation", "version"])
@@ -451,7 +451,7 @@ if HI == "m" :
 	h3 = h2 
 	h4 = h2 
 	h5 = h2
-	h6 = 20 
+	h6 = 30 
 	h7 = h6 
 	h8 = 20  
 	h9 = 20
