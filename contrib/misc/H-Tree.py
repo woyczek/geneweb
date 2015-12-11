@@ -289,6 +289,17 @@ def DoOneGen (basex, basey, size, n, sosa, mode, Q, HI, vient) :
 		DictLines[Sgp[0][3]] = [x , basey+1]
 	DoOneGen (x, y, (size-1)/2, n-2, Sgp[0][3], mode, 11, HI, Sgp[1][3])   # maternal grand mother
 
+def offset (s0, d, sens) :
+	global DictSosa
+	return
+	DictSosa[s][1] =  DictSosa[s][1] + sens * d
+	DictSosa[s*2][1] =  DictSosa[s*2][1] + sens * d
+	DictSosa[s*2+2][1] =  DictSosa[s*2+2][1] + sens * d
+	DictSosa[s*4][1] =  DictSosa[s*4][1] + sens * d
+	DictSosa[s*4+2][1] =  DictSosa[s*4+2][1] + sens * d
+	DictSosa[s*4+4][1] =  DictSosa[s*4+6][1] + sens * d
+	DictSosa[s*4+6][1] =  DictSosa[s*4+6][1] + sens * d
+
 def usage (version) :
 	Usage = """
 ./H-tree.py [-g|--generations] [-m|--mode] [-x|--offsetx] [-y|--offsety] [-w|--width] [-h|--height] [-o|--orientation]
@@ -418,6 +429,25 @@ if HI == "m" :
 		ix = DictSosa[i][0]+1
 		strgx = strgx + str(ix) + "//"
 		i += 2
+	
+	h2=140
+	delta=h2/3
+	offset(32, delta,  1)	
+	offset(36, delta,  1)	
+	offset(34, delta, -1)	
+	offset(38, delta, -1)	
+	offset(40, delta, -1)	
+	offset(44, delta,  1)	
+	offset(42, delta, -1)	
+	offset(46, delta, -1)	
+	offset(48, delta,  1)	
+	offset(52, delta,  1)	
+	offset(50, delta, -1)	
+	offset(54, delta, -1)	
+	offset(56, delta,  1)	
+	offset(60, delta,  1)	
+	offset(58, delta, -1)	
+	offset(62, delta, -1)	
 	i = 2
 	while i < 511 :
 		ix = DictSosa[i][1]+1
@@ -447,10 +477,10 @@ if HI == "m" :
 
 	h0 = 0
 	h1 = 0
-	h2 = 140 
+	h2 = 140
 	h3 = h2 
 	h4 = h2 
-	h5 = h2
+	h5 = 30
 	h6 = 30 
 	h7 = h6 
 	h8 = 25  
@@ -474,6 +504,7 @@ if HI == "m" :
 	l15 = l14 + w8
 	l16 = l15
 	
+	delta = -30
 	y0 = 0
 	y1 = y0 + h8
 	y2 = y1 + h6
@@ -481,16 +512,31 @@ if HI == "m" :
 	y4 = y3 + h2
 	y5 = y4 + h8
 	y6 = y5 + h6
-	y7 = y6 + h8
-	y8 = y7 + h2
+	y7 = y6 + h8 + delta
+	y8 = y7 + h2 + delta
 	y9 = y8 + h8
 	y10 = y9 + h6
-	y11 = y10 + h8
+	y11 = y10 + h8 
 	y12 = y11 + h2
 	y13 = y12 + h8
 	y14 = y13 + h6
 	y15 = y14 + h8
 	y16 = y15
+	
+	
+	delta = int(h2/3)
+	y0  += delta
+	y1  += delta
+	y2  += delta
+	y4  -= delta
+	y5  -= delta
+	y6  -= delta
+	y8  += delta
+	y9  += delta
+	y10 += delta
+	y12 -= delta
+	y13 -= delta
+	y14 -= delta
 	
 	print ("%define;left9mw(xx)")
 	print ("  %apply;nth%with;") 
