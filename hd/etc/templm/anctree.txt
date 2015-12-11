@@ -272,7 +272,9 @@
 %elseif;(evar.t1 = "it" or evar.t1= "ht")
   %include.anctree_hi;
 %else;
-  %apply;show_templ(evar.t1)
+  %if;(evar.t1 != "")
+  	%apply;show_templ(evar.t1)
+  %end;
 %end;
   %if;not cancel_links;%apply;tools()%end;
   %base_trailer;
