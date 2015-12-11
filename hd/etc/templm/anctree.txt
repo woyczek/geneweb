@@ -169,7 +169,7 @@
       %end;
         %let;l_emaxv;%if;(evar.t != "T")%evar.maxv;%elseif;(bvar.max_anc_tree = "")7%else;%bvar.max_anc_tree;%end;%in;
         <input type="hidden" name="maxv" value="%evar.maxv;"/>
-        <label><code>(X)</code> [*generation/generations]1<input type="number" id="v" name="v" style="font-weight:bold;text-align:right;font-size:13px;width:2.4em;" value="%l_v;"
+        <label><code>(X)</code> [*generation/generations]1<input type="number" id="v" name="v" style="font-weight:bold;text-align:right;font-size:13px;width:2.4em;" value="%l_v0;"
           autocomplete="off" autofocus="on" 
           min="%if;(evar.t1!="" and evar.cpl="on")5%elseif;(evar.t1!="" and evar.cpl="")4%else;2%end;" 
           max="%if;(evar.t1!="" and evar.cpl="on")14%elseif;(evar.t1!="" and evar.cpl="")13%else;%l_emaxv;%end;"
@@ -180,7 +180,7 @@
         <label><input type="radio" name="t1" value="T" %l_on; %l_on1;
               %if;(evar.t1 = "T") checked="checked"%end;%/>[*full tree]</label>
          %if;(evar.t = "T")
-                     <a href="%prefix;m=A;t=T;v=%l_v;;%access;;dag=on;notab=on" accesskey="/" 
+                     <a href="%prefix;m=A;t=T;v=%l_v0;;%access;;dag=on;notab=on" accesskey="/" 
            title="[display by slices/slice width/overlap/total width]0 (/)"
            >[display by slices/slice width/overlap/total width]0</a>
          %end;
@@ -214,12 +214,11 @@
         </table>
       </fieldset>
       <fieldset style="border:0">
-          <legend><label><input type="radio" id="t1hi" name="t1" value="hi" %l_on; %l_on1;
-            %if;(evar.t1 = "hi") checked="checked"%end;%/>[*compact tree]</label></legend>
-          <label><input type="radio" name="t2" value="h" %l_on; %l_on2;
-            %if;(evar.t2 = "h") checked="checked"%end;%/>[*htree]</label>
-          <label><input type="radio" name="t2" value="i" %l_on; %l_on2;
-            %if;(evar.t2 = "i") checked="checked"%end;%/>[*itree]</label>
+          <legend><label>[*compact tree]</label></legend>
+          <label><input type="radio" name="t1" value="hi" %l_on; %l_on2;
+            %if;(evar.t1 = "hi") checked="checked"%end;%/>[*htree]</label>
+          <label><input type="radio" name="t1" value="ih" %l_on; %l_on2;
+            %if;(evar.t1 = "ih") checked="checked"%end;%/>[*itree]</label>
           <label>     <input type="checkbox" name="implx" value="on" %l_on; %l_on1;
             %if;(evar.implx = "on") checked="checked"%end;%/>[display implex links]</label>
           <label>     <input type="checkbox" name="cpl" value="on" %l_on; %l_on1;
