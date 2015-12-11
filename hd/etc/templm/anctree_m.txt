@@ -1,5 +1,6 @@
 <!-- anctree_m.txt v2 -->
 
+
 %define;left9m(xx)
   %apply;nth%with;
        //8//4//12//4//4//12//12//2//6//2//6//10//14//10//14//2//2//6//6//2//2//6//6//10//10//14//14//10//10//14//14//1//3//1//3//5//7//5//7//1//3//1//3//5//7//5//7//9//11//9//11//13//15//13//15//9//11//9//11//13//15//13//15//1//1//3//3//1//1//3//3//5//5//7//7//5//5//7//7//1//1//3//3//1//1//3//3//5//5//7//7//5//5//7//7//9//9//11//11//9//9//11//11//13//13//15//15//13//13//15//15//9//9//11//11//9//9//11//11//13//13//15//15//13//13//15//15//1//1//1//1//3//3//3//3//1//1//1//1//3//3//3//3//5//5//5//5//7//7//7//7//5//5//5//5//7//7//7//7//1//1//1//1//3//3//3//3//1//1//1//1//3//3//3//3//5//5//5//5//7//7//7//7//5//5//5//5//7//7//7//7//9//9//9//9//11//11//11//11//9//9//9//9//11//11//11//11//13//13//13//13//15//15//15//15//13//13//13//13//15//15//15//15//9//9//9//9//11//11//11//11//9//9//9//9//11//11//11//11//13//13//13//13//15//15//15//15//13//13//13//13//15//15//15//15//
@@ -12,38 +13,38 @@
 %end;
 %define;left9mw(xx)
   %apply;nth%with;
-      /0/25/55/80/280/305/335/360/560/585/615/640/840/865/895/920/920/
+      /0/30/60/90/290/320/350/380/580/610/640/670/870/900/930/960/960/
   %and;xx%end;
 %end;
 %define;top9mh(xx)
   %apply;nth%with;
-      /0/20/50/70/190/210/240/260/380/400/430/450/570/590/620/640/640/
+      /0/25/55/80/220/245/275/300/440/465/495/520/660/685/715/740/740/
   %and;xx%end;
 %end;
 %define;top9mw(xx)
   %apply;nth%with;
-      /25/30/25/200/25/30/25/200/25/30/25/200/25/30/25/0/0/
+      /30/30/30/200/30/30/30/200/30/30/30/200/30/30/30/0/0/
   %and;xx%end;
 %end;
 %define;bhig9l(xx)
   %apply;nth%with;
-    /0/120/120/120/120/30/30/20/20/
+    /0/140/140/140/140/30/30/25/25/
   %and;xx%end;
 %end;
 %define;bwid9l(xx)
   %apply;nth%with;
-    /200/200/200/200/30/30/25/25/0/
+    /200/200/200/200/30/30/30/30/0/
   %and;xx%end;
 %end;
 
 %define;left9mdx(xx)
   %apply;nth%with;
-      ////200//80//100//100//100//100//30//25//30//25//30//25//30//25//15//15//15//15//15//15//15//15//15//15//15//15//15//15//15//15//
+      ////200//90//100//100//100//100//30//30//30//30//30//30//30//30//15//15//15//15//15//15//15//15//15//15//15//15//15//15//15//15//
   %and;xx%end;
 %end;
 %define;top9mdy(xx)
   %apply;nth%with;
-      ////60//60//120//70//120//70//60//60//60//60//60//60//60//60//30//20//30//20//30//20//30//20//30//20//30//20//30//20//30//20//
+      ////70//70//140//80//140//80//70//70//70//70//70//70//70//70//30//25//30//25//30//25//30//25//30//25//30//25//30//25//30//25//
   %and;xx%end;
 %end;
 
@@ -62,12 +63,12 @@
 
 %define;wl(xx)
 	%apply;nth%with;
-	  ///80/2/25/2/
+	  ///80/2/30/2/
   %and;xx%end;
 %end;
 %define;hl(xx)
 	%apply;nth%with;
-	  ///2/70/2/20/
+	  ///2/80/2/25/
   %and;xx%end;
 %end;
 
@@ -89,7 +90,7 @@
 </h3>
 
 </div>
-<div style="position:relative; left:20px; width:920px; height:650px; border:solid 0px;">
+<div style="position:relative; left:20px; width:920px; height:740px; border:solid 0px;">
   %foreach;ancestor_level(0)
     %foreach;ancestor;
 		%ancestor.first_name %ancestor.surname; xxx<br>
@@ -120,7 +121,7 @@
       %let;widl;%apply;wl(level)%in;
       %let;higl;%apply;hl(level)%in;
       %let;font;%if;(level>1 and level<5) 14px
-            %elseif;(level> 4 and level<7) 8px %else; 5px %end;%in;
+            %elseif;(level> 4 and level<7) 14px %else; 14px %end;%in;
       %let;bg;%if;(ancestor.same != "")CBFECE%else;%apply;bg(level)%end;%in;
       %let;bord;%if;(level=8 and ancestor.has_parents)1%else;0%end;%in;
 	  %( draw lines %)
@@ -132,9 +133,8 @@
 	  %(draw box %)
       <div style="position:absolute;top:%top;px;left:%left;px;width:%wid;px;
       background-color:#%bg;;padding:0px;text-align:center;border:solid %bord;px;font-family:monospace;font-size:%font;">
-      <div style="position:relative;width:%wid;px;height:%hig;px;border:solid 0px;">
+      <div style="position:relative; top:4px; width:%wid;px; height:%hig;px; border:solid 0px;">
       %if;(level>1)
-      <br>
       %end;
       %if;(level>1 and level<5) 
 		  <a href="%prefix;m=A;p=%ancestor.first_name;;n=%ancestor.surname;;oc=%ancestor.occ;;
