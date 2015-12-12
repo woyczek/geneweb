@@ -28,8 +28,7 @@
 </head>
 
 %define;symbol(xx)
-  <span %if;(xx.has_sosa)class="color_sosa"%end;
-  >        %if;(xx.has_siblings)&diams;%elseif;(xx.has_parents)&loz;%else;│%end;        </span>
+  <span %if;(xx.has_sosa)class="color_sosa"%end;>│</span>
 %end;
 
 %define;a_tree_line()
@@ -113,7 +112,7 @@
       %if;(not is_first)
         <td colspan="1" align="center">%nn;
         %if;(cell.is_right)<hr class="full"%/>%nn;
-        %else;<tt>&nbsp;</tt>%end;
+        %end;
         </td>
       %end;
       <td colspan="%cell.colspan;" align="%nn;
