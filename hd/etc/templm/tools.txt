@@ -12,7 +12,7 @@
 
 %define;image()
   %if;(bvar.no_image_for_visitor != "yes" or friend or wizard)
-    %apply;checkbox(image,[display picture])
+    %apply;checkbox("image",[display picture])
   %end;
 %end;
 
@@ -21,17 +21,17 @@
   <label><input type="checkbox" name="t1" value="1" %l_on;
          %if;(evar.t1= "1") checked="checked"%end;%/>[branch/branches]0 : Sosa</label>
   %end;
-  %apply;checkbox(siblings,[siblings])
-  %apply;checkbox(nosurn,[first name/first names]0 <span style="text-decoration:line-through;"> [surname/surnames]0</span>))
-  %apply;checkbox(alias,[surname alias] [first name alias])
-  %apply;checkbox(spouse,[include spouses])
-  %apply;checkbox(parents,[parents])
-  %apply;checkbox(rel,[relation/relations]1)
-  %apply;checkbox(witn,[witness/witnesses]1)
-  %apply;checkbox(notes,[note/notes]1)
-  %apply;checkbox(src,[source/sources]1)
-  %apply;checkbox(upd,[update]1)
-  %apply;checkbox(hide,[visualize/show/hide/summary]2)
+  %apply;checkbox("siblings",[siblings])
+  %apply;checkbox("nosurn",[first name/first names]0 <span style="text-decoration:line-through;"> [surname/surnames]0</span>))
+  %apply;checkbox("alias",[surname alias] [first name alias])
+  %apply;checkbox("spouse",[include spouses])
+  %apply;checkbox("parents",[parents])
+  %apply;checkbox("rel",[relation/relations]1)
+  %apply;checkbox("witn",[witness/witnesses]1)
+  %apply;checkbox("notes",[note/notes]1)
+  %apply;checkbox("src",[source/sources]1)
+  %apply;checkbox("upd",[update]1)
+  %apply;checkbox("hide",[visualize/show/hide/summary]2)
 %end;
 
 %define;generation()
@@ -67,10 +67,9 @@
 %end;
 
 %define;tools_anctree()
-  %let;l_on1;onchange="valid('tT')"%in;
   <hr style="clear:both;" %/>
   <form id="tools" style="display:block;" name="tools" method="get" action="%action;">
-    <fieldset>
+    <fieldset style="border:0">
     <input type="hidden" name="t" value="T" %l_on;
                %if;(evar.t = "T") checked="checked"%end;%/>
       <legend>[*tools]0 [ascendants tree] <input type="submit" value="Ok"/></legend>
@@ -88,46 +87,39 @@
         <input type="hidden" name="maxv" value="%evar.maxv;"/>
         %apply;generation()
         <fieldset style="float:left;border:0;">
-        <label><input type="radio" name="t1" value="T" %l_on; %l_on1;
+        <label><input type="radio" name="t1" value="T" %l_on; onchange="valid('tT')"
               %if;(evar.t1 = "T") checked="checked"%end;%/>[*full tree]</label>
          %if;(evar.t1 = "T")
           <a href="%prefix;m=A;t=T;v=%l_v;;%access;;dag=on;notab=on" accesskey="/"
            title="[display by slices/slice width/overlap/total width]0 (/)"
            >[display by slices/slice width/overlap/total width]0</a>
          %end;
-        %apply;checkbox(marriage,[display marriage date])
+        %apply;checkbox("marriage",[display marriage date])
         %apply;image()
-        %apply;checkbox(dag,[dag])
-        %apply;radio(t1,A,[*male line/female line]0)
-        %apply;radio(t1,C,[*male line/female line]1)
-        %apply;checkbox(cgl,[cancel GeneWeb links])
+        %apply;checkbox("dag",[dag])
+        %apply;radio("t1","A",[*male line/female line]0)
+        %apply;radio("t1","C",[*male line/female line]1)
+        %apply;checkbox("cgl",[cancel GeneWeb links])
         %apply;border_color()
       </fieldset>
       <fieldset style="border:0;">
-          <label><input type="radio" name="t1" value="ht" %l_on; %l_on1;
-            %if;(evar.t1 = "ht") checked="checked"%end;%/>[*htree]</label>
-          <label><input type="radio" name="t1" value="it" %l_on; %l_on1;
-            %if;(evar.t1 = "it") checked="checked"%end;%/>[*itree]</label>
-          <label>     <input type="checkbox" name="implx" value="on" %l_on; %l_on1;
-            %if;(evar.implx = "on") checked="checked"%end;%/>[display implex links]</label>
-          <label>     <input type="checkbox" name="cpl" value="on" %l_on; %l_on1;
-            %if;(evar.cpl = "on") checked="checked"%end;%/>mode couple</label>
-          <label>     <input type="checkbox" name="nav" value="on" %l_on; %l_on1;
-            %if;(evar.nav = "on") checked="checked"%end;%/>mode navigation</label>
-          <label>     <input type="checkbox" name="sms" value="on" %l_on; %l_on1;
+          %apply;radio("t1","ht",[*htree])
+          %apply;radio("t1","it",[*itree])
+          %apply;checkbox("implx",[display implex links])
+          %apply;checkbox("cpl",[display couple])
+          %apply;checkbox("nav",[navigation])
+          <label>     <input type="checkbox" name="sms" value="on" %l_on;
             %if;(evar.sms = "on") checked="checked"%end;%/>[visualize/show/hide/summary]1 [missing sosa]</label><br%/>
-          <label><input type="radio" name="t1" value="i" %l_on; %l_on1;
+          <label><input type="radio" name="t1" value="i" %l_on;
             %if;(evar.t1 = "i") checked="checked"%end;%/>[*itree] [with] [n° Sosa], 6/8 [generation/generations]1</label>
-          <label><input type="radio" name="t1" value="h" %l_on; %l_on1;
+          <label><input type="radio" name="t1" value="h" %l_on;
             %if;(evar.t1 = "h") checked="checked"%end;%/>[*htree] [with] [n° Sosa], 8 [generation/generations]1, mode couple</label>
-          <label><input type="radio" name="t1" value="m" %l_on; %l_on1;
+          <label><input type="radio" name="t1" value="m" %l_on;
             %if;(evar.t1 = "m") checked="checked"%end;%/>[*tree] H3 mix name+Sosa, 9 [generation/generations]1</label>
-		  <label>     <code>(X)</code> [font size]<input type="number" id="fs" name="fs" 
-			style="font-weight:bold;text-align:right;font-size:13px;width:2.4em;" value="%evar.fs;"
-			autocomplete="off" autofocus="on"
-			title="[font size] (X)" accesskey="X"/> max 16
-          </label>
-       </fieldset>
+            <label>    <code>(X)</code> [font size]<input type="number" id="fs" name="fs" 
+            style="font-weight:bold;text-align:right;font-size:13px;width:2.4em;" value="%evar.fs;"
+            autocomplete="off" title="[font size] (X)" accesskey="X"/> max 16</label>
+      </fieldset>
     </fieldset>
   </form>
 %end;
@@ -210,18 +202,18 @@
       %end;
       <fieldset>
         %if;(evar.m = "RLM" or evar.m = "RL" or evar.em = "R")
-          %apply;checkbox(spouse,[include spouses])
+          %apply;checkbox("spouse",[include spouses])
         %end;
         <label><input type="checkbox" name="opt" value="no_index" %l_on;
                %if;(evar.opt = "no_index") checked="checked"%end;%/>[link to use]</label>
-        %apply;checkbox(cgl,[cancel GeneWeb links])
+        %apply;checkbox("cgl",[cancel GeneWeb links])
         %apply;image()
         %apply;border_color()
       </fieldset>
       %if;(evar.m = "RLM")
         <fieldset style="border:0;">
-          %apply;checkbox(invert,invert)
-          %apply;checkbox(new,new)
+          %apply;checkbox("invert",[invert])
+          %apply;checkbox("new",[new])
           <label>lim<input name="lim" value="%evar.lim;" size="1"%/></label>
         </fieldset>
       %end;
@@ -252,17 +244,17 @@
         <input type="hidden" name="maxv" value="%evar.maxv;"%/>
         %apply;generation()
         %if;(evar.fam7 != "on" and evar.t != "H" and evar.t != "L")
-          %apply;checkbox(only,[only the generation selected])
+          %apply;checkbox("only",[only the generation selected])
         %end;
       </p>
       <p>
-        %apply;checkbox(cgl,[cancel GeneWeb links])
+        %apply;checkbox("cgl",[cancel GeneWeb links])
         %if;(evar.t = "H")
-          %apply;checkbox(marriage,[display marriage date])
-          %apply;checkbox(sosa,[n° Sosa])
-          %apply;checkbox(xy,x & y)
-          %apply;checkbox(siblings,[siblings])
-          %apply;checkbox(timeline,[time line])
+          %apply;checkbox("marriage",[display marriage date])
+          %apply;checkbox("sosa",[n° Sosa])
+          %apply;checkbox("xy",[x & y])
+          %apply;checkbox("siblings",[siblings])
+          %apply;checkbox("timeline",[time line])
           <label>[generation/generations]0<input name="gen" class="number" value="%evar.gen;"
                  size="1" placeholder="40" %/>(< 50 [years old])</label>
         %end;
@@ -270,20 +262,20 @@
       %if;(evar.fam7 = "on")
         <fieldset style="border:0;"><legend>7 [family/families]1</legend>
           <input type="hidden" name="fam7" value="on"%/>
-          %apply;radio(tf1,fam73,[Χρόνος])
-          %apply;radio(tf1,fam70,[date/dates]0, [place]0)
+          %apply;radio("tf1","fam73",[Χρόνος])
+          %apply;radio("tf1","fam70",[date/dates]0, [place]0)
           %if;(bvar.no_image_for_visitor != "yes" or friend or wizard)
-            %apply;radio(tf1,fam71,[image/images]1 [long display])
-            %apply;radio(tf1,fam72,[image/images]1 onmousemove)
+            %apply;radio("tf1","fam71",[image/images]1 [long display])
+            %apply;radio("tf1","fam72",[image/images]1 onmousemove)
           %end;
-          %apply;checkbox(spouse,[spouse/spouses]1)
-          %apply;checkbox(cousins,[cousins])
+          %apply;checkbox("spouse",[spouse/spouses]1)
+          %apply;checkbox("cousins",[cousins])
         </fieldset>
       %end;
       %if;(evar.tf1 != "" and evar.fam7 != "on")
         <fieldset  style="border:0;">
           <legend>[*list/list (ancestors)]0</legend>
-          %apply;radio(tf1,sb,[surnames branch])
+          %apply;radio("tf1","sb",[surnames branch])
           <label><input type="radio" name="tf1" value="surn" %l_on;
             %if;(evar.tf1 = "surn") checked="checked"%end;%/>[list eclair]0 - [surname/surnames]1 / [places]</label>
           <label><input type="radio" name="tf1" value="place" %l_on;
@@ -291,17 +283,17 @@
         </fieldset>
         <fieldset style="border:0;">
           <legend>[*statistics]</legend>
-          %apply;radio(tf1,cal,[calendar/calendars]0)
-          %apply;radio(tf1,bmdm,[year/month/day]1)
+          %apply;radio("tf1","cal",[calendar/calendars]0)
+          %apply;radio("tf1,"bmdm",[year/month/day]1)
           <label><input type="radio" name="tf1" value="afm" %l_on;
                   %if;(evar.tf1 = "afm") checked="checked"%end;%/>[age] ([father/mother]0, [father/mother]1)</label>
-          %apply;radio(tf1,aax,[age at %s birth date:::x])
+          %apply;radio("tf1","aax",[age at %s birth date:::x])
           <label><input type="radio" name="tf1" value="nxd" %l_on;
                   %if;(evar.tf1 = "nxd") checked="checked"%end;%/>[year/month/day]0 [death] - [year/month/day]0 [death] x</label>
           %apply;(radio(tf1,aad,[age at death])
           <label><input type="radio" name="tf1" value="mm" %l_on;
                   %if;(evar.tf1 = "mm") checked="checked"%end;%/>[year/month/day]1 [birth] = [year/month/day]1 [death] ?</label>
-          %apply;radio(tf1,ars,[Αἰθήρ])
+          %apply;radio("tf1","ars",[Αἰθήρ])
         </fieldset>
       %end;
     </fieldset>
@@ -331,14 +323,14 @@
         %let;l_emaxv;%if;(evar.maxv = "")%l_bmaxv;%elseif;(evar.maxv < l_bmaxv)%evar.maxv;%else;%l_bmaxv;%end;%in;
         <input type="hidden" name="maxv" value="%evar.maxv;"%/>
         %apply;generation()
-        %apply;checkbox(only,[only the generation selected])
+        %apply;checkbox("only",[only the generation selected])
         </p>
       %end;
       %if;(evar.t = "D" or evar.t = "G" or evar.t = "Z")
         <p>
         %if;(evar.i1 != "")<input type="hidden" name="i1" value="%evar.i1;" %/>%end;
         %if;(evar.l != "")<input type="hidden" name="l" value="%evar.l;" %/>%end;
-        %apply;checkbox(cgl,[cancel GeneWeb links])
+        %apply;checkbox("cgl",[cancel GeneWeb links])
         %apply;image()
         </p>
       %end;
@@ -417,17 +409,17 @@
         </p>
         %end;
         <p>
-          %apply;checkbox(cgl,[cancel GeneWeb links])
+          %apply;checkbox("cgl",[cancel GeneWeb links])
           %if;(evar.tl1)%apply;image()%end;
         </p>
         %if;(evar.tl1 = "")
           %if;(evar.t = "L" or evar.t = "M" or evar.t = "F")
             <fieldset  style="border:0;">
               <legend>
-              %apply;radio(t,L,[*long display]0)
+              %apply;radio("t","L",[*long display]0)
               </legend>
-              %apply;radio(t,M,[male line/female line]0)
-              %apply;radio(t,F,[male line/female line]1)
+              %apply;radio("t","M",[male line/female line]0)
+              %apply;radio("t","F",[male line/female line]1)
               %apply;longdisplay()
             </fieldset>
           %end;
@@ -438,18 +430,18 @@
           <input type="hidden" name="t" value="L"%/>
           <fieldset  style="border:0;">
             <legend>[*statistics]</legend>
-            %apply;radio(tl1,cal,[calendar/calendars]0)
-            %apply;radio(tl1,bmdm,[year/month/day]1)
+            %apply;radio("tl1","cal",[calendar/calendars]0)
+            %apply;radio("tl1","bmdm",[year/month/day]1)
             <label><input type="radio" name="tl1" value="afm" %l_on;
                     %if;(evar.tl1 = "afm") checked="checked"%end;%/>[age] ([father/mother]0, [father/mother]1)</label>
             <label><input type="radio" name="tl1" value="aax" %l_on;
                     %if;(evar.tl1 = "aax") checked="checked"%end;%/>[age at %s birth date:::x]</label>
             <label><input type="radio" name="tl1" value="nxd" %l_on;
                     %if;(evar.tl1 = "nxd") checked="checked"%end;%/>[year/month/day]0 [death] - [year/month/day]0 [death] x</label>
-            %apply;radio(tl1,aad,[age at death])
+            %apply;radio("tl1","aad",[age at death])
             <label><input type="radio" name="tl1" value="mm" %l_on;
                     %if;(evar.tl1 = "mm") checked="checked"%end;%/>[year/month/day]1 [birth] = [year/month/day]1 [death] ?</label>
-            %apply;radio(tl1,ars,[Αἰθήρ]
+            %apply;radio("tl1","ars",[Αἰθήρ]
           </fieldset>
         %end;
     </fieldset>
