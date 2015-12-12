@@ -2372,7 +2372,7 @@ sv: Postnummer
 
     ascendants tree
 de: Stammbaum der Vorfahren
-en: Family Tree
+en: family tree
 es: árbol de ascendencia
 fi: Esipolvitaulu
 fr: arbre d’ascendance
@@ -13968,3 +13968,15 @@ fr: arbre en H
     itree
 en: I-Tree
 fr: arbre en I
+
+    descendants tree
+en: descendants tree
+fr: arbre de descendance
+
+    display couple
+en: display by couple
+fr: afficher par couple
+
+    navigation
+en: navigate on the compact tree
+fr: navigation sur l’arbre compact
