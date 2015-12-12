@@ -1,4 +1,4 @@
-%if;(evar.t = "T" and evar.t1 = "T")%doctype_transitional;%else;%doctype;%end;
+﻿%if;(evar.t = "T" and evar.t1 = "T")%doctype_transitional;%else;%doctype;%end;
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <!-- $Id: anctree.txt,v 7.00 2015/12/10 21:34:32 mr Exp $ -->
@@ -9,8 +9,11 @@
     %elseif;(evar.t = "C" or evar.t1 = "C")[*male line/female line]1%nn;
     %elseif;(evar.t1 = "ht" or evar.t1 = "h")[*htree]
     %elseif;(evar.t1 = "it" or evar.t1 = "i") [*itree]
-    %else[*tree] %if;(evar.t1 = "m")mix 9 g%end;%end;
-    %if;(evar.t1 != "")[:]%sp;
+    %elseif;(evar.m = "A") [*ascendants tree]
+    %elseif;(evar.m = "D") [*descendants tree]
+    %elseif;(evar.t1 = "m")mix 9 g
+    %end;
+    %if;(evar.t != "")[:]%sp;
       %if;(public_name != "")%public_name;%else;%first_name;%end;
       %if;(qualifier != "") %qualifier;%end; %surname;
     %end;
@@ -25,9 +28,8 @@
 </head>
 
 %define;symbol(xx)
-  <span %if;(xx.has_sosa)class="color_sosa"%end;>
-    %if;(xx.has_siblings)&diams;%elseif;(xx.has_parents)&loz;%else;|%end;
-  </span>
+  <span %if;(xx.has_sosa)class="color_sosa"%end;
+  >        %if;(xx.has_siblings)&diams;%elseif;(xx.has_parents)&loz;%else;│%end;        </span>
 %end;
 
 %define;a_tree_line()
@@ -38,7 +40,7 @@
         <td colspan="1" align="center"><tt>&nbsp;</tt></td>
       %end;
       <td colspan="%cell.colspan;" align="center">%nn;
-        %if;(cell.is_empty or cell.is_top)<tt>&nbsp;</tt>%else;|%end;
+        %if;(cell.is_empty or cell.is_top)<tt>&nbsp;</tt>%else;│%end;
       </td>
     %end;
     </tr>
@@ -121,7 +123,7 @@
       %if;cell.is_empty;<tt>&nbsp;</tt>%nn;
       %elseif;cell.is_left;<hr class="%right;"%/>%nn;
       %elseif;cell.is_right;<hr class="%left;"%/>%nn;
-      %else;|%end;
+      %else;│%end;
       </td>
     %end;
     </tr>
@@ -136,7 +138,7 @@
     <a href="%prefix;%xx.access">%xx;</a>
     %end;
     %xx.title;%xx.dates;
-    %if;("xx" != "self")<br%/>|<br%/>%end;
+    %if;("xx" != "self")<br%/>│<br%/>%end;
   %end;%nl;
 %end;
 
@@ -149,7 +151,7 @@
     <a href="%prefix;%xx.access">%xx;</a>
     %end;
     %xx.title;%xx.dates;
-    %if;("xx" != "self")<br%/>|<br%/>%end;
+    %if;("xx" != "self")<br%/>│<br%/>%end;
   %end;%nl;
 %end;
 

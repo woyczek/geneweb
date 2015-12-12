@@ -1,4 +1,4 @@
-%doctype;
+﻿%doctype;
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <!-- $Id: dag.txt,v 7.00 2015/04/30 11:14:09 mr Exp $ -->
@@ -121,7 +121,7 @@
     <tr align="left">
     %foreach;dag_cell;
       <td %if;(dag_cell.colspan > 1)colspan="%dag_cell.colspan;" %end;align="%dag_cell.align;">%nn;
-      %if;dag_cell.is_nothing;&nbsp;%nn;
+      %if;dag_cell.is_nothing;%nn;
       %elseif;dag_cell.is_bar;
         %if;(dag_cell.bar_link != "" and evar.cgl != "on")
           <a style="text-decoration:none;" href="%dag_cell.bar_link;;image=%evar.image;" title="%l_a;">        │        </a>%nn;
