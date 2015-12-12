@@ -125,7 +125,7 @@
       %elseif;dag_cell.is_bar;
         %if;(dag_cell.bar_link != "" and evar.cgl != "on")
           <a style="text-decoration:none;" href="%dag_cell.bar_link;;image=%evar.image;" title="%l_a;">        │        </a>%nn;
-        %else;│%end;
+        %end;
       %elseif;(dag_cell.item != "")%dag_cell.item;
       %elseif;(dag_cell.text != "")%dag_cell.text;
       %else;
