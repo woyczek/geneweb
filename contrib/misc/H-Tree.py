@@ -478,7 +478,7 @@ if HI == "m" :
 
 	h0 = 0    # hauteur des boites pour chaque niveau de sosa
 	h1 = 0
-	h2 = 140
+	h2 = 150
 	h3 = h2 
 	h4 = h2 
 	h5 = 30
