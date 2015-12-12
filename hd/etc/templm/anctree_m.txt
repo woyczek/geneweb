@@ -163,7 +163,7 @@
 		  %if;(ancestor.birth_date.year != "")%ancestor.birth_date.year;%end
           %if;(ancestor.birth_date.year != "" and ancestor.is_dead) – %end;
           %if;(ancestor.birth_date.year = "" and ancestor.death_date.year != "")†%else;%ancestor.death_date.year;%end;&#013;
-		  <br>&amp;<br>
+		  <br>&amp;%if;(evar.marriage="on")%ancestor.family.marriage_date.year;%end;<br> 
 		  <a href="%prefix;m=A;p=%ancestor.spouse.first_name;;n=%ancestor.spouse.surname;;oc=%ancestor.occ;;
 		           maxv=;v=7;t=T;marriage=on;image=on;bd=;color=on;t1=m"
 		  title="Sosa %expr(ancestor.anc_sosa+1)[:] ♀ 
