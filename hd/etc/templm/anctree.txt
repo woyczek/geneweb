@@ -177,7 +177,7 @@
   %include.anctree_z1;
 %end;
 
-%if;(evar.t = "T" or evar.t1 = "T")
+%if;(evar.t = "T" and (evar.t1 = "T" or evar.t1 = ""))
   %apply;tree(l_v)
 %elseif;(evar.t = "A" or evar.t1 = "A")
   <div style="text-align: center">%apply;male_line("self",l_v0)</div>
@@ -188,11 +188,12 @@
 %elseif;(evar.t1 != "")
   %apply;show_templ(evar.t1)
 %end;
-  %if;not cancel_links;
-    %import;tools;
-    %apply;tools_anctree()
-  %end;
+
+%if;not cancel_links;
+  %import;tools;
+  %apply;tools_anctree()
   %base_trailer;
   %copyright;
+%end;
 </body>
 </html>
