@@ -3163,7 +3163,7 @@ eo: nuligi GeneWeb-ajn ligilojn
 es: anular los lazos GeneWeb
 et: ilma GeneWebi viideteta
 fi: ei GeneWeb-linkkejä
-fr: masquer les liens internes
+fr: masquer les liens
 he:  בטל קשרי GeneWeb
 is: án GeneWeb tengla
 it: annullare i links
@@ -13953,9 +13953,9 @@ fr: arbre complet
 en: compact tree
 fr: arbre compact
 
-    display implex links
-en: display links between implexes
-fr: afficher les liens entre les implexes
+    implex links
+en: link implexes
+fr: relier les implexes
 
     dag
 en: fusion implexes
@@ -13969,14 +13969,22 @@ fr: arbre en H
 en: I-Tree
 fr: arbre en I
 
+    mtree
+en: mixed tree
+fr: arbre mixte
+
     descendants tree
 en: descendants tree
 fr: arbre de descendance
 
-    display couple
-en: display by couple
-fr: afficher par couple
+    by couple
+en: by couple
+fr: par couple
 
     navigation
-en: navigate on the compact tree
-fr: navigation sur l’arbre compact
+en: navigate on the tree
+fr: naviguer sur l’arbre
+
+    font size
+en: font size
+fr: taille de police
