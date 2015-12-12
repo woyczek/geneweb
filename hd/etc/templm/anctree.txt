@@ -26,7 +26,7 @@
 
 %define;symbol(xx)
   <span %if;(xx.has_sosa)class="color_sosa"%end;
-  >        %if;(xx.has_siblings)&diams;%elseif;(xx.has_parents)&loz;%else;|%end;        </span>
+  >        %if;(xx.has_siblings)&diams;%elseif;(xx.has_parents)&loz;%else;│%end;        </span>
 %end;
 
 %define;a_tree_line()
@@ -37,7 +37,7 @@
         <td colspan="1" align="center"><tt>&nbsp;</tt></td>
       %end;
       <td colspan="%cell.colspan;" align="center">%nn;
-        %if;(cell.is_empty or cell.is_top)<tt>&nbsp;</tt>%else;|%end;
+        %if;(cell.is_empty or cell.is_top)<tt>&nbsp;</tt>%else;│%end;
       </td>
     %end;
     </tr>
@@ -120,7 +120,7 @@
       %if;cell.is_empty;<tt>&nbsp;</tt>%nn;
       %elseif;cell.is_left;<hr class="%right;"%/>%nn;
       %elseif;cell.is_right;<hr class="%left;"%/>%nn;
-      %else;|%end;
+      %else;│%end;
       </td>
     %end;
     </tr>
@@ -131,7 +131,7 @@
   %if;(nn > 0)
     %if;(xx.has_parents)%apply;male_line("xx.father", nn - 1)%end;
     <a href="%prefix;%xx.access">%xx;</a>%xx.title;%xx.dates;
-    %if;("xx" != "self")<br%/>|<br%/>%end;
+    %if;("xx" != "self")<br%/>│<br%/>%end;
   %end;%nl;
 %end;
 
@@ -139,7 +139,7 @@
   %if;(nn > 0)
     %if;(xx.has_parents)%apply;female_line("xx.mother", nn - 1)%end;
     <a href="%prefix;%xx.access">%xx;</a>%xx.title;%xx.dates;
-    %if;("xx" != "self")<br%/>|<br%/>%end;
+    %if;("xx" != "self")<br%/>│<br%/>%end;
   %end;%nl;
 %end;
 
@@ -164,7 +164,7 @@
             %elseif;(env.key = "templ")
             %else;%env.key;=%env.val.decoded;;%nn;
             %end;
-          %end;">[*tree] &darr;&darr;&darr;</a>
+          %end;">[*descendants tree]</a>
       </span>
     </div>
   %end;

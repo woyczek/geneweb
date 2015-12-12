@@ -42,7 +42,7 @@
                 %elseif;(env.key = "templ")
                 %else;%env.key;=%env.val.decoded;;%nn;
                 %end;
-              %end;">[*tree] &darr;&darr;&darr;</a>
+              %end;">[*descendants tree]</a>
         </span>
       %elseif;(evar.m = "D")
         <span>
@@ -52,7 +52,7 @@
                 %elseif;(env.key = "dag" or env.key = "templ")
                 %else;%env.key;=%env.val.decoded;;%nn;
                 %end;
-              %end;">[*tree] &uarr;&uarr;&uarr;</a>
+              %end;">[*ascendants tree]</a>
         </span>
       %end;
     %end;
@@ -124,8 +124,8 @@
       %if;dag_cell.is_nothing;&nbsp;%nn;
       %elseif;dag_cell.is_bar;
         %if;(dag_cell.bar_link != "" and evar.cgl != "on")
-          <a style="text-decoration:none;" href="%dag_cell.bar_link;;image=%evar.image;" title="%l_a;">        %l_arr;        </a>%nn;
-        %else;|%end;
+          <a style="text-decoration:none;" href="%dag_cell.bar_link;;image=%evar.image;" title="%l_a;">        │        </a>%nn;
+        %else;│%end;
       %elseif;(dag_cell.item != "")%dag_cell.item;
       %elseif;(dag_cell.text != "")%dag_cell.text;
       %else;
