@@ -121,8 +121,13 @@
           <label><input type="radio" name="t1" value="h" %l_on; %l_on1;
             %if;(evar.t1 = "h") checked="checked"%end;%/>[*htree] [with] [n° Sosa], 8 [generation/generations]1, mode couple</label>
           <label><input type="radio" name="t1" value="m" %l_on; %l_on1;
-            %if;(evar.t1 = "m") checked="checked"%end;%/>[*tree] H3 mix name+Sosa, 9 [generation/generations]1</label><br%/>
-      </fieldset>
+            %if;(evar.t1 = "m") checked="checked"%end;%/>[*tree] H3 mix name+Sosa, 9 [generation/generations]1</label>
+		  <label>     <code>(X)</code> [font size]<input type="number" id="fs" name="fs" 
+			style="font-weight:bold;text-align:right;font-size:13px;width:2.4em;" value="%evar.fs;"
+			autocomplete="off" autofocus="on"
+			title="[font size] (X)" accesskey="X"/> max 16
+          </label>
+       </fieldset>
     </fieldset>
   </form>
 %end;

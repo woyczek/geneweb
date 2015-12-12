@@ -326,7 +326,7 @@ Dx = 15
 Dy = 15
 Idx = "oui"
 HI = "I"
-version = "2.8"
+version = "2.9"
 try:
 	opts, args = getopt.getopt(sys.argv[1:], "m:g:x:y:w:h:i:o:vx", 
 	  ["mode=", "generations=", "offsetx=", "offsety=", "width=", "height=", "indices=", "orientation", "version"])
@@ -422,8 +422,8 @@ if HI == "m" :
 		print ("[" + strg + "]")
 		j += 1
 
-	strgx = "       //"
-	strgy = "       //"
+	strgx = "	//"
+	strgy = "	//"
 	i = 2
 	while i < 511 :
 		ix = DictSosa[i][0]+1
@@ -466,7 +466,7 @@ if HI == "m" :
 	print ("%end;")
 	
 	w1 = 200
-	w2 = 200 
+	w2 = 250 
 	w3 = w2 
 	w4 = w3 
 	w5 = 30  
@@ -504,7 +504,7 @@ if HI == "m" :
 	l15 = l14 + w8
 	l16 = l15
 	
-	delta = -30
+	delta1 = 30
 	y0 = 0
 	y1 = y0 + h8
 	y2 = y1 + h6
@@ -512,8 +512,8 @@ if HI == "m" :
 	y4 = y3 + h2
 	y5 = y4 + h8
 	y6 = y5 + h6
-	y7 = y6 + h8 + delta
-	y8 = y7 + h2 + delta
+	y7 = y6 + h8 - delta1
+	y8 = y7 + h2 - delta1
 	y9 = y8 + h8
 	y10 = y9 + h6
 	y11 = y10 + h8 
@@ -540,27 +540,27 @@ if HI == "m" :
 	
 	print ("%define;left9mw(xx)")
 	print ("  %apply;nth%with;") 
-	print ("      /%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/"%(l0,l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,l13,l14,l15,l16))
+	print ("	/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/"%(l0,l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,l13,l14,l15,l16))
 	print ("  %and;xx%end;")
 	print ("%end;")	
 	print ("%define;top9mh(xx)")
 	print ("  %apply;nth%with;")
-	print ("      /%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/"%(y0,y1,y2,y3,y4,y5,y6,y7,y8,y9,y10,y11,y12,y13,y14,y15,y16))
+	print ("	/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/"%(y0,y1,y2,y3,y4,y5,y6,y7,y8,y9,y10,y11,y12,y13,y14,y15,y16))
 	print ("  %and;xx%end;")
 	print ("%end;")	
 	print ("%define;top9mw(xx)")
 	print ("  %apply;nth%with;")
-	print ("      /%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/"%(w7,w6,w7,w3,w7,w6,w7,w2,w7,w6,w7 ,w3 ,w7 ,w6 ,w7 ,00 ,00 ))
+	print ("	/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/"%(w7,w6,w7,w3,w7,w6,w7,w2,w7,w6,w7 ,w3 ,w7 ,w6 ,w7 ,00 ,00 ))
 	print ("  %and;xx%end;")
 	print ("%end;")	
 	print ("%define;bhig9l(xx)")
 	print ("  %apply;nth%with;")
-	print ("    /%s/%s/%s/%s/%s/%s/%s/%s/%s/"%(h1,h2,h3,h4,h5,h6,h7,h8,h9))
+	print ("	/%s/%s/%s/%s/%s/%s/%s/%s/%s/"%(h1,h2,h3,h4,h5,h6,h7,h8,h9))
 	print ("  %and;xx%end;")
 	print ("%end;")
 	print ("%define;bwid9l(xx)")
 	print ("  %apply;nth%with;")
-	print ("    /%s/%s/%s/%s/%s/%s/%s/%s/%s/"%(w1,w2,w3,w4,w5,w6,w7,w8,w9))
+	print ("	/%s/%s/%s/%s/%s/%s/%s/%s/%s/"%(w1,w2,w3,w4,w5,w6,w7,w8,w9))
 	print ("  %and;xx%end;")
 	print ("%end;")
 	print ("")
@@ -581,15 +581,31 @@ if HI == "m" :
 	
 	print ("%define;left9mdx(xx)")
 	print ("  %apply;nth%with;") 
-	print ("      %s"%strgdx)
+	print ("	%s"%strgdx)
 	print ("  %and;xx%end;")
 	print ("%end;")	
 	print ("%define;top9mdy(xx)")
 	print ("  %apply;nth%with;") 
-	print ("      %s"%strgdy)
+	print ("	%s"%strgdy)
+	print ("  %and;xx%end;")
+	print ("%end;")
+	dy1 = (h2 - h5)/2
+	dy2 = dy1-delta
+	dy3 = delta1
+	print ("%define;dy1()"+str(dy1)+"%end;")
+	print ("%define;dy2()"+str(dy2)+"%end;")
+	print ("%define;dy3()"+str(dy3)+"%end;")
+	print ("")
+	print ("%define;wl(xx)")
+	print ("  %apply;nth%with;") 
+	print ("	///%s/2/%s/2/"%(str(w6+2*w7), w7)) #///90/2/30/2/
 	print ("  %and;xx%end;")
 	print ("%end;")	
-	print ("")
+	print ("%define;hl(xx)")
+	print ("  %apply;nth%with;") 
+	print ("	///2/%s/2/%s/"%(str(2*h8+h6-delta1), str(dy1+h8-delta))) #  ///2/50/2/34/
+	print ("  %and;xx%end;")
+	print ("%end;")
 
 	sys.exit()
 
