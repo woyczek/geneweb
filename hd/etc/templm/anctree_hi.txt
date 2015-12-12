@@ -246,7 +246,7 @@
 %let;size2;%apply;size(evar.v-2)%in;
 %let;size3;%apply;size(evar.v-3)%in;
 %if;(evar.t = "T" and evar.v > 3)
-  %if;(evar.t1 = "it")
+  %if;(evar.t1 = "ht")
     %if;(evar.v < 15 and evar.cpl = "on")
       <div id="ih-tree1" style="position:relative;width:%size2;px;height:%size3;px">
       %apply;graph(evar.v-2,1,2)
@@ -257,7 +257,7 @@
       %apply;graphlinks(evar.v-1,1)
     %end;
     </div>
-  %elseif;(evar.t1 = "ht")
+  %elseif;(evar.t1 = "it")
     %if;(evar.v < 15 and evar.cpl = "on")
       <div id="ih-tree1" style="position:relative;width:%size2;px;height:%size2;px">
       %apply;graph(evar.v-2,0,2)
