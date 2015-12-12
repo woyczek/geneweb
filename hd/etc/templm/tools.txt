@@ -37,7 +37,7 @@
 %define;generation()
   <label><code>(X)</code> [*generation/generations]1<input type="number" id="v" name="v" style="font-weight:bold;text-align:right;font-size:13px;width:2.4em;" value="%evar.v;"
   autocomplete="off" autofocus="on"
-  min="%if;(evar.m = "A")
+  min="%if;(evar.m = "A" or evar.m = "D")
          %if;(evar.t1!="" and evar.t1!="T" and evar.cpl="on")5%elseif;(evar.t1!="" and evar.t1!="T" and evar.cpl="")4%else;2%end;
        %else;1
        %end;"
@@ -98,7 +98,7 @@
         %apply;image()
         %apply;checkbox("dag",[dag])
         %apply;radio("t1","A",[*male line/female line]0)
-        %apply;radio("t1","C",[*male line/female line]1)
+        %apply;radio("t1","C",[*male line/female line]1)<br%/>
         %apply;checkbox("cgl",[cancel GeneWeb links])
         %apply;border_color()
       </fieldset>
@@ -116,9 +116,9 @@
             %if;(evar.t1 = "h") checked="checked"%end;%/>[*htree] [with] [n° Sosa], 8 [generation/generations]1, mode couple</label>
           <label><input type="radio" name="t1" value="m" %l_on;
             %if;(evar.t1 = "m") checked="checked"%end;%/>[*tree] H3 mix name+Sosa, 9 [generation/generations]1</label>
-            <label>    <code>(X)</code> [font size]<input type="number" id="fs" name="fs" 
+            <label>    [font size]<input type="number" id="fs" name="fs" 
             style="font-weight:bold;text-align:right;font-size:13px;width:2.4em;" value="%evar.fs;"
-            autocomplete="off" title="[font size] (X)" accesskey="X"/> max 16</label>
+            autocomplete="off" title="[font size]" /> max 16</label>
       </fieldset>
     </fieldset>
   </form>
