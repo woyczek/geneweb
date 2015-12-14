@@ -312,7 +312,7 @@
       %if;(evar.v < 13 and evar.cpl = "on")
         <div id="ih-tree1" style="position:relative;left:10px;width:%size2;px;height:%size2;px">
         %apply;graph(evar.v-2,0,2)
-        %apply;graphlinks(evar.v-1,0)
+        %apply;graphlinks(evar.v-2,0)
         </div>
       %elseif;(evar.v < 12 and evar.cpl != "on")
         <div id="ih-tree1" style="position:relative;left:10px;width:%size1;px;height:%size1;px">
