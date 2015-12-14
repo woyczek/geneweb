@@ -15,12 +15,12 @@
 
 %let;hbc;13%in;
 %let;wbc;8%in;
-%let;hbs;20%in;
-%let;wbs;20%in;
-%let;hb1;17%in;
-%let;wb1;17%in;
+%let;hbs;18%in;
+%let;wbs;21%in;
+%let;hb1;15%in;
+%let;wb1;18%in;
 
-%let;ttstyle;position:absolute;font-family:monospace;line-height:10pt;%in;
+%let;ttstyle;position:absolute;font-family:monospace;font-size:10pt;line-height:10pt;%in;
 
 %define;bg(xx)
   %apply;nth%with;
@@ -41,7 +41,7 @@
 %import;anctree_hi_indexes
 
 %define;boxsosa(xx, yy, ll, bg) %( x = sosa, y = level max, l = level %)
-  <div style="position:relative;width:%wb1;px;height:%hb1;px;text-align:center;border:solid 1px;background-color:#bg">
+  <div style="position:relative;width:%wb1;px;height:%hb1;px;text-align:center;vertical-align:middle;border:solid 1px;background-color:#bg">
   <span style="font-size:%if;(ll>10)5%elseif;(ll>9)7%else;9%end;px; ">xx</span>
   </div>
 %end;
@@ -188,7 +188,7 @@
           [*add] %apply;a_of_b%with;[the parents]%and;Sosa %ancestor.anc_sosa.v; %ancestor;%end;">%if;(evar.sms="on")·%else; %end;</a></tt>
           %let;top3;%expr(topxx_yy(ancestor.anc_sosa.v*2+1)*hb)%in;
           %let;left3;%expr(leftxx_yy(ancestor.anc_sosa.v*2+1)*wb)%in;
-          <tt><a style="%ttstyle;top:%top%i;;px;left:%left%i;;px;" href="%prefix;m=ADD_PAR;ip=%ancestor.index;" 
+          <tt><a style="%ttstyle;top:%top3;;px;left:%left3;;px;" href="%prefix;m=ADD_PAR;ip=%ancestor.index;" 
           title="[missing sosa] %expr(ancestor.anc_sosa.v*2) & %expr(ancestor.anc_sosa.v*2+1) – [*generation/generations]0 %expr(level+1)&#013;
           [*add] %apply;a_of_b%with;[the parents]%and;%ancestor; Sosa %ancestor.anc_sosa.v;%end;">%if;(evar.sms="on")·%else; %end;</a></tt>
         %end;
