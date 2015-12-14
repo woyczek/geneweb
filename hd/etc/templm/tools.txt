@@ -108,6 +108,7 @@
           %apply;checkbox("cpl",[by couple],"")
           %apply;checkbox("implx",[implex links],"")
           %apply;checkbox("nav",[navigation],"")
+          %apply;checkbox("sosa",[sosa],"afficher les n° sosas")
           <label title="[create] [family/families]0">     <input type="checkbox" name="sms" value="on" %l_on;
             %if;(evar.sms = "on") checked="checked"%end;%/>[visualize/show/hide/summary]1 [missing sosa]</label><br%/>
           <label title="[*full tree] [with] 15 [person/persons]1 + [compact tree] [with] 256 [n° Sosa] + extra [generation/generations]0 = 9 [generation/generations]1"
