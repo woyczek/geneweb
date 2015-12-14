@@ -20,7 +20,6 @@
 %let;hb1;17%in;
 %let;wb1;17%in;
 
-
 %let;ttstyle;position:absolute;font-family:monospace;font-size:10pt;line-height:10pt;%in;
 
 %define;bg(xx)
@@ -105,8 +104,8 @@
   %end;
 %end;
 
-%define;graph(xx,yy,zz)
-  %let;nav;;m=A;v=%evar.v;;t=T;t1=%evar.t1;;nav=on;%if;(evar.cpl != "")cpl=%evar.cpl;%end;;%if;(evar.sms != "")sms=%evar.sms;%end;%in;
+%define;graph(xx,yy,zz) %( xx gen ; yy mode 0=H 1=I ; zz 1=single 2=couple %)
+  %let;nav;;m=A;v=%evar.v;;t=T;t1=%evar.t1;;%if;(evar.sosa != "")sosa=%evar.sosa;%end;;nav=on;%if;(evar.cpl != "")cpl=%evar.cpl;%end;;%if;(evar.sms != "")sms=%evar.sms;%end;%in;
   %let;levelup;%expr(xx+1)%in;
   %let;leveldown;%expr(xx-1)%in;
   %let;hb;%if;(evar.sosa = "on")%hbs;%else;%hbc;%end;%in;
@@ -134,7 +133,7 @@
             %if;(not ancestor.spouse.has_parents) [*missing parents].%end;">
             %if;(evar.sosa != "on")
               %if;(ancestor.same != "")x %apply;implex()
-              %else;%apply;boxchar(ancestor.anc_sosa.v,yy)%end;</a></tt>
+              %else;%apply;boxchar(anc_sosahalf,yy)%end;</a></tt>
             %else;
               %if;(ancestor.same != "")%apply;implex()%end;
               %apply;boxsosa(ancestor.anc_sosa.v,yy,level,bg)</a></tt>
@@ -282,19 +281,19 @@
   %end;
 %end;
 
+%let;size0;%apply;size(evar.v)%in;
 %let;size1;%apply;size(evar.v-1)%in;
 %let;size2;%apply;size(evar.v-2)%in;
 %let;size3;%apply;size(evar.v-3)%in;
 %if;(evar.t = "T" and evar.v > 3)
   %if;(evar.t1 = "ht")
     %if;(evar.sosa = "on")
-      %if;(evar.v < 13 and evar.cpl = "on")
+      %if;(evar.v < 11 and evar.cpl = "on")
         <div id="ih-tree1" style="position:relative;left:10px;width:%size2;px;height:%size2;px">
         %apply;graph(evar.v-2,1,2)
         %apply;graphlinks(evar.v-2,1)
         </div>
-      %elseif;(evar.v < 12 and evar.cpl != "on")
-        Sosa on / cpl off <br%/>
+      %elseif;(evar.v < 10 and evar.cpl != "on")
         <div id="ih-tree1" style="position:relative;left:10px;width:%size1;px;height:%size1;px">
         %apply;graph(evar.v-1,1,1)
         %apply;graphlinks(evar.v-1,1)
@@ -302,12 +301,12 @@
       %end;
     %elseif;(evar.sosa != "on")
       %if;(evar.v < 15 and evar.cpl = "on")
-        <div id="ih-tree1" style="position:relative;width:%size2;px;height:%size3;px">
+        <div id="ih-tree1" style="position:relative;left:10px;width:%size2;px;height:%size3;px">
         %apply;graph(evar.v-2,1,2)
         %apply;graphlinks(evar.v-2,1)
         </div>
       %elseif;(evar.v < 14 and evar.cpl != "on")
-        <div id="ih-tree1" style="position:relative;width:%size1;px;height:%size2;px">
+        <div id="ih-tree1" style="position:relative;left:10px;width:%size1;px;height:%size2;px">
         %apply;graph(evar.v-1,1,1)
         %apply;graphlinks(evar.v-1,1)
         </div>
@@ -315,25 +314,25 @@
     %end;
   %elseif;(evar.t1 = "it")
     %if;(evar.sosa = "on")
-      %if;(evar.v < 13 and evar.cpl = "on")
-        <div id="ih-tree1" style="position:relative;left:10px;width:%size3;px;height:%size3;px">
+      %if;(evar.v < 11 and evar.cpl = "on")
+        <div id="ih-tree1" style="position:relative;left:10px;width:%size1;px;height:%size1;px">
         %apply;graph(evar.v-2,0,2)
         %apply;graphlinks(evar.v-2,0)
         </div>
-      %elseif;(evar.v < 12 and evar.cpl != "on")
-        <div id="ih-tree1" style="position:relative;left:10px;width:%size2;px;height:%size2;px">
+      %elseif;(evar.v < 10 and evar.cpl != "on")
+        <div id="ih-tree1" style="position:relative;left:10px;width:%size0;px;height:%size0;px">
         %apply;graph(evar.v-1,0,1)
         %apply;graphlinks(evar.v-1,0)
         </div>
       %end;
     %elseif;(evar.sosa != "on")
       %if;(evar.v < 15 and evar.cpl = "on")
-        <div id="ih-tree1" style="position:relative;width:%size2;px;height:%size2;px">
+        <div id="ih-tree1" style="position:relative;left:10px;width:%size2;px;height:%size2;px">
         %apply;graph(evar.v-2,0,2)
         %apply;graphlinks(evar.v-2,0)
         </div>
       %elseif;(evar.v < 14 and evar.cpl != "on")
-        <div id="ih-tree1" style="position:relative;width:%size1;px;height:%size1;px">
+        <div id="ih-tree1" style="position:relative;left:10px;width:%size1;px;height:%size1;px">
         %apply;graph(evar.v-1,0,1)
         %apply;graphlinks(evar.v-1,0)
         </div>

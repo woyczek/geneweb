@@ -105,23 +105,21 @@
       <fieldset style="border:0;">
           %apply;radio("t1","ht",[*htree])
           %apply;radio("t1","it",[*itree])
+          %apply;checkbox("sosa",[n° Sosa],[visualize/show/hide/summary]1)
           %apply;checkbox("cpl",[by couple],"")
           %apply;checkbox("implx",[implex links],"")
           %apply;checkbox("nav",[navigation],"")
-          %apply;checkbox("sosa",[sosa],"afficher les n° sosas")
           <label title="[create] [family/families]0">     <input type="checkbox" name="sms" value="on" %l_on;
-            %if;(evar.sms = "on") checked="checked"%end;%/>[visualize/show/hide/summary]1 [missing sosa]</label><br%/>
+            %if;(evar.sms = "on") checked="checked"%end;%/>[visualize/show/hide/summary]1 [missing sosa]</label>
           <label title="[*full tree] [with] 15 [person/persons]1 + [compact tree] [with] 256 [n° Sosa] + extra [generation/generations]0 = 9 [generation/generations]1"
            style="display:inline"><input  type="radio" name="t1" value="m" %l_on;
             %if;(evar.t1 = "m") checked="checked"%end;%/>[*mtree]</label> 
-          <span style="font-size:12px">([font size]<label style="display:inline"><input type="number" id="fs" name="fs" 
-            style="valign:top;text-align:left;font-size:12px;width:2.3em;height:12px" 
+          <label style="display:inline"><input type="number" id="fs" name="fs" 
+            style="valign:top;text-align:right;font-size:12px;width:1.9em;height:12px" 
             value="%if;(evar.fs!="")%evar.fs;%else;14%end;" min="1" max="16"
-            autocomplete="off" title="[font size] ([maximum] 16)" /></label>)</span>
-          <label title="6/8 [generation/generations]1"><input type="radio" name="t1" value="is" %l_on;
-            %if;(evar.t1 = "is") checked="checked"%end;%/>[*itree] [with] [n° Sosa]</label>
+            autocomplete="off" title="[font size] ([maximum] 16)" />px</label>
           <label title="7 [generation/generations]1, [by couple]"><input type="radio" name="t1" value="hs" %l_on;
-            %if;(evar.t1 = "hs") checked="checked"%end;%/>[*htree] [with] [n° Sosa]</label>
+            %if;(evar.t1 = "hs") checked="checked"%end;%/>[*htree] [with] [n° Sosa] CSS</label>
       </fieldset>
     </fieldset>
   </form>
