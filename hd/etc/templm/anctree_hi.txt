@@ -13,11 +13,12 @@
   %end;
 %end;
 
-
-  %let;hb1;17%in;
-  %let;wb1;17%in;
-  %let;hb;20%in;
-  %let;wb;20%in;
+%let;hbc;13%in;
+%let;wbc;8%in;
+%let;hbs;20%in;
+%let;wbs;20%in;
+%let;hb1;17%in;
+%let;wb1;17%in;
 
 
 %let;ttstyle;position:absolute;font-family:monospace;font-size:10pt;line-height:10pt;%in;
@@ -108,13 +109,16 @@
   %let;nav;;m=A;v=%evar.v;;t=T;t1=%evar.t1;;nav=on;%if;(evar.cpl != "")cpl=%evar.cpl;%end;;%if;(evar.sms != "")sms=%evar.sms;%end;%in;
   %let;levelup;%expr(xx+1)%in;
   %let;leveldown;%expr(xx-1)%in;
-  %if;(zz=2)  %( par couple %)
+  %let;hb;%if;(evar.sosa = "on")%hbs;%else;%hbc;%end;%in;
+  %let;wb;%if;(evar.sosa = "on")%wbs;%else;%wbc;%end;%in;
+   %if;(zz=2)  %( par couple %)
      %foreach;ancestor_level(levelup)
       %foreach;ancestor;
         %if;(ancestor.anc_sosa.v %2 = 0)
           %let;anc_sosahalf;%expr(ancestor.anc_sosa.v/2)%in;
           %let;top;%expr(topxx_yy(anc_sosahalf)*hb)%in;
           %let;left;%expr(leftxx_yy(anc_sosahalf)*wb)%in;
+          %let;bg;%if;(ancestor.same != "")CBFECE;%else;%apply;bg(level)%end;%in;
           <tt><a style="%ttstyle;top:%top;px;left:%left;px;"
           href="%prefix;%ancestor.access;%if;(evar.nav="on")%nav;%end;"
           title="[*generation/generations]0 %level; – Sosa %if;(ancestor.interval != "") = Sosa %ancestor.interval;%else;%ancestor.anc_sosa; & %expr(ancestor.anc_sosa+1)%end;&#013;
@@ -158,7 +162,7 @@
         %let;left1;%expr(leftxx_yy(ancestor.anc_sosa.v)*wb+4)%in;
         %let;top2;%expr(topxx_yy(ancestor.same.v)*hb+6)%in;
         %let;left2;%expr(leftxx_yy(ancestor.same.v)*wb+4)%in;
-        %if;(evar.sosa = "on")%let;bg;%if;(ancestor.same != "")CBFECE;%else;%apply;bg(level)%end;%in;%else;%end;
+        %let;bg;%if;(ancestor.same != "")CBFECE;%else;%apply;bg(level)%end;%in;
         <tt><a style="%ttstyle;top:%top;px;left:%left;px;"
         href="%prefix;%ancestor.access;%if;(evar.nav="on")%nav;%end;"
         title="Sosa %ancestor.anc_sosa;%if;(ancestor.same != "") = Sosa %ancestor.same;%end; – [*generation/generations]0 %level;&#013;
@@ -197,6 +201,8 @@
 %end;
 
 %define;graphlinks(xx,yy) %( xx level -1, yy mode : 0=I, 1=H %)
+  %let;hb;%if;(evar.sosa = "on")%hbs;%else;%hbc;%end;%in;
+  %let;wb;%if;(evar.sosa = "on")%wbs;%else;%wbc;%end;%in;
   %foreach;ancestor_level(xx-2)
     %foreach;ancestor;
       %let;top_;%expr(topxx_yy_(ancestor.anc_sosa.v)*hb)%in;
@@ -310,12 +316,12 @@
   %elseif;(evar.t1 = "it")
     %if;(evar.sosa = "on")
       %if;(evar.v < 13 and evar.cpl = "on")
-        <div id="ih-tree1" style="position:relative;left:10px;width:%size2;px;height:%size2;px">
+        <div id="ih-tree1" style="position:relative;left:10px;width:%size3;px;height:%size3;px">
         %apply;graph(evar.v-2,0,2)
         %apply;graphlinks(evar.v-2,0)
         </div>
       %elseif;(evar.v < 12 and evar.cpl != "on")
-        <div id="ih-tree1" style="position:relative;left:10px;width:%size1;px;height:%size1;px">
+        <div id="ih-tree1" style="position:relative;left:10px;width:%size2;px;height:%size2;px">
         %apply;graph(evar.v-1,0,1)
         %apply;graphlinks(evar.v-1,0)
         </div>
