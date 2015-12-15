@@ -1,4 +1,5 @@
 ﻿%let;l_on;onclick="this.focus()" onkeydown="if (event.keyCode == 13) javascript:document.tools.submit();"%in;
+%let;l_emaxv;%if;(evar.t != "T")%evar.maxv;%elseif;(bvar.max_anc_tree = "")7%else;%bvar.max_anc_tree;%end;%in;
 
 %define;checkbox(xx,yy,tt)
   <label title="tt">     <input type="checkbox" name="xx" value="on" %l_on;
@@ -52,10 +53,9 @@
        %else;1
        %end;"
   max="%if;(evar.m = "A")
-         %if;(evar.t1!="" and evar.cpl="on")14%elseif;(evar.t1!="" and evar.cpl="")13%end;
-       else;%l_emaxv;
-       %end;"
-  title="%if;(evar.m = "A" and evar.t = "T")[*maximum][:]&#013;[*full tree] %evar.maxv; [generation/generations]1&#013;[*compact tree] H [or] I  13 [generation/generations]1&#013;     [by couple] 14 [generation/generations]1%end;&#013;[*with] [n° Sosa] 12 [generation/generations]1&#013;    [by couple] 13 [generation/generations]1"
+         %if;(evar.t1!="" and evar.t1!="T" and evar.cpl="on")14%elseif;(evar.t1!="" and evar.t1!="T" and evar.cpl="")13%else;%l_emaxv;%end;"
+       %end;
+  title="%if;(evar.m = "A" and evar.t = "T")[*maximum][:]&#013;[*full tree] %l_emaxv; [generation/generations]1&#013;[*compact tree] H [or] I  13 [generation/generations]1&#013;     [by couple] 14 [generation/generations]1%end;&#013;[*with] [n° Sosa] 12 [generation/generations]1&#013;    [by couple] 13 [generation/generations]1"
         accesskey="X"/>[generation/generations]1 <code>(X)</code></label><br/>
 %end;
 
@@ -93,9 +93,7 @@
       %if;(evar.i != "")
         <input type="hidden" name="i" value="%evar.i;"/>
       %end;
-        %let;l_emaxv;%if;(evar.t != "T")%evar.maxv;%elseif;(bvar.max_anc_tree = "")7%else;%bvar.max_anc_tree;%end;%in;
         <input type="hidden" name="maxv" value="%evar.maxv;"/>
-        
       <fieldset style="float:left;border:0">
         <label title="[*ascendants tree]"><input type="radio" name="t1" value="T" %l_on; onchange="valid('tT')"
               %if;(evar.t1 = "T") checked="checked"%end;%/>[*full tree]</label>
