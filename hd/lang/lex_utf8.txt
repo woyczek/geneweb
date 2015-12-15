@@ -12662,15 +12662,15 @@ sv: detta forum är ändrat
 
     time line
 de: Chronologie
-en: Timeline
-es: Cronología
-fi: Aikajana
-fr: Chronologie
-it: Cronologia
-nl: Tijdlijn
-no: Kronologi
-pt: Cronologia
-sv: Kronologi
+en: timeline
+es: cronología
+fi: aikajana
+fr: chronologie
+it: cronologia
+nl: tijdlijn
+no: kronologi
+pt: cronologia
+sv: kronologi
 
     title/titles
 af: titel/titels
@@ -13988,3 +13988,7 @@ fr: naviguer sur l’arbre
     font size
 en: font size
 fr: taille de police
+
+    horizontal tree
+en: horizontal tree
+fr: arbre horizontal

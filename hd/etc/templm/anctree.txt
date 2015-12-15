@@ -195,6 +195,8 @@
   <div style="text-align: center">%apply;female_line("self",l_v0)</div>
 %elseif;(evar.t1 = "it" or evar.t1= "ht")
   %include.anctree_hi;
+%elseif;(evar.t1 = "hrztl")
+  %include.anclist_hrztl;
 %elseif;(evar.t1 != "")
   %apply;show_templ(evar.t1)
 %end;
