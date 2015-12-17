@@ -119,7 +119,7 @@
          %if;cell.is_left;%right;
          %elseif;cell.is_right;%left;
          %else;center%end;">%nn;
-      %if;cell.is_empty;<tt>&nbsp;</tt>%nn;
+      %if;cell.is_empty;%nn;
       %elseif;cell.is_left;<hr class="%right;"%/>%nn;
       %elseif;cell.is_right;<hr class="%left;"%/>%nn;
       %end;
