@@ -97,7 +97,7 @@
       %if;cell.is_empty;<tt>&nbsp;</tt>%nn;
       %elseif;(evar.cgl = "on")%apply;symbol("cell.person")%nn;
       %else;
-        <a style="text-decoration:none;" title="[tree]" href="%prefix_no_iz;%cell.person.access;;%nn;
+        <a style="text-decoration:none;" title="[*navigation]" href="%prefix_no_iz;%cell.person.access;;%nn;
         %foreach;env_binding;
           %if;(env.key = "" or env.key = "p" or env.key = "n" or env.key = "oc" or env.key = "i" or env.key = "templ")
           %else;%env.key;=%env.val.decoded;;%nn;
@@ -179,7 +179,7 @@
     </div>
   %end;
   <div class="menu2">
-    <a href="%prefix;" title="[visualize/show/hide/summary]3">^^</a>
+    <a href="%prefix;" title="[*visualize/show/hide/summary]3">^^</a>
   </div>
 %end;
 

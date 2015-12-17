@@ -174,18 +174,17 @@
     </legend>
     <fieldset>
       %let;l_on1;onchange="valid('tT')"%in;
-      %let;l_on2;onchange="valid('tT'),valid('t1hi')"%in;
       <label><input type="radio" name="t1" value="T" %l_on; %l_on1;
-             %if;(evar.t1 = "T") checked="checked"%end;%/>[*full tree]</label><br%/>
+             %if;(evar.t1 = "T") checked="checked"%end;%/>[full tree]</label><br%/>
       <label><input type="radio" name="t" value="A" %l_on;
              %/>[male line/female line]0</label><br%/>
       <label><input type="radio" name="t" value="C" %l_on;
              %/>[male line/female line]1</label><br%/>
-      <label><input type="checkbox" name="dag" value="on" %l_on1; %l_on;
-             %/>dag=on</label><br%/>
-      <label><input type="checkbox" name="marriage" value="on" %l_on1; %l_on;
+      <label>     <input type="checkbox" name="dag" value="on" %l_on1; %l_on;
+             %/>[dag]</label><br%/>
+      <label>     <input type="checkbox" name="marriage" value="on" %l_on1; %l_on;
              %/>[marriage/marriages]0</label><br%/>
-      <label><input type="checkbox" name="image" value="on" %l_on1; %l_on;
+      <label>     <input type="checkbox" name="image" value="on" %l_on1; %l_on;
              %/>[image/images]1</label><br%/>
       <label>[border]<input name="bd" size="1" maxlength="2" value="0" %l_on1; %/></label><br%/>
       <table summary="colors" cellspacing="0" cellpadding="0">
@@ -200,22 +199,19 @@
     </fieldset>
     <fieldset>
       <legend><label>[*compact tree]</label></legend>
-        <label><input type="radio" name="t1" value="i" %l_on; %l_on1;
-          %if;(evar.t1 = "i") checked="checked"%end;%/>[itree] [with] [n° Sosa] (6 [and] 8 gen.)</label><br%/>
-        <label><input type="radio" name="t1" value="h" %l_on; %l_on1;
-          %if;(evar.t1 = "h") checked="checked"%end;%/>[htree] [with] [n° Sosa] couple (8 gen.)</label><br%/>
         <label><input type="radio" name="t1" value="m" %l_on; %l_on1;
-          %if;(evar.t1 = "m") checked="checked"%end;%/>[tree] mix (9 gen.)</label><br%/>
-        <label><input type="radio" id="t1hi" name="t1" value="hi" %l_on; %l_on1;
-          %if;(evar.t1 = "hi") checked="checked"%end;%/>[itree]/[htree]</label><br%/>
-        <label>     <input type="radio" name="t2" value="h" %l_on; %l_on2;
-          %if;(evar.t2 = "h") checked="checked"%end;%/>[htree]</label><br%/>
-        <label>     <input type="radio" name="t2" value="i" %l_on; %l_on2;
+          %if;(evar.t1 = "m") checked="checked"%end;%/>[mtree] 9 gen.</label><br%/>
+        <label><input type="radio" id="t1m" name="t1" value="T" %l_on; %l_on1;
+          %if;(evar.t1 = "h") checked="checked"%end;%/>[htree]</label><br%/>
+        <label><input type="radio" name="t2" value="i" %l_on; %l_on2;
           %if;(evar.t2 = "i") checked="checked"%end;%/>[itree]</label><br%/>
-        <label>     <input type="checkbox" name="implx" value="on" %l_on; %l_on1;
-          %if;(evar.implx = "on") checked="checked"%end;%/>[display implex links]</label><br%/>
-        <label>     <input type="checkbox" name="cpl" value="on" %l_on; %l_on1;
-          %if;(evar.cpl = "on") checked="checked"%end;%/>mode couple (not working)</label>
+        <label>          <input type="checkbox" name="sosa2" value="on" %l_on; %l_on1;
+          %if;(evar.sosa2 = "on") checked="checked"%end;%/>[n° Sosa]</label><br%/>
+        <label>          <input type="checkbox" name="cpl" value="on" %l_on; %l_on1;
+          %if;(evar.cpl = "on") checked="checked"%end;%/>mode couple</label><br%/>
+        <label><input type="radio" name="t1" value="h" %l_on; %l_on1;
+          %if;(evar.t1 = "h") checked="checked"%end;%/>[htree] [with] [n° Sosa] [by couple] (7 gen.)</label>
+
     </fieldset>
   </fieldset>
   <fieldset>

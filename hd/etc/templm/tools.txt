@@ -117,7 +117,7 @@
       <fieldset style="border:0">
         %apply;radio("t1","ht",[*htree])
         %apply;radio("t1","it",[*itree])
-        %apply;checkbox("sosa",[n° Sosa],[visualize/show/hide/summary]1)
+        %apply;checkbox("sosa2",[n° Sosa],[visualize/show/hide/summary]1)
         %apply;checkbox("cpl",[by couple],"")
         %apply;checkbox("implx",[implex links],"")
         %apply;checkbox("nav",[navigation],"")
