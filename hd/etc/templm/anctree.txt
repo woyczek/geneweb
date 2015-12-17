@@ -1,4 +1,4 @@
-﻿%if;(evar.t = "T" and evar.t1 = "T")%doctype_transitional;%else;%doctype;%end;
+﻿%if;(evar.t = "T" and (evar.t1 = "T" or evar.t1 = "CT")%doctype_transitional;%else;%doctype;%end;
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <!-- $Id: anctree.txt,v 7.00 2015/12/10 21:34:32 mr Exp $ -->
@@ -159,6 +159,27 @@
     %apply;a_tree_line()
   %end;
   </table>
+%end;
+
+%define;togen1(xx)
+  %if;(xx = 1)[*specify::generation/generations]0%nn;
+  %elseif;(xx = 2)[*to the parents]%nn;
+  %elseif;(xx = 3)[*to the grandparents]%nn;
+  %elseif;(xx = 4)[*to the great-grandparents]%nn;
+  %else;
+    %apply;tothegen%with;
+      %apply;nth([nth (generation)], xx)
+    %end;
+  %end;
+%end;
+%define;togen()
+  <p>
+    %if;(evar.only != "on")
+      %apply;togen1(l_v)
+    %else;
+      [*generation/generations]0 %l_v;
+    %end;
+  </p>
 %end;
 
 <body%body_prop; id="anctree">
