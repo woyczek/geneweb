@@ -161,7 +161,7 @@
   </table>
 %end;
 
-%define;togen1(xx)
+%define;togen1(xx) %( togen1/togen/tothegen needed for HT %)
   %if;(xx = 1)[*specify::generation/generations]0%nn;
   %elseif;(xx = 2)[*to the parents]%nn;
   %elseif;(xx = 3)[*to the grandparents]%nn;
@@ -181,12 +181,15 @@
     %end;
   </p>
 %end;
+%define;tothegen(xx)
+  [*to the %s generation:::xx]%nn;
+%end;
 
 <body%body_prop; id="anctree">
 %message_to_wizard;
 
 %if;not cancel_links;
-  %if;(evar.t = "T")
+  %if;(evar.t = "T" and evar.t1 != "HT")
     <div class="menu">
       <span>
         <a title="[tree] (Y)" accesskey="Y" href="%prefix_no_iz;%nn;

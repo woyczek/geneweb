@@ -1,13 +1,13 @@
 ﻿%let;l_on;onclick="this.focus()" onkeydown="if (event.keyCode == 13) javascript:document.tools.submit();"%in;
 %let;l_emaxv;%if;(evar.t != "T")%evar.maxv;%elseif;(bvar.max_anc_tree = "")7%else;%bvar.max_anc_tree;%end;%in;
 
-%define;checkbox(cc,xx,yy,tt)
-  <label title="tt"> cc<input type="checkbox" name="xx" value="on" %l_on1; %l_on;
+%define;checkbox(cc,xx,yy,uu)
+  <label title="uu"> cc<input type="checkbox" name="xx" value="on" %l_on1; %l_on;
   %if;(evar.xx = "on") checked="checked"%end;%/>yy</label>
 %end;
 
-%define;radio(xx,yy,zz,tt)
-  <label title="tt"><input type="radio" id="xxyy" name="xx" value="yy" %_on1; %l_on;
+%define;radio(xx,yy,zz,uu)
+  <label title="uu"><input type="radio" id="xxyy" name="xx" value="yy" %_on1; %l_on;
   %if;(evar.xx = "yy") checked="checked"%end;%/>zz</label>
 %end;
 
@@ -38,9 +38,9 @@
 %define;anc_hrztl()
   %apply;checkbox("├","marriage2",[marriage date],[display marriage date])
   %apply;checkbox("├","sosa",[n° Sosa],"")
-  %apply;checkbox("├","xy",[by couple],"")
-  %apply;checkbox("├","siblings",[siblings],"")
-  %apply;checkbox("└","timeline",[time line],"")
+  %apply;checkbox("└","xy",[by couple],"")
+  %apply;checkbox("    ├","siblings",[siblings],"")
+  %apply;checkbox("    ├","timeline",[time line],"")
   <label>     └ [scale] <input title="[year/month/day]0s/[generation/generations]0 (default 40, [maximum] 50)" type="number" style="width:2.8em" min="0" max="50" name="gen" class="number" value="%evar.gen;"
          size="1" placeholder="40" %/></label>
 %end;
@@ -60,7 +60,7 @@
 %end;
 
 %define;border_color()
-  <label> ├ [border]<input name="bd" size="1" maxlength="2" style="padding:0px 2px 0px 2px;width:1.5em;" value="%evar.bd;" %/>px</label>
+  <label> ├ [border]<input type="number" name="bd" min="0" style="padding:0px 2px;width:2.4em;" value="%if;(evar.bd!="")%evar.bd;%else;%end;" placeholder="0"%/>px</label>
   <label> └ [color] %for;i;0;8;
         %let;bgi;bg%i;%in;
         <a style="style:inline" class="%bgi;"><input type="radio" name="color" value="%bgi;" %l_on1; %l_on;
@@ -114,8 +114,8 @@
       %let;l_on1;onchange="valid('t1CT')"%in;
         %apply;radio("t1","CT",[*compact tree],[htree])
         %apply;checkbox("├","it",[itree],"")
-        %apply;checkbox("├","sosa2",[n° Sosa],[visualize/show/hide/summary]1)
         %apply;checkbox("├","cpl",[by couple],"")
+        %apply;checkbox("├","sosa2",[n° Sosa],[visualize/show/hide/summary]1)
         %apply;checkbox("├","implx",[implex links],"")
         %apply;checkbox("├","nav",[navigation],"")
         <label title="[create] [family/families]0"> └<input type="checkbox" name="sms" value="on" %l_on;
@@ -123,9 +123,8 @@
         <label title="[*full tree] [with] 15 [person/persons]1 + [compact tree] [with] 256 [n° Sosa] + extra [generation/generations]0 = 9 [generation/generations]1"
          style="display:inline"><input  type="radio" name="t1" value="m" %l_on;
           %if;(evar.t1 = "m") checked="checked"%end;%/>[*mtree]</label> 
-        <label style="display:inline"><input type="number" id="fs" name="fs" 
-          style="valign:top;text-align:right;font-size:12px;width:2.4em;height:12px" 
-          value="%if;(evar.fs!="")%evar.fs;%else;14%end;" min="1" max="16"
+        <label style="display:inline"><input type="number" id="fs" name="fs" style="width:2.4em" 
+          value="%if;(evar.fs!="")%evar.fs;%end;" placeholder="14" min="8" max="16"
           autocomplete="off" title="[font size] ([maximum] 16)" />px</label>
         <label title="7 [generation/generations]1, [by couple]"><input type="radio" name="t1" value="h" %l_on;
           %if;(evar.t1 = "h") checked="checked"%end;%/>[*htree] [with] [n° Sosa] CSS</label>
