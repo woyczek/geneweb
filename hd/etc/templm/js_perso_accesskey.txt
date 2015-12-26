@@ -1,5 +1,4 @@
 <!-- $Id: js_perso_accesskey.txt,v 7.00 2015/02/12 22:01:17 mr Exp $ -->
-
 <script type="text/javascript" src="/templm/js_perso_accesskey.js"></script>
 %let;laA;title="[add::family/families]0 (A)" accesskey="A"%in;
 %let;laD;title="[difference between the two revisions] (D)" accesskey="D"%in;
@@ -14,17 +13,37 @@
 %let;lcX;<code>(X)</code>%in; %( generation %)
 %let;laY;title="[tree] (Y)" accesskey="Y"%in;
 %let;laZ;title="[navigation] OnKeyPress (Z)" accesskey="Z"%in;
+%define;lang(xx)
+  %apply;nth%with;
+    /af/bg/br/ca/cs/da/de/en/eo/es/et/fi/fr/he/is/it/lv/nl/no/oc/pl/pt/pt-br/ro/ru/sk/sl/sv/zh/
+  %and;xx%end;
+%end;
+%define;link_lang()
+  %for;i;1;30;
+    %let;l1;%apply;lang(i)%in;
+     <a href="%prefix_base;templ=%evar.templ;;lang=%l1;;%suffix;" title="%apply;language_name(l1)">
+     <img src="%image_prefix;/flags/l-%l1;.jpg" width="20" height="11" alt="" id="i%tt;" style="border:0"%/> %l1; %apply;language_name(l1)</a>
+  %end;
+%end;
+%let;lg;
+  %if;(evar.lang != "")
+    %evar.lang;
+  %elseif;(bvar.default_lang != "")
+    %bvar.default_lang;
+  %else;en%nn;
+  %end;
+%in;
 %define;menu2()
   %if;not cancel_links;
     <div class="menu2">
-      <form id="ak" method="get" action="" style="display:inline;">
-        <div style="display:inline;"><input id="acckey" style="width:15px;text-align:center;"
+      <form id="ak" method="get" action="" style="display:inline">
+        <div style="display:inline"><input id="acckey" style="width:15px;text-align:center;"
          name="acckey" %laZ; value="" size="1" maxlength="1"
          placeholder="?"
          onkeypress="javascript:return acc_key(this,event,'sib_1','spo_1','chi_1_1','mod_ind','add_par','add_fam','mod_fam_1');"
          %/>
           <div class="s_menu">
-            <h3>[*navigation] OnKeyPress (Alt+Z)</h3>
+            <h3>[*shortcuts] (Alt+Z)</h3>
             <p>
               (0) [spouse/spouses]1<br%/>
               (1) [siblings]<br%/>
@@ -37,7 +56,7 @@
               (W) [search/case sensitive]0<br%/>
               (X) [generation/generations]0<br%/>
               (Y) [tree]<br%/>
-              <br%/> 
+              <br%/>
               %if;wizard;
               (A) [add::family/families]0<br%/>
               (F) [modify::family/families]0 1<br%/>
@@ -52,7 +71,45 @@
           </div>
         </div>
       </form>
-      <a href="%prefix;" title="[visualize/show/hide/summary]3">^^</a>
-    </div>
+      <div class="menu2">
+      <form method="get" action="%action;" onsubmit="return oS3();">
+             %hidden;
+             <input id="mS" type="hidden" name="m" value="S"/>
+             <input type="search" id="mSn" name="n" accesskey="W" size="34" maxlength="200" style="margin:0px"
+               title="[*search/case sensitive]0 (W)%nl;* = [starting with]%nl;Sosa* = Sosa x 2%nl;Sosa/ = Sosa / 2"
+               placeholder="[surname/surnames]0*, [public name], [alias], n° Sosa"
+               onkeypress="javascript:return computeSosa(event,'mSn')"
+             %/><input type="search" id="mSp" name="p" size="17" maxlength="200" style="margin:0px"
+               placeholder="[first name/first names]0*, n° index"
+               title="* = [starting with]"
+             %/><input style="display:none" type="submit" value="Ok" title="[*search/case sensitive]0 (W)"/>
+      </form>
+      </div>
+      %if;(bvar.hide_advanced_request != "yes")
+        <div class="menu2" style="display:inline;font-size:9pt">
+        <a href="%prefix;m=H;v=advanced" title="[*advanced request]">🔍</a>
+        </div>
+      %end;
+      <div class="menu" style="display:inline"><img src="%image_prefix;/flags/l-%lg;.jpg" width="32" height="24" alt="flag" title="%lg; %apply;language_name(lg)"/>
+        <div class="s_menu" style="width:115px">%apply;link_lang()</div>
+      </div>
+      <div class="menu" style="display:inline;"><a href="%prefix;" title="[*back] [visualize/show/hide/summary]3%nl;Template[:] %if;(evar.templ != "")%evar.templ;%else;templ%end;">⇧⇧</a>
+         <div class="s_menu" style="width:70px">
+           <a href="%prefix_no_templ;templ=;%suffix;">default</a>
+           <a href="%prefix_no_templ;templ=templ502;%suffix;">templ502</a>
+           <a href="%prefix_no_templ;templ=templa;%suffix;">templa</a>
+           <a href="%prefix_no_templ;templ=templb;%suffix;">templb</a>
+           <a href="%prefix_no_templ;templ=templc;%suffix;">templc</a>
+           <a href="%prefix_no_templ;templ=templd;%suffix;">templd</a>
+           <a href="%prefix_no_templ;templ=templf;%suffix;">templf</a>
+           <a href="%prefix_no_templ;templ=templh;%suffix;">templh</a>
+          %( <a href="%prefix_no_templ;templ=templ_cpl;%suffix;">templm_cpl</a> %)
+           <a href="%prefix_no_templ;templ=templm;%suffix;">templm</a>
+           %if;(wizard or bvar.wizard_passwd = "")
+             <small><sup><strong><a href="%prefix;m=H;v=doc_templm">doc templm</a></strong></sup></small>
+           %end;
+        </div>
+      </div>
+    </div> 
   %end;
 %end;

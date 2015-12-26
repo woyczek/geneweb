@@ -15,11 +15,11 @@
     </div>
   %end;
   <div id="trl">
-    %if;(evar.digest = "")
+    %if;(evar.digest = "" and evar.wide!="")
       <form method="get" action="%action;" onsubmit="return oS3();">
          %hidden;
          <input id="mS" type="hidden" name="m" value="S" %/>
-         <input type="search" id="mSn" name="n" accesskey="W" size="40" maxlength="200"
+         <input type="search" id="mSn" name="n" accesskey="" size="40" maxlength="200"
            title="* = [starting with]%nl;Sosa* = Sosa x 2%nl;Sosa/ = Sosa / 2"
            placeholder="[surname/surnames]0*, Sosa*/, [public name], [alias]"
            onkeypress="javascript:return computeSosa(event,'mSn')"
