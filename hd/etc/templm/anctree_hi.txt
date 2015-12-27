@@ -131,8 +131,8 @@
   %let;nav;;m=A;v=%evar.v;;t=T;t1=%evar.t1;;it=%evar.it;;%if;(evar.sosa2 != "")sosa=%evar.sosa2;;%end;nav=on;%if;(evar.cpl != "")cpl=%evar.cpl;;%end;%if;(evar.implx != "")implx=%evar.implx;;%end;%if;(evar.sms != "")sms=%evar.sms;;%end;%in;
   %let;levelup;%expr(xx+1)%in;
   %let;leveldown;%expr(xx-1)%in;
-  %let;hb;%if;(evar.sosa2 = "on" and (evar.v<9 and evar.cpl!="on") or (evar.v<10 and evar.cpl="on"))%expr(hbs*2)%elseif;(evar.sosa2 = "on")%hbs;%else;%hbc;%end;%in;
-  %let;wb;%if;(evar.sosa2 = "on" and (evar.v<9 and evar.cpl!="on") or (evar.v<10 and evar.cpl="on"))%expr(wbs*2)%elseif;(evar.sosa2 = "on")%wbs;%else;%wbc;%end;%in;
+  %let;hb;%if;(evar.sosa2 = "on" and ((evar.v<9 and evar.cpl!="on") or (evar.v<10 and evar.cpl="on")))%expr(hbs*2)%elseif;(evar.sosa2 = "on")%hbs;%else;%hbc;%end;%in;
+  %let;wb;%if;(evar.sosa2 = "on" and ((evar.v<9 and evar.cpl!="on") or (evar.v<10 and evar.cpl="on")))%expr(wbs*2)%elseif;(evar.sosa2 = "on")%wbs;%else;%wbc;%end;%in;
    %if;(zz=2)  %( par couple %)
      %foreach;ancestor_level(levelup)
       %foreach;ancestor;
