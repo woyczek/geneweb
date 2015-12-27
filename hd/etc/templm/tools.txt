@@ -11,9 +11,9 @@
   %if;(evar.xx = "yy") checked="checked"%end;%/>zz</label>
 %end;
 
-%define;image()
+%define;image(xx)
   %if;(bvar.no_image_for_visitor != "yes" or friend or wizard)
-    %apply;checkbox("├","image",[display picture],"")
+    %apply;checkbox("xx","image",[display picture],"")
   %end;
 %end;
 
@@ -23,7 +23,8 @@
          %if;(evar.t1= "1") checked="checked"%end;%/>[branch/branches]0 : Sosa</label>
   %end;
   %apply;checkbox("├","siblings",[siblings],"")
-  %apply;checkbox("├","nosurn",[first name/first names]0 <span style="text-decoration:line-through;"> [surname/surnames]0</span>),"")
+  %let;nosurn;[first name/first names]0 <span style="text-decoration:line-through;"> [surname/surnames]0</span>)%in;
+  %apply;checkbox("├","nosurn",nosurn,"")
   %apply;checkbox("├","alias",[surname alias] [first name alias],"")
   %apply;checkbox("├","spouse",[include spouses],"")
   %apply;checkbox("├","parents",[parents],"")
@@ -92,7 +93,7 @@
         %apply;radio("t1","C",[*male line/female line]1,"")
         %apply;radio("t1","T",[*full tree],[*ascendants tree])
         %apply;checkbox("├","marriage",[marriage date],[display marriage date])
-        %apply;image()
+        %apply;image("├")
         %apply;checkbox("├","dag",[dag],"")
          %if;(evar.t = "T")
             ├ <a href="%prefix;m=A;t=T;v=%l_v;;%access;;dag=on;notab=on" accesskey="/"
@@ -209,22 +210,20 @@
              >[*display by slices/slice width/overlap/total width]0</a></li>
         </ul>
       %end;
-      <fieldset>
+      <fieldset style="border:0">
         %if;(evar.m = "RLM" or evar.m = "RL" or evar.em = "R")
           %apply;checkbox("├","spouse",[include spouses],"")
         %end;
-        <label><input type="checkbox" name="opt" value="no_index" %l_on;
+        <label> ├<input type="checkbox" name="opt" value="no_index" %l_on;
                %if;(evar.opt = "no_index") checked="checked"%end;%/>[link to use]</label>
         %apply;checkbox("├","cgl",[cancel GeneWeb links],"")
-        %apply;image()
+        %apply;image("├")
         %apply;border_color()
       </fieldset>
       %if;(evar.m = "RLM")
-        <fieldset style="border:0;">
           %apply;checkbox("├","invert",[invert],"")
           %apply;checkbox("├","new",[new],"")
           <label>lim<input name="lim" value="%evar.lim;" size="1"%/></label>
-        </fieldset>
       %end;
     </fieldset>
   </form>
@@ -257,22 +256,25 @@
         %end;
       </p>
       <p>
-        %apply;checkbox("├","cgl",[cancel GeneWeb links],"")
+        %apply;checkbox(" ","cgl",[cancel GeneWeb links],"")
         %if;(evar.t = "H")
           %apply;anc_hrztl()
         %end;
       </p>
       %if;(evar.fam7 = "on")
-        <fieldset style="border:0;"><legend>7 [family/families]1</legend>
+        <fieldset style="border:0;"><legend>[*family time line]1</legend>
           <input type="hidden" name="fam7" value="on"%/>
-          %apply;radio("tf1","fam73",[Χρόνος],"")
-          %apply;radio("tf1","fam70",[date/dates]0, [place]0,"")
+          %apply;radio("tf1","fam73",[time line],"")
+          %let;fam70;[date/dates]0, [place]0%in;
+          %apply;radio("tf1","fam70",fam70,"")
           %if;(bvar.no_image_for_visitor != "yes" or friend or wizard)
-            %apply;radio("tf1","fam71",[image/images]1 [long display],"","")
-            %apply;radio("tf1","fam72",[image/images]1 onmousemove,"","")
+            %let;fam71;[image/images]1 [long display]%in;
+            %apply;radio("tf1","fam71",fam71,"")
+            %let;fam72;[image/images]1 onmousemov%in;
+            %apply;radio("tf1","fam72",fam72,"")
           %end;
-          %apply;checkbox("├","spouse",[spouse/spouses]1,"")
-          %apply;checkbox("├","cousins",[cousins],"")
+          %apply;checkbox("├","spouse",[add::spouse/spouses]1,"")
+          %apply;checkbox("└","cousins",[add::cousins],"")
         </fieldset>
       %end;
       %if;(evar.tf1 != "" and evar.fam7 != "on")
@@ -327,14 +329,12 @@
         <input type="hidden" name="maxv" value="%evar.maxv;"%/>
         %apply;generation()
         %apply;checkbox("├","only",[only the generation selected],"")
-        </p>
       %end;
       %if;(evar.t = "D" or evar.t = "G" or evar.t = "Z")
-        <p>
         %if;(evar.i1 != "")<input type="hidden" name="i1" value="%evar.i1;" %/>%end;
         %if;(evar.l != "")<input type="hidden" name="l" value="%evar.l;" %/>%end;
         %apply;checkbox("├","cgl",[cancel GeneWeb links],"")
-        %apply;image()
+        %apply;image("└")
         </p>
       %end;
       %if;(evar.t = "G")
