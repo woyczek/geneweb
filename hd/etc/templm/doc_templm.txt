@@ -17,8 +17,8 @@
   <a href="%prefix;" title="[visualize/show/hide/summary]3">^^</a>
 </div>
 <h2>Aide en ligne</h2>
-<ul><li><a href="http://opensource.geneanet.org/projects/geneweb/wiki/Fr_templm">http://opensource.geneanet.org/projects/geneweb/wiki/Fr_templm</a></li></ul>
-<h2>Options pour l'habillage templm</h2>
+<ul><li><a href="http://geneweb.tuxfamily.org/wiki/templm/fr">http://geneweb.tuxfamily.org/wiki/templm/fr</a></li></ul>
+<h2>Options pour l’habillage templm</h2>
 <h3>[*file] : bases/%base.name;.gwf</h3>
 %let;l1;%if;(bvar.setup_http != "")%bvar.setup_http;%else;http://localhost:2316/%end;%in;
 <p class="button"><a href="%l1;gwf?lang=fr&anon=%base.name;#a_3">[modify] (gwstp)</a></p>
@@ -69,8 +69,8 @@
 <tr>
   <td>event_age=%bvar.event_age;</td>
   <td>
-    Sur la page d'une personne, affiche l'âge des parents à la naissance et 
-    l'âge de la personne pour chaque événement.
+    Sur la page d’une personne, affiche l’âge des parents à la naissance et 
+    l’âge de la personne pour chaque événement.
   </td>
 </tr>
 <tr>
@@ -167,9 +167,9 @@
 <tr>
   <td>hideflag=%bvar.hideflag;</td>
   <td>
-    Sur la page d'une personne :
+    Dans le menu de droite :
     <ul>
-      <li>hideflag=yes : affichage les drapeaux fonction de la langue</li>
+      <li>hideflag=yes : masque les drapeaux (choix de la langue)</li>
     </ul>
   </td>
 </tr>
