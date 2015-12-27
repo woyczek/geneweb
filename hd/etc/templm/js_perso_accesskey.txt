@@ -1,18 +1,18 @@
 <!-- $Id: js_perso_accesskey.txt,v 7.00 2015/02/12 22:01:17 mr Exp $ -->
 <script type="text/javascript" src="/templm/js_perso_accesskey.js"></script>
-%let;laA;title="[add::family/families]0 (A)" accesskey="A"%in;
-%let;laD;title="[difference between the two revisions] (D)" accesskey="D"%in;
-%let;laI;title="[send::image/images]0 (I)" accesskey="I"%in;
-%let;laL;title="[add::parents] (L)" accesskey="L"%in;
-%let;laP;title="[modify::person/persons]0 (P)" accesskey="P"%in;
-%let;laR;title="[relationship computing] (R)" accesskey="R"%in;
-%let;laU;title="[update] (U)" accesskey="U"%in;
-%let;laS;title="[navigation with %t as Sosa reference:::xx] (S)" accesskey="S"%in;
+%let;laA;title="[*add::family/families]0 (A)" accesskey="A"%in;
+%let;laD;title="[*difference between the two revisions] (D)" accesskey="D"%in;
+%let;laI;title="[*send::image/images]0 (I)" accesskey="I"%in;
+%let;laL;title="[*add::parents] (L)" accesskey="L"%in;
+%let;laP;title="[*modify::person/persons]0 (P)" accesskey="P"%in;
+%let;laR;title="[*relationship computing] (R)" accesskey="R"%in;
+%let;laU;title="[*update] (U)" accesskey="U"%in;
+%let;laS;title="[*navigation with %t as Sosa reference:::xx] (S)" accesskey="S"%in;
 %let;lcS;<code>(S)</code>%in; %( Sosa reference %)
-%let;laX;autocomplete="off" title="[generation/generations]0 (X)" accesskey="X"%in;
+%let;laX;autocomplete="off" title="[*generation/generations]0 (X)" accesskey="X"%in;
 %let;lcX;<code>(X)</code>%in; %( generation %)
-%let;laY;title="[tree] (Y)" accesskey="Y"%in;
-%let;laZ;title="[navigation] OnKeyPress (Z)" accesskey="Z"%in;
+%let;laY;title="[*tree] (Y)" accesskey="Y"%in;
+%let;laZ;title="[*shortcuts] (Alt+Z)" accesskey="Z"%in;
 %define;lang(xx)
   %apply;nth%with;
     /af/bg/br/ca/cs/da/de/en/eo/es/et/fi/fr/he/is/it/lv/nl/no/oc/pl/pt/pt-br/ro/ru/sk/sl/sv/zh/
@@ -22,7 +22,8 @@
   %for;i;1;30;
     %let;l1;%apply;lang(i)%in;
      <a href="%prefix_base;templ=%evar.templ;;lang=%l1;;%suffix;" title="%apply;language_name(l1)">
-     <img src="%image_prefix;/flags/l-%l1;.jpg" width="20" height="11" alt="" id="i%tt;" style="border:0"%/> %l1; %apply;language_name(l1)</a>
+     %if;(bvar.hideflag != "yes")
+     <img src="%image_prefix;/flags/l-%l1;.jpg" width="20" height="11" alt="" id="i%tt;" style="border:0"%/> %end;%l1; %apply;language_name(l1)</a>
   %end;
 %end;
 %let;lg;
@@ -74,10 +75,13 @@
       <div class="menu2">
       <form method="get" action="%action;" onsubmit="return oS3();">
              %hidden;
-             <input id="mS" type="hidden" name="m" value="S"/>
+             %if;(evar.m != "A")<input id="mS" type="hidden" name="m" value="S"/>%end;
+             %if;(evar.t = "T")<input id="tT" type="hidden" name="t" value="T"/>
+             <input id="v" type="hidden" name="v" value="%evar.v"/>%end;
+             %if;(evar.m = "A")<input id="mA" type="hidden" name="m" value="A"/>%end;
              <input type="search" id="mSn" name="n" accesskey="W" size="34" maxlength="200" style="margin:0px"
                title="[*search/case sensitive]0 (W)%nl;* = [starting with]%nl;Sosa* = Sosa x 2%nl;Sosa/ = Sosa / 2"
-               placeholder="[surname/surnames]0*, [public name], [alias], n° Sosa"
+               placeholder="[surname/surnames]0*%if;(evar.t != "T"), [public name], [alias], n° Sosa%end;"
                onkeypress="javascript:return computeSosa(event,'mSn')"
              %/><input type="search" id="mSp" name="p" size="17" maxlength="200" style="margin:0px"
                placeholder="[first name/first names]0*, n° index"
@@ -90,7 +94,7 @@
         <a href="%prefix;m=H;v=advanced" title="[*advanced request]">🔍</a>
         </div>
       %end;
-      <div class="menu" style="display:inline"><img src="%image_prefix;/flags/l-%lg;.jpg" width="32" height="24" alt="flag" title="%lg; %apply;language_name(lg)"/>
+      <div class="menu" style="display:inline">%if;(bvar.hideflag != "yes")<img src="%image_prefix;/flags/l-%lg;.jpg" width="32" height="24" alt="flag" title="%lg; %apply;language_name(lg)"/>%else;<a href="#">%lg;</a>%end;
         <div class="s_menu" style="width:115px">%apply;link_lang()</div>
       </div>
       <div class="menu" style="display:inline;"><a href="%prefix;" title="[*back] [visualize/show/hide/summary]3%nl;Template[:] %if;(evar.templ != "")%evar.templ;%else;templ%end;">⇧⇧</a>

@@ -164,6 +164,15 @@
     </ul>
   </td>
 </tr>
+<tr>
+  <td>hideflag=%bvar.hideflag;</td>
+  <td>
+    Sur la page d'une personne :
+    <ul>
+      <li>hideflag=yes : affichage les drapeaux fonction de la langue</li>
+    </ul>
+  </td>
+</tr>
 </table>
 %base_trailer;
 %copyright;

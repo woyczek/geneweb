@@ -2621,7 +2621,7 @@ eo: notoj:a:+n
 es: notas
 et: märkused:g:-id
 fi: lisätietoja
-fr: chronique familiale
+fr: notes
 he:  הערות
 is: athugasemdum
 it: note
@@ -13996,3 +13996,7 @@ fr: arbre horizontal
     shortcuts
 en: keyboard shortcuts
 fr: raccourcis clavier
+
+    family time line
+en: time line of the family
+fr: chronologie de la famille
