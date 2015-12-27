@@ -130,36 +130,15 @@
 %define;menu1()
   <div class="menu%bvar.menu;">
     %if;wizard;
-      <span><a id="upd" href="%prefix;m=U;%access;" %laU;>[*update]</a>
-        <span class="s_menu">
-          <a id="mod_ind" href="%prefix;m=MOD_IND;i=%index;" %laP; %l_on1;>[modify::person/persons]0</a>%nn;
-          %foreach;family;
-            %if;(family_cnt < 4)
-              %let;a_k;%if;(family_cnt = 1)F%elseif;(family_cnt = 2)G%elseif;(family_cnt = 3)H%end;%in;
-              <a id="mod_fam_%family_cnt;" href="%prefix;m=MOD_FAM;i=%family.index;;ip=%index;" title="[modify::family/families]0 %family_cnt; (%a_k;)"
-                 accesskey="%a_k;" %l_on1;>[modify::family/families]0 %family_cnt;</a>%nn;
-            %else;
-              <a id="mod_fam_%family_cnt;" href="%prefix;m=MOD_FAM;i=%family.index;;ip=%index;" title="[modify::family/families]0 %family_cnt;"
-                 %l_on1;>[modify::family/families]0 %family_cnt;</a>%nn;
-            %end;
-          %end;
-          %if;(is_male or is_female)
-            <a id="add_fam" href="%prefix;m=ADD_FAM;ip=%index;" %laA; %l_on1;>[add::family/families]0</a>%nn;
-          %end;
-          <a id="snd_image" href="%prefix;m=SND_IMAGE;i=%index;" %laI; >[send::image/images]0</a>%nn;
-          <a href="%prefix;m=MRG;i=%index;">[merge]0 (oc=%occ;)</a>%nn;
-          <a href="%prefix;%access;%l_url;i=%index;;del=on;">[delete::]</a>%nn;
-        </span>
-      </span>
       %if;(bvar.setup_link != "no")
         %let;l1;%if;(bvar.setup_http != "")%bvar.setup_http;%else;http://localhost:2316/%end;%in;
         %let;l2;%if;(has_sosa)s%sosa.v;%else;i%index;%end;%apply;initial(first_name_key)%apply;initial(surname_key)-%base.name;%in;
         %let;l_gwu;%l1;gwu?opt=check;anon=%base.name;;nn=on;c=%in;
         <span>
           %if;(version = l_version)
-            <a href="%l1;gwstp?v=main.htm;">Gwstp</a>
+            <a href="%l1;gwstp?v=main.htm;" title="Gwstp">Gwstp</a>
           %else;
-            <a href="%l1;gwsetup?v=main.htm;">Gwsetup</a>
+            <a href="%l1;gwsetup?v=main.htm;" title="Gwsetup" style="font-size:9pt">📂</a>
           %end;
           %if;(has_parents or has_children)
             <span class="s_menu">
@@ -188,11 +167,32 @@
           %end;
         </span>
       %end;
+      <span><a id="upd" href="%prefix;m=U;%access;" %laU;>[*update]</a>
+        <span class="s_menu">
+          <a id="mod_ind" href="%prefix;m=MOD_IND;i=%index;" %laP; %l_on1;>[*modify::person/persons]0</a>%nn;
+          %foreach;family;
+            %if;(family_cnt < 4)
+              %let;a_k;%if;(family_cnt = 1)F%elseif;(family_cnt = 2)G%elseif;(family_cnt = 3)H%end;%in;
+              <a id="mod_fam_%family_cnt;" href="%prefix;m=MOD_FAM;i=%family.index;;ip=%index;" title="[*modify::family/families]0 %family_cnt; (%a_k;)"
+                 accesskey="%a_k;" %l_on1;>[*modify::family/families]0 %family_cnt;</a>%nn;
+            %else;
+              <a id="mod_fam_%family_cnt;" href="%prefix;m=MOD_FAM;i=%family.index;;ip=%index;" title="[*modify::family/families]0 %family_cnt;"
+                 %l_on1;>[*modify::family/families]0 %family_cnt;</a>%nn;
+            %end;
+          %end;
+          %if;(is_male or is_female)
+            <a id="add_fam" href="%prefix;m=ADD_FAM;ip=%index;" %laA; %l_on1;>[*add::family/families]0</a>%nn;
+          %end;
+          <a id="snd_image" href="%prefix;m=SND_IMAGE;i=%index;" %laI; >[*send::image/images]0</a>%nn;
+          <a href="%prefix;m=MRG;i=%index;">[*merge]0 (oc=%occ;)</a>%nn;
+          <a href="%prefix;%access;%l_url;i=%index;;del=on;">[*delete::]</a>%nn;
+        </span>
+      </span>
     %end;
     %if;(bvar.history_diff="yes" and has_history)
       <span><a href="%prefix;m=HIST_DIFF;t=SUM;f=%history_file;">[*history]</a>
         <span class="s_menu">
-          <a id="hist" href="%prefix;m=HIST_DIFF;t=DIFF;f=%history_file;&new=0;old=1" %laD;>[difference between the two revisions]</a>
+          <a id="hist" href="%prefix;m=HIST_DIFF;t=DIFF;f=%history_file;&new=0;old=1" %laD;>[*difference between the two revisions]</a>
         </span>
       </span>
     %end;
@@ -201,12 +201,12 @@
       <span>
         <a href="%prefix;m=A;%access;">[*ancestors]</a>
         <span class="s_menu">
-          <a id="anc_tree" href="%prefix;m=A;t=T;v=4;image=on;marriage=on;%access;" %laY;>[ascendants tree]</a>%nn;
-          <a href="%prefix;m=A;t=H;v=%l1;;maxv=%max_anc_level;;i=%index;">[horizontal tree]</a>%nn;
-          <a href="%prefix;m=A;t=Z;image=%evar.image;;v=7;maxv=%max_anc_level;;%access;">[table]</a>%nn;
-          <a href="%prefix;m=A;t=G;v=3;maxv=%max_anc_level;;siblings=on;alias=on;spouse=on;parents=on;rel=on;witn=on;notes=on;src=on;upd=on;hide=on;%access;">[long display]</a>%nn;
-          <a href="%prefix;m=A;t=F;tf1=aad;v=%max_anc_level;;maxv=%max_anc_level;;i=%index;">[age at death]</a>%nn;
-          <a href="%prefix;m=A;t=F;tf1=sb;v=5;maxv=%max_anc_level;;i=%index;">[surnames branch]</a>%nn;
+          <a id="anc_tree" href="%prefix;m=A;t=T;v=4;image=on;marriage=on;%access;" %laY;>[*ascendants tree]</a>%nn;
+          <a href="%prefix;m=A;t=H;v=%l1;;maxv=%max_anc_level;;i=%index;">[*horizontal tree]</a>%nn;
+          <a href="%prefix;m=A;t=Z;image=%evar.image;;v=7;maxv=%max_anc_level;;%access;">[*table] [ancestors]</a>%nn;
+          <a href="%prefix;m=A;t=G;v=3;maxv=%max_anc_level;;siblings=on;alias=on;spouse=on;parents=on;rel=on;witn=on;notes=on;src=on;upd=on;hide=on;%access;">[*long display]</a>%nn;
+          <a href="%prefix;m=A;t=F;tf1=aad;v=%max_anc_level;;maxv=%max_anc_level;;i=%index;">[*age at death]</a>%nn;
+          <a href="%prefix;m=A;t=F;tf1=sb;v=5;maxv=%max_anc_level;;i=%index;">[*surnames branch]</a>%nn;
         </span>
       </span>
     %end;
@@ -215,29 +215,29 @@
       <span>
         <a href="%prefix;m=D;%access;">[*descendants]</a>
         <span class="s_menu">
-          <a href="%prefix;m=D;t=T;v=4;image=on;%access"%if;(not has_parents) %laY;%end;>[descendants tree]</a>%nn;
-          <a href="%prefix;m=D;t=L;tl1=hrztl;v=%l1;;maxv=%max_desc_level;;i=%index;">[horizontally]</a>%nn;
-          <a href="%prefix;m=D;t=H;v=%max_desc_level;;birth=on;birth_place=on;marr=on;marr_date=on;marr_place=on;child=on;death=on;death_place=on;death_age=on;occu=on;gen=on;%access;">[table]</a>%nn;
-          <a href="%prefix;m=D;t=L;v=3;maxv=%max_desc_level;;siblings=on;alias=on;spouse=on;parents=on;rel=on;witn=on;notes=on;src=on;upd=on;hide=on;%access;">[long display]</a>%nn;
-          <a href="%prefix;m=D;t=L;tl1=aad;v=%max_desc_level;;maxv=%max_desc_level;;i=%index;">[age at death]</a>%nn;
+          <a href="%prefix;m=D;t=T;v=4;image=on;%access"%if;(not has_parents) %laY;%end;>[*descendants tree]</a>%nn;
+          <a href="%prefix;m=D;t=L;tl1=hrztl;v=%l1;;maxv=%max_desc_level;;i=%index;">[*horizontally]</a>%nn;
+          <a href="%prefix;m=D;t=H;v=%max_desc_level;;birth=on;birth_place=on;marr=on;marr_date=on;marr_place=on;child=on;death=on;death_place=on;death_age=on;occu=on;gen=on;%access;">[*table] [descendants]</a>%nn;
+          <a href="%prefix;m=D;t=L;v=3;maxv=%max_desc_level;;siblings=on;alias=on;spouse=on;parents=on;rel=on;witn=on;notes=on;src=on;upd=on;hide=on;%access;">[*long display]</a>%nn;
+          <a href="%prefix;m=D;t=L;tl1=aad;v=%max_desc_level;;maxv=%max_desc_level;;i=%index;">[*age at death]</a>%nn;
         </span>
       </span>
     %end;
-    <span><a id="rela_comp" href="%prefix;m=R;%access;" %laR;>[*relationship computing]</a>
+    <span><a id="rela_comp" href="%prefix;m=R;%access;" %laR;>[*relationship]</a>
       <span class="s_menu">
         %if;(browsing_with_sosa_ref)
           %if;(sosa_ref.index != "" and sosa_ref.index != index)
             <a href="%prefix;em=R;ei=%index;;i=%sosa_ref.index;;m=NG;n=1;t=PN;spouse=on;image=on;et=S" title="…[shortest path]… %sosa_ref;">[shortest path]</a>%nn;
           %end;
         %end;
-        <a href="%prefix;%access;;m=A;t=F;fam7=on;tf1=fam73;v=3;maxv=4">7 [family/families]1</a>%nn;
+        <a href="%prefix;%access;;m=A;t=F;fam7=on;tf1=fam73;v=3;maxv=4">[*family time line]</a>%nn;
         %if;(has_parents)
           %if;(father.has_siblings or mother.has_siblings)
-            <a href="%prefix;%access;;m=C;v1=2;v2=1">[uncles and aunts]</a>%nn;
+            <a href="%prefix;%access;;m=C;v1=2;v2=1">[*uncles and aunts]</a>%nn;
           %end;
         %end;
         %if;has_nephews_or_nieces;
-          <a href="%prefix;%access;;m=C;v1=1;v2=2">[nephews and nieces]</a>%nn;
+          <a href="%prefix;%access;;m=C;v1=1;v2=2">[*nephews and nieces]</a>%nn;
         %end;
       </span>
     </span>
@@ -973,8 +973,7 @@
   %end;
 %end;
 <div class="col1">
-%( <!-- Begin display image, person --> %)
-  <div class="person">
+  <div class="person"> %( <!-- Begin display image, person --> %)
     <h1 class="ch1 h1_%sex; h1_%has_families;%has_sosa;">
       %if;(has_public_name)
         %apply;link_s("n",public_name)
@@ -1020,7 +1019,7 @@
       %end;
       %if;has_aliases;
         %apply;lazy_print("")
-        <br%/>
+        %if;(has_qualifiers)<br%/>%end;
         <em><strong>%nn;
         %foreach;alias;
           %if;(lazy_printed)/%end;
@@ -1030,10 +1029,10 @@
         </strong></em>
       %end;
       %if;(has_public_name or has_qualifiers)
-        <br%/>
-        <em>
-        (%apply;link_s("p",first_name)%sp;
-        %apply;link_s("n",surname))
+        %if;(has_aliases or has_qualifiers)<br%/>%end;
+        <em style="font-size:13pt">
+        %apply;link_s("p",first_name)%sp;
+        %apply;link_s("n",surname)
         </em>
       %end;
       %if;has_first_names_aliases;
@@ -1059,6 +1058,7 @@
     </p>
   </div>
   %apply;timeline()
+  %if;(bvar.timeline="yes")%include.timeline1;%end;
 %( <!-- End display image, person --> %)
   %if;(bvar.mickroue2 = "yes" and (has_linked_pages or wizard))
     %include.perso_mickroue2;

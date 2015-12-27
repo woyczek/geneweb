@@ -15,7 +15,7 @@
     </div>
   %end;
   <div id="trl">
-    %if;(evar.digest = "" and evar.wide!="")
+    %if;(evar.digest = "")
       <form method="get" action="%action;" onsubmit="return oS3();">
          %hidden;
          <input id="mS" type="hidden" name="m" value="S" %/>
