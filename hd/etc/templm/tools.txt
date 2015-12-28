@@ -48,7 +48,7 @@
 
 %define;generation()
   <label style="display:inline"><input type="number" id="v" name="v" style="font-weight:bold;text-align:right;font-size:14px;width:2.4em;height:16px" value="%evar.v;"
-  autocomplete="off" autofocus="on"
+  autocomplete="off" %if;(evar.m="A")autofocus="on"%end;
   min="%if;(evar.m = "A" or evar.m = "D")
          %if;(evar.t1="CT" and evar.cpl="on")5%elseif;(evar.t1="CT" and evar.cpl="")4%else;2%end;
        %else;1

@@ -1,12 +1,30 @@
 <!-- $Id: trl.txt,v 7.00 2015/02/12 22:06:44 mr Exp $ -->
+%include.js_perso_accesskey;
 
-%import;js_perso_accesskey;
-%include.js_perso_accesskey
+%define;lang(xx)
+  %apply;nth%with;
+    /af/bg/br/ca/cs/da/de/en/eo/es/et/fi/fr/he/is/it/lv/nl/no/oc/pl/pt/pt-br/ro/ru/sk/sl/sv/zh/
+  %and;xx%end;
+%end;
+%define;link_lang()
+  %for;i;1;30;
+    %let;l1;%apply;lang(i)%in;
+     <a href="%prefix_base;templ=%evar.templ;;lang=%l1;;%suffix;" title="%apply;language_name(l1)">
+     %if;(bvar.hideflag != "yes")
+     <img src="%image_prefix;/flags/l-%l1;.jpg" width="20" height="11" alt="" id="i%tt;" style="border:0"%/> %end;%l1; %apply;language_name(l1)</a>
+  %end;
+%end;
+%let;lg;
+  %if;(evar.lang != "")%evar.lang;
+  %elseif;(bvar.default_lang != "")%bvar.default_lang;
+  %else;en%end;
+%in;
+
   %if;not cancel_links;
     <div class="menu2">
       <form id="ak" method="get" action="" style="display:inline">
         <div style="display:inline"><input id="acckey" style="width:15px;text-align:center;"
-         name="acckey" %laZ; value="" size="1" maxlength="1"
+         name="acckey" %laZ; value="" size="1" maxlength="1" %if;(evar.m!="A")autofocus="on"%end;
          placeholder="?"
          onkeypress="javascript:return acc_key(this,event,'sib_1','spo_1','chi_1_1','mod_ind','add_par','add_fam','mod_fam_1');"
          %/>
