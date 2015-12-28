@@ -2585,7 +2585,7 @@ ca: notes
 cs: poznámky
 da: noter
 de: Notizen
-en: notes
+en: notes index
 eo: notoj:a:+n
 es: notas
 et: märkused:g:-id
@@ -4547,10 +4547,10 @@ sv: visa genom att dela sidan/sidbredd/överlappning/global bredd
 
     display by/branch/alphabetic order
 de: anzuzeigen/nach Zweigen/alphabetisch geordnet
-en: display by:/line/alphabetical order
+en: display by/line/alphabetical order
 es: edición por:/ramas/orden alfabético
 fi: näytetään:/sukuhaaroittain/aakkosjärjestyksessä
-fr: affichage par :/branches/ordre alphabétique
+fr: affichage par/branches/ordre alphabétique
 it: visualizzazione per:/rami/ordine alfabetico
 nl: tonen per:/tak/alfabetische volgorde
 no: vises etter:/grener/alfabetisk orden
@@ -6121,7 +6121,7 @@ ca: històric de les actualitzacions
 cs: historie změn
 da: opdateringers historie
 de: verlauf der Updates
-en: history of Updates
+en: history of updates
 eo: historio de la ĝisdatigoj
 es: histórico de las actualizaciones
 et: muudatuste ajalugu
@@ -8520,7 +8520,7 @@ eo: navigado kun %t kiel Sosa referenco
 es: navegación con %t como referencia de Sosa
 et: navigeerimine kasutades %t Sosa viidet
 fi: navigointi käyttäen %t Sosa-viitteenä
-fr: navigation avec %t comme référence Sosa
+fr: naviguer avec %t comme Sosa racine
 he:  ניוות עם %t כאזכור Sosa
 is: leiðsögn með %t sem Sosa tilvísun
 it: percorso con %t come riferimento Sosa
@@ -9216,7 +9216,7 @@ sv: antal barn
 
     number of events
 de: Anzahl der Ereignisse
-en: Number of Facts
+en: number of facts
 es: número de eventos
 fi: Tapahtumien lukumäärä
 fr: nombre d’événements
@@ -9229,7 +9229,7 @@ sv: Antal händelser
 
     number of individuals
 de: Anzahl der Individuen
-en: Number of Individuals
+en: number of individuals
 es: número de individuos
 fi: Henkilöiden lukumäärä
 fr: nombre d’individus
@@ -11319,10 +11319,10 @@ sv: son/dotter/barn
 
     sort by/branch/alphabetic order
 de: sortieren nach: /Zweige/Alphabet
-en: Sort by:/Line/Alphabetical order
+en: sort by/line/alphabetical order
 es: organizar por: ramas/orden alfabético
 fi: Lajittelu:/Sukulinja/Aakkosjärjestys
-fr: trier par :/branches/ordre alphabétique
+fr: trier par/branches/ordre alphabétique
 it: smistare per :/rami/ordine alfabetico
 nl: tonen per:/tak/alfabetische volgorde
 no: vises etter:/grener/alfabetisk orden
@@ -11332,10 +11332,10 @@ sv: visas efter:/grenar/alfabetisk ordning
 
     sort by/date begin/alphabetic order/nb individuals/nb events
 de: sortieren nach: /Anfangsdatum/Alphabet/Anzahl der Individuen/Anzahl der Ereignisse
-en: Sort by:/Date/Alphabetical order/Number of individuals/Number of facts
+en: sort by/date/alphabetical order/number of individuals/number of facts
 es: organizar por: fecha de inicio/orden alfabético/numero de individuos/número de eventos
 fi: Lajittelu:/Päivämäärä/Aakkosjärjestys/Henkilöiden lukumäärä/Tapahtumien lukumäärä
-fr: trier par :/date de début/ordre alphabétique/nombre d’individus/nombre d’événements
+fr: trier par/date de début/ordre alphabétique/nombre d’individus/nombre d’événements
 it: smistare per : data d'inizio/ordine alfabetico/numero d'individui/numero d'eventi
 nl: sorteren per:/begindatum/alfabetisch/aantal personen/aantal evenementen
 no: Sorter etter:/Dato/alfabetisk rekkefølge/antall individer/antall hendelser
@@ -11345,10 +11345,10 @@ sv: Sortera efter datum börja alfabetisk ordning/nb individer/nb haändelser
 
     sort by/generation/alphabetic order
 de: sortieren nach: /Generationen/Alphabet
-en: Sort by:/Generation/Alphabetical order
+en: sort by/generation/alphabetical order
 es: organizar por: generación/orden alfabético
 fi: Lajittelu:/Sukupolvi/Aakkosjärjestys
-fr: trier par :/génération/ordre alphabétique
+fr: trier par/génération/ordre alphabétique
 it: smistare per : /generazione/ordine alfabetico
 nl: tonen per:/tak/alfabetische volgorde
 no: vises etter:/grener/alfabetisk orden
@@ -13848,7 +13848,7 @@ eo: vi devas unue kunigi la 2 familiojn
 es: debe primero fusionar las 2 familias
 et: kõigepealt peab ühendama mõlemad pered
 fi: yhdistä ensin molemmat perheet
-fr: vous devez d’abord fusionner les 2 familles
+fr: vous devez d’abord fusionner les deux familles
 he:  צריך לאחד קודם את 2 המשפחות
 is: þú verður fyrst að sameina þessar 2 fjölskyldur
 it: dovete in primo luogo fondere le 2 famiglie
