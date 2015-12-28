@@ -69,6 +69,47 @@
       %end;</table>
 %end;
 
+%define;tools_perso()
+%let;l_on1;%in;
+  <hr style="clear:both"/>
+  <div style="clear:both">
+    <form id="tools" name="tools" method="get" action="%action;">
+      <fieldset style="border:0">
+        <legend style="font-weight:bold">[*tools] <input type="submit" value="Ok"%/></legend>
+        %foreach;env_binding;
+          %if;(env.key = "cgl" or env.key = "dsrc" or env.key = "image" or env.key = "maxlev" or env.key = "spouse" or env.key = "wide")
+          %else;
+           <input type="hidden" name="%env.key;" value="%env.val.decoded;"/>
+          %end;
+        %end;
+        %if;(not cancel_links and (not browsing_with_sosa_ref or sosa_ref.index!=index))
+          <p>%apply;nav_with_sosa_ref%with;%self;%end;</p>
+        %end;
+        <p>
+          %let;maxvd;%if;(has_children and max_desc_level > 1)%max_desc_level;%else;3%end;%in;
+          <label>[*generation/generations]0 %lcX; <input type="number" min="1" max="%maxvd;" id="maxlev" title="[*maximum][:] %maxvd; [generation/generations]1" name="maxlev" class="number" size="1" value="%l_maxlev;" %l_on; %laX;%/></label>
+          %if;(wizard)
+            <label>[*source/sources]0[:] [person/persons]1 ([create])
+            <input name="dsrc" value="%evar.dsrc;" size="40" maxlength="300" /></label>
+          %end;
+        </p>
+        <p>
+          %apply;checkbox("","cgl",[cancel GeneWeb links],"")
+          %apply;image("")
+          %if;(bvar.wide = "yes")
+            <label> <input type="checkbox" name="wide" value="no" %l_on;
+                   %if;(lwide = "no") checked="checked"%end;%/>[visualize/show/hide/summary]0 &middot;|&middot;</label>
+          %else;
+            <label> <input type="checkbox" name="wide" value="yes" %l_on;
+                   %if;(lwide = "yes") checked="checked"%end;%/>[visualize/show/hide/summary]0 &divide;</label>
+          %end;
+          <label> <input type="checkbox" name="spouse" value="off" %l_on;
+                 %if;(evar.spouse = "off") checked="checked"%end;%/>[spouses not included]</label>
+        </p>
+      </fieldset>
+    </form>
+%end;
+
 %define;tools_anctree()
   <hr style="clear:both;" %/>
   <form id="tools" style="display:block" name="tools" method="get" action="%action;">

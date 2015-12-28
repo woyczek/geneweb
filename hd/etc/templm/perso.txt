@@ -14,7 +14,7 @@
   <meta http-equiv="Content-Style-Type" content="text/css"%/>
   <link rel="shortcut icon" href="%image_prefix;/favicon_gwd.png"%/>
   %include.css;
-  %import;js_perso_accesskey
+  %import;js_perso_accesskey;
   %if;(bvar.jquery = "no")
     <script type="text/javascript">
       <!-- 
@@ -73,7 +73,6 @@
 %let;l_ref;%if;browsing_with_sosa_ref;%sosa_ref.index;%else;%index;%end;%in;
 %let;l_url;;wide=%evar.wide;;maxlev=%l_maxlev;;image=%evar.image;;spouse=%evar.spouse;;%in;
 %let;l_on1; onclick="window.open(this.href); return false;" %in;
-%let;l_on2; onclick="this.focus()" onkeydown="if (event.keyCode == 13) javascript:document.tools.submit();" %in;
 %let;l_ldates;
   %if;wizard;
     %if;(evar.del="on")
@@ -240,54 +239,6 @@
         %end;
       </span>
     </span>
-  </div>
-  <div style="clear:both;">
-    <form id="tools" name="tools" method="get" action="%action;">
-      <fieldset>
-        <legend>[*tools]0 <input type="submit" value="Ok"%/></legend>
-        %foreach;env_binding;
-          %if;(
-               env.key = "cgl" or 
-               env.key = "dsrc" or
-               env.key = "image" or
-               env.key = "maxlev" or
-               env.key = "spouse" or
-               env.key = "wide"
-               )
-          %else;
-           <input type="hidden" name="%env.key;" value="%env.val.decoded;" %/>
-          %end;
-        %end;
-        %if;(not cancel_links and (not browsing_with_sosa_ref or sosa_ref.index!=index))
-          <p>%apply;nav_with_sosa_ref%with;%self;%end;</p>
-        %end;
-        <p>
-          %let;l_maxvd;%if;(has_children and max_desc_level > 1)%expr(max_desc_level + 1)%else;3%end;%in;
-          <label>[*generation/generations]0 %lcX; <input id="maxlev" name="maxlev" class="number" size="1" value="%l_maxlev;" %l_on2; %laX;%/> / %l_maxvd;</label>
-          %if;(wizard)
-            <label>[*source/sources]0[:] [person/persons]1 ([create])
-            <input name="dsrc" value="%evar.dsrc;" size="40" maxlength="300" /></label>
-          %end;
-        </p>
-        <p>
-          <label><input type="checkbox" name="cgl" value="on" %l_on2;
-                 %if;(evar.cgl = "on") checked="checked"%end;%/>[cancel GeneWeb links]</label>
-          %if;(bvar.no_image_for_visitor != "yes" or friend or wizard)
-            <label><input type="checkbox" name="image" value="on" %l_on2;
-                 %if;(evar.image = "on") checked="checked"%end;%/>[image/images]1</label>
-          %end;
-          %if;(bvar.wide = "yes")
-            <label><input type="checkbox" name="wide" value="no" %l_on2;
-                   %if;(lwide = "no") checked="checked"%end;%/>[visualize/show/hide/summary]0 &middot;|&middot;</label>
-          %else;
-            <label><input type="checkbox" name="wide" value="yes" %l_on2;
-                   %if;(lwide = "yes") checked="checked"%end;%/>[visualize/show/hide/summary]0 &divide;</label>
-          %end;
-          <label><input type="checkbox" name="spouse" value="off" %l_on2;
-                 %if;(evar.spouse = "off") checked="checked"%end;%/>[spouses not included]</label>
-        </p>
-      </fieldset>
-    </form>
   </div>
 %end;
 %define;init_count(prev_count)
@@ -1243,9 +1194,13 @@
   </iframe>
 %end;
 %if;(not cancel_links)
-  %include.trl;
-  %copyright;
-%end;
+<div>
+    %import;tools;
+    %apply;tools_perso()
+</div>
+    %include.trl;
+    %copyright;
+  %end;
 </div>%( the magic Safari div %)
 </body>
 </html>
