@@ -58,8 +58,7 @@ h1{text-align:center;}
 .menu2 .s_menu{display:none;float:left;width:350px;padding:5px;}
 .menu2 div:hover > .s_menu{display:block;position:absolute;right:0px;top:23px;z-index:10000;}
 /* Properties of the footer block. All pages. */
-#footer{clear:both;width:100%;}
-#footer hr{color:#999;margin-top:-1em;}
+#footer{float:right;paddin:3px}
 /* Properties of the title block. All pages. */
 #title{padding-top:10px;width:100%;}
 /* Propositions de background dans certains menus */

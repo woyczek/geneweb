@@ -1,15 +1,9 @@
-
 <div id="footer">
-  <br />
-  <hr />
-  <div>
-    <em>
-      <a href="http://opensource.geneanet.org/projects/geneweb/" target="_blank">
-      <img src="%image_prefix;/logo_bas.png" 
-      style="vertical-align: middle; border: 0" 
-      alt="GeneWeb" title="GeneWeb"%/></a>%sp;
-      Version %version; %compilation_time;%sp;
-      Copyright &copy; 1998-2016 INRIA%connections;%sq;
-    </em><br%/>
-  </div>
+  <a href="http://geneweb.tuxfamily.org/wiki/GeneWeb%if;(bvar.default_lang = "fr" or evar.lang = "fr")/fr%end;"
+  alt="doc GeneWeb" title="Manual of GeneWeb on Mediawiki" target="_blank">
+  <img src="%image_prefix;/logo_bas_mw.png"/></a>
+  <a href="http://opensource.geneanet.org/projects/geneweb/" target="_blank">
+  <img src="%image_prefix;/logo_bas.png" 
+  alt="GeneWeb" title="GeneWeb version %version; %compilation_time;%sp;&#013;
+  &copy; INRIA 1998-2016 %connections;%sq;"/></a>%sp;
 </div>
