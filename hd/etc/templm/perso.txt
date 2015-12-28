@@ -124,7 +124,6 @@
     </div>
   %else;
     %apply;menu1()
-    %apply;menu2()
   %end;
 %end;
 %define;menu1()
@@ -1243,10 +1242,10 @@
     <p>The browser does not like IFRAME ! Error $*^ù¤£ùµ€~èàçé</p>
   </iframe>
 %end;
-<div style="clear:both;">
-  %base_trailer;
+%if;(not cancel_links)
+  %include.trl;
   %copyright;
-</div>
+%end;
 </div>%( the magic Safari div %)
 </body>
 </html>

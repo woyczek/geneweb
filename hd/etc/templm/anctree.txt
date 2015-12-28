@@ -24,7 +24,6 @@
   <meta http-equiv="Content-Style-Type" content="text/css"%/>
   <link rel="shortcut icon" href="%image_prefix;/favicon_gwd.png"%/>
   %include.css;
-  %import;js_perso_accesskey;
   %base_header;
 </head>
 
@@ -203,10 +202,6 @@
       </span>
     </div>
   %end;
-  %apply;menu2()
-  <div class="menu2">
-    <a href="%prefix;" title="[*visualize/show/hide/summary]3">^^</a>
-  </div>
 %end;
 
 %define;show_templ(z1)
