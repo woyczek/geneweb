@@ -852,18 +852,20 @@
 %end;
 %define;marriage_event()
   <dt>
-    %apply;capitalize(event.name)
+    %if;(evar.spouse="off")<span title="[with] %event.spouse;">%apply;capitalize(event.name)</span>
+    %else;%apply;capitalize(event.name)%end;
     %if;event.has_date;%apply;on_edate("event")%end;
     %if;event.has_place; · %apply;advanced("marriage_place",event.place)%end;
-    %if;event.has_spouse; · [with] %event.spouse;%end;
+    %if;(event.has_spouse and evar.spouse!="off") · [with] %event.spouse;%end;
   </dt>
 %end;
 %define;other_event()
   <dt>
-    %apply;capitalize(event.name)
+    %if;(evar.spouse="off")<span title="[with] %event.spouse;">%apply;capitalize(event.name)</span>
+    %else;%apply;capitalize(event.name)%end;
     %if;event.has_date;%apply;on_edate("event")%end;
     %if;event.has_place; · %event.place;%end;
-    %if;event.has_spouse; · [with] %event.spouse;%end;
+    %if;(event.has_spouse and evar.spouse!="off") · [with] %event.spouse;%end;
   </dt>
 %end;
 %define;one_event(z1)
