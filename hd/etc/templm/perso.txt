@@ -809,23 +809,27 @@
   </div>
 %end;
 %define;birth_event()
+%let;parents_age;
+      %apply;a_of_b%with;
+        %if(is_male)[son/daughter/child]0%elseif;(is_female)[son/daughter/child]1%else;[son/daughter/child]2%end;
+      %and;
+        %if;(bvar.event_age!="yes")%nl;%end;
+        %father;
+        %if;(father_age_at_birth != ""), %if;(bvar.event_age="yes")<span class="nobr">%father_age_at_birth;</span>%else;%father_age_at_birth;%end;%if;(bvar.event_age="yes"),%end;
+        %end;
+        %if;(bvar.event_age!="yes")%nl;%else;%sp;[and]%sp;%end;
+        %mother;
+        %if;(mother_age_at_birth != ""), %if;(bvar.event_age="yes")<span class="nobr">%mother_age_at_birth;</span>%else;%mother_age_at_birth;%end;
+        %end;
+      %end;
+%in;
   <dt>
-    %apply;capitalize(event.name)
+    %if;(bvar.event_age!="yes")<span title="%parents_age;">%apply;capitalize(event.name)</span>%else;%apply;capitalize(event.name)%end;
     %if;event.has_date;%apply;on_edate("event")%end;
     %if;event.has_place; · %apply;advanced("birth_place",event.place)%end;
   </dt>
   %if;(bvar.event_age = "yes" and has_parents)
-    <dd>
-      %apply;a_of_b%with;
-        %if(is_male)[*son/daughter/child]0%elseif;(is_female)[*son/daughter/child]1%else;[son/daughter/child]2%end;
-      %and;
-        %father;
-        %if;(father_age_at_birth != "") <span class="nobr">(%father_age_at_birth;)</span>%end;
-        %sp;[and]%sp;
-        %mother;
-        %if;(mother_age_at_birth != "") <span class="nobr">(%mother_age_at_birth;)</span>%end;
-      %end;
-    </dd>
+       %parents_age;.
   %end;
 %end;
 %define;baptism_event()
@@ -877,7 +881,7 @@
   %else;%apply;other_event()
   %end;
   %if;event.has_witnesses;
-    <dd>[*witness/witnesses]1[:]
+       [witness/witnesses]1[:]
     %foreach;event_witness;
       %if;(not is_first), %nl;%end;
       %apply;somebody("event_witness")
@@ -890,7 +894,6 @@
         %end;%nn;
       %( <!-- End personalization mickroue --> %)
     %end;
-    </dd>
   %end;
   %if;event.has_note;
     <dd>%event.note;</dd>
