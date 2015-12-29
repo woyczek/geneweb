@@ -21,7 +21,7 @@
 %in;
 
 %if;(not cancel_links and evar.m != "MOD_DATA_OK" and evar.m != "DEL_IND_OK" and evar.m != "DEL_FAM_OK")
-  <div class="menu2">
+  <div class="menu2" id="menu2">
     %if;(evar.n != "" or evar.i != "")
     <form id="ak" method="get" action="" style="display:inline">
       <div style="display:inline"><input id="acckey" style="width:15px;text-align:center;"
@@ -118,6 +118,7 @@
       </span>
     </div>
   %end;
+  <div id="trl"/>
   %if;(wizard)
     <script type="text/javascript">
     <!--
@@ -137,7 +138,8 @@
     {
       if (window.opener && !window.opener.closed) 
       {
-        document.getElementById("trl").innerHTML = "<p><a id=\"reloadclose\" href=\"javascript:reloadClose()\">[X]</a></p>";
+        document.getElementById("menu2").innerHTML = "";
+        document.getElementById("trl").innerHTML = "<a id=\"reloadclose\" href=\"javascript:reloadClose()\">[X]</a>";
         document.getElementById("reloadclose").focus();
       }
     }
