@@ -766,7 +766,9 @@
   %end;
 %end;
 %define;on_edate(z1)
-  %z1.on_date;
+  %if;(bvar.event_age != "yes" and event.age != "" and event.name != [death])<span title="%event.age;">%sp;%z1.on_date;</span>
+  %else;%sp;%z1.on_date;
+  %end;
   %if;(bvar.event_age = "yes" and event.age != "" and event.name != [death]) · %event.age;%nn;
   %elseif;(event.name = [birth] and computable_age)
     %if;(l_nbd != "") · %apply;compute_age("today","birth_date")%else; · %age;%end;
