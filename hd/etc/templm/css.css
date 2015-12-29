@@ -58,7 +58,7 @@ h1{text-align:center;}
 .menu2 .s_menu{display:none;float:left;width:350px;padding:5px;}
 .menu2 div:hover > .s_menu{display:block;position:absolute;right:0px;top:23px;z-index:10000;}
 /* Properties of the footer block. All pages. */
-#footer{float:right;paddin:3px}
+#footer{float:right;padding:3px}
 /* Properties of the title block. All pages. */
 #title{padding-top:10px;width:100%;}
 /* Propositions de background dans certains menus */
@@ -120,7 +120,7 @@ input[type='submit']{line-height:14px;height:24px;}
 .small{font-size:.7em;}
 #perso .col1,#perso .col2{float:left;padding:5px;margin:5px;}
 #perso .col1{margin-right:0px;}
-#perso .col2{margin-left:-1px;min-height:600px;}
+#perso .col2{margin-left:-1px;}
 #perso .col2 > div{float:left;padding:5px;margin:5px;}
 #perso .col2 .fam{margin-bottom:10px;clear:both;}
 #perso .col2 ol{list-style-type:none;padding:0;margin:0;}

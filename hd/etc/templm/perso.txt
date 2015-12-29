@@ -15,6 +15,7 @@
   <link rel="shortcut icon" href="%image_prefix;/favicon_gwd.png"%/>
   %include.css;
   %import;js_perso_accesskey;
+  %import;tools;
   %if;(bvar.jquery = "no")
     <script type="text/javascript">
       <!-- 
@@ -562,6 +563,7 @@
     %end;
   %end;
 %end;
+
 %define;anc_families()
   %if;has_parents;
     <div>
@@ -704,13 +706,13 @@
   [age at %s birth date:::xx]%nn;
 %end;
 %define;nav_with_sosa_ref(xx)
-  <a id="nav_sosa_ref"
+  %sp;<a id="nav_sosa_ref"
     %if;(bvar.access_by_key="yes")
       href="%prefix_no_iz;pz=%first_name_key;;nz=%surname_key;;ocz=%occ;;%self.access;%l_url;"
     %else;
       href="%prefix_no_iz;iz=%self.index;;%self.access;%l_url;"
     %end;
-     %laS;>[*navigation with %t as Sosa reference:::xx]</a> %lcS;
+     title="[*navigation with %t as Sosa reference:::xx] %lcS;" %laS;>√</a>
 %end;
 %define;link_s(z1,z2)
   %if;cancel_links;z2%nn;
@@ -1113,7 +1115,7 @@
   <hr %if;(lwide = "no")style="display:none"%end; %/>
   %( <!-- Begin display sosa consang nb ancestors nb descendants --> %)
   <div class="consang">
-    %if;(browsing_with_sosa_ref)
+    %if;not cancel_links;
       %if;(has_sosa and sosa != 1)
         %let;l_sosa_ref;
           %apply;a_of_b%with;
@@ -1126,17 +1128,20 @@
         %else;
           <a href="%prefix;m=A;t=D;image=%evar.image;;i=%sosa_ref.index;;i1=%index;;l=%max_desc_level;" title="%apply;a_of_b%with;[ancestors]%and;%sosa_ref;%end; [up to] %self;">[*Sosa] %sosa;</a> %l_sosa_ref;%nn;
         %end;
-        <br%/>
       %elseif;(sosa = 1)
-        [*Sosa] 1<br%/>
+        [*Sosa] 1
       %end;
-    %end;
-    %if;(bvar.jquery = "no")
-      %if;(bvar.show_consang != "no" and has_consanguinity)
-        [*consanguinity][:] %consanguinity;
+      %if;(not cancel_links and (not browsing_with_sosa_ref or sosa_ref.index!=index))
+        %apply;nav_with_sosa_ref%with;%self;%end; 
       %end;
-    %else;
-      <div id="jq2">%if;has_parents;<br%/>%end;%if;has_children;<br%/>%end;</div>
+      <br%/>
+      %if;(bvar.jquery = "no")
+        %if;(bvar.show_consang != "no" and has_consanguinity)
+          [*consanguinity][:] %consanguinity;
+        %end;
+      %else;
+        <div id="jq2">%if;has_parents;<br%/>%end;%if;has_children;<br%/>%end;</div>
+      %end;
     %end;
   </div>
   %( <!-- End display sosa consang nb ancestors nb descendants --> %)
@@ -1144,7 +1149,7 @@
     %apply;anc_families()
     %if;has_families;
       <div>
-        <h2 class="ch2">[*descendants]</h2>
+        <h2 class="ch2">[*descendants] %apply;perso_gen()</h2>
         %foreach;family;
           <div class="fam">
             %if;(wizard and not cancel_links and family_cnt != 1)
@@ -1192,22 +1197,17 @@
     %misc_names;
   </div>
 %end;
-%if;not cancel_links;
-  %apply;menu()
-%end;
 %if;(evar.del="on")
   <iframe style="position:fixed;bottom:0px;right:0px;width:400px;height:120px;background-color:#AAA;" name="ifr">
     <p>The browser does not like IFRAME ! Error $*^ù¤£ùµ€~èàçé</p>
   </iframe>
 %end;
 %if;(not cancel_links)
-<div>
-    %import;tools;
+    %apply;menu()
     %apply;tools_perso()
-</div>
     %include.trl;
     %copyright;
-  %end;
+%end;
 </div>%( the magic Safari div %)
 </body>
 </html>

@@ -46,6 +46,15 @@
          size="1" placeholder="40" %/></label>
 %end;
 
+%define;border_color()
+  <label> ├ [border]<input type="number" name="bd" min="0" style="padding:0px 2px;width:2.4em;" value="%if;(evar.bd!="")%evar.bd;%else;%end;" placeholder="0"%/>px</label>
+  <label> └ [color] %for;i;0;8;
+        %let;bgi;bg%i;%in;
+        <a style="style:inline" class="%bgi;"><input type="radio" name="color" value="%bgi;" %l_on1; %l_on;
+                          %if;(evar.color=bgi) checked="checked"%end;%/></a>%if;(i=3)<br%/>                 %end;
+      %end;</table>
+%end;
+
 %define;generation()
   <label style="display:inline"><input type="number" id="v" name="v" style="font-weight:bold;text-align:right;font-size:14px;width:2.4em;height:16px" value="%evar.v;"
   autocomplete="off" %if;(evar.m="A")autofocus="on"%end;
@@ -60,58 +69,57 @@
         accesskey="X"/>[generation/generations]1 <code>(X)</code></label><br/>
 %end;
 
-%define;border_color()
-  <label> ├ [border]<input type="number" name="bd" min="0" style="padding:0px 2px;width:2.4em;" value="%if;(evar.bd!="")%evar.bd;%else;%end;" placeholder="0"%/>px</label>
-  <label> └ [color] %for;i;0;8;
-        %let;bgi;bg%i;%in;
-        <a style="style:inline" class="%bgi;"><input type="radio" name="color" value="%bgi;" %l_on1; %l_on;
-                          %if;(evar.color=bgi) checked="checked"%end;%/></a>%if;(i=3)<br%/>                 %end;
-      %end;</table>
-%end;
-
-%define;tools_perso()
-%let;l_on1;%in;
-  <hr style="clear:both"/>
-  <div style="clear:both">
-    <form id="tools" name="tools" method="get" action="%action;">
-      <fieldset style="border:0">
-        <legend style="font-weight:bold">[*tools] <input type="submit" value="Ok"%/></legend>
-        %foreach;env_binding;
+%define;perso_gen()
+  %if(not cancel_links)
+    %let;maxvd;%if;(has_children and max_desc_level > 1)%max_desc_level;%else;3%end;%in;
+    %let;l_on;onclick="this.focus()" onkeydown="if (event.keyCode == 13) javascript:document.tools.submit();"%in;
+    <form style="display:inline" name="tools" method="get" action="%action;">
+          %foreach;env_binding;
           %if;(env.key = "cgl" or env.key = "dsrc" or env.key = "image" or env.key = "maxlev" or env.key = "spouse" or env.key = "wide")
           %else;
            <input type="hidden" name="%env.key;" value="%env.val.decoded;"/>
           %end;
-        %end;
-        %if;(not cancel_links and (not browsing_with_sosa_ref or sosa_ref.index!=index))
-          <p>%apply;nav_with_sosa_ref%with;%self;%end;</p>
-        %end;
-        <p>
-          %let;maxvd;%if;(has_children and max_desc_level > 1)%max_desc_level;%else;3%end;%in;
-          <label>[*generation/generations]0 %lcX; <input type="number" min="1" max="%maxvd;" id="maxlev" title="[*maximum][:] %maxvd; [generation/generations]1" name="maxlev" class="number" size="1" value="%l_maxlev;" %l_on; %laX;%/></label>
-          %if;(wizard)
-            <label>[*source/sources]0[:] [person/persons]1 ([create])
-            <input name="dsrc" value="%evar.dsrc;" size="40" maxlength="300" /></label>
           %end;
-        </p>
-        <p>
-          %apply;checkbox("","cgl",[cancel GeneWeb links],"")
-          %apply;image("")
-          %if;(bvar.wide = "yes")
-            <label> <input type="checkbox" name="wide" value="no" %l_on;
-                   %if;(lwide = "no") checked="checked"%end;%/>[visualize/show/hide/summary]0 &middot;|&middot;</label>
-          %else;
-            <label> <input type="checkbox" name="wide" value="yes" %l_on;
-                   %if;(lwide = "yes") checked="checked"%end;%/>[visualize/show/hide/summary]0 &divide;</label>
-          %end;
-          <label> <input type="checkbox" name="spouse" value="off" %l_on;
-                 %if;(evar.spouse = "off") checked="checked"%end;%/>[spouses not included]</label>
-        </p>
-      </fieldset>
-    </form>
+    <label><input style="font-weight:bold;text-align:right;font-size:16px;width:2.5em" type="number" min="1" max="%maxvd;" id="maxlev"
+    title="[*maximum][:] %maxvd; [generation/generations]1 %lcX;" name="maxlev" class="number" size="1,4" value="%l_maxlev;" %l_on; %laX;%/>
+    </label></form>
+  %end;
+%end;
+
+%define;tools_perso()
+  %let;l_on1;%in;
+  <hr style="clear:both"/>
+  <form id="tools" style="display:block" name="tools" method="get" action="%action;">
+    <fieldset style="border:0">
+      <legend style="font-weight:bold">[*tools] <input type="submit" value="Ok"%/></legend>
+      %foreach;env_binding;
+        %if;(env.key = "cgl" or env.key = "dsrc" or env.key = "image" or env.key = "l_maxlev" or env.key = "spouse" or env.key = "wide")
+        %else;
+         <input type="hidden" name="%env.key;" value="%env.val.decoded;"/>
+        %end;
+      %end;
+        %if;(wizard)
+          <label>[*source/sources]0[:] [person/persons]1 ([create])
+          <input name="dsrc" value="%evar.dsrc;" size="20" maxlength="300" /></label>
+        %end;
+        %if;(cancel_links)<input type="hidden" name="maxlev" value="%env.maxlev"/>%end;
+        %apply;checkbox("","cgl",[cancel GeneWeb links],"")
+        %apply;image("")
+        %if;(bvar.wide = "yes")
+          <label> <input type="checkbox" name="wide" value="no" %l_on;
+                 %if;(lwide = "no") checked="checked"%end;%/>[visualize/show/hide/summary]0 &middot;|&middot;</label>
+        %else;
+          <label> <input type="checkbox" name="wide" value="yes" %l_on;
+                 %if;(lwide = "yes") checked="checked"%end;%/>[visualize/show/hide/summary]0 &divide;</label>
+        %end;
+        <label> <input type="checkbox" name="spouse" value="off" %l_on;
+               %if;(evar.spouse = "off") checked="checked"%end;%/>[spouses not included]</label>
+    </fieldset>
+  </form>
 %end;
 
 %define;tools_anctree()
-  <hr style="clear:both;" %/>
+  <hr style="clear:both"/>
   <form id="tools" style="display:block" name="tools" method="get" action="%action;">
     <fieldset style="border:0">
       <input type="hidden" name="t" value="T" %l_on;

@@ -7,9 +7,9 @@
 %let;laP;title="[*modify::person/persons]0 (P)" accesskey="P"%in;
 %let;laR;title="[*relationship computing] (R)" accesskey="R"%in;
 %let;laU;title="[*update] (U)" accesskey="U"%in;
-%let;laS;title="[*navigation with %t as Sosa reference:::xx] (S)" accesskey="S"%in;
-%let;lcS;<code>(S)</code>%in; %( Sosa reference %)
+%let;lcS;(S)%in; %( Sosa reference %)
+%let;laS;accesskey="S"%in;
 %let;laX;autocomplete="off" title="[*generation/generations]0 (X)" accesskey="X"%in;
-%let;lcX;<code>(X)</code>%in; %( generation %)
+%let;lcX;(X)%in; %( generation %)
 %let;laY;title="[*tree] (Y)" accesskey="Y"%in;
 %let;laZ;title="[*shortcuts] (Alt+Z)" accesskey="Z"%in;
