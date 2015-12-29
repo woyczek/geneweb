@@ -73,7 +73,7 @@
            %/><input type="search" id="mSp" name="p" size="17" maxlength="200" style="margin:0px"
              placeholder="[first name/first names]0*, n° index"
              title="* = [starting with]"
-           %/><input style="position:absolute;opacity:0;width:0px;height:0px;top:-99999px;left:-99999px;" type="submit" value="Ok" title="[*search/case sensitive]0 (W)"/>
+           %/><input style="position:absolute;opacity:0;width:0px;height:0px;" type="submit" value="Ok" title="[*search/case sensitive]0 (W)"/>
     </form>
     </div>
     %if;(bvar.hide_advanced_request != "yes")
@@ -84,7 +84,7 @@
     <div class="menu" style="display:inline">%if;(bvar.hideflag != "yes")<img src="%image_prefix;/flags/l-%lg;.jpg" width="32" height="24" alt="flag" title="%lg; %apply;language_name(lg)"/>%else;<a href="#">%lg;</a>%end;
       <div class="s_menu" style="width:115px">%apply;link_lang()</div>
     </div>
-    <div class="menu" style="display:inline;"><a href="%prefix;" title="%if;(evar.n != "" or evar.i != "")[*back] [visualize/show/hide/summary]3%end;%nl;Template[:] %if;(evar.templ != "")%evar.templ;%else;templ%end;">%if;(evar.n != "" or evar.i != "")⇧⇧%else;templ%end;</a>
+    <div class="menu" style="display:inline;"><a href="%prefix;" title="%if;(evar.n != "" or evar.i != "")[*back] [visualize/show/hide/summary]3%nl;%end;Template[:] %if;(evar.templ != "")%evar.templ;%else;templ%end;">%if;(evar.n != "" or evar.i != "")⇧⇧%else;templ%end;</a>
       %if;(evar.digest = "")
         <div class="s_menu" style="width:70px">
           <a href="%prefix_no_templ;templ=;%suffix;">default</a>
