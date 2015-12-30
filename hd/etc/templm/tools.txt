@@ -1,6 +1,5 @@
 ﻿%let;l_on;onclick="this.focus()" onkeydown="if (event.keyCode == 13) javascript:document.tools.submit();"%in;
 %let;l_emaxv;%if;(evar.t != "T")%evar.maxv;%elseif;(bvar.max_anc_tree = "")7%else;%bvar.max_anc_tree;%end;%in;
-
 %define;checkbox(cc,xx,yy,uu)
   <label title="uu"> cc<input type="checkbox" name="xx" value="on" %l_on1; %l_on;
   %if;(evar.xx = "on") checked="checked"%end;%/>yy</label>
@@ -80,8 +79,9 @@
            <input type="hidden" name="%env.key;" value="%env.val.decoded;"/>
           %end;
           %end;
-    <label><input style="font-weight:bold;text-align:right;font-size:16px;width:2.5em" type="number" min="1" max="%maxvd;" id="maxlev"
-    title="[*maximum][:] %maxvd; [generation/generations]1 %lcX;" name="maxlev" class="number" size="1,4" value="%l_maxlev;" %l_on; %laX;%/>
+    <label><input type="number" style="font-weight:bold;text-align:right;font-size:16px;width:2.5em" type="number" min="1" max="%maxvd;" id="maxlev"
+    title="[*maximum][:] %maxvd; [generation/generations]1 %lcX;" name="maxlev" value="%l_maxlev;" %l_on; %laX;%/>
+    <input id="hide_ie" hidefocus="true" tabindex="-1" type="submit"/>
     </label></form>
   %end;
 %end;
@@ -172,8 +172,8 @@
           %if;(evar.sms = "on") checked="checked"%end;%/>[visualize/show/hide/summary]1 [missing sosa]</label>
         <label title="[*full tree] [with] 15 [person/persons]1 + [compact tree] [with] 256 [n° Sosa] + extra [generation/generations]0 = 9 [generation/generations]1"
          style="display:inline"><input  type="radio" name="t1" value="m" %l_on;
-          %if;(evar.t1 = "m") checked="checked"%end;%/>[*mtree]</label> 
-        <label style="display:inline"><input type="number" id="fs" name="fs" style="width:2.4em" 
+          %if;(evar.t1 = "m") checked="checked"%end;%/>[*mtree]</label>
+        <label style="display:inline"><input type="number" id="fs" name="fs" style="width:2.4em"
           value="%if;(evar.fs!="")%evar.fs;%end;" placeholder="14" min="8" max="16"
           autocomplete="off" title="[font size] ([maximum] 16)" />px</label>
         <label title="7 [generation/generations]1, [by couple]"><input type="radio" name="t1" value="h" %l_on;
@@ -254,7 +254,7 @@
                     %end;
                   %end;">[*modify::tree]</a></li>
           %end;
-          <li><a href="%prefix;%suffix;notab=on" accesskey="/" 
+          <li><a href="%prefix;%suffix;notab=on" accesskey="/"
              title="[display by slices/slice width/overlap/total width]0 (/)"
              >[*display by slices/slice width/overlap/total width]0</a></li>
         </ul>

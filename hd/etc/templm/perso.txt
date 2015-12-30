@@ -23,8 +23,7 @@
       {}
        -->
     </script>
-  %else;
-    <script type="text/javascript" src="/jquery_1_9_1_min.js"></script>
+  %else;<script type="text/javascript" src="templm/jquery.1.10.2.js"></script>
     <script type="text/javascript">
      <!--
         function jq2()
@@ -64,7 +63,6 @@
     %else;0%end;
   %end;
 %in;
-%let;l_ol;%if;(not cancel_links)document.getElementById('acckey').focus();%end;%in;
 %let;birth_symbol;%if;(bvar.birth_symbol != "")%bvar.birth_symbol;%else;&deg;%end;%in;
 %let;death_symbol;%if;(bvar.death_symbol != "")%bvar.death_symbol;%else;&dagger;%end;%in;
 %let;l_child;%if;(bvar.always_surname = "yes" and evar.always_surname != "no")child%else;child_name%end;%in;
@@ -73,7 +71,7 @@
 %let;l_maxlev;%if;(has_children and max_desc_level > 1 and l_maxlev0 > max_desc_level)%max_desc_level;%else;%l_maxlev0;%end;%in;
 %let;l_ref;%if;browsing_with_sosa_ref;%sosa_ref.index;%else;%index;%end;%in;
 %let;l_url;;wide=%evar.wide;;maxlev=%l_maxlev;;image=%evar.image;;spouse=%evar.spouse;;%in;
-%let;l_on1; onclick="window.open(this.href); return false;" %in;
+%let;l_on1; target="_blank"%in;
 %let;l_ldates;
   %if;wizard;
     %if;(evar.del="on")
@@ -137,7 +135,7 @@
           %if;(version = l_version)
             <a href="%l1;gwstp?v=main.htm;" title="Gwstp">Gwstp</a>
           %else;
-            <a href="%l1;gwsetup?v=main.htm;" title="Gwsetup" style="font-size:9pt">📂</a>
+            <a href="%l1;gwsetup?v=main.htm;" title="Gwsetup">📂</a>
           %end;
           %if;(has_parents or has_children)
             <span class="s_menu">
@@ -918,7 +916,7 @@
   %if;not cancel_links;%apply;timeline_tree(l_ref)%end;
 %end;
 %( <!-- End define --> %)
-<body%body_prop; id="perso"%if;(evar.del != "on") onload="javascript:jq2();%l_ol;"%end;>%nn;
+<body%body_prop; id="perso"%if;(evar.del != "on") onload="javascript:jq2();"%end;>%nn;
 <div onclick="void(0);">%( the magic Safari div %)
 %message_to_wizard;
 %if;(evar.del = "on")<h1 class="del">[*delete::]… [person/persons]1… [family/families]1…</h1>
@@ -1203,10 +1201,12 @@
   </iframe>
 %end;
 %if;(not cancel_links)
+<div>
     %apply;menu()
     %apply;tools_perso()
     %include.trl;
     %copyright;
+    </div>
 %end;
 </div>%( the magic Safari div %)
 </body>

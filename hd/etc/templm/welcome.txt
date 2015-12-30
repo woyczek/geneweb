@@ -104,9 +104,9 @@ zh: 已经有 %nb_accesses; 次访问数据库，其中 %nb_accesses_to_welcome;
   %elseif;(bvar.friend_passwd = "" and bvar.friend_passwd_file = ""
        and bvar.wizard_passwd = "" and bvar.wizard_passwd_file = "" and bvar.auth_file = "")
   %else;
-    <form method="post" action="%action;">
+    <form class="login" method="post" action="%action;">
       %hidden;
-      [*access] [wizard/wizards/friend/friends/exterior]2/[wizard/wizards/friend/friends/exterior]0[:] <input name="w" type=password size="20" maxlength="100" placeholder="[user/password/cancel]0:[user/password/cancel]1" autofocus="on"%/>
+      [*access] [wizard/wizards/friend/friends/exterior]2/[wizard/wizards/friend/friends/exterior]0[:] <input name="w" type="password" size="20" maxlength="100" placeholder="[user/password/cancel]0:[user/password/cancel]1" autofocus="on"%/>
     </form>
   %end;
 %end;
@@ -229,7 +229,7 @@ zh: 网络家谱
                   <input id="mTT" type="hidden" name="m" value="TT"/>
                   <li><a href="%prefix;m=TT;t=" title="[*all the titles], [display by/branch/alphabetic order]0 [display by/branch/alphabetic order]2">[*title/titles]1</a><input type=text name="t" size="10" maxlength="100" title="[*search/case sensitive]0 [title/titles]0"%/></li>
                   <li><a href="%prefix;m=TT;p=*" title="[*all the estates], [display by/branch/alphabetic order]0 [display by/branch/alphabetic order]2">[*estate]0s</a><input type=text name="p" size="10" maxlength="100" title="[*search/case sensitive]0 [estate]0"%/>
-                  <input style="position:absolute;opacity:0;width:0px;height:0px;" type="submit" value="Ok"%/>
+                  <input id="hide_ie" "hidefocus="true" tabindex="-1" type="submit" value="Ok"/>
                   </li>
           </form>
         %end;
