@@ -142,7 +142,7 @@
   <input name="death" value=""%/> 
  %( marche pas :
     "NotDead"
-    "DontKnowIfDead
+    "DontKnowIfDead"
     "Death"
     "DeadYoung"
     "OfCourseDead"
@@ -175,7 +175,7 @@
     %lpc1; <label %lpa1;>[first name/first names]0<input id="first_name" name="first_name" size="30" maxlength="200" value="%first_name;" %l_on3;%/></label>
     <label>[surname/surnames]0<input id="surname" name="surname" size="30" maxlength="200" value="%surname;" %l_on2;%/></label>
   </div>
-  <div class="w1">  
+  <div class="w1">
     <label>[public name]<input name="public_name" size="30" value="%public_name;" id="public_name" %/></label>
   </div>
   <div class="w2">
@@ -217,10 +217,10 @@
     <span id="new_surname_alias"></span>
   </div>
   <div class="w1">
-    <label>%lpcP; [occupation/occupations]0<input name="occu" size="36" maxlength="200" value="%occupation;" id="occu" %lpaP; %l_on4;%/></label>
+    <label>%lpcP; [occupation/occupations]0<textarea name="occu" rows="1" maxlength="300" id="occu" %lpaP; %l_on4;%>%occupation;</textarea></label>
   </div>
   <div class="w1">
-    <label>[source/sources]0 [person/persons]0<input name="src" size="36" maxlength="300" value="%sources;" id="src" %l_on6;%/></label>
+    <label>[source/sources]0 [person/persons]0<textarea name="src" rows="1" maxlength="800" id="src" %l_on6;%>%sources;</textarea></label>
     <label>[image/images]0<input name="image" size="36" value="%image;" %/></label>
   </div>
   <div>
@@ -248,14 +248,8 @@
       %if;has_pevents;%foreach;pevent;%apply;one_event(cnt,"","witness")%end;%end;
       %if;(not has_pevent_death)%apply;one_event(next_pevent,"-","witness")%incr_next_pevent;%end;
       <dt id="new_event"></dt>
-      <dt><a href="javascript:addEvent()" %lpa4;> + [event/events]0</a></dt>
+      <dt><a href="javascript:addEvent()" title="(+) [*death]" %lpa4;> + [event/events]0</a> %lt2; [place] [note/notes]1 [source/sources]1</dt>
       %incr_next_pevent;
-    </dl>
-    <dl>
-      <dt><abbr title="(+) [*death]">[*event/events]0</abbr> %lt2; [place]</dt>
-        <dd>[note/notes]0</dd>
-        <dd><em>[source/sources]0</em></dd>
-        <dd>[witness/witnesses]0[:] %lt1; [first name/first names]0 [surname/surnames]0</dd>
     </dl>
 </fieldset>
 <fieldset class="f2 t">
@@ -301,4 +295,6 @@
   %base_trailer;
   %copyright;
 </body>
+<script type="text/javascript" src="/templm/autosize.min.js"></script>
+<script>autosize(document.querySelectorAll('textarea'));</script>
 </html>

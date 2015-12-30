@@ -1,8 +1,9 @@
 /* $Id: templm/css.css,v 7.00 2015/04/20 22:08:24 mr Exp $ /*
 /* Properties of all html pages.*/
+input[type=number]::-webkit-inner-spin-button {opacity:1}
 html{color:#000;background-color:#EEE;}
 /* Properties of all html pages */
-textarea{width:99%;}
+textarea{width:99%;padding:10px;vertical-align:top;min-height:1em;}
 tr,div,p,li,img{page-break-inside:avoid;}
 body{word-wrap:break-word;}
 table{word-wrap:normal;}
@@ -44,7 +45,7 @@ pre{font-size:1em;font-family:monospace,monospace;}
 /* Properties for the unvisited,visited and mouse over links. All pages. */
 a:link.date,a:visited.date{text-decoration:none;color:inherit;background-color:transparent;}
 a:link,a:visited{color:#00C;text-decoration:none;}
-a:hover.date,a:hover,.button a:hover,.menu a:hover,.menu1 a:hover,.menu2 a:hover,.menu3 a:hover,a:active,a:focus,a:focus.date,input:focus,select:focus,.button a:focus,input[type='submit']:hover,input[type='submit']:focus{background-color:#FAFA9A;color:#000;text-decoration:none;}
+a:hover.date,a:hover,.button a:hover,.menu a:hover,.menu1 a:hover,.menu2 a:hover,.menu3 a:hover,a:active,a:focus,a:focus.date,input:focus,select:focus,.button a:focus,input[type='submit']:hover,input[type='submit']:focus,textarea:focus{background-color:#FAFA9A;color:#000;text-decoration:none;}
 input[type="checkbox"]:focus,input[type="radio"]:focus{outline:2px solid #FF9}
 a:hover{z-index:100;}
 /* Properties of the main title. All pages. */
@@ -167,18 +168,20 @@ input[type='submit']{line-height:14px;height:24px;}
 #upd .e{width:162px;}
 #upd .jq2,#upd .jq4{text-align:left;}
 code{font-size:12px;color:#999;font-family:monospace;}
-#upd #notes{width:405px;height:270px;}
+#upd #notes{min-height:270px;max-height:540px;width:405px;height:270px;}
+#notes:focus{background-color:#FAFAFA}
 #upd #notes1{min-height:354px;}
-#upd #comment{width:849px;height:3em;margin:0;}
+#upd #comment #src #psrc {width:849px;margin:0;}
 #upd .event{text-align:left;}
 #upd .event dt{font-weight:500;margin-top:10px;}
 #upd .event input{margin:0;}
-#upd .enote{margin:5px 0px;width:809px;height:3em;}
-#upd .esrc{width:809px;font-style:italic;}
+#upd .enote{margin:5px 0px;width:809px;}
+#upd .esrc{margin:5px 0px;width:809px;}
 #upd label{white-space:nowrap;font-size:12px;}
 #upd .f1,#upd #notes1{width:420px;}
 #upd .f2,#upd .event{width:862px;}
 #upd .w1 input{width:280px;}
+#upd .w1 textarea{width:280px}
 #upd .w2 input{width:264px;}
 #upd .w3 input{width:700px;}
 #upd .fn,#upd .sn{width:230px;}

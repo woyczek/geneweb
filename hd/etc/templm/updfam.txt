@@ -231,20 +231,14 @@
   <dl>
     %if;has_fevents;%foreach;fevent;%apply;one_event(cnt,"","fwitness")%end;%else;%apply;one_event(1,"#marr","fwitness")%end;
     <dt id="new_event"></dt>
-    <dt><a href="javascript:addEvent()" %lfa4;> + [event/events]0</a></dt>
-  </dl>
-  <dl>
-    <dt>[*event/events]0 %lt2; [place]</dt>
-      <dd>[note/notes]0</dd>
-      <dd><em>[source/sources]0</em></dd>
-      <dd>[witness/witnesses]0[:] %lt1; [first name/first names]0 [surname/surnames]0</dd>
+    <dt><a href="javascript:addEvent()" %lfa4;>+ [event/events]0</a> %lt2; [place] [note/notes]1 [source/sources]1</dt>
   </dl>
 </fieldset>
 <fieldset class="f2 al">
   <legend>%lfc5; 
     <label style="font-size:inherit" for="comment" %lfa5;>[*marriage notes]0</label>
   </legend>
-  <textarea id="comment" name="comment" style="overflow:hidden;" onkeydown="%l_on1;">
+  <textarea id="comment" rows="1" placeholder="[*note/notes]1" name="comment">
     %if;(comment != "" and bvar.move_comment = "yes")
       %foreach;fevent;
         %if;(fevent.e_name = "#marr" and fevent.e_note != "")%comment;%sq;%end;
@@ -258,8 +252,8 @@
 </fieldset>
 <fieldset class="f2 w3">
   <legend>%lfc6; [*source/sources]1</legend>
-    <label>[family/families]0<input id="src" name="src" size="100" maxlength="300" value="%fsources;" %lfa6; %l_on6;%/></label>
-    <label>[person/persons]1<input id="psrc" name="psrc" size="100" maxlength="300" value="%if;(evar_psrc != "")%evar_psrc;%else;%evar_dsrc;%end;" %l_on6;%/></label>
+    <label><textarea id="src" name="src" placeholder="[*source/sources]1 [family/families]0" rows="1" maxlength="800" %lfa6; %l_on6;%>%fsources;</textarea></label>
+    <label><textarea id="psrc" name="psrc" placeholder="[*source/sources]1 [person/persons]0" rows="1" maxlength="800" %l_on6;%/>%if;(evar_psrc != "")%evar_psrc;%else;%evar_dsrc;%end;</textarea></label>
     %if;(bvar.origin_file = "on")
       <label>[file]<input name="origin_file" size="50" maxlength="200" value="%origin_file;"%/></label>
     %end;
@@ -269,4 +263,6 @@
 %base_trailer;
 %copyright;
 </body>
+<script type="text/javascript" src="/templm/autosize.min.js"></script>
+<script>autosize(document.querySelectorAll('textarea'));</script>
 </html>
