@@ -150,14 +150,13 @@
            >[display by slices/slice width/overlap/total width]0</a>
          %end;<br%/>
         %apply;border_color()
-<br%/>
-      %let;l_on1;%in;
       </fieldset>
       <fieldset style="float:left;border:0">
       %let;l_on1;onchange="valid('t1HT')"%in;
         %apply;radio("t1","HT",[*horizontal tree],"")
         %apply;anc_hrztl()
         <br%/>
+        %let;l_on1;%in;
         %apply;checkbox("  ","cgl",[*cancel GeneWeb links],"")
       </fieldset>
       <fieldset style="border:0">
