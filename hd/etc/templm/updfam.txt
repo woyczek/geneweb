@@ -191,8 +191,8 @@
   %apply;hevent("marr","marriage")
   %apply;hevent("div","divorce")
 </p>
-<fieldset>
-  <legend>%lfc1; 
+<fieldset style="border:0">
+  <legend>
     %if;(evar_m = "ADD_FAM" or evar_m = "ADD_FAM_OK")
       [*add::family/families]0
     %elseif;(evar_m = "ADD_PAR")
@@ -203,14 +203,16 @@
          evar_m = "MRG_FAM_OK" or evar_m = "MRG_MOD_FAM_OK")
       [*merge::family/families]1 # %evar_i;
     %end;
-    &nbsp;<input type="submit" value="Ok"%/>
+    &nbsp;&nbsp;<input type="submit" value="Ok"%/>
   </legend>
   <table summary="parents" cellspacing=0 cellpadding=0>
     %foreach;parent;%apply;one_parent(cnt)%end;
+ <tr><td colspan=5 style="border:0;text-align:left;padding:5px"><label><input type="checkbox" id="nsck" name="nsck" value="on"
+    %if;(mrel = "nsck" or mrel = "nsckm") checked="checked"%end;%/> [no sexes check]</label></td></tr>
   </table>
 </fieldset>
-<fieldset>
-  <legend>%lfc2; [*child/children]1</legend>
+<fieldset style="border:0">
+  <legend>[*child/children]1</legend>
   <table summary="children" cellspacing=0 cellpadding=0>
     <tr>
       <td class="bg7"><abbr %lt4;>#</abbr></td>
@@ -223,22 +225,22 @@
     </tr>
     %foreach;child;%apply;one_child(cnt)%end;
     <tr id="new_child"></tr>
-    <tr><td class="bg7"><a id="ach" href="javascript:addChild(1,1)" %lfa2;> + </a></td></tr>
+    <tr><td class="bg7"><a id="ach" href="javascript:addChild(1,1)" %lfa2;> + </a></td><td style="text-align:left;border:0"> %lfc2;</td></tr>
   </table>
 </fieldset>
-<fieldset class="event">
-  <legend>%lfc4; [*event/events]1</legend>
+<fieldset class="event" style="border:0">
+  <legend>[*event/events]1</legend>
   <dl>
     %if;has_fevents;%foreach;fevent;%apply;one_event(cnt,"","fwitness")%end;%else;%apply;one_event(1,"#marr","fwitness")%end;
     <dt id="new_event"></dt>
-    <dt><a href="javascript:addEvent()" %lfa4;>+ [event/events]0</a> %lt2; [place] [note/notes]1 [source/sources]1</dt>
+    <dt><a href="javascript:addEvent()" %lfa4;>+ [event/events]0</a> %lfc4; %lt2; [place] [note/notes]1 [source/sources]1</dt>
   </dl>
 </fieldset>
-<fieldset class="f2 al">
-  <legend>%lfc5; 
+<fieldset class="f2 al" style="border:0">
+  <legend>
     <label style="font-size:inherit" for="comment" %lfa5;>[*marriage notes]0</label>
   </legend>
-  <textarea id="comment" rows="1" placeholder="[*note/notes]1" name="comment">
+  <textarea id="comment" rows="1" placeholder="[*comment]" name="comment" %l_on1s;>
     %if;(comment != "" and bvar.move_comment = "yes")
       %foreach;fevent;
         %if;(fevent.e_name = "#marr" and fevent.e_note != "")%comment;%sq;%end;
@@ -247,20 +249,17 @@
       %comment;%sq;
     %end;
   </textarea>
-  <div><label><input type="checkbox" id="nsck" name="nsck" value="on"
-    %if;(mrel = "nsck" or mrel = "nsckm") checked="checked"%end;%/>[no sexes check]</label></div>
 </fieldset>
-<fieldset class="f2 w3">
-  <legend>%lfc6; [*source/sources]1</legend>
-    <label><textarea id="src" name="src" placeholder="[*source/sources]1 [family/families]0" rows="1" maxlength="800" %lfa6; %l_on6;%>%fsources;</textarea></label>
-    <label><textarea id="psrc" name="psrc" placeholder="[*source/sources]1 [person/persons]0" rows="1" maxlength="800" %l_on6;%/>%if;(evar_psrc != "")%evar_psrc;%else;%evar_dsrc;%end;</textarea></label>
+<fieldset class="f2 w3" style="border:0">
+  <legend>[*source/sources]1</legend>
+    <label><textarea id="src" name="src" placeholder="[*source/sources]1 [family/families]0" rows="1" maxlength="800" %lfa6; %l_on6; %l_on1s;>%fsources;</textarea></label>
+    <label><textarea id="psrc" name="psrc" placeholder="[*source/sources]1 [person/persons]0" rows="1" maxlength="800" %l_on6;% %l_on1s;/>%if;(evar_psrc != "")%evar_psrc;%else;%evar_dsrc;%end;</textarea></label>
     %if;(bvar.origin_file = "on")
       <label>[file]<input name="origin_file" size="50" maxlength="200" value="%origin_file;"%/></label>
     %end;
 </fieldset>
 </form>
-<div style="height:20px;clear:both;"> </div>
-%base_trailer;
+%include.trl
 %copyright;
 </body>
 <script type="text/javascript" src="/templm/autosize.min.js"></script>

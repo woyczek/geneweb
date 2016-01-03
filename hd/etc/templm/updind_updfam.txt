@@ -1,22 +1,6 @@
 <!-- $Id: updind_updfam.txt,v 7.00 2015/04/11 16:44:42 mr Exp $ -->
 
-%(updind %)
-%let;lpc1;<code>(1)</code>%in;%let;lpa1;accesskey="1"%in; %( prénom %)
-%let;lpc2;<code id="lpc2">(2)</code>%in;%let;lpa2;accesskey="2"%in; %( naissance %)
-%let;lpc3;<code id="lpc3">(3)</code>%in;%let;lpa3;accesskey="3"%in; %( décès %)
-%let;lpc4;<code>(4)</code>%in;%let;lpa4;accesskey="4"%in; %( event %)
-%let;lpc5;<code>(5)</code>%in;%let;lpa5;accesskey="5"%in; %( notes %)
-%let;lpc6;<code>(6)</code>%in;%let;lpa6;accesskey="6"%in; %( relations %)
-%let;lpc7;<code>(7)</code>%in;%let;lpa7;accesskey="7"%in; %( titres %)
-%let;lpcP;<code>(P)</code>%in;%let;lpaP;accesskey="P"%in; %( profession %)
-
-%(updfam %)
-%let;lfc1;<code>(1)</code>%in;%let;lfa1;accesskey="1"%in; %( prénom du père %)
-%let;lfc2;<code>(2)</code>%in;%let;lfa2;accesskey="2"%in; %( enfants %)
-%let;lfc3;<code id="lfc3">(3)</code>%in;%let;lfa3;accesskey="3"%in; %( mariage %)
-%let;lfc4;<code>(4)</code>%in;%let;lfa4;accesskey="4"%in; %( event %)
-%let;lfc5;<code>(5)</code>%in;%let;lfa5;accesskey="5"%in; %( commentaire %)
-%let;lfc6;<code>(6)</code>%in;%let;lfa6;accesskey="6"%in; %( sources %)
+%import;js_perso_accesskey
 
 %(updind and updfam %)
 %let;ak1;[*link] [any individual in the base] [with][:]
@@ -26,7 +10,7 @@
          
          [*create]/[add] [person/persons]0
 %in;
-%let;ak2;  [sex], [select a letter][:]
+%let;ak2;  [*sex], [select a letter][:]
            (M) [male/female/neuter]0
            (F) [male/female/neuter]1
            (N) [male/female/neuter]2
@@ -77,7 +61,8 @@
            1787.1789, 1787.07/1789, 1787.14/07/1789 [between (date)]
            [text]
 %in;
-%let;l_on1;if (event.keyCode == 13) javascript:document.upd.submit();%in;
+%let;l_on1; onkeydown="if (event.keyCode == 13) javascript:document.upd.submit()";%in;
+%let;l_on1s; onkeydown="if (event.keyCode == 13) if (!event.shiftKey) javascript:document.upd.submit()";%in;
 %let;l_on2; onblur="tUC(this)" onkeydown="if(event.keyCode == 13)tUC(this)"%in;
 %let;l_on3; onblur="tUC1(this)" onkeydown="if(event.keyCode == 13)tUC1(this)"%in;
 %let;l_on4;%if;(bvar.datalist_occu > 0) list="dloccu"%if;(bvar.datalist_occu = 2) onkeyup="ldl(this,'occu',event)"%end;%end;%in;
@@ -167,10 +152,10 @@
       %/>%l4;%apply;date("e_datez1","event_date",l2,l3)%sp;
       <input id="e_placez1" name="e_placez1" class="pl" size="70" placeholder="[*place]" value="%event.e_place;" %l_on5;%/>
   </dt>
-  <dd><textarea id="e_notez1" name="e_notez1" placeholder="[*comment]" rows="1" class="enote">%nn;
+  <dd><textarea id="e_notez1" name="e_notez1" placeholder="[*comment]" rows="1" class="enote" %l_on1s;>%nn;
     %if;(evar.m = "MOD_FAM" and comment != "" and bvar.move_comment = "yes" and event.e_note = "")%comment;%end;
     %event.e_note;%sq;</textarea></dd>
-  <dd><textarea id="e_srcz1" name="e_srcz1" placeholder="[*source/sources]1" rows="1" class="esrc" %l_on6;%>%event.e_src;%sq;</textarea></dd>
+  <dd><textarea id="e_srcz1" name="e_srcz1" placeholder="[*source/sources]1" rows="1" class="esrc" %l_on6;% %l_on1s;>%event.e_src;%sq;</textarea></dd>
   %if;has_z3;%foreach;z3;%apply;one_witness(z1,wcnt,"z3")%end;%end;
   <dd id="new_ez1_witn"></dd>
   <dd> <a id="awz1" href="javascript:addWitness(1,1,'ez1_witn')">+ [witness/witnesses]0</a> %lt1; [first name/first names]0 [surname/surnames]0</dd>

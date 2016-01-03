@@ -165,12 +165,10 @@
     %else;
       [*add::person/persons]0
     %end;
-    &nbsp;&nbsp;<input type="submit" value="OK" %/></h1>
+    &nbsp;<input type="submit" value="Ok" %/>&nbsp;
+    <label><input id="sex1" name="sex1" class="occ%l_s1;" %lt3; size="2" maxlength="8" autocomplete="off" placeholder="%l_s2;" onkeypress="javascript:return oKP1(event)" onblur="oB1()"%/></label>
+    <label>[number]0<input name="occ" style="text-align:center" title="occurence [number]" autocomplete="off" size="2" maxlength="8" value="%if(occ="")0%else;%occ;%end;" id="occ"%/></label>
   </legend>
-  <div>
-    <label><abbr %lt3;>[sex]</abbr><input id="sex1" name="sex1" class="occ%l_s1;" size="2" maxlength="8" autocomplete="off" placeholder="%l_s2;" onkeypress="javascript:return oKP1(event)" onblur="oB1()"%/></label>
-    <label>[number]0<input name="occ" style="text-align:center" autocomplete="off" size="2" maxlength="8" value="%if(occ="")0%else;%occ;%end;" id="occ"%/></label>
-  </div>
   <div class="w1">
     %lpc1; <label %lpa1;>[first name/first names]0<input id="first_name" name="first_name" size="30" maxlength="200" value="%first_name;" %l_on3;%/></label>
     <label>[surname/surnames]0<input id="surname" name="surname" size="30" maxlength="200" value="%surname;" %l_on2;%/></label>
@@ -217,10 +215,10 @@
     <span id="new_surname_alias"></span>
   </div>
   <div class="w1">
-    <label>%lpcP; [occupation/occupations]0<textarea name="occu" rows="1" maxlength="300" id="occu" %lpaP; %l_on4;%>%occupation;</textarea></label>
+    <label>%lpcP; [occupation/occupations]0<textarea name="occu" rows="1" maxlength="300" id="occu" %lpaP; %l_on4; %l_on1s;>%occupation;</textarea></label>
   </div>
   <div class="w1">
-    <label>[source/sources]0 [person/persons]0<textarea name="src" rows="1" maxlength="800" id="src" %l_on6;%>%sources;</textarea></label>
+    <label>[source/sources]0 [person/persons]0<textarea name="src" rows="1" maxlength="800" id="src" %l_on6; %l_on1s;>%sources;</textarea></label>
     <label>[image/images]0<input name="image" size="36" value="%image;" %/></label>
   </div>
   <div>
@@ -231,29 +229,29 @@
   </div>
 </fieldset>
 <fieldset id="notes1">
-  <legend>%lpc5; <label style="font-size:inherit;" for="notes" %lpa5;>[*note/notes]1</label></legend>
+  <legend><label style="font-size:inherit;" for="notes" %lpa5;>[*note/notes]1 </label></legend>
   <textarea name="notes" id="notes">%notes;%sq;</textarea>
-  <fieldset id="accent2">
+  <span id="accent2">
     <legend>
-      <a style="display:none;" id="accent0" href="javascript:accent0()"> - </a>
+      <a style="display:none" id="accent0" href="javascript:accent0()"> - </a>
       <a id="accent1" href="javascript:accent1()">…</a>
     </legend>
-    <div id="accent" style="display:none;">%include.accent;</div>
-  </fieldset>
+    <div id="accent" style="display:none">%include.accent;</div>
+  </span>
 </fieldset>
 <fieldset class="event">
-  <legend>%lpc4; [*event/events]1</legend>
+  <legend>[*event/events]1</legend>
     <dl>
       %if;(not has_pevent_birth)%apply;one_event(next_pevent,"#birt","witness")%incr_next_pevent;%end;
       %if;has_pevents;%foreach;pevent;%apply;one_event(cnt,"","witness")%end;%end;
       %if;(not has_pevent_death)%apply;one_event(next_pevent,"-","witness")%incr_next_pevent;%end;
       <dt id="new_event"></dt>
-      <dt><a href="javascript:addEvent()" title="(+) [*death]" %lpa4;> + [event/events]0</a> %lt2; [place] [note/notes]1 [source/sources]1</dt>
+      <dt><a href="javascript:addEvent()" title="(+) [*death]" %lpa4;> + [event/events]0</a> %lpc4; %lt2; [place] [note/notes]1 [source/sources]1</dt>
       %incr_next_pevent;
     </dl>
 </fieldset>
-<fieldset class="f2 t">
-  <legend>%lpc6; [*relation/relations]1</legend>
+<fieldset class="f2">
+  <legend>[*relation/relations]1</legend>
   <table summary="relations" cellspacing=0 cellpadding=0>
     <tr>
       <td class="bg7"><abbr %lt4;>#</abbr></td>
@@ -271,7 +269,7 @@
   </table>
 </fieldset>
 <fieldset class="t">
-<legend>%lpc7; [*title/titles]1</legend>
+<legend>[*title/titles]1</legend>
   <table summary="titles" cellspacing=0 cellpadding=0>
     <tr>
     <td class="bg7"><abbr %lt5;>#</abbr></td>
@@ -291,8 +289,7 @@
   </table>
 </fieldset>
 </form>
-<div style="height:300px;clear:both;"> </div>
-  %base_trailer;
+  %include.trl
   %copyright;
 </body>
 <script type="text/javascript" src="/templm/autosize.min.js"></script>

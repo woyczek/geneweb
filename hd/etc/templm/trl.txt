@@ -22,34 +22,51 @@
 
 %if;(not cancel_links and evar.m != "MOD_DATA_OK" and evar.m != "DEL_IND_OK" and evar.m != "DEL_FAM_OK")
   <div class="menu3" id="menu_trl">
-    %if;(evar.n != "" or evar.i != "")
+    %if;(evar.n != "" or evar.i != "" or evar.ip !="")
     <form style="display:inline" id="ak" method="get" action="">
-      <span><input id="acckey" name="acckey" %laZ; value="" size="1" maxlength="1" %if;(evar.m!="A")autofocus="on"%end; placeholder="?"
+      <span><input id="acckey" name="acckey" %laZ; maxlength="1" %if;(evar.m!="A")autofocus="on"%end; placeholder="?"
        onkeypress="javascript:return acc_key(this,event,'sib_1','spo_1','chi_1_1','mod_ind','add_par','add_fam','mod_fam_1');"/>
         <span class="s_menu">
-          <h4>[*shortcuts] (Alt+Z)</h4>
-          <p>
+          <h4>[*shortcuts] (Alt+%laZk;)</h4>
+          <p>%if;(evar.m = "MOD_IND")
+            Alt+%lpc1k; [first name/first names]0<br%/>
+            Alt+%lpc2k; [birth]<br%/>
+            Alt+%lpc3k; [death]<br%/>
+            Alt+%lpc4k; [add] [event/events]0<br%/>
+            Alt+%lpc5k; [note/notes]1<br%/>
+            Alt+%lpc6k; [relation/relations]1<br%/>
+            Alt+%lpc7k; [title/titles]1<br%/>
+            Alt+%lpcPk; [occupation/occupations]0<br%/><br%/>
+            %elseif;(evar.m ="MOD_FAM" or evar.m ="ADD_FAM")
+            Alt+%lfc1k; [first name/first names]0 [father/mother]0<br%/>
+            Alt+%lfc2k; [add] [child/children]0<br%/>
+            Alt+%lfc3k; [date of marriage]/[relation/relations]0<br%/>
+            Alt+%lfc4k; [add] [event/events]0<br%/>
+            Alt+%lfc5k; [marriage notes]<br%/>
+            Alt+%lfc6k; [source/sources]1<br%/><br%/>
+            %else;
             (0) [spouse/spouses]1<br%/>
             (1) [siblings]<br%/>
             (2 3 4 5 6 7) [n° Sosa] [ancestors]<br%/>
             (8) [child/children]1<br%/>
             (9) [child/children]1 Sosa<br%/>
-            (D) [difference between the two revisions]<br%/>
-            (R) [relationship computing]<br%/>
-            (S) [navigation with %t as Sosa reference:::xx]<br%/>
-            (W) [search/case sensitive]0<br%/>
-            (X) [generation/generations]0<br%/>
-            (Y) [tree]<br%/><br%/>
-            %if;wizard;
-            (A) [add::family/families]0<br%/>
-            (F) [modify::family/families]0 1<br%/>
-            (G) [modify::family/families]0 2<br%/>
-            (H) [modify::family/families]0 3<br%/>
-            (I) [send::image/images]0<br%/>
-            (L) [add::parents]<br%/>
-            (P) [modify::person/persons]0<br%/>
-            (U) [update]
+            (%laDk;) [difference between the two revisions]<br%/>
+            (%laRk;) [relationship computing]<br%/>
+            (%laSk;) [navigation with %t as Sosa reference:::xx]<br%/>
+            (%laXk;) [generation/generations]0<br%/>
+            (%laYk;) [tree]<br%/><br%/>
+              %if;wizard;
+              (%laAk;) [add::family/families]0<br%/>
+              (%laFk;) [modify::family/families]0 1<br%/>
+              (%laGk;) [modify::family/families]0 2<br%/>
+              (%laHk;) [modify::family/families]0 3<br%/>
+              (%laIk;) [send::image/images]0<br%/>
+              (%laLk;) [add::parents]<br%/>
+              (%laPk;) [modify::person/persons]0<br%/>
+              (%laUk;) [update]<br%/><br%/>
+              %end;
             %end;
+            (%laWk;) [search/case sensitive]0<br%/>
           </p>
         </span>
       </span>
@@ -62,7 +79,7 @@
            %if;(evar.t = "T")<input id="tT" type="hidden" name="t" value="T"/>
            <input id="v" type="hidden" name="v" value="%evar.v"/>%end;
            %if;(evar.m = "A")<input id="mA" type="hidden" name="m" value="A"/>%end;
-           <input type="search" id="mSn" name="n" accesskey="W" size="34" maxlength="200" autofocus="on" 
+           <input type="search" id="mSn" name="n" accesskey="%laWk;" size="34" maxlength="200" autofocus="on" 
              title="[*search/case sensitive]0 (W)%nl;* = [starting with]%nl;Sosa* = Sosa x 2%nl;Sosa/ = Sosa / 2"
              placeholder="[surname/surnames]0*%if;(evar.t != "T"), [public name], [alias], n° Sosa%end;"
              onkeypress="javascript:return computeSosa(event,'mSn')"

@@ -2,6 +2,10 @@
 /* Properties of all html pages.*/
 input[type=number]::-webkit-inner-spin-button {opacity:1}
 html{color:#000;background-color:#EEE;}
+/* placeholder color, don't concatenate */
+::-webkit-input-placeholder {color: grey;}
+::-moz-placeholder {color: grey;}
+:-ms-input-placeholder {color: grey;}
 /* Properties of all html pages */
 textarea{width:99%;padding:10px;vertical-align:top;min-height:1em;}
 tr,div,p,li,img{page-break-inside:avoid;}
@@ -64,7 +68,7 @@ h1{text-align:center;}
 .login input[type="password"],.menu3 input[type="search"]{padding:4px;border: solid 1px #dcdcdc;transition: box-shadow 0.3s, border 0.3s;}
 .login input[type="password"]:focus,.login input[type="password"].focus,.menu3 input[type="search"]:focus,.menu3 input[type="search"].focus{border: solid 1px #707070;box-shadow: 0 0 5px 1px #969696;}
 .menu3 span{position:relative;display:inline;float:left;}
-.menu span a,.menu3 span a{height:16px;display:inline;}
+.menu span a,.menu3 span a{height:16px;margin-right:0}
 .menu3 .s_menu{display:none;float:left;margin:0;padding:0;border:0;}
 .menu3 span:hover > .s_menu{display:block;position:absolute;right:0;top:23px;}
 #tpl a{width:65px}
@@ -152,12 +156,13 @@ input[type='submit']{line-height:14px;height:24px;}
 #perso .image_sheet{border:0;margin:4px;padding:5px;background-color:#FAFAFA;text-align:center;}
 #perso .del{cursor:crosshair;color:#900;border-bottom:dotted 2px #F00;}
 /* updind.txt,updfam.txt */
+#upd legend{font-size:16px;font-weight:bold;text-align:left}
 #upd form,#upd input,#upd select,#upd textarea{font-size:14px;}
 .number,#upd .d,#upd .m, #upd .y, #upd .ys{font-weight:bold;text-align:center;margin:0;}
-#upd .d{width:20px}
-#upd .m{width:30px}
-#upd .y{width:140px}
-#upd .ys{width:50px}
+#upd .d{width:2em}
+#upd .m{width:2em}
+#upd .y{width:8em}
+#upd .ys{width:4em}
 #upd .dmy{display:block;white-space:nowrap;margin-right:3px;}
 #upd .dmyt{display:block;white-space:nowrap;margin:0;}
 #upd .dmyt input{border-bottom:solid 1px #DDD;border-left:solid 1px #DDD;}
@@ -165,31 +170,30 @@ input[type='submit']{line-height:14px;height:24px;}
 #upd #pa1_jq4,#upd #ch1_jq4{width:282px;}
 #upd .occu{width:275px;}
 #upd .pl{width:440px;}
-#upd .e{width:162px;}
+#upd .e{width:182px;}
 #upd .jq2,#upd .jq4{text-align:left;}
 code{font-size:12px;color:#999;font-family:monospace;}
 #upd #notes{min-height:270px;max-height:540px;width:405px;height:270px;}
 #notes:focus{background-color:#FAFAFA}
-#upd #notes1{min-height:354px;}
-#upd #comment #src #psrc {width:849px;margin:0;}
+#upd #notes1{min-height:1em;}
+#upd #comment #src #psrc #notes1{width:849px;margin:0;}
 #upd .event{text-align:left;}
 #upd .event dt{font-weight:500;margin-top:10px;}
 #upd .event input{margin:0;}
 #upd .enote{margin:5px 0px;width:809px;}
 #upd .esrc{margin:5px 0px;width:809px;}
 #upd label{white-space:nowrap;font-size:12px;}
-#upd .f1,#upd #notes1{width:420px;}
+#upd .f1{width:420px;}
 #upd .f2,#upd .event{width:862px;}
 #upd .w1 input{width:280px;}
 #upd .w1 textarea{width:280px}
 #upd .w2 input{width:264px;}
 #upd .w3 input{width:700px;}
 #upd .fn,#upd .sn{width:230px;}
-#upd fieldset{border:solid 1px #999;float:left;margin:5px;padding:5px;text-align:right;}
+#upd fieldset{border:0px;float:left;margin:5px;padding:5px;text-align:right;}
 #upd table{width:auto;float:left;text-align:center;}
 #upd table td{border:solid 1px #DDD;}
 #upd table td input{border:0;}
-#upd legend{text-align:left;}
 #upd fieldset div{margin:1px;padding:3px;}
 #upd table td div{margin:0;padding:0;}
 #upd .fl{float:left;width:auto;}
