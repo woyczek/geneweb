@@ -183,7 +183,7 @@ code{font-size:12px;color:#999;font-family:monospace;}
 #upd .enote{margin:5px 0px;width:809px;}
 #upd .esrc{margin:5px 0px;width:809px;}
 #upd label{white-space:nowrap;font-size:12px;}
-#upd .f1{width:420px;}
+#upd .f1, .f1 legend{width:420px;}
 #upd .f2,#upd .event{width:862px;}
 #upd .w1 input{width:280px;}
 #upd .w1 textarea{width:280px}
