@@ -1,10 +1,10 @@
 <!-- $Id: css.txt,v 7.00 2015/03/30 13:00:31 mr Exp $ -->
 
-<link type="text/css" href="/templm/css%bvar.css;.css" media="all" rel="stylesheet" %/>
-<link type="text/css" href="/templm/css.css" media="all" rel="alternate stylesheet" title="css"%/>
-<link type="text/css" href="/templm/css1.css" media="all" rel="alternate stylesheet" title="css1"%/>
+<link type="text/css" href="%bvar.static_path;templm/css%bvar.css;.css" media="all" rel="stylesheet" %/>
+<link type="text/css" href="%bvar.static_path;templm/css.css" media="all" rel="alternate stylesheet" title="css"%/>
+<link type="text/css" href="%bvar.static_path;templm/css1.css" media="all" rel="alternate stylesheet" title="css1"%/>
 
-<script type="text/javascript" src="/templm/js.js"></script>
+<script type="text/javascript" src="%bvar.static_path;templm/js.js"></script>
 %if;(bvar.uppercase = "yes")
   <script type="text/javascript">
   <!--
@@ -17,7 +17,7 @@
     %end;
   -->
   </script>
-  <script type="text/javascript" src="/templm/js_uppercase.js"></script>
+  <script type="text/javascript" src="%bvar.static_path;templm/js_uppercase.js"></script>
 %else;
-  <script type="text/javascript" src="/templm/js_uppercase_no.js"></script>
+  <script type="text/javascript" src="%bvar.static_path;templm/js_uppercase_no.js"></script>
 %end;

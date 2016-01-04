@@ -1,5 +1,5 @@
 <!-- $Id: js_perso_accesskey.txt,v 7.00 2015/02/12 22:01:17 mr Exp $ -->
-<script type="text/javascript" src="/templm/js_perso_accesskey.js"></script>
+<script type="text/javascript" src="%bvar.static_path;templm/js_perso_accesskey.js"></script>
 
 %( To personalize the descriptions of shortcuts, change the character under | column
    in accordance with the definitions of shortucts in js_perso_accesskey.js case "_" %)

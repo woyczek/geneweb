@@ -262,6 +262,6 @@
 %include.trl
 %copyright;
 </body>
-<script type="text/javascript" src="/templm/autosize.min.js"></script>
+<script type="text/javascript" src="%bvar.static_path;templm/autosize.min.js"></script>
 <script>autosize(document.querySelectorAll('textarea'));</script>
 </html>

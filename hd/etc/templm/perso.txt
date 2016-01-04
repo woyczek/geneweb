@@ -23,7 +23,7 @@
       {}
        -->
     </script>
-  %else;<script type="text/javascript" src="templm/jquery-1.11.3.min.js"></script>
+  %else;<script type="text/javascript" src="%bvar.static_path;templm/jquery-1.11.3.min.js"></script>
     <script type="text/javascript">
      <!--
         function jq2()
