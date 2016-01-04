@@ -121,6 +121,7 @@ zh: 已经有 %nb_accesses; 次访问数据库，其中 %nb_accesses_to_welcome;
 </div>
 <div>
 %if;(bvar.motd != "")%apply;interp(bvar.motd)%end;
+</div>
 <div>
 %if;just_friend_wizard;
   <div class="div1" style="color:#FF0000;font-weight:700;">
@@ -259,5 +260,6 @@ zh: 网络家谱
 <br/>
 %include.trl
 %copyright;
+</div>
 </body>
 </html>
