@@ -753,11 +753,11 @@
   %if;(z1.month = z2.month)
     %if;(z1.day >= z2.day)
       %apply;compute_age1(z1.year - z2.year,0,z1.day - z2.day)
-    %else;
+    %elseif;(z1.year > z2.year)
       %apply;compute_age1(z1.year - z2.year - 1,11,l1 + z1.day - z2.day)
     %end;
   %end;
-  %if;(z1.month < z2.month)
+  %if;(z1.month < z2.month and z1.year > z2.year)
     %if;(z1.day >= z2.day)
       %apply;compute_age1(z1.year - z2.year - 1,12 + z1.month - z2.month,z1.day - z2.day)
     %else;
@@ -771,11 +771,11 @@
   %end;
   %if;(bvar.event_age = "yes" and event.age != "" and event.name != [death]) · %event.age;%nn;
   %elseif;(event.name = [birth] and computable_age)
-    %if;(l_nbd != "") · %apply;compute_age("today","birth_date")%else; · %age;%end;
+    %if;(today.year >= birth_date.year and l_nbd != "") · %apply;compute_age("today","birth_date")%else; · %age;%end;
     %if;birthday; ([happy birthday to you!])%end;
     %if;(today = birth_date.date)[today]%end;
   %elseif;(event.age != "" and event.name = [death])
-    %if;(l_nbd != "") · %apply;compute_age("death_date","birth_date")%else; · %event.age;%end;
+    %if;(death_date.year >= birth_date.year and l_nbd != "") · %apply;compute_age("death_date","birth_date")%else; · %event.age;%end;
   %end;
 %end;
 %define;timeline_tree(z1)
