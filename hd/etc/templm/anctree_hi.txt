@@ -3,7 +3,7 @@
   #ih-tree1 {position:relative;left:10px;}
   #ih-tree1 tt{position:absolute;font-size:10pt;line-height:10pt;}
   #ih-tree1 span{position:absolute;font-size:9pt;line-height:10pt;margin:%if;((evar.v<9 and evar.cpl!="on") or (evar.v<10 and evar.cpl="on"))8px 12px%else;0px 4px%end;}
-  #ih-tree1 a{position:absolute;font-family:monospace;font-size:10pt;line-height:10pt;}
+  #ih-tree1 a{position:absolute;font-size:10pt;line-height:10pt;}
   #boxsosa {position:relative;border:solid 1px;text-align:center}
 </style>
 
@@ -75,24 +75,24 @@
   %elseif;((x>1 and x<4) or (x>7 and x<16) or (x>31 and x<64) or (x>127 and x<256) or (x>511 and x<1024)or (x>2047 and x<4096))
     %if;(y=0)
       %if;(x%2=0)
-        %if;(evar.cpl="on" and not ancestor.spouse.has_parents  and ancestor.has_parents)┐
+        %if;(evar.cpl="on" and not ancestor.spouse.has_parents and ancestor.has_parents)┐
         %elseif;(evar.cpl="on" and not ancestor.has_parents and ancestor.spouse.has_parents)┌
         %elseif;(not ancestor.has_parents)╷
         %else;┬%end;
       %else;
-        %if;(evar.cpl="on" and not ancestor.spouse.has_parents  and ancestor.has_parents)┘
+        %if;(evar.cpl="on" and not ancestor.spouse.has_parents and ancestor.has_parents)┘
         %elseif;(evar.cpl="on" and not ancestor.has_parents and ancestor.spouse.has_parents)└
         %elseif;(not ancestor.has_parents)╵
         %else;┴%end;
       %end;
     %else;
        %if;(x%2=0)
-         %if;(evar.cpl="on" and not ancestor.spouse.has_parents  and ancestor.has_parents)└
+         %if;(evar.cpl="on" and not ancestor.spouse.has_parents and ancestor.has_parents)└
          %elseif;(evar.cpl="on" and not ancestor.has_parents and ancestor.spouse.has_parents)┌
          %elseif;(not ancestor.has_parents)╶
          %else;├%end;
        %else;
-         %if;(evar.cpl="on" and not ancestor.spouse.has_parents  and ancestor.has_parents)┘
+         %if;(evar.cpl="on" and not ancestor.spouse.has_parents and ancestor.has_parents)┘
          %elseif;(evar.cpl="on" and not ancestor.has_parents and ancestor.spouse.has_parents)┐
          %elseif;(not ancestor.has_parents)╴
          %else;┤%end;
@@ -128,7 +128,7 @@
 %end;
 
 %define;graph(xx,yy,zz) %( xx gen ; yy mode 0=H 1=I ; zz 1=single 2=couple %)
-  %let;nav;;m=A;v=%evar.v;;t=T;t1=%evar.t1;;it=%evar.it;;%if;(evar.sosa2 != "")sosa=%evar.sosa2;;%end;nav=on;%if;(evar.cpl != "")cpl=%evar.cpl;;%end;%if;(evar.implx != "")implx=%evar.implx;;%end;%if;(evar.sms != "")sms=%evar.sms;;%end;%in;
+  %let;nav;;m=A;v=%evar.v;;t=T;t1=%evar.t1;;it=%evar.it;;%if;(evar.sosa2 != "")sosa2=%evar.sosa2;;%end;nav=on;%if;(evar.cpl != "")cpl=%evar.cpl;;%end;%if;(evar.implx != "")implx=%evar.implx;;%end;%if;(evar.sms != "")sms=%evar.sms;;%end;%in;
   %let;levelup;%expr(xx+1)%in;
   %let;leveldown;%expr(xx-1)%in;
   %let;hb;%if;(evar.sosa2 = "on" and ((evar.v<9 and evar.cpl!="on") or (evar.v<10 and evar.cpl="on")))%expr(hbs*2)%elseif;(evar.sosa2 = "on")%hbs;%else;%hbc;%end;%in;
@@ -141,7 +141,7 @@
           %let;top;%expr(topxx_yy(anc_sosahalf)*hb)%in;
           %let;left;%expr(leftxx_yy(anc_sosahalf)*wb)%in;
           %let;bg;%if;(ancestor.same != "")CBFECE;%else;%apply;bg(level)%end;%in;
-          <a id="s%ancestor.anc_sosa.v;" style="top:%top;px;left:%left;px;" %nn;
+          %if;(evar.sosa2!="on")<tt>%end;<a id="s%ancestor.anc_sosa.v;" style="top:%top;px;left:%left;px;" %nn;
           %if;(ancestor.same != "")%apply;implex1(ancestor.same.v)%end;
           href="%prefix;%ancestor.access;%if;(evar.nav="on")%nav;%end;"%if;(evar.nav!="on") target="_blank"%end;
           title="[*generation/generations]0 %level; – Sosa %if;(ancestor.interval != "") = Sosa %ancestor.interval;%else;%ancestor.anc_sosa; & %expr(ancestor.anc_sosa+1)%end;&#013;
@@ -159,7 +159,7 @@
             %end;">
             %if;(evar.sosa2 != "on")
               %if;(ancestor.same != "")x %apply;implex()
-              %else;%apply;boxchar(anc_sosahalf,yy)%end;</a>
+              %else;%apply;boxchar(anc_sosahalf,yy)%end;</a></tt>
             %else;
               %if;(ancestor.same != "")%apply;implex()%end;
               %apply;boxsosa(ancestor.anc_sosa.v,yy,level,bg)</a>
@@ -188,7 +188,7 @@
         %let;top2;%expr(topxx_yy(ancestor.same.v)*hb+6)%in;
         %let;left2;%expr(leftxx_yy(ancestor.same.v)*wb+4)%in;
         %let;bg;%if;(ancestor.same != "")CBFECE;%else;%apply;bg(level)%end;%in;
-        <a id="s%ancestor.anc_sosa.v;" style="top:%top;px;left:%left;px;" %nn;
+        %if;(evar.sosa2!="on")<tt>%end;<a id="s%ancestor.anc_sosa.v;" style="top:%top;px;left:%left;px;" %nn;
         %if;(ancestor.same != "")%apply;implex1(ancestor.same.v)%end;
         href="%prefix;%ancestor.access;%if;(evar.nav="on")%nav;%end;"%if;(evar.nav!="on") target="_blank"%end;
         title="Sosa %ancestor.anc_sosa;%if;(ancestor.same != "") = Sosa %ancestor.same;%end; – [*generation/generations]0 %level;&#013;
@@ -199,7 +199,7 @@
           %if;(not ancestor.has_parents) [*missing parents].%end;">
         %if;(evar.sosa2 != "on")
             %if;(ancestor.same != "")x %apply;implex()
-            %else;%apply;boxchar(ancestor.anc_sosa.v,yy)%end;</a>
+            %else;%apply;boxchar(ancestor.anc_sosa.v,yy)%end;</a></tt>
         %else;
           %if;(ancestor.same != "")%apply;implex()%end;
             %apply;boxsosa(ancestor.anc_sosa.v,yy,level,bg)</a>
@@ -229,9 +229,9 @@
   %if;(evar.sosa2="on")<span%else;<tt%end; style="top:%top_;px;left:%left_;px">
     %for;i;0;nn;
       %if;(oo=0)
-        %if;(yy=0)│<br%/>%else;─%if;(evar.sosa2="on" and (evar.v<9 and evar.cpl!="on") or (evar.v<10 and evar.cpl="on") and nn!=1)───%elseif;(evar.sosa2="on" and nn!=1)─%end;%end;
+        %if;(yy=0)│<br%/>%else;─%if;(evar.sosa2="on" and (evar.v<9 and evar.cpl!="on") or (evar.v<8 and evar.cpl="on") and nn!=1)───%elseif;(evar.sosa2="on" and nn!=1)─%end;%end;
       %elseif;(oo=1)
-        %if;(yy=0)─%if;(evar.sosa2="on" and (evar.v<9 and evar.cpl!="on") or (evar.v<10 and evar.cpl="on") and nn!=1)───%elseif;(evar.sosa2="on" and nn!=1)─%end;%else;│<br%/>%end;
+        %if;(yy=0)─%if;(evar.sosa2="on" and (evar.v<9 and evar.cpl!="on") or (evar.v<8 and evar.cpl="on") and nn!=1)───%elseif;(evar.sosa2="on" and nn!=1)─%end;%else;│<br%/>%end;
       %end;
     %end;
   </%if;(evar.sosa2="on")span%else;tt%end;>
