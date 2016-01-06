@@ -317,7 +317,7 @@
     %elseif;(xx.computable_death_age) %death_symbol; %xx.death_age;%nl;
     %elseif;(xx.computable_age) %birth_symbol; %xx.age;%nl;
     %end;
-  %end;
+  %end;%nl;
   %l_ldates1;"
 %end;
 %define;link_dates(xx)
@@ -328,6 +328,12 @@
 %define;link_marriage(xx)
   %if;(not cancel_links)
     %let;l1;%marriage_date.year;%in;
+    %let;marriage_date_place;
+        %if;(marriage_date.day != "")%marriage_date.day;/%end;
+        %if;(marriage_date.month != "")%marriage_date.month;/%end;
+        %if;(marriage_date.year != "")%marriage_date.year;%end;%nl;
+        %if;(marriage_place != "")%marriage_place;%end;%nl;%nl;
+    %in;
     %let;him;%nn;
       %if;(evar.del != "on")
         [him/her]0%sp;
@@ -357,7 +363,7 @@
       %end;
     %in;
     <a id="f%family.index;" %l_lmarriage1;i=%family.index;;ip=%index;"
-       title="%him;%her;%l_lmarriage2;"
+       title="%marriage_date_place;%him;%her;%nl;%l_lmarriage2;"
        >%if;(on_marriage_date != "")&amp;%marriage_date.prec;%marriage_date.year;%else; &amp; %end;
         %foreach;event;
           %if;(event.has_spouse and spouse.index = event.spouse.index)
@@ -1041,26 +1047,27 @@
                 %end;
                 %if;has_relation_her;
                   %apply;somebody("relation_her")
-                %end;
+                %end;.
             </li>
           %end;
           %foreach;related;
             <li>%apply;capitalize(related_type)[:]
-              %apply;somebody("related")
+              %apply;somebody("related").
             </li>
           %end;
           %foreach;event_witness_relation;
-            <li>%apply;witness_at_event%with;%event_witness_relation.event.name;%end;[:]
-            %apply;somebody("event_witness_relation.person")%nn;
+            <li>
+            %apply;a_of_b%with;[*witness/witnesses]0%and;
+            %apply;a_of_b%with;%event_witness_relation.event.name;%and;%end;%end;
+            %apply;somebody("event_witness_relation.person")%sp;
             %if;(event_witness_relation.event.spouse != "")
-              %if;(event_witness_relation.event.has_date)
-                <span title="%if;(event_witness_relation.event.has_date);%event_witness_relation.event.date;%end;%nn;
-                %if;event_witness_relation.event.has_place; · %event_witness_relation.event.place;%end;">
-                &%event_witness_relation.event.date.year;</span>
-                %else; <span title="%if;event_witness_relation.event.has_place;%event_witness_relation.event.place;%end;">&</span>
+              %if;(event_witness_relation.event.has_date)<a href="%prefix;MOD_FAM;i=%event_witness_relation.person.family.index;;ip=%event_witness_relation.person.index;" 
+                title="%if;(event_witness_relation.event.has_date)%event_witness_relation.event.date;%nl;%end;%nn;
+                       %if;event_witness_relation.event.has_place;%event_witness_relation.event.place;%end;">&%event_witness_relation.event.date.year;</a>
+                %else;<span title="%if;event_witness_relation.event.has_place;%event_witness_relation.event.place;%end;"> &</span>
               %end;
               %apply;somebody("event_witness_relation.event.spouse")
-            %end;%nn;
+            %end;.%nn;
             </li>
           %end;
         </ul>
