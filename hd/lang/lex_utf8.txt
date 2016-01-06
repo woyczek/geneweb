@@ -14000,3 +14000,15 @@ fr: raccourcis clavier
     family time line
 en: time line of the family
 fr: chronologie de la famille
+
+    witness at %s of
+en: witness at %s of
+fr: témoin au %s de
+
+    relations tree
+en: tree of relations
+fr: arbre des relations
+
+    events tree
+en: tree of events
+fr: arbre des événements

@@ -697,7 +697,7 @@
         t%count;=sosa_1;%nn;
       %end;
     "
-     >[*tree]</a>%nn;
+     >[*relations tree]</a>%nn;
      %reset_count;
 %end;
 %define;age_at(xx)
@@ -899,6 +899,9 @@
     <dd>%event.note;</dd>
   %end;
 %end;
+%define;witness_at_event(xx)
+  [*witness at %s of:::xx]%nn;
+%end;
 %define;timeline()
   <div class="event">
     %if;has_occupation;
@@ -1015,7 +1018,7 @@
     </p>
   </div>
   %apply;timeline()
-  %if;(bvar.timeline="yes")%include.timeline1;%end;
+  %if;(bvar.timeline="yes")%include.timeline;%end;
 %( <!-- End display image, person --> %)
   %if;(bvar.mickroue2 = "yes" and (has_linked_pages or wizard))
     %include.perso_mickroue2;
@@ -1026,10 +1029,12 @@
       %include.perso_mickroue1;
     %else;
       <div class="relations">
-        <h2 class="ch2">[*relation/relations]1</h2>
+        <h2 class="ch2">[*relation/relations]1
+         %if;not cancel_links;<div class="menu" style="padding-right:20px;font-weight:normal;float:right;position:relative">
+         %apply;relations_tree(l_ref)</div>%end;</h2>
         <ul>
           %foreach;relation;
-            <li><em>%apply;capitalize(relation_type)</em>[:]
+            <li>%apply;capitalize(relation_type)[:]
                 %if;has_relation_him;
                   %apply;somebody("relation_him")
                   %if;has_relation_her; [and] %end;
@@ -1040,21 +1045,26 @@
             </li>
           %end;
           %foreach;related;
-            <li><em>%apply;capitalize(related_type)</em>[:]
+            <li>%apply;capitalize(related_type)[:]
               %apply;somebody("related")
             </li>
           %end;
           %foreach;event_witness_relation;
-            <li><em>%apply;capitalize(event_witness_relation.event.name)
-              %if;event_witness_relation.event.has_date; %apply;on_edate("event_witness_relation.event")%end;
-              %if;event_witness_relation.event.has_place; · %event_witness_relation.event.place;%end;</em>[:]
-              %apply;somebody("event_witness_relation.person")
-              %if;(event_witness_relation.event.spouse != "") [and] %apply;somebody("event_witness_relation.event.spouse")%end;
+            <li>%apply;witness_at_event%with;%event_witness_relation.event.name;%end;[:]
+            %apply;somebody("event_witness_relation.person")%nn;
+            %if;(event_witness_relation.event.spouse != "")
+              %if;(event_witness_relation.event.has_date)
+                <span title="%if;(event_witness_relation.event.has_date);%event_witness_relation.event.date;%end;%nn;
+                %if;event_witness_relation.event.has_place; · %event_witness_relation.event.place;%end;">
+                &%event_witness_relation.event.date.year;</span>
+                %else; <span title="%if;event_witness_relation.event.has_place;%event_witness_relation.event.place;%end;">&</span>
+              %end;
+              %apply;somebody("event_witness_relation.event.spouse")
+            %end;%nn;
             </li>
           %end;
         </ul>
       </div>
-      %if;not cancel_links;<div class="menu" style="position:relative">%apply;relations_tree(l_ref)</div>%end;
     %end;
   %end;
   <div class="notes">
