@@ -7,16 +7,16 @@
            [number] occurence (oc=), [first name/first names]0, [surname/surnames]0
          [or]
            [number] index (i=)
-         
+
          [*create]/[add] [person/persons]0
 %in;
 %let;ak2;  [*sex], [select a letter][:]
            (M) [male/female/neuter]0
            (F) [male/female/neuter]1
            (N) [male/female/neuter]2
-         
+
 %in;
-%let;ak3; 
+%let;ak3;
          [*tools] [and] [relationship shortcut]
            (R) [move up/down]0
            (D) [move up/down]1
@@ -155,7 +155,7 @@
   <dd><textarea id="e_notez1" name="e_notez1" placeholder="[*comment]" rows="1" class="enote" %l_on1s;>%nn;
     %if;(evar.m = "MOD_FAM" and comment != "" and bvar.move_comment = "yes" and event.e_note = "")%comment;%end;
     %event.e_note;%sq;</textarea></dd>
-  <dd><textarea id="e_srcz1" name="e_srcz1" placeholder="[*source/sources]1" rows="1" class="esrc" %l_on6;% %l_on1s;>%event.e_src;%sq;</textarea></dd>
+  <dd><textarea id="e_srcz1" name="e_srcz1" placeholder="[*source/sources]1" rows="1" class="esrc" %l_on6; %l_on1s;>%event.e_src;%sq;</textarea></dd>
   %if;has_z3;%foreach;z3;%apply;one_witness(z1,wcnt,"z3")%end;%end;
   <dd id="new_ez1_witn"></dd>
   <dd> <a id="awz1" href="javascript:addWitness(1,1,'ez1_witn')">+ [witness/witnesses]0</a> %lt1; [first name/first names]0 [surname/surnames]0</dd>
@@ -170,7 +170,7 @@
       ><input type="hidden" id="%l5;_kind" name="%l5;_kind" value="%if;(witness_kind != "")%witness_kind;%end;"
       %/><input type="hidden" id="%l5;_sex" name="%l5;_sex" value="%l2;"
       %/><input type="hidden" id="%l5;_p" name="%l5;_p" value="%l3;"
-      %/><input id="%l5;_occ" name="%l5;_occ" class="occ%l4;" placeholder="%l2;" autocomplete="off" size="5" maxlength="8" 
+      %/><input id="%l5;_occ" name="%l5;_occ" class="occ%l4;" placeholder="%l2;" autocomplete="off" size="5" maxlength="8"
        onkeypress="javascript:return oKP2(event,'witn','z2','_occ','ez1_witn')" onblur="oB2('%l5;')"
        %if;(z3.create="create" or z3.create) value="" %elseif;(z3.occ="") value="0" %else; value="%z3.occ;" %end;
       %/><input id="%l5;_fn" name="%l5;_fn" class="fn ar" size="30" maxlength="200" value="%z3.first_name;" %l_on3;
