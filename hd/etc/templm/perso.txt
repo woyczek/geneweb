@@ -875,7 +875,7 @@
     %else;%apply;capitalize(event.name)%end;
     %if;event.has_date;%apply;on_edate("event")%end;
     %if;event.has_place; · %event.place;%end;
-    %if;(event.has_spouse and evar.spouse!="off") · [with] %event.spouse;%end;
+    %if;(event.has_spouse and evar.spouse!="off" and event.name!=[divorce event] and event.name!=[separate event] and event.name!=[annulation]) · [with] %event.spouse;%end;
   </dt>
 %end;
 %define;one_event(z1)
@@ -1042,32 +1042,32 @@
           %foreach;relation;
             <li>%apply;capitalize(relation_type)[:]
                 %if;has_relation_him;
-                  %apply;somebody("relation_him")
-                  %if;has_relation_her; [and] %end;
+                  <nobr>%apply;somebody("relation_him")</nobr>
+                  %if;has_relation_her; <nobr>[and] %end;
                 %end;
                 %if;has_relation_her;
-                  %apply;somebody("relation_her")
-                %end;.
+                  %apply;somebody("relation_her")</nobr>.
+                %end;
             </li>
           %end;
           %foreach;related;
             <li>%apply;capitalize(related_type)[:]
-              %apply;somebody("related").
+              <nobr>%apply;somebody("related")</nobr>.
             </li>
           %end;
           %foreach;event_witness_relation;
             <li>
             %apply;a_of_b%with;[*witness/witnesses]0%and;
             %apply;a_of_b%with;%event_witness_relation.event.name;%and;%end;%end;
-            %apply;somebody("event_witness_relation.person")
+            <nobr>%apply;somebody("event_witness_relation.person")</nobr>%if;(event_witness_relation.event.spouse = "").%end;
             %if;(event_witness_relation.event.spouse != "")
-              %if;(event_witness_relation.event.has_date)%sp;<a href="%prefix;MOD_FAM;i=%event_witness_relation.person.family.index;;ip=%event_witness_relation.person.index;"
+              <nobr>%if;(event_witness_relation.event.has_date)%sp;<a href="%prefix;MOD_FAM;i=%event_witness_relation.person.family.index;;ip=%event_witness_relation.person.index;"
                 title="%if;(event_witness_relation.event.has_date)%event_witness_relation.event.date;%nl;%end;%nn;
                        %if;event_witness_relation.event.has_place;%event_witness_relation.event.place;%end;">&%event_witness_relation.event.date.year;</a>
                 %else;<span title="%if;event_witness_relation.event.has_place;%event_witness_relation.event.place;%end;"> &</span>
               %end;
-              %apply;somebody("event_witness_relation.event.spouse")
-            %end;.%nn;
+              %apply;somebody("event_witness_relation.event.spouse")</nobr>.
+            %end;%nn;
             </li>
           %end;
         </ul>
