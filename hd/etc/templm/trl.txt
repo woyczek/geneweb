@@ -1,5 +1,5 @@
 <!-- $Id: trl.txt,v 7.00 2015/02/12 22:06:44 mr Exp $ -->
-%include.js_perso_accesskey;
+%import;js_perso_accesskey
 
 %define;lang(xx)
   %apply;nth%with;
@@ -20,7 +20,7 @@
   %else;en%end;
 %in;
 
-%if;(not cancel_links and evar.m != "MOD_DATA_OK" and evar.m != "DEL_IND_OK" and evar.m != "DEL_FAM_OK")
+%if;(not cancel_links and evar.m != "MOD_DATA_OK" and evar.m != "DEL_IND_OK" and evar.m != "DEL_FAM_OK" and evar.templ = "templm")
   <div class="menu3" id="menu_trl">
     %if;(evar.n != "" or evar.i != "" or evar.ip !="")
     <form style="display:inline" id="ak" method="get" action="">
@@ -82,6 +82,7 @@
            <input type="search" id="mSn" name="n" accesskey="%laWk;" size="34" maxlength="200" autofocus="on" 
              title="[*search/case sensitive]0 (W)%nl;* = [starting with]%nl;Sosa* = Sosa x 2%nl;Sosa/ = Sosa / 2"
              placeholder="[surname/surnames]0*%if;(evar.t != "T"), [public name], [alias], n° Sosa%end;"
+             value="%if;(evar.m = "S" and evar.n != "")%evar.n;%end;"
              onkeypress="javascript:return computeSosa(event,'mSn')"
            %/><input type="search" id="mSp" name="p" size="17" maxlength="200"
              placeholder="[first name/first names]0*, n° index"
