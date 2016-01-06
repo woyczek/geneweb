@@ -1,7 +1,7 @@
 %doctype;
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <!-- $Id: updind.txt,v 7.00 2015/03/27 12:09:38 mr Exp $ -->
+  <!-- $Id: updind.txt,v 7.00 2016/01/06 19:24:42 mr Exp $ -->
   <title>%nn;
     %if;(evar_m = "MRG_IND_OK" or evar_m = "MRG_MOD_IND_OK")
       [*merge::person/persons]1 # %index;
@@ -246,7 +246,7 @@
       %if;has_pevents;%foreach;pevent;%apply;one_event(cnt,"","witness")%end;%end;
       %if;(not has_pevent_death)%apply;one_event(next_pevent,"-","witness")%incr_next_pevent;%end;
       <dt id="new_event"></dt>
-      <dt><a href="javascript:addEvent()" title="(+) [*death]" %lpa4;> + [event/events]0</a> %lpc4; %lt2; [place] [note/notes]1 [source/sources]1</dt>
+      <dt><a href="javascript:addEvent('%prefix;')" title="(+) [*death]" %lpa4;> + [event/events]0</a> %lpc4; %lt2; [place] [note/notes]1 [source/sources]1</dt>
       %incr_next_pevent;
     </dl>
 </fieldset>
@@ -265,7 +265,7 @@
       %apply;relations("1")
     %end;
     <tr id="new_relation"></tr>
-    <tr><td class="bg7"><a href="javascript:addRelation(1,1)" %lpa6;> + </a></td></tr>
+    <tr><td class="bg7"><a href="javascript:addRelation(1,1,'%prefix;')" %lpa6;> + </a></td></tr>
   </table>
 </fieldset>
 <fieldset class="t">

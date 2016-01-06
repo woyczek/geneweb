@@ -1,7 +1,7 @@
 %doctype;
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <!-- $Id: upddag.txt,v 7.00 2015/04/30 14:58:16 mr Exp $ -->
+  <!-- $Id: upddag.txt,v 7.00 2015/11/09 23:07:57 mr Exp $ -->
   <title>[*modify::tree]</title>
   <meta name="robots" content="none"%/>
   <meta name="format-detection" content="telephone=no"%/>
@@ -21,12 +21,12 @@
 %define;one_pvar(z1)
   %if;(pvar.z1 != "")
     <tr id="pz1">
-      <td class="b1"><a tabindex="10000" href="javascript:addPvar('z1','0');">+</a></td>
+      <td class="b1"><a tabindex="10000" href="javascript:addPvar('z1','0','%prefix;');">+</a></td>
       <td><input id="pz1_occ" name="ocz1" class="occ3" autocomplete="off" size="5" maxlength="8" value="%pvar.z1.occ;"
            onkeypress="javascript:return oKP2(event,'p','z1','_occ','')"%/></td>
       <td class="b1"><a tabindex="10000" href="javascript:delS('p','z1','_occ',1,0,'');">x</a></td>
       <td><input id="pz1_fn" name="pz1" class="ar" size="30" maxlength="200" value="%pvar.z1.first_name;" onblur="tUC1(this)"%/></td>
-      <td><input id="pz1_sn" name="nz1" size="30" maxlength="200" value="%pvar.z1.surname;" onblur="tUC(this);jq1('pz1','')"%/></td>
+      <td><input id="pz1_sn" name="nz1" size="30" maxlength="200" value="%pvar.z1.surname;" onblur="tUC(this);jq1('pz1','','%prefix;')"%/></td>
       <td class="b1"><a tabindex="10000" href="javascript:invertS('p','z1','_occ',0,1,'');">&uarr;</a></td>
       <td class="b1"><span id="pz1_jq1">
           %if;pvar.z1.has_birth_date; %pvar.z1.slash_birth_date;
@@ -80,7 +80,7 @@
         %apply;one_pvar(i)
       %end;
       <tr id="new_pvar"></tr>
-      <tr><td class="b1"><a id="add_pvar" style="display:block" href="javascript:addPvar(1,1)">+</a></td>
+      <tr><td class="b1"><a id="add_pvar" style="display:block" href="javascript:addPvar(1,1,'%prefix;')">+</a></td>
           <td colspan="8" class="b1"> </td>
       </tr>
     </table>

@@ -1,9 +1,9 @@
-/* $Id: js_upd_jq.js,v 7.00 2015/04/20 22:05:46 mr Exp $ */
+/* $Id: js_upd_jq.js,v 7.00 2015/11/10 15:00:52 mr Exp $ */
 
 var ldlLen = 0;
 var ldlTim;
 var ldlVal = "";
-function ldl(z1,z2,z3)
+function ldl(z1,z2,z3,z4)
 {
   var a1 = "o" + z2;
   var a2 = z1.value.length;
@@ -21,12 +21,12 @@ function ldl(z1,z2,z3)
     {
       var b1 = encodeURI(z1.value);
       var b2 = "#dl" + z2;
-      var b3 = "?templ=templm;m=MOD_DATA;data=" + z2 + ";s=" + b1 + ";datalist=on;";
+      var b3 = z4 + "m=MOD_DATA;data=" + z2 + ";s=" + b1 + ";datalist=on;";
       $(b2).load(b3);
     },1000);
   }
 }
-function jq1(z1,z2)
+function jq1(z1,z2,z3)
 {
   var e7 = document.getElementById(z1 + "_occ");
   var v7 = e7.value;
@@ -47,7 +47,7 @@ function jq1(z1,z2)
       e1.title = t1;
       if (v7 != "")
       {
-        var l = (u8 == "" || u8 == "?" || u9 == "?") ? "?templ=templm;m=U;jq1=on;i=" + v7: "?templ=templm;m=U;jq1=on;oc=" + v7 + ";p=" + u8 + ";n=" + u9;
+        var l = (u8 == "" || u8 == "?" || u9 == "?") ? z3 + "m=U;jq1=on;i=" + v7: z3 + "m=U;jq1=on;oc=" + v7 + ";p=" + u8 + ";n=" + u9;
         $("#jq").load(l, function()
         {
           if(document.getElementById("jql"))
@@ -71,12 +71,12 @@ function jq1(z1,z2)
       }
       else
       {
-        var l = "?templ=templm;m=U;oc=0;p=" + u8 + ";n=" + u9 + ";jq1=on";
+        var l = z3 + "m=U;oc=0;p=" + u8 + ";n=" + u9 + ";jq1=on";
         $("#jq").load(l, function()
         {
           if(document.getElementById("jql"))
           {
-            var l1 = "?templ=templm;m=S;p="+ u8 +";n=" + u9;
+            var l1 = z3 + "m=S;p="+ u8 +";n=" + u9;
             e1.innerHTML = ' <a onclick="window.open(this.href); return false;" href="'+ l1 +'">&lt;!&gt;<\/a>';
           }
         })
@@ -84,7 +84,7 @@ function jq1(z1,z2)
     }
   }
 }
-function jq1a(z1)
+function jq1a(z1,z2)
 {
   var e7 = document.getElementById(z1 + "_occ");
   var v7 = e7.value;
@@ -112,7 +112,7 @@ function jq1a(z1)
       e4.innerHTML = "";
       if (v7 != "")
       {
-        var l = (u8 == "" || u8 == "?" || u9 == "?") ? "?templ=templm;m=U;jq1a=on;i=" + v7: "?templ=templm;m=U;jq1a=on;oc=" + v7 + ";p=" + u8 + ";n=" + u9;
+        var l = (u8 == "" || u8 == "?" || u9 == "?") ? z2 + "m=U;jq1a=on;i=" + v7: z2 + "m=U;jq1a=on;oc=" + v7 + ";p=" + u8 + ";n=" + u9;
         $("#jq").load(l, function()
         {
           if(document.getElementById("jql"))
@@ -143,12 +143,12 @@ function jq1a(z1)
       }
       else
       {
-        var l = "?templ=templm;m=U;oc=0;p=" + u8 + ";n=" + u9 + ";jq1a=on";
+        var l = z2 + "m=U;oc=0;p=" + u8 + ";n=" + u9 + ";jq1a=on";
         $("#jq").load(l, function()
         {
           if(document.getElementById("jql"))
           {
-            var l1 = "?templ=templm;m=S;p="+ u8 +";n=" + u9;
+            var l1 = z2 + "m=S;p="+ u8 +";n=" + u9;
             e1.innerHTML = ' <a onclick="window.open(this.href); return false;" href="'+ l1 +'">&lt;!&gt;<\/a>';
           }
         })
@@ -188,7 +188,7 @@ function jq1b1(z1)
       e7.className = "occ" + d11;
     }
 }
-function jq1b(z1)
+function jq1b(z1,z2)
 {
   var e8 = document.getElementById("pa1_fn");
   var v8 = e8.value;
@@ -202,7 +202,7 @@ function jq1b(z1)
     var u9 = encodeURI(v9);
     if (u8 != "?" || u9 != "?")
     {
-      var l = "?templ=templm;m=U;jq1b=on;ifam=" + z1 + ";oc=" + v7 + ";p=" + u8 + ";n=" + u9;
+      var l = z2 + "m=U;jq1b=on;ifam=" + z1 + ";oc=" + v7 + ";p=" + u8 + ";n=" + u9;
       $("#jq").load(l, function()
       {
         if(document.getElementById("jql"))

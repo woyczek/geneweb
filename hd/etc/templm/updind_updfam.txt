@@ -1,4 +1,4 @@
-<!-- $Id: updind_updfam.txt,v 7.00 2015/04/11 16:44:42 mr Exp $ -->
+<!-- $Id: updind_updfam.txt,v 7.00 2016/01/06 19:24:42 mr Exp $ -->
 
 %import;js_perso_accesskey
 
@@ -65,9 +65,9 @@
 %let;l_on1s; onkeydown="if (event.keyCode == 13) if (!event.shiftKey) javascript:document.upd.submit()";%in;
 %let;l_on2; onblur="tUC(this)" onkeydown="if(event.keyCode == 13)tUC(this)"%in;
 %let;l_on3; onblur="tUC1(this)" onkeydown="if(event.keyCode == 13)tUC1(this)"%in;
-%let;l_on4;%if;(bvar.datalist_occu > 0) list="dloccu"%if;(bvar.datalist_occu = 2) onkeyup="ldl(this,'occu',event)"%end;%end;%in;
-%let;l_on5;%if;(bvar.datalist_place > 0) list="dlplace"%if;(bvar.datalist_place = 2) onkeyup="ldl(this,'place',event)"%end;%end;%in;
-%let;l_on6;%if;(bvar.datalist_src > 0) list="dlsrc"%if;(bvar.datalist_src = 2) onkeyup="ldl(this,'src',event)"%end;%end;%in;
+%let;l_on4;%if;(bvar.datalist_occu > 0) list="dloccu"%if;(bvar.datalist_occu = 2) onkeyup="ldl(this,'occu',event,'%prefix;')"%end;%end;%in;
+%let;l_on5;%if;(bvar.datalist_place > 0) list="dlplace"%if;(bvar.datalist_place = 2) onkeyup="ldl(this,'place',event,'%prefix;')"%end;%end;%in;
+%let;l_on6;%if;(bvar.datalist_src > 0) list="dlsrc"%if;(bvar.datalist_src = 2) onkeyup="ldl(this,'src',event,'%prefix;')"%end;%end;%in;
 %let;ldmy;%if;([ !dates order]0 = "ddmmyyyy")dd%elseif;([ !dates order]0 = "mmddyyyy")mm%else;yy%end;%in;
 
 %define;date(z1,z2,z3,z4)
@@ -137,7 +137,7 @@
   %end;
 %end;
 
-%define;onjq1(z1,z2) onkeydown="if(event.keyCode == 13)tUC(this)" onblur="tUC(this);jq1('z1','z2')"%end;
+%define;onjq1(z1,z2) onkeydown="if(event.keyCode == 13)tUC(this)" onblur="tUC(this);jq1('z1','z2','%prefix;')"%end;
 
 %define;one_event(z1,z2,z3)
   %let;l1;%if;("z2" != "")z2%else;%event.e_name;%end;%in;
@@ -158,7 +158,7 @@
   <dd><textarea id="e_srcz1" name="e_srcz1" placeholder="[*source/sources]1" rows="1" class="esrc" %l_on6; %l_on1s;>%event.e_src;%sq;</textarea></dd>
   %if;has_z3;%foreach;z3;%apply;one_witness(z1,wcnt,"z3")%end;%end;
   <dd id="new_ez1_witn"></dd>
-  <dd> <a id="awz1" href="javascript:addWitness(1,1,'ez1_witn')">+ [witness/witnesses]0</a> %lt1; [first name/first names]0 [surname/surnames]0</dd>
+  <dd> <a id="awz1" href="javascript:addWitness(1,1,'ez1_witn','%prefix;')">+ [witness/witnesses]0</a> %lt1; [first name/first names]0 [surname/surnames]0</dd>
 %end;
 %define;one_witness(z1,z2,z3)
   %let;l1;%z3.create.sex;%in;
