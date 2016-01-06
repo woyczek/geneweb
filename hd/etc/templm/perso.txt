@@ -18,7 +18,7 @@
   %import;tools;
   %if;(bvar.jquery = "no")
     <script type="text/javascript">
-      <!-- 
+      <!--
       function jq2()
       {}
        -->
@@ -996,10 +996,10 @@
       %end;
       %if;(has_public_name or has_qualifiers)
         %if;(has_aliases or has_qualifiers)<br%/>%end;
-        <em style="font-size:13pt">
+        <span style="font-size:13pt">
         %apply;link_s("p",first_name)%sp;
         %apply;link_s("n",surname)
-        </em>
+        </span>
       %end;
       %if;has_first_names_aliases;
         %apply;lazy_print("")
@@ -1059,9 +1059,9 @@
             <li>
             %apply;a_of_b%with;[*witness/witnesses]0%and;
             %apply;a_of_b%with;%event_witness_relation.event.name;%and;%end;%end;
-            %apply;somebody("event_witness_relation.person")%sp;
+            %apply;somebody("event_witness_relation.person")
             %if;(event_witness_relation.event.spouse != "")
-              %if;(event_witness_relation.event.has_date)<a href="%prefix;MOD_FAM;i=%event_witness_relation.person.family.index;;ip=%event_witness_relation.person.index;" 
+              %if;(event_witness_relation.event.has_date)%sp;<a href="%prefix;MOD_FAM;i=%event_witness_relation.person.family.index;;ip=%event_witness_relation.person.index;"
                 title="%if;(event_witness_relation.event.has_date)%event_witness_relation.event.date;%nl;%end;%nn;
                        %if;event_witness_relation.event.has_place;%event_witness_relation.event.place;%end;">&%event_witness_relation.event.date.year;</a>
                 %else;<span title="%if;event_witness_relation.event.has_place;%event_witness_relation.event.place;%end;"> &</span>
@@ -1106,7 +1106,7 @@
     %foreach;source;
       %if;(source_type = [person/persons]0 or source_type = [family/families]0)
         %lazy_force;
-        <li><em>%apply;capitalize(source_type)</em>[:] %source;</li>
+        <li>%apply;capitalize(source_type)[:] %source;</li>
       %end;
     %end;
   %end;
@@ -1114,8 +1114,8 @@
     %if;event.has_src;
       %lazy_force;
       <li>
-        <em>%apply;capitalize(event.name)
-        %if;(event.has_spouse) [with] %event.spouse;%end;</em>[:]
+        %apply;capitalize(event.name)
+        %if;(event.has_spouse) [with] %event.spouse;%end;[:]
         %event.src;
       </li>
     %end;

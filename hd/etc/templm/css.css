@@ -122,6 +122,8 @@ hr.full{margin-left:0;margin-right:0;}
 #perso h1{margin:5px;padding:5px;}
 #perso .ch1{font-size:1.5em;}
 #perso .ch2{font-size:1.2em;}
+#perso .relations ul,#perso .sources ul{margin-left:-15px}
+#perso .relations li,#perso .sources li{padding:0px;}
 #perso li{margin:2px 0 0 0;padding:0 0 0 10px;}
 #perso .consang{width:90%;}
 .menu{margin:0;padding:0;border:0;position:absolute;top:0;left:0;font-size:14px;}
