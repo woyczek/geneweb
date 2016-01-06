@@ -124,7 +124,7 @@
 %if;not cancel_links;
   %import;tools;
   %apply;tools_ancsosa()
-  %base_trailer;
+  %include.trl;
   %copyright;
 %end;
 </body>

@@ -301,7 +301,7 @@
 </td>
 </tr>
 </table>
-%base_trailer;
+%include.trl;
 %copyright;
 </body>
 </html>

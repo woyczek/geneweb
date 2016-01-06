@@ -259,7 +259,7 @@
     %end;
 </fieldset>
 </form>
-%include.trl
+%include.trl;
 %copyright;
 </body>
 <script type="text/javascript" src="%bvar.static_path;templm/autosize.min.js"></script>

@@ -42,7 +42,7 @@
 ">[tree]</a></div>
 <p></p>
 
-%base_trailer;
+%include.trl;
 %copyright;
 </body>
 </html>

@@ -226,7 +226,7 @@
     </ul>
   </fieldset>
 </form>
-  %base_trailer;
+  %include.trl;
   %copyright;
 </body>
 </html>
