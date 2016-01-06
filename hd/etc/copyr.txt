@@ -2,8 +2,8 @@
   <a href="http://geneweb.tuxfamily.org/wiki/GeneWeb%if;(bvar.default_lang = "fr" or evar.lang = "fr")/fr%end;"
   alt="doc GeneWeb" title="Manual of GeneWeb on Mediawiki" target="_blank">
   <img src="%image_prefix;/logo_bas_mw.png"/></a>
-  <a href="http://opensource.geneanet.org/projects/geneweb/" target="_blank">
-  <img src="%image_prefix;/logo_bas.png" 
+  <a href="http://opensource.geneanet.org/projects/geneweb/" 
   alt="GeneWeb" title="GeneWeb version %version; %compilation_time;%sp;&#013;
-  &copy; INRIA 1998-2016 %connections;%sq;"/></a>%sp;
+  &copy; INRIA 1998-2016 %connections;%sq;" target="_blank">
+  <img src="%image_prefix;/logo_bas.png"/></a>
 </div>
