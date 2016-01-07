@@ -1,9 +1,12 @@
-<div id="footer">
+ <div id="footer">
+ <div>
   <a href="http://geneweb.tuxfamily.org/wiki/GeneWeb%if;(bvar.default_lang = "fr" or evar.lang = "fr")/fr%end;"
   alt="doc GeneWeb" title="Manual of GeneWeb on Mediawiki" target="_blank">
   <img src="%image_prefix;/logo_bas_mw.png"/></a>
   <a href="http://opensource.geneanet.org/projects/geneweb/" 
   alt="GeneWeb" title="GeneWeb version %version; %compilation_time;%sp;&#013;
-  &copy; INRIA 1998-2016 %connections;%sq;" target="_blank">
+  &copy; INRIA 1998-2016" target="_blank">
   <img src="%image_prefix;/logo_bas.png"/></a>
+  </div>
+  <div>%connections;</div>
 </div>
