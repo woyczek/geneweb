@@ -13,9 +13,6 @@
 <body%body_prop;>
 %message_to_wizard;
 <h1>Documentation de templm</h1>
-<div class="menu2">
-  <a href="%prefix;" title="[visualize/show/hide/summary]3">^^</a>
-</div>
 <h2>Aide en ligne</h2>
 <ul><li><a href="http://geneweb.tuxfamily.org/wiki/templm/fr">http://geneweb.tuxfamily.org/wiki/templm/fr</a></li></ul>
 <h2>Options pour l’habillage templm</h2>

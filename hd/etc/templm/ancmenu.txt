@@ -46,9 +46,6 @@
     %if;(alias != "") <em>(%alias;)</em>%end;
   %end;
 </h1>
-<div class="menu2">
-  <a href="%prefix;" title="[visualize/show/hide/summary]3">^^</a>
-</div>
 %let;l_on;onclick="this.focus()" onkeydown="if (event.keyCode == 13) javascript:document.ancmenu.submit();"%in;
 <form name="ancmenu" method="get" action="%action;">
   <p>

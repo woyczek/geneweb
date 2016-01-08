@@ -65,12 +65,6 @@
 <body%body_prop; id="ancsosa">
 %message_to_wizard;
 
-%if;not cancel_links;
-  <div class="menu2">
-    <a href="%prefix;" title="[visualize/show/hide/summary]3">^^</a>
-  </div>
-%end;
-
 <h1>%nn;
   %apply;a_of_b%with;
     %if;(evar.t = "M")[*missing ancestors]%else;[*ancestors]%end;

@@ -40,12 +40,6 @@
   %sp;[and]0…%nn;
 </h1>
 
-%if;not cancel_links;
-  <div class="menu2">
-    <a href="%prefix;" title="[visualize/show/hide/summary]3">^^</a>
-  </div>
-%end;
-
 <form name="relmenu" method="get" action="%action;">
   <div>
     %hidden;

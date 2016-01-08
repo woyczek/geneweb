@@ -93,12 +93,6 @@
     %else;
   %end;
 </h1>
-%if;(cancel_links or evar.tf1 = "csv")
-%else;
-  <div class="menu2">
-    <a href="%prefix;" title="[visualize/show/hide/summary]3">^^</a>
-  </div>
-%end;
 %if;(evar.t = "F" and evar.fam7 = "on" and (evar.tf1 = "fam71" or evar.tf1 = "fam72"))
   %include.anclist_fam7_img;
 %elseif;(evar.t = "F" and evar.fam7 = "on" and evar.tf1 = "fam70")

@@ -128,12 +128,7 @@
 <div id="nx_a" style="display:none">a</div>
 
 <h1>%title;</h1>
-%if;not cancel_links;
-  %if;(evar.s != "")<p><a href="%prefix;m=MOD_DATA;data=%evar.data;">^^</a></p>%end;
-  <div class="menu2">
-    <a href="%prefix;" title="[visualize/show/hide/summary]3">^^</a>
-  </div>
-%end;
+%if;(not cancel_links and evar.s != "")<p><a href="%prefix;m=MOD_DATA;data=%evar.data;">^^</a></p>%end;
 
 <iframe name="ifr" style="position:fixed;bottom:0px;right:0px;width:400px;height:120px;background-color:#AAA;">
 <p>The browser does not like IFRAME !</p>

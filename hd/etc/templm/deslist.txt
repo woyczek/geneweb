@@ -71,11 +71,6 @@
     %end;
       %sp;%dates;<br%/>
   </h1>
-  %if;not cancel_links;
-    <div class="menu2">
-      <a href="%prefix;" title="[visualize/show/hide/summary]3">^^</a>
-    </div>
-  %end;
   %if;(evar.m = "D" and evar.t = "L" and evar.tl1 = "aad")
     %include.ancdes_aad;
   %elseif;(evar.m = "D" and evar.t = "L" and evar.tl1 = "aax")
