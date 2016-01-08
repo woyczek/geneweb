@@ -53,7 +53,7 @@ a:hover.date,a:hover,.button a:hover,.menu a:hover,.menu1 a:hover,.menu2 a:hover
 input[type="checkbox"]:focus,input[type="radio"]:focus{outline:2px solid #FF9}
 a:hover{z-index:100;}
 /* Properties of the main title. All pages. */
-h1{text-align:center;}
+h1{text-align:center;margin-top:28px}
 /* Properties of the menu2. All pages. */
 .menu2{position:absolute;top:0px;right:1px;z-index:10000}
 .menu2,.menu2 form,.menu2 form input{font-family:Arial;font-size:14px;}
@@ -202,11 +202,11 @@ code{font-size:12px;color:#999;font-family:monospace;}
 #upd .bd0{border:0}
 #upd .ar{text-align:right;}
 #upd .al{text-align:left;}
-.occ,.occ0,.occ1,.occ2{color:#000;text-align:center;width:50px;}
-.occ{background-color:#EEE;}
-.occ0{background-color:#36C;}
-.occ1{background-color:#F6C;}
-.occ2{background-color:#FAFAFA;}
+.occ,.occ0,.occ1,.occ2{text-align:center;width:50px;}
+.occ{background-color:#EEE;color:#000;}
+.occ0{background-color:#36C;color:#FFF;}
+.occ1{background-color:#F6C;color:#FFF;}
+.occ2{background-color:#FAFAFA;color:#000;}
 .t_occ{width:10px;text-align:center;background-color:#EEE;color:#000;border:0;}
 #upd .vis{display:inline;}
 #upd .hid{display:none;}

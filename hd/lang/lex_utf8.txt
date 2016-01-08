@@ -13981,7 +13981,7 @@ fr: arbre de descendance
 en: by couple
 fr: par couple
 
-    navigation
+    navigate on tree
 en: navigate on the tree
 fr: naviguer sur l’arbre
 
@@ -13991,7 +13991,7 @@ fr: taille de police
 
     horizontal tree
 en: horizontal tree
-fr: arbre horizontal
+fr: arborescence ascendante
 
     shortcuts
 en: keyboard shortcuts
@@ -14012,3 +14012,11 @@ fr: arbre des relations
     events tree
 en: tree of events
 fr: arbre des événements
+
+    descendant tree view
+en: descendant tree view
+fr: arborescence descendante
+
+    home
+en: home
+fr: accueil

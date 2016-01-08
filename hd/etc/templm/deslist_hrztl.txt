@@ -112,7 +112,10 @@
 %if;(not cancel_links and has_parents)
   <div class="menu">
     <span>
-      <a href="%l_url1;i=%index;" title="(Y)" accesskey="Y">[*ancestors]0</a>
+      <a href="%l_url1;i=%index;" title="(Y)" accesskey="Y">[*horizontal tree]0</a>
+    </span>
+    <span>
+      <a href="%prefix;m=D;t=T;v=4;image=on;%access"%if;(not has_parents) %laY;%end;>[*descendants tree]</a>%nn;
     </span>
   </div>
 %end;

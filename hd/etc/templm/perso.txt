@@ -135,7 +135,7 @@
           %if;(version = l_version)
             <a href="%l1;gwstp?v=main.htm;" title="Gwstp">Gwstp</a>
           %else;
-            <a href="%l1;gwsetup?v=main.htm;" title="Gwsetup">📂</a>
+            <a href="%l1;gwsetup?v=main.htm;" title="Gwsetup">%if;(evar.oc!="" evar.oc!="0")%evar.oc;%else;📂%end;</a>
           %end;
           %if;(has_parents or has_children)
             <span class="s_menu">
@@ -213,7 +213,7 @@
         <a href="%prefix;m=D;%access;">[*descendants]</a>
         <span class="s_menu">
           <a href="%prefix;m=D;t=T;v=4;image=on;%access"%if;(not has_parents) %laY;%end;>[*descendants tree]</a>%nn;
-          <a href="%prefix;m=D;t=L;tl1=hrztl;v=%l1;;maxv=%max_desc_level;;i=%index;">[*horizontally]</a>%nn;
+          <a href="%prefix;m=D;t=L;tl1=hrztl;v=%l1;;maxv=%max_desc_level;;i=%index;">[*descendant tree view]</a>%nn;
           <a href="%prefix;m=D;t=H;v=%max_desc_level;;birth=on;birth_place=on;marr=on;marr_date=on;marr_place=on;child=on;death=on;death_place=on;death_age=on;occu=on;gen=on;%access;">[*table] [descendants]</a>%nn;
           <a href="%prefix;m=D;t=L;v=3;maxv=%max_desc_level;;siblings=on;alias=on;spouse=on;parents=on;rel=on;witn=on;notes=on;src=on;upd=on;hide=on;%access;">[*long display]</a>%nn;
           <a href="%prefix;m=D;t=L;tl1=aad;v=%max_desc_level;;maxv=%max_desc_level;;i=%index;">[*age at death]</a>%nn;
@@ -224,7 +224,7 @@
       <span class="s_menu">
         %if;(browsing_with_sosa_ref)
           %if;(sosa_ref.index != "" and sosa_ref.index != index)
-            <a href="%prefix;em=R;ei=%index;;i=%sosa_ref.index;;m=NG;n=1;t=PN;spouse=on;image=on;et=S" title="…[shortest path]… %sosa_ref;">[shortest path]</a>%nn;
+            <a href="%prefix;em=R;ei=%index;;i=%sosa_ref.index;;m=NG;n=1;t=PN;spouse=on;image=on;et=S" title="[*shortest path] [with] %sosa_ref;">[*shortest path]</a>%nn;
           %end;
         %end;
         <a href="%prefix;%access;;m=A;t=F;fam7=on;tf1=fam73;v=3;maxv=4">[*family time line]</a>%nn;
@@ -1035,9 +1035,10 @@
       %include.perso_mickroue1;
     %else;
       <div class="relations">
-        <h2 class="ch2">[*relation/relations]1
-         %if;not cancel_links;<div class="menu" style="padding-right:20px;font-weight:normal;float:right;position:relative">
-         %apply;relations_tree(l_ref)</div>%end;</h2>
+        <div style="display:inline-block"><h2 class="ch2" style="float:left;display:inline">[*relation/relations]1</h2>
+         %if;not cancel_links;<div class="menu" style="padding-right:20px;margin:0px;font-weight:normal;float:right;position:relative">
+         %apply;relations_tree(l_ref)</div>%end;
+         </div>
         <ul>
           %foreach;relation;
             <li>%apply;capitalize(relation_type)[:]

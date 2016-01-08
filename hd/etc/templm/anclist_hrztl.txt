@@ -288,8 +288,12 @@
 %if;(not cancel_links and has_children)
   <div class="menu">
     <span>
-      <a href="%l_url1;i=%index;" title="(Y)" accesskey="Y">[*descendants]0</a>
+      <a href="%l_url1;i=%index;" title="(Y)" accesskey="Y">[*descendant tree view]0</a>
     </span>
+    <span>
+    <a id="anc_tree" href="%prefix;m=A;t=T;v=4;image=on;marriage=on;%access;" %laY;>[*ascendants tree]</a>%nn;
+    </span>
+    
   </div>
 %end;
 %apply;togen()

@@ -24,7 +24,12 @@
   <div class="menu3" id="menu_trl">
     %if;(evar.n != "" or evar.i != "" or evar.ip !="")
     <form style="display:inline" id="ak" method="get" action="">
-      <span><input id="acckey" name="acckey" %laZ; maxlength="1" %if;(evar.m!="A")autofocus="on"%end; placeholder="?"
+      <span>%if;(referer != "")
+            <span><a href="%referer;" alt="[*back]" title="[*back]%nl;%nl;[*select] %nl;%lg %apply;language_name(lg)">⇦</a></span>
+            %elseif;(bvar.hideflag != "yes")<img src="%image_prefix;/flags/l-%lg;.jpg" width="32" height="24" alt="flag" title="%lg; %apply;language_name(lg)"/>%else;<a href="#">%lg;</a>%end;
+         <span class="s_menu" id="lang">%apply;link_lang()</span>
+      </span>
+      <span><input id="acckey" name="acckey" %laZ; maxlength="1" %if;(evar.m!="A")autofocus="on"%end; placeholder=""
        onkeypress="javascript:return acc_key(this,event,'sib_1','spo_1','chi_1_1','mod_ind','add_par','add_fam','mod_fam_1');"/>
         <span class="s_menu">
           <h4>[*shortcuts] (Alt+%laZk;)</h4>
@@ -80,9 +85,29 @@
            <input id="v" type="hidden" name="v" value="%evar.v"/>%end;
            %if;(evar.m = "A")<input id="mA" type="hidden" name="m" value="A"/>%end;
            <input type="search" id="mSn" name="n" accesskey="%laWk;" size="34" maxlength="200" autofocus="on" 
-             title="[*search/case sensitive]0 (W)%nl;* = [starting with]%nl;Sosa* = Sosa x 2%nl;Sosa/ = Sosa / 2"
+             title="[*search/case sensitive]0 (W)%nl;%nl;* = [starting with]%nl;%nl;
+                    (*+/-) [search/case sensitive]0 [with] [n° Sosa][:]%nl;
+                    (*) [father/mother]0 (×2)%nl;
+                    (+) [father/mother]1 (×2+1)%nl;
+                    (/) [child/children]0 [Sosa] (div)%nl;
+                    (-) %apply;a_of_b%with;[spouse/spouses]0%and;[child/children]0 [Sosa] (div+1)%end;%nl;
+                    (/+) or (*-) [spouse/spouses]0%nl;
+                    ×      +%nl;
+                      \   /%nl;
+                        n°     ÷+ = ×-%nl;
+                          \   /%nl;
+                            ÷      - = ÷÷+%nl;
+                              \   /%nl;"
+%(
+═╦════╦════╦════╗
+ ║ /  ║ *  ║ -  ║
+ ║  ÷2║  ×2║÷2+1║
+═╩════╩════╬════╣
+   8*   +9 ║ +  ║
+      4    ║×2+1║
+   2/   -3 ║    ║%)
              placeholder="[surname/surnames]0*%if;(evar.t != "T"), [public name], [alias], n° Sosa%end;"
-             value="%if;(evar.m = "S" and evar.n != "")%evar.n;%end;"
+             onfocus="%evar.n;%if;(evar.m = "S" and evar.n != "")%evar.n;%end;"
              onkeypress="javascript:return computeSosa(event,'mSn')"
            %/><input type="search" id="mSp" name="p" size="17" maxlength="200"
              placeholder="[first name/first names]0*, n° index"
@@ -95,10 +120,7 @@
       <a href="%prefix;m=H;v=advanced" title="[*advanced request]">🔍</a>
       </span>
     %end;
-    <span>%if;(bvar.hideflag != "yes")<img src="%image_prefix;/flags/l-%lg;.jpg" width="32" height="24" alt="flag" title="%lg; %apply;language_name(lg)"/>%else;<a href="#">%lg;</a>%end;
-      <span class="s_menu" id="lang">%apply;link_lang()</span>
-    </span>
-    <span><a href="%prefix;" title="%if;(evar.n != "" or evar.i != "")[*back] [visualize/show/hide/summary]3%nl;%end;Template[:] %if;(evar.templ != "")%evar.templ;%else;templ%end;">%if;(evar.n != "" or evar.i != "")⇧%else;templ%end;</a>
+    <span><a href="%prefix;" title="%if;(evar.n != "" or evar.i != "")[*home]%nl;%nl;%end[*select]%nl;%if;(evar.templ != "")%evar.templ;%else;templ%end;">%if;(evar.n != "" or evar.i != "")⇧%else;templ%end;</a>
       %if;(evar.digest = "")
         <span class="s_menu" id="tpl">
           <a href="%prefix_no_templ;templ=;%suffix;">default</a>

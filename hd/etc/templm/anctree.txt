@@ -191,7 +191,8 @@
 %if;not cancel_links;
   %if;(evar.t = "T" and evar.t1 != "HT")
     <div class="menu">
-      <span>
+      %if;has_children;
+        <span>
         <a title="[tree] (Y)" accesskey="Y" href="%prefix_no_iz;%nn;
           %foreach;env_binding;
             %if;(env.key = "m")m=D;%nn;
@@ -199,6 +200,12 @@
             %else;%env.key;=%env.val.decoded;;%nn;
             %end;
           %end;">[*descendants tree]</a>
+        </span>
+      %end;
+      <span>
+        <a href="%prefix;m=A;t=H;v=%evar.v;;maxv=%max_anc_level;;i=%index;">[*horizontal tree]</a>%nn;
+      <span>
+        <a href="%prefix;%access;;m=A;t=F;fam7=on;tf1=fam73;v=%if;(evar.v=3 or evar.v=4)%evar.v;%else;3%end;;maxv=4">[*family time line]</a>%nn;
       </span>
     </div>
   %end;
