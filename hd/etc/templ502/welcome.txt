@@ -38,18 +38,18 @@ sv: Genealogi
     %if;(evar.templ = "random")
       %include.random_css;
     %else;
-      html { background:url('%image_prefix;/gwback.jpg') }
-      span.highlight { color: %highlight;; font-weight: bold }
-      #user-info { float: %right; }
-      #title { padding-top: 1em }
-      #title { text-align: center; vertical-align: middle; width: 100%% }
-      #title { color: %highlight; }
-      #lang { text-align: center }
-      #lang .title { font-size: 80%% }
-      #lang .list { width: 100%% }
-      #lang a { display: inline }
-      #lang .item span { display: none }
-      #content .subtitle { text-align: center }
+      html{ background:url('%image_prefix;/gwback.jpg')}
+      span.highlight{color: %highlight;; font-weight: bold}
+      #user-info{float:right;}
+      #title{padding-top: 1em}
+      #title{text-align: center; vertical-align: middle; width: 100%%}
+      #title{color: %highlight;}
+      #lang{text-align: center}
+      #lang .title{font-size: 80%%}
+      #lang .list{width: 100%%}
+      #lang a {display: inline}
+      #lang .item span{display: none}
+      #content .subtitle{text-align: center}
     %end;
   </style>
 %base_header;
@@ -116,10 +116,10 @@ sv: Genealogi
   <a href="%prefix_base;suicide=x"> </a>
 </div>
 
-<div style="float: %left;">
-  <a href="http://www.geneweb.org/"><img width="96" height="108"
-   src="%image_prefix;/gwlogo.png" style="border: 0"%sp;
-   alt="GeneWeb"%/></a>
+<div style="position:absolute">
+  <a href="http://www.geneweb.org/"><img width="280px"
+   src="%image_prefix;/gwlogo.png"%sp;
+   alt="GeneWeb"/></a>
 </div>
 
 <div id="title">
