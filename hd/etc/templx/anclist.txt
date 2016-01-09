@@ -415,8 +415,6 @@
 
 %import;menubar
 
-%apply;display_arrows()
-
 <h1>%nn;
   %if;(evar.t = "E")
     %if;(public_name != "")%public_name;%else;%first_name;%end;

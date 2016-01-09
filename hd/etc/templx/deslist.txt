@@ -354,8 +354,6 @@
 
 %import;menubar
 
-%apply;display_arrows()
-
 <h1 id="top">%nn;
   %apply;a_of_b_gr_eq_lev%with;
     [*descendants]%nn;

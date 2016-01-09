@@ -175,8 +175,6 @@
 
 %import;menubar
 
-%apply;display_arrows()
-
 <h1>%nn;
   %if;(evar.t = "A")[*male line/female line]0%nn;
   %elseif;(evar.t = "C")[*male line/female line]1%nn;

@@ -45,17 +45,6 @@
   [*navigation with %t as Sosa reference:::xx].
 %end;
 
-%if;not cancel_links;
-  <table style="float:%right;"><tr><td>
-    %if;(referer != "")
-      <a href="%referer;"><img
-       src="%image_prefix;/left.png"%wid_hei;left.png; alt="&lt;&lt;"%/></a>
-    %end;
-    <a href="%prefix;"><img%sp;
-    src="%image_prefix;/up.png"%wid_hei;up.png; alt="^^"%/></a>
-  </td></tr></table>
-%end;
-
 <table border="%border;" width="100%%"><tr><td align="center">
 <table border="%border;">
 <tr>

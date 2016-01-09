@@ -40,21 +40,6 @@ function update_old () {
 
 --></script>
 
-%if;not cancel_links;
-  <table style="float:%right;">
-    <tr><td>
-      %if;(referer != "")
-        <a href="%referer;">
-          <img src="%image_prefix;/left.png" %wid_hei;left.png; alt="&lt;&lt;" title="&lt;&lt;"%/>
-        </a>
-      %end;
-      <a href="%prefix;">
-        <img src="%image_prefix;/up.png" %wid_hei;up.pnd; alt="^^" title="^^"%/>
-      </a>
-    </td></tr>
-  </table>
-%end;
-
 <h1>
   <a href="%prefix;%acces;">%person;</a>%nn;
   %if;(evar.t = "SUM"), [revision history]

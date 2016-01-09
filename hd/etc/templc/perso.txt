@@ -36,8 +36,6 @@
   %apply;image_MF("self","13")
 </div>
 
-%apply;display_arrows()
-
 <h1 class="highlight" style="text-align: center">
   %if;has_public_name;
     %if;has_qualifiers;%public_name; <em>%qualifier;</em>

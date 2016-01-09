@@ -1164,8 +1164,6 @@
 
 %import;menubar
 
-%apply;display_arrows()
-
 <h1>%nn;
   %apply;a_of_b%with;
     %if;(evar.t = "M")
