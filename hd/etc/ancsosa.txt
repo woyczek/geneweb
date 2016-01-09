@@ -1520,7 +1520,7 @@ evar.templ="templd" or evar.templ="templf" or evar.templ="templh")
   %end;
 %end;
 
-%base_trailer;
+%include.trl;
 %copyright;
 </body>
 </html>

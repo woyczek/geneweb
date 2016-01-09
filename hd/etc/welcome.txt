@@ -601,7 +601,7 @@ sv: Om din webbläsare inte automatiskt uppdaterar de modifierade sidorna
 <br/>
 </div> 
 
-%base_trailer;
+%include.trl;
 
 %copyright;
 

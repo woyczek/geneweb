@@ -504,7 +504,7 @@ function no_options () {
   </div>
 </form>
 
-%base_trailer;
+%include.trl;
 %copyright;
 </body>
 </html>

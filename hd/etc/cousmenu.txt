@@ -93,7 +93,7 @@
   </ul>
 %end;
 
-%base_trailer;
+%include.trl;
 %copyright;
 </body>
 </html>

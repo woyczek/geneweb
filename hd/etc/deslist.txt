@@ -522,7 +522,7 @@ evar.templ="templd" or evar.templ="templf" or evar.templ="templh")
   %else;%apply;min(evar.v, max_desc_level, bvar.max_desc_level)%end;
 %end;
 
-%base_trailer;
+%include.trl;
 %copyright;
 </body>
 </html>
