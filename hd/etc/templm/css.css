@@ -3,9 +3,9 @@
 input[type=number]::-webkit-inner-spin-button {opacity:1}
 html{color:#000;background-color:#EEE;}
 /* placeholder color, don't concatenate */
-::-webkit-input-placeholder {color: grey;}
-::-moz-placeholder {color: grey;}
-:-ms-input-placeholder {color: grey;}
+::-webkit-input-placeholder {color:#aaa;}
+::-moz-placeholder {color: #aaa;}
+:-ms-input-placeholder {color: #aaa;}
 /* Properties of all html pages */
 textarea{width:99%;padding:10px;vertical-align:top;min-height:1em;}
 tr,div,p,li,img{page-break-inside:avoid;}
