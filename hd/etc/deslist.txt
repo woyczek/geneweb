@@ -1,3 +1,7 @@
+%if;(evar.templ="templa" or evar.templ="templb" or evar.templ="templc" or
+evar.templ="templd" or evar.templ="templf" or evar.templ="templh")
+%import;templx/deslist
+%else;
 %doctype;
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -535,3 +539,4 @@
 %copyright;
 </body>
 </html>
+%end;
