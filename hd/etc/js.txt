@@ -1,2 +1,2 @@
-<script type="text/javascript" src="jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="jquery-2.2.0.min.js"></script>
 <script type="text/javascript" src="jquery.placeholder.min.js"></script>

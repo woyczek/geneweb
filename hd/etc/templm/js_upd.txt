@@ -3,6 +3,6 @@
 %if;(bvar.jquery = "no")
   <script type="text/javascript" src="%bvar.static_path;templm/js_upd_jq_no.js"></script>
 %else;
-  <script type="text/javascript" src="%bvar.static_path;jquery-1.11.3.min.js"></script>
+  <script type="text/javascript" src="%bvar.static_path;jquery-2.2.0.min.js"></script>
   <script type="text/javascript" src="%bvar.static_path;templm/js_upd_jq.js"></script>
 %end;
