@@ -1035,10 +1035,9 @@
       %include.perso_mickroue1;
     %else;
       <div class="relations">
-        <div style="display:inline-block"><h2 class="ch2" style="float:left;display:inline">[*relation/relations]1</h2>
-         %if;not cancel_links;<div class="menu" style="padding-right:20px;margin:0px;font-weight:normal;float:right;position:relative">
-         %apply;relations_tree(l_ref)</div>%end;
-         </div>
+        <div style="width=30%%;display:inline-block"><h2 class="ch2" style="float:left;display:inline">[*relation/relations]1</h2></div>
+         %if;not cancel_links;<div class="menu" style="padding-top:16px;float:right;position:relative">
+         <span>%apply;relations_tree(l_ref)</span></div>%end;
         <ul>
           %foreach;relation;
             <li>%apply;capitalize(relation_type)[:]
@@ -1192,7 +1191,7 @@
         <div class="button">
           %if;((first_name = "?" or surname = "?") and (nb_families != 0 or has_parents))
           %elseif;(is_male or is_female)
-            <a href="%prefix;m=ADD_FAM;ip=%index;" title="[add::family/families]0 (A)" %l_on1;>[add::family/families]0</a>
+            <a href="%prefix;m=ADD_FAM;ip=%index;" title="[add::family/families]0 (A)" %l_on1;>[add::family/families]0</a>%nn;
             <br%/>
           %end;
         </div>
