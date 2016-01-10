@@ -1,4 +1,4 @@
-/* $Id: js_upd_jq.js,v 7.00 2015/11/10 15:00:52 mr Exp $ */
+/* $Id: js_upd_jq.js,v 7.00 2016/01/10 15:28:35 mr Exp $ */
 
 var ldlLen = 0;
 var ldlTim;
@@ -221,6 +221,6 @@ function jq1b(z1,z2)
   }
   else
   {
-    if (document.getElementById("pa2_fn").value != "")jq1a('pa2');
+    if (document.getElementById("pa2_fn").value != "")jq1a('pa2',z2);
   }
 }
