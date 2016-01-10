@@ -22,13 +22,13 @@
 
 %if;(not cancel_links and evar.m != "MOD_DATA_OK" and evar.m != "DEL_IND_OK" and evar.m != "DEL_FAM_OK" and evar.templ = "templm")
   <div class="menu3" id="menu_trl">
-    %if;(evar.n != "" or evar.i != "" or evar.ip !="")
-    <form style="display:inline" id="ak" method="get" action="">
-      <span>%if;(referer != "")
+    %if;(evar.n != "" or evar.i != "" or evar.ip !="" or evar.m !="")
+    <span>%if;(referer != "")
             <span><a href="%referer;" alt="[*back]" title="[*back]%nl;%nl;[*select] %nl;%lg %apply;language_name(lg)">⇦</a></span>
             %elseif;(bvar.hideflag != "yes")<img src="%image_prefix;/flags/l-%lg;.jpg" width="32" height="24" alt="flag" title="%lg; %apply;language_name(lg)"/>%else;<a href="#">%lg;</a>%end;
          <span class="s_menu" id="lang">%apply;link_lang()</span>
-      </span>
+    </span>
+    <form style="display:inline" id="ak" method="get" action="">
       <span><input id="acckey" name="acckey" %laZ; maxlength="1" %if;(evar.m!="A")autofocus="on"%end; placeholder=""
        onkeypress="javascript:return acc_key(this,event,'sib_1','spo_1','chi_1_1','mod_ind','add_par','add_fam','mod_fam_1');"/>
         <span class="s_menu">
@@ -120,7 +120,7 @@
       <a href="%prefix;m=H;v=advanced" title="[*advanced request]">🔍</a>
       </span>
     %end;
-    <span><a href="%prefix;" title="%if;(evar.n != "" or evar.i != "")[*home]%nl;%nl;%end[*select]%nl;%if;(evar.templ != "")%evar.templ;%else;templ%end;">%if;(evar.n != "" or evar.i != "")⇧%else;templ%end;</a>
+    <span><a href="%prefix;" title="%if;(evar.n != "" or evar.i != "" or evar.m !="")[*home]%nl;%nl;%end[*select]%nl;%if;(evar.templ != "")%evar.templ;%else;templ%end;">%if;(evar.n != "" or evar.i != "" or evar.m!="")⇧%else;templ%end;</a>
       %if;(evar.digest = "")
         <span class="s_menu" id="tpl">
           <a href="%prefix_no_templ;templ=;%suffix;">default</a>
