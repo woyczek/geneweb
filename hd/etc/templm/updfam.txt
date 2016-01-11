@@ -243,7 +243,7 @@
   <textarea id="comment" rows="1" placeholder="[*comment]" name="comment" %l_on1s;>
     %if;(comment != "" and bvar.move_comment = "yes")
       %foreach;fevent;
-        %if;((event.e_name = "#marr" or event.e_name = "#nmar" or event.e_name = "#nmen") and event.e_note != "")%comment;%end;
+        %if;((fevent.e_name = "#marr" or fevent.e_name = "#nmar" or fevent.e_name = "#nmen") and fevent.e_note != "")%comment;%end;
       %end;
     %else;
       %comment;%sq;
