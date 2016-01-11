@@ -1,9 +1,10 @@
-
 %( On importe perso_utils pour l'inclusion hors template. %)
 %( Normalement, il n'est ajouté qu'une seule fois.        %)
 %import;perso_utils
 
-%include.menubar;
+%if;(evar.templm="templm" and evar.m!="SND_IMAGE")
+  %include.menubar;
+%end;
 
 <h1>
   %apply;image_MF("self", "")
