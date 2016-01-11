@@ -153,7 +153,7 @@
       <input id="e_placez1" name="e_placez1" class="pl" size="70" placeholder="[*place]" value="%event.e_place;" %l_on5;%/>
   </dt>
   <dd><textarea id="e_notez1" name="e_notez1" placeholder="[*comment]" rows="1" class="enote" %l_on1s;>%nn;
-    %if;(evar.m = "MOD_FAM" and comment != "" and bvar.move_comment = "yes" and event.e_note = "")%comment;%end;
+    %if;(evar.m = "MOD_FAM" and comment != "" and bvar.move_comment = "yes" and event.e_note = "" and (event.e_name = "#marr" or event.e_name= "#nmar" or event.e_name= "#nmen"))%comment;%end;
     %event.e_note;%sq;</textarea></dd>
   <dd><textarea id="e_srcz1" name="e_srcz1" placeholder="[*source/sources]1" rows="1" class="esrc" %l_on6; %l_on1s;>%event.e_src;%sq;</textarea></dd>
   %if;has_z3;%foreach;z3;%apply;one_witness(z1,wcnt,"z3")%end;%end;
