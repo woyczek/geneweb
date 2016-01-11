@@ -22,9 +22,10 @@
          %if;(evar.t1= "1") checked="checked"%end;%/>[branch/branches]0 : Sosa</label>
   %end;
   %apply;checkbox("├","siblings",[siblings],"")
-  %let;nosurn;[first name/first names]0 <span style="text-decoration:line-through;"> [surname/surnames]0</span>)%in;
+  %let;nosurn;[first name/first names]0 (<span style="text-decoration:line-through;">[surname/surnames]0</span>)%in;
   %apply;checkbox("├","nosurn",nosurn,"")
-  %apply;checkbox("├","alias",[surname alias] [first name alias],"")
+  %let;alias;[surname alias], [first name alias]%in;
+  %apply;checkbox("├","alias",alias,"")
   %apply;checkbox("├","spouse",[include spouses],"")
   %apply;checkbox("├","parents",[parents],"")
   %apply;checkbox("├","rel",[relation/relations]1,"")
@@ -190,17 +191,8 @@
       %hidden;
       %foreach;env_binding;
         %if;(
-             env.key = "bd" or
-             env.key = "bg" or
-             env.key = "cgl" or
-             env.key = "color" or
-             env.key = "image" or
-             env.key = "invert" or
-             env.key = "lim" or
-             env.key = "opt" or
-             env.key = "new" or
-             env.key = "spouse" or
-             env.key = "v" or
+             env.key = "bd" or env.key = "bg" or env.key = "cgl" or env.key = "color" or env.key = "image" or env.key = "invert" or env.key = "lim" or
+             env.key = "opt" or env.key = "new" or env.key = "spouse" or env.key = "v" or
              env.key = "dpos" or env.key = "pos1" or env.key = "pos2" or env.key = "nogroup" or env.key = "notab" or env.key = "overlap" or
              env.key = "width" or env.key = "slices" or
              env.key = "templ" or env.key = "iz" or env.key = "pz" or env.key = "nz" or env.key = "ocz"
@@ -281,7 +273,7 @@
   <hr style="clear:both;" %/>
   <form id="tools" name="tools" method="get" action="%action;">
     <fieldset>
-      <legend>[*tools]0 <input type="submit" value="Ok"%/></legend>
+      <legend>[*tools]0 %if;(evar.fam7 = "on")[family time line]1 %end;<input type="submit" value="Ok"%/></legend>
       %hidden;
       <input type="hidden" name="m" value="A"%/>
       <input type="hidden" name="t" value="%evar.t;"%/>
@@ -293,24 +285,21 @@
       %if;(evar.i != "")
         <input type="hidden" name="i" value="%evar.i;"%/>
       %end;
-      <p>
+
         %let;l_bmaxv;%if;(bvar.max_anc_level = "")%evar.maxv;%else;%bvar.max_anc_level;%end;%in;
         %let;l_emaxv;%if;(evar.maxv = "")%l_bmaxv;%elseif;(evar.maxv < l_bmaxv)%evar.maxv;%else;%l_bmaxv;%end;%in;
         %let;l_maxv;%if;((evar.fam7 = "on") and l_v > 4)4%else;%l_emaxv;%end;%in;
         <input type="hidden" name="maxv" value="%evar.maxv;"%/>
         %apply;generation()
+              <p>
         %if;(evar.fam7 != "on" and evar.t != "H" and evar.t != "L")
           %apply;checkbox("├","only",[only the generation selected],"")
         %end;
-      </p>
-      <p>
-        %apply;checkbox(" ","cgl",[cancel GeneWeb links],"")
+        %apply;checkbox("","cgl",[cancel GeneWeb links],"")
         %if;(evar.t = "H")
           %apply;anc_hrztl()
         %end;
-      </p>
       %if;(evar.fam7 = "on")
-        <fieldset style="border:0;"><legend>[*family time line]1</legend>
           <input type="hidden" name="fam7" value="on"%/>
           %apply;radio("tf1","fam73",[time line],"")
           %let;fam70;[date/dates]0, [place]0%in;
@@ -323,6 +312,7 @@
           %end;
           %apply;checkbox("├","spouse",[add::spouse/spouses]1,"")
           %apply;checkbox("└","cousins",[add::cousins],"")
+     <p>
         </fieldset>
       %end;
       %if;(evar.tf1 != "" and evar.fam7 != "on")
@@ -347,7 +337,6 @@
           <label><input type="radio" name="tf1" value="mm" %l_on;
                   %if;(evar.tf1 = "mm") checked="checked"%end;%/>[year/month/day]1 [birth] = [year/month/day]1 [death] ?</label>
           %apply;radio("tf1","ars",[Αἰθήρ],"")
-        </fieldset>
       %end;
     </fieldset>
   </form>
