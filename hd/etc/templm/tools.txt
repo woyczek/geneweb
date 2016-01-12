@@ -87,8 +87,6 @@
     %apply;envkb()
     <label><input type="number" style="font-weight:bold;text-align:right;font-size:16px;width:2.5em" type="number" min="1" max="%maxvd;" id="maxlev"
     title="[*maximum][:] %maxvd; [generation/generations]1 %lcX;" name="maxlev" value="%l_maxlev;" %l_on; %laX;%/>
-    <input id="hide_ie" hidefocus="true" tabindex="-1" type="submit"/>
-    </label></form>
   %end;
 %end;
 
@@ -285,13 +283,12 @@
       %if;(evar.i != "")
         <input type="hidden" name="i" value="%evar.i;"%/>
       %end;
-
         %let;l_bmaxv;%if;(bvar.max_anc_level = "")%evar.maxv;%else;%bvar.max_anc_level;%end;%in;
         %let;l_emaxv;%if;(evar.maxv = "")%l_bmaxv;%elseif;(evar.maxv < l_bmaxv)%evar.maxv;%else;%l_bmaxv;%end;%in;
         %let;l_maxv;%if;((evar.fam7 = "on") and l_v > 4)4%else;%l_emaxv;%end;%in;
         <input type="hidden" name="maxv" value="%evar.maxv;"%/>
         %apply;generation()
-              <p>
+        <p>
         %if;(evar.fam7 != "on" and evar.t != "H" and evar.t != "L")
           %apply;checkbox("├","only",[only the generation selected],"")
         %end;
@@ -312,7 +309,7 @@
           %end;
           %apply;checkbox("├","spouse",[add::spouse/spouses]1,"")
           %apply;checkbox("└","cousins",[add::cousins],"")
-     <p>
+        </p>
         </fieldset>
       %end;
       %if;(evar.tf1 != "" and evar.fam7 != "on")
@@ -425,7 +422,7 @@
   <hr %/>
   <form id="tools" name="tools" method="get" action="%action;">
     <fieldset>
-      <legend>[*tools]0 <input type="submit" value="Ok"%/></legend>
+      <legend>[*tools]0 %if;(evar.tl1!="hrtzl")[statistics] <input type="submit" value="Ok"%/></legend>
         %hidden;
         <input type="hidden" name="m" value="D"%/>
         %if;(evar.p != "" or evar.n != "" or evar.oc != "")
@@ -468,8 +465,7 @@
           <input type="hidden" name="tl1" value="hrztl"%/>
         %else;
           <input type="hidden" name="t" value="L"%/>
-          <fieldset  style="border:0;">
-            <legend>[*statistics]</legend>
+          <fieldset style="border:0;">
             %apply;radio("tl1","cal",[calendar/calendars]0,"")
             %apply;radio("tl1","bmdm",[year/month/day]1,"")
             <label><input type="radio" name="tl1" value="afm" %l_on;

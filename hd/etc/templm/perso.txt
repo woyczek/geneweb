@@ -871,8 +871,8 @@
 %end;
 %define;other_event()
   <dt>
-    %if;(evar.spouse="off")<span title="[with] %event.spouse;">%apply;capitalize(event.name)</span>
-    %else;%apply;capitalize(event.name)%end;
+    %if;(evar.spouse="off")<span title="[with] %event.spouse;">%if;(event.name=[no mention])[*relation/relations]0%else;%apply;capitalize(event.name)%end;</span>
+    %else;%if;(event.name=[no mention])[*relation/relations]0%else;%apply;capitalize(event.name)%end;%end;
     %if;event.has_date;%apply;on_edate("event")%end;
     %if;event.has_place; · %event.place;%end;
     %if;(event.has_spouse and evar.spouse!="off" and event.name!=[divorce event] and event.name!=[separate event] and event.name!=[annulation]) · [with] %event.spouse;%end;
@@ -1161,10 +1161,50 @@
   </div>
   %( <!-- End display sosa consang nb ancestors nb descendants --> %)
 %( <!-- Begin display families --> %)
-    %apply;anc_families()
+  %apply;anc_families()
+
+%define;maxdec()
+   %foreach;descendant_level;
+     %if;(level = max_desc_level)
+       %if;(number_of_descendants = "1")
+         [a descendant]0 / %nn;
+       %else;
+         %number_of_descendants; [descendants] [up to] %nn;
+       %end;
+       %level;
+       %if;(level = "1") [generation/generations]0 %else; [generation/generations]1%end;
+     %end;
+   %end;
+%end;
     %if;has_families;
-      <div>
-        <h2 class="ch2">[*descendants] %apply;perso_gen()</h2>
+      <div class="menu" style="display:inline;position:relative;background-color:#AAA;">
+      <span style="color:white"><small>max %apply;maxdec()</small></span>
+        <h2 class="ch2">
+          %let;l1;%apply;min(max_desc_level,5)%in;
+      <span>
+        <span><a href="%prefix;m=D;%access;">#desc [descendants]</a>
+          <span class="s_menu">
+          <a href="%prefix;m=D;t=T;v=4;image=on;%access"%if;(not has_parents) %laY;%end;>[*descendants tree]</a>%nn;
+          <a href="%prefix;m=D;t=L;tl1=hrztl;v=%l1;;maxv=%max_desc_level;;i=%index;">[*descendant tree view]</a>%nn;
+          <a href="%prefix;m=D;t=H;v=%max_desc_level;;birth=on;birth_place=on;marr=on;marr_date=on;marr_place=on;child=on;death=on;death_place=on;death_age=on;occu=on;gen=on;%access;">[*table] [descendants]</a>%nn;
+          <a href="%prefix;m=D;t=L;v=3;maxv=%max_desc_level;;siblings=on;alias=on;spouse=on;parents=on;rel=on;witn=on;notes=on;src=on;upd=on;hide=on;%access;">[*long display]</a>%nn;
+          <a href="%prefix;m=D;t=L;tl1=aad;v=%max_desc_level;;maxv=%max_desc_level;;i=%index;">[*age at death]</a>%nn;
+        </span>
+      </span>
+     <span>
+      <span>  à%apply;perso_gen() <input style="display:inline" type="submit" value="%if;(evar.v=1)[generation/generations]0%else;[generation/generations]1%end;"/></label></form>
+        <span class="s_menu">
+        %let;l2;%expr(max_desc_level+1)%in;
+         %for;i;1;l2;
+         <label><form style="display:inline" name="tools" method="get" action="%action;">
+          %apply;envkb()
+          <input type="submit" id="maxlev" name="maxlev" value="%i;"/>%nn;
+          </label></form>
+         %end;
+        </span>
+      </span>
+    </span></h2>
+    </div>
         %foreach;family;
           <div class="fam">
             %if;(wizard and not cancel_links and family_cnt != 1)
