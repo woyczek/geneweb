@@ -1,7 +1,7 @@
 %doctype;
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <!-- $Id: updfam.txt,v 7.00 2016/01/06 19:24:42 mr Exp $ -->
+  <!-- $Id: updfam.txt,v 7.00 2016/01/12 23:39:27 mr Exp $ -->
   <title>%nn;
     %if;(evar_m = "ADD_FAM" or evar_m = "ADD_FAM_OK")
       [*add::family/families]0%nn;
@@ -115,7 +115,7 @@
       <td><input id="pa1_fn" name="pa1_fn" size="30" maxlength="200" placeholder="[first name/first names]0" value="%parent.first_name;" %lfa1;
            %sp;onkeypress="javascript:return cF2(event,'pa',1,'_fn');" %l_on3;%/><br
        %/><input id="pa1_sn" name="pa1_sn" class="ar" size="30" maxlength="200" placeholder="[surname/surnames]0" value="%parent.surname;"
-           onkeypress="javascript:return cF2(event,'pa',1,'_sn');" %apply;onjq1a("pa1")%/></td>
+           onkeypress="javascript:return cF2(event,'pa',1,'_sn');" %apply;onjq1a("pa1") %l_on7;%/></td>
       <td class="jq2"><div id="pa1_jq2"></div><div id="pa1_jq3"></div>
         <span id="dppa1" class="%l1;">%nn;
           %apply;date_place("parent","birth","pa1b","pa","1","b_yy")
@@ -129,7 +129,7 @@
       <td><input id="pa2_fn" name="pa2_fn" size="30" maxlength="200" placeholder="[first name/first names]0" value="%parent.first_name;"
            onkeypress="javascript:return cF2(event,'pa',2,'_fn');" %l_on3;%/><br
        %/><input id="pa2_sn" name="pa2_sn" class="ar" size="30" maxlength="200" placeholder="[surname/surnames]0" value="%parent.surname;"
-           onkeypress="javascript:return cF2(event,'pa',2,'_sn');" %apply;onjq1a("pa2")%/></td>
+           onkeypress="javascript:return cF2(event,'pa',2,'_sn');" %apply;onjq1a("pa2") %l_on7;%/></td>
       <td class="jq2"><div id="pa2_jq2"></div><div id="pa2_jq3"></div>
         <span id="dppa2" class="%l1;">%nn;
           %apply;date_place("parent","birth","pa2b","pa","2","b_yy")
@@ -146,7 +146,7 @@
     <td><input id="chz1_fn" name="chz1_fn" size="30" maxlength="200" value="%child.first_name;"
          onkeypress="javascript:return cF2(event,'ch',z1,'_fn');" %apply;onjq1a1("chz1")%/><br
      %/><input type="hidden" id="chz1_sn" name="chz1_sn" class="ar" size="30" maxlength="200" value="%child.surname;"
-         onkeypress="javascript:return cF2(event,'ch',z1,'_sn');" %apply;onjq1a("chz1")%/></td>
+         onkeypress="javascript:return cF2(event,'ch',z1,'_sn');" %apply;onjq1a("chz1") %l_on7;%/></td>
     <td class="jq2"><div id="chz1_jq2"> </div><div id="chz1_jq3"> </div>
       <span id="dpchz1" class="%l2;">%nn;
         %apply;date_place("child","birth","chz1b","ch","z1","b_yy")

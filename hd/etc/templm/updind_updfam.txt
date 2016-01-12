@@ -1,4 +1,4 @@
-<!-- $Id: updind_updfam.txt,v 7.00 2016/01/06 19:24:42 mr Exp $ -->
+<!-- $Id: updind_updfam.txt,v 7.00 2016/01/13 00:17:54 mr Exp $ -->
 
 %import;js_perso_accesskey
 
@@ -62,12 +62,13 @@
            [text]
 %in;
 %let;l_on1; onkeydown="if (event.keyCode == 13) javascript:document.upd.submit()";%in;
-%let;l_on1s; onkeydown="if (event.keyCode == 13) if (!event.shiftKey) javascript:document.upd.submit()";%in;
+%let;l_on1s; onkeydown="if (event.keyCode == 13) if (!event.shiftKey) javascript:document.upd.submit()"%in;
 %let;l_on2; onblur="tUC(this)" onkeydown="if(event.keyCode == 13)tUC(this)"%in;
 %let;l_on3; onblur="tUC1(this)" onkeydown="if(event.keyCode == 13)tUC1(this)"%in;
 %let;l_on4;%if;(bvar.datalist_occu > 0) list="dloccu"%if;(bvar.datalist_occu = 2) onkeyup="ldl(this,'occu',event,'%prefix;')"%end;%end;%in;
 %let;l_on5;%if;(bvar.datalist_place > 0) list="dlplace"%if;(bvar.datalist_place = 2) onkeyup="ldl(this,'place',event,'%prefix;')"%end;%end;%in;
 %let;l_on6;%if;(bvar.datalist_src > 0) list="dlsrc"%if;(bvar.datalist_src = 2) onkeyup="ldl(this,'src',event,'%prefix;')"%end;%end;%in;
+%let;l_on7;%if;(bvar.datalist_sn > 0) list="dlsn"%if;(bvar.datalist_sn = 2) onkeyup="%if;(bvar.uppercase = "yes")tUC(this);%end;ldl(this,'sn',event,'%prefix;')"%end;%end;%in;
 %let;ldmy;%if;([ !dates order]0 = "ddmmyyyy")dd%elseif;([ !dates order]0 = "mmddyyyy")mm%else;yy%end;%in;
 
 %define;date(z1,z2,z3,z4)
@@ -174,7 +175,7 @@
        onkeypress="javascript:return oKP2(event,'witn','z2','_occ','ez1_witn')" onblur="oB2('%l5;')"
        %if;(z3.create="create" or z3.create) value="" %elseif;(z3.occ="") value="0" %else; value="%z3.occ;" %end;
       %/><input id="%l5;_fn" name="%l5;_fn" class="fn ar" size="30" maxlength="200" value="%z3.first_name;" %l_on3;
-      %/><input id="%l5;_sn" name="%l5;_sn" class="sn" size="30" maxlength="200" value="%z3.surname;" %apply;onjq1(l5,"")
+      %/><input id="%l5;_sn" name="%l5;_sn" class="sn" size="30" maxlength="200" value="%z3.surname;" %apply;onjq1(l5,"") %l_on7;
       %/><span id="%l5;_jq1"> </span>
   </dd>
 %end;

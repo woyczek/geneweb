@@ -1,29 +1,24 @@
-<!-- $Id: upd_datalist.txt,v 7.00 2014/11/12 14:33:31 mr Exp $ -->
+<!-- $Id: upd_datalist.txt,v 7.00 2016/01/12 23:25:14 mr Exp $ -->
 
-%if;(bvar.datalist_occu > 0)
-  <datalist id="dloccu">
-    <option id="ooccu">0
-  %if;(bvar.datalist_occu = 1)
-    <script type=text/javascript>$("#dloccu").delay(2000).load("%prefix;m=MOD_DATA;data=occu;datalist=on");</script>
+%define;dlist(z1)
+  %if;(bvar.datalist_z1 > 0)
+    <datalist id="dlz1"
+     onkeyup="%nn;
+      %if;("z1"="sn" and bvar.uppercase="yes")tUC(this);%end;
+      ldl(this,'z1',event,'%prefix;')">
+      <option id="oz1">0
+    %if;(bvar.datalist_z1 = 1)
+      <script type=text/javascript>$("#dlz1").delay(2000).load("%prefix;m=MOD_DATA;data=z1;datalist=on");</script>
+    %end;
+    </datalist>
   %end;
-  </datalist>
 %end;
-%if;(bvar.datalist_place > 0)
-  <datalist id="dlplace">
-    <option id="oplace">0
-  %if;(bvar.datalist_place = 1)
-    <script type=text/javascript>$("#dlplace").load("%prefix;m=MOD_DATA;data=place;datalist=on");</script>
-  %end;
-  </datalist>
-%end;
-%if;(bvar.datalist_src > 0)
-  <datalist id="dlsrc">
-    <option id="osrc">0
-  %if;(bvar.datalist_src = 1)
-    <script type=text/javascript>$("#dlsrc").load("%prefix;m=MOD_DATA;data=src;datalist=on");</script>
-  %end;
-  </datalist>
-%end;
+
+%apply;dlist("occu")
+%apply;dlist("place")
+%apply;dlist("sn")
+%apply;dlist("src")
+
 <datalist id="dlmonth">
   <option value=VD label="[(french revolution month)]0 VD">
   <option value=BR label="[(french revolution month)]1 BR">

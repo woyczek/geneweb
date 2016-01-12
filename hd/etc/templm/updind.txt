@@ -1,7 +1,7 @@
 %doctype;
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <!-- $Id: updind.txt,v 7.00 2016/01/06 19:24:42 mr Exp $ -->
+  <!-- $Id: updind.txt,v 7.00 2016/01/13 00:18:16 mr Exp $ -->
   <title>%nn;
     %if;(evar_m = "MRG_IND_OK" or evar_m = "MRG_MOD_IND_OK")
       [*merge::person/persons]1 # %index;
@@ -90,7 +90,7 @@
         onblur="oB3('%l1;')"%/></td>
     <td><input id="%l1;_fn" name="%l1;_fn" class="ar fn" size="30" maxlength="200" value="%relation.z3.first_name;" %l_on3;%/></td>
     <td><input id="%l1;_sn" name="%l1;_sn" class="sn" size="30" maxlength="200" value="%relation.z3.surname;"
-         %apply;onjq1(l1,z4)%/></dt><td><span id="%l1;_jq1"> </span></td>
+         %apply;onjq1(l1,z4) %l_on7;%/></dt><td><span id="%l1;_jq1"> </span></td>
 %end;
 
 %(<!-- End define  -->%)
@@ -171,7 +171,7 @@
   </legend>
   <div class="w1">
     %lpc1; <label %lpa1;>[first name/first names]0<input id="first_name" name="first_name" size="30" maxlength="200" value="%first_name;" %l_on3;%/></label>
-    <label>[surname/surnames]0<input id="surname" name="surname" size="30" maxlength="200" value="%surname;" %l_on2;%/></label>
+    <label>[surname/surnames]0<input id="surname" name="surname" size="30" maxlength="200" value="%surname;" %l_on2; %l_on7;%/></label>
   </div>
   <div class="w1">
     <label>[public name]<input name="public_name" size="30" value="%public_name;" id="public_name" %/></label>

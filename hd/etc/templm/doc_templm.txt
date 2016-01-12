@@ -1,7 +1,7 @@
 %doctype;
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <!-- $Id: doc_templm.txt,v 7.00 2015/03/30 13:03:18 mr Exp $ -->
+  <!-- $Id: doc_templm.txt,v 7.00 2016/01/13 00:43:25 mr Exp $ -->
   <title>doc_templm</title>
   <meta name="robots" content="none"%/>
   <meta http-equiv="content-type" content="text/html; charset=%charset;"%/>
@@ -49,6 +49,17 @@
       <li>datalist_place= : ne fait rien</li>
       <li>datalist_place=1 : charge toute la liste en une fois</li>
       <li>datalist_place=2 : charge une petite liste après la saisie de 3 caractères</li>
+    </ul>
+  </td>
+</tr>
+<tr>
+  <td>datalist_sn=%bvar.datalist_sn;</td>
+  <td>
+    Liste des patronymes sur le formulaire individu et famille :
+    <ul>
+      <li>datalist_sn= : ne fait rien</li>
+      <li>datalist_sn=1 : charge toute la liste en une fois</li>
+      <li>datalist_sn=2 : charge une petite liste après la saisie de 3 caractères</li>
     </ul>
   </td>
 </tr>

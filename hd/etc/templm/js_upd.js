@@ -1,4 +1,4 @@
-/* $Id: js_upd.js,v 7.00 2015/11/10 15:00:40 mr Exp $ */
+/* $Id: js_upd.js,v 7.00 2016/01/13 00:20:52 mr Exp $ */
   function oKP1(event)
   {
     var key = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
@@ -185,6 +185,9 @@
     var c1 = itemMaxCnt('r',c0);
     var v = document.getElementById("r1_fath_fn").value;
     var v1 = document.getElementById("r1_moth_fn").value;
+    var e1s = document.getElementById("dlsn");
+    var a1s = e1s.getAttribute("onkeyup","false");
+    var a2s = a1s == null ? "" : "onkeyup=\"" + a1s + "\"";
     if(v != "" || v1 != "")
     {
       var t0 = "r" + c0;
@@ -217,7 +220,7 @@
         <td><input type="hidden" id="' + t1m + '_p" name="' + t1m + '_p" value="create">\n\
             <input id="' + t1m + '_occ" name="' + t1m + '_occ" class="occ1" autocomplete="off" placeholder="' + l13 + '" size="3" maxlength="8" value="" onkeypress="javascript:return oKP2(event,\'r\',\'' + c1 + '\',\'_moth_occ\')" onblur="oB3(\'' + t1m + '\')"><\/td>\n\
         <td><input id="' + t1m + '_fn" name="' + t1m + '_fn" class="fn ar" size="30" maxlength="200" value="" onblur="tUC1(this)" onkeydown="if(event.keyCode == 13)tUC1(this)"><\/td>\n\
-        <td><input id="' + t1m + '_sn" name="' + t1m + '_sn" class="sn" size="30" maxlength="200" value="" onblur="tUC(this);jq1(\''+ t1m +'\',\'1\',\''+ z3 + '\')" onkeydown="if(event.keyCode == 13)tUC(this)"><\/td>\n\
+        <td><input id="' + t1m + '_sn" name="' + t1m + '_sn" class="sn" size="30" maxlength="200" value="" onblur="tUC(this);jq1(\''+ t1m +'\',\'1\',\''+ z3 + '\')" onkeydown="if(event.keyCode == 13)tUC(this)" list="dlsn" ' + a2s + '><\/td>\n\
         <td><span id="'+ t1m +'_jq1"> <\/span><\/td>\n\
       <\/tr>\n\
       <tr id="new_relation"><\/tr>';
@@ -445,9 +448,15 @@
     var c0 = z1;
     var c1 = itemMaxCnt('ch',c0);
     var v = document.getElementById("ch1_fn").value;
-    var e1 = document.getElementById("ch1b_pl");
-    var a1 = e1.getAttribute("onkeyup","false");
-    var a2 = a1 == null ? "" : "onkeyup=\"" + a1 + "\"";
+    var e1p = document.getElementById("dlplace");
+    var a1p = e1p.getAttribute("onkeyup","false");
+    var a2p = a1p == null ? "" : "onkeyup=\"" + a1p + "\"";
+    var e1o = document.getElementById("dloccu");
+    var a1o = e1o.getAttribute("onkeyup","false");
+    var a2o = a1o == null ? "" : "onkeyup=\"" + a1o + "\"";
+    var e1s = document.getElementById("dlsn");
+    var a1s = e1s.getAttribute("onkeyup","false");
+    var a2s = a1s == null ? "" : "onkeyup=\"" + a1s + "\"";
     if(v != "")
     {
       var e2 = document.getElementById("ch1_sn");
@@ -499,13 +508,13 @@
           <div id="' + t1 + '_jq1"> <\/div>\n\
         <\/td>\n\
         <td><input id="' + t1 + '_fn" name="' + t1 + '_fn" size="30" maxlength="200" value="" onkeypress="javascript:return cF2(event,\'ch\',' + c1 + ',\'_fn\');" onkeydown="if(event.keyCode == 13)tUC1(this)" onblur="tUC1(this);jq1a(\'' + t1 + '\',\''+ z3 +'\')"><br>\
-            <input type="' + v2 + '" id="' + t1 + '_sn" name="' + t1 + '_sn" class="ar" size="30" maxlength="200" value="' + v3 + '" placeholder="' + v1 + '" onkeypress="javascript:return cF2(event,\'ch\',' + c1 + ',\'_sn\');" onblur="tUC(this);jq1a(\'' + t1 + '\',\''+ z3 +'\')" onkeydown="if(event.keyCode == 13)tUC(this)"><\/td>\n\
+            <input type="' + v2 + '" id="' + t1 + '_sn" name="' + t1 + '_sn" class="ar" size="30" maxlength="200" value="' + v3 + '" placeholder="' + v1 + '" onkeypress="javascript:return cF2(event,\'ch\',' + c1 + ',\'_sn\');" onblur="tUC(this);jq1a(\'' + t1 + '\',\''+ z3 +'\')" onkeydown="if(event.keyCode == 13)tUC(this)" list="dlsn" ' + a2s + '><\/td>\n\
         <td class="jq2"><div id="' + t1 + '_jq2"> <\/div><div id="' + t1 + '_jq3"> <\/div>\n\
             <span id="dp' + t1 + '" class="vis">\n\
-              <span class="dmyt">' + d_b + '<input id="' + t1 + 'b_pl" name="' + t1 + 'b_pl" class="pl" size="44" maxlength="200" value="" onblur="fillPlaceFam(this)" list="dlplace" ' + a2 + '><\/span>\n\
-              <span class="dmyt">' + d_d + '<input id="' + t1 + 'd_pl" name="' + t1 + 'd_pl" class="pl" size="44" maxlength="200" value="" onblur="fillPlaceFam(this)" list="dlplace" ' + a2 + '><\/span>\n\
+              <span class="dmyt">' + d_b + '<input id="' + t1 + 'b_pl" name="' + t1 + 'b_pl" class="pl" size="44" maxlength="200" value="" onblur="fillPlaceFam(this)" list="dlplace" ' + a2p + '><\/span>\n\
+              <span class="dmyt">' + d_d + '<input id="' + t1 + 'd_pl" name="' + t1 + 'd_pl" class="pl" size="44" maxlength="200" value="" onblur="fillPlaceFam(this)" list="dlplace" ' + a2p + '><\/span>\n\
             <\/span><\/td>\n\
-        <td class="jq4"><div id="' + t1 + '_jq4"> <\/div><input id="' + t1 + '_occupation" name="' + t1 + '_occupation" class="occu vis" size="40" maxlength="200" value="" list="dloccu"><\/td>\n\
+        <td class="jq4"><div id="' + t1 + '_jq4"> <\/div><input id="' + t1 + '_occupation" name="' + t1 + '_occupation" class="occu vis" size="40" maxlength="200" value="" list="dloccu" ' + a2o + '><\/td>\n\
       <\/tr>\n\
       <tr id="new_child"><\/tr>';
       if(z2 == 0)
@@ -611,6 +620,9 @@
     var c1 = itemMaxCnt(t3,c0);
     var t0 = t3 + c0;
     var t1 = t3 + c1;
+    var e1s = document.getElementById("dlsn");
+    var a1s = e1s.getAttribute("onkeyup","false");
+    var a2s = a1s == null ? "" : "onkeyup=\"" + a1s + "\"";
     document.getElementById("new_" + t3).outerHTML = '\
     <dd id="' + t1 + '"\n\
     ><input type="hidden" id="' + t1 + '_kind" name="' + t1 + '_kind" value=""\n\
@@ -618,7 +630,7 @@
     ><input type="hidden" id="' + t1 + '_p" name="' + t1 + '_p" value="create"\n\
     ><input id="' + t1 + '_occ" name="' + t1 + '_occ" class="occ2" autocomplete="off" size="5" maxlength="8" value="" placeholder="N" onkeypress="javascript:return oKP2(event,\'witn\',' + c1 + ',\'_occ\',\'' + t3 + '\')" onblur="oB2(\'' + t1 + '\')"\n\
     ><input id="' + t1 + '_fn" name="' + t1 + '_fn" class="fn ar" size="30" maxlength="200" value="" onblur="tUC1(this)" onkeydown="if(event.keyCode == 13)tUC1(this)"\n\
-    ><input id="' + t1 + '_sn" name="' + t1 + '_sn" class="sn" size="30" maxlength="200" value="" onblur="tUC(this);jq1(\''+ t1 +'\',\'\',\''+ z4 +'\')" onkeydown="if(event.keyCode == 13)tUC(this)"><span id="'+ t1 +'_jq1"> <\/span><\/dd>\n\
+    ><input id="' + t1 + '_sn" name="' + t1 + '_sn" class="sn" size="30" maxlength="200" value="" onblur="tUC(this);jq1(\''+ t1 +'\',\'\',\''+ z4 +'\')" onkeydown="if(event.keyCode == 13)tUC(this)" list="dlsn" ' + a2s + '><span id="'+ t1 +'_jq1"> <\/span><\/dd>\n\
     <dd id="new_' + t3 + '"><\/dd>';
     if(z2 == 0)
     {
