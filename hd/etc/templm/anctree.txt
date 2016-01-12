@@ -232,8 +232,8 @@
 %if;not cancel_links;
   %import;tools;
   %apply;tools_anctree()
-  %include.trl;
-  %copyright;
+  %base_trailer;
+  %include.copyr;
 %end;
 </body>
 </html>

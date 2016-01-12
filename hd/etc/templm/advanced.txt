@@ -111,7 +111,7 @@
     %apply;event("burial")
   </fieldset>
 </form>
-%include.trl;
-%copyright;
+%base_trailer;
+%include.copyr;
 </body>
 </html>

@@ -195,8 +195,8 @@ evar.templ="templd" or evar.templ="templf" or evar.templ="templh")
   </tr></tr></table>
 %end;
 
-%include.trl;
-%copyright;
+%base_trailer;
+%include.copyr;
 </body>
 </html>
 %end;

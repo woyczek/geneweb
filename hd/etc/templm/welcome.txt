@@ -258,8 +258,8 @@ zh: 网络家谱
      </td></tr>
   </table>
 <br/>
-%include.trl;
-%copyright;
+%base_trailer;
+%include.copyr;
 </div>
 </body>
 </html>

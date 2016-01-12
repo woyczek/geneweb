@@ -26,7 +26,7 @@ it: La base di dati "%old;" ha cambiato nome "%new;".
 </ul>
 </p>
 
-%include.trl;
-%copyright;
+%base_trailer;
+%include.copyr;
 </body>
 </html>

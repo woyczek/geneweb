@@ -601,9 +601,8 @@ sv: Om din webbläsare inte automatiskt uppdaterar de modifierade sidorna
 <br/>
 </div> 
 
-%include.trl;
-
-%copyright;
+%base_trailer;
+%include.copyr;
 
 %define;language_link(xx,yy)%sq;
   <a href="%prefix_base;lang=yy;">xx</a>

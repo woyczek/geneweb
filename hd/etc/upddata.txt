@@ -88,8 +88,8 @@
   %apply;print_long()
 %end;
 
-%include.trl;
-%copyright;
+%base_trailer;
+%include.copyr;
 
 </body>
 </html>

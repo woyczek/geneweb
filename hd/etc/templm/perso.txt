@@ -1221,8 +1221,8 @@
 <div>
     %apply;menu()
     %apply;tools_perso()
-    %include.trl;
-    %copyright;
+    %base_trailer;
+    %include.copyr
     </div>
 %end;
 </div>%( the magic Safari div %)

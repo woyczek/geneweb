@@ -155,8 +155,8 @@
   %if;not cancel_links;
     %import;tools
     %apply;tools_anclist()
-    %include.trl;
-    %copyright;
+    %base_trailer;
+    %include.copyr;
   %end;
 %end;
 </body>

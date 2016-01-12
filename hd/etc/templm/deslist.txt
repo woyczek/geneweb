@@ -102,8 +102,8 @@
     %if;not cancel_links;
       %import;tools;
       %apply;tools_deslist()
-      %include.trl;
-      %copyright;
+      %base_trailer;
+      %include.copyr;
     %end;
   %end;
 </body>

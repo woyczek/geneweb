@@ -145,7 +145,7 @@
 
 %if;(evar.m = "HIST_SEARCH" and found)%apply;search_form("left")%end;
 
-%include.trl;
-%copyright;
+%base_trailer;
+%include.copyr;
 </body>
 </html>

@@ -1351,7 +1351,7 @@ function changeCalendar(e,v,m,c) {
   </p>
 </form>
 
-%include.trl;
-%copyright;
+%base_trailer;
+%include.copyr;
 </body>
 </html>

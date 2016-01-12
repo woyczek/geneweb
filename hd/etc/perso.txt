@@ -52,8 +52,8 @@
 
 %if;(evar.opt = "misc")%misc_names;<p>%end;
 
-%include.trl;
-%copyright;
+%base_trailer;
+%include.copyr;
 
 </div> %( the magic Safari div %)
 </body>

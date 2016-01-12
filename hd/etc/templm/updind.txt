@@ -289,8 +289,8 @@
   </table>
 </fieldset>
 </form>
-  %include.trl;
-  %copyright;
+  %base_trailer;
+  %include.copyr;
 </body>
 <script type="text/javascript" src="%bvar.static_path;templm/autosize.min.js"></script>
 <script>autosize(document.querySelectorAll('textarea'));</script>
