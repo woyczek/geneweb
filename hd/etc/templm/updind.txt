@@ -207,10 +207,10 @@
     %if;has_surnames_aliases;
       %foreach;surname_alias;
         %let;cnt1;%expr(cnt+1)%in;
-        <label>[surname alias]0 %cnt1;<input id="surname_alias%cnt;" name="surname_alias%cnt;" size="30" value="%surname_alias;"%/></label><a href="javascript:addItem('surname_alias',%cnt1;,'[surname alias]0')"> + </a>
+        <label>[surname alias]0 %cnt1;<input id="surname_alias%cnt;" name="surname_alias%cnt;" size="30" value="%surname_alias;" %l_on7;%/></label><a href="javascript:addItem('surname_alias',%cnt1;,'[surname alias]0')"> + </a>
       %end;
     %else;
-      <label>[surname alias]0 1<input id="surname_alias0" name="surname_alias0" size="30" value=""%/></label><a href="javascript:addItem('surname_alias',1,'[surname alias]0')"> + </a>
+      <label>[surname alias]0 1<input id="surname_alias0" name="surname_alias0" size="30" value="" %l_on7;%/></label><a href="javascript:addItem('surname_alias',1,'[surname alias]0')"> + </a>
     %end;
     <span id="new_surname_alias"></span>
   </div>
