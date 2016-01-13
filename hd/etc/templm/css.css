@@ -49,7 +49,8 @@ pre{font-size:1em;font-family:monospace,monospace;}
 /* Properties for the unvisited,visited and mouse over links. All pages. */
 a:link.date,a:visited.date{text-decoration:none;color:inherit;background-color:transparent;}
 a:link,a:visited{color:#00C;text-decoration:none;}
-a:hover.date,a:hover,.button a:hover,.menu a:hover,.menu1 a:hover,.menu2 a:hover,.menu3 a:hover,a:active,a:focus,a:focus.date,input:focus,select:focus,.button a:focus,input[type='submit']:hover,input[type='submit']:focus,textarea:focus{background-color:#FAFA9A;color:#000;text-decoration:none;}
+.menu a:hover,.menu1 a:hover,.menu2 a:hover,.menu3 a:hover{background-color:#EEE;}
+a:hover,a:focus.date,a:hover.date,a:hover,.button a:hover,a:active,a:focus,input:focus,select:focus,.button a:focus,input[type='submit']:hover,input[type='submit']:focus,textarea:focus{background-color:#FAFA9A;color:#000;text-decoration:none;}
 input[type="checkbox"]:focus,input[type="radio"]:focus{outline:2px solid #FF9}
 a:hover{z-index:100;}
 /* Properties of the main title. All pages. */
@@ -63,17 +64,17 @@ h1{text-align:center;margin-top:28px}
 .menu2 div:hover > .s_menu{display:block;position:absolute;right:0px;top:23px;z-index:10000;}
 /* Properties of the menu_3 (trailer). All pages. */
 .menu3{position:absolute;top:0px;right:0px;font-family:Arial;font-size:14px;}
-.menu3 a,.menu3 .s_menu{float:left;background-color:#CCC;border:solid 1px #DDD;margin:0 -1px -1px 0;padding:3px;color:#000;}
+.menu3 a,.menu3 .s_menu{float:left;border:solid 1px #DDD;margin:0 -1px -1px 0;padding:3px;color:#000;}
 .menu3 input{margin:0;}
 .login input[type="password"],.menu3 input[type="search"]{padding:4px;border: solid 1px #dcdcdc;transition: box-shadow 0.3s, border 0.3s;}
 .login input[type="password"]:focus,.login input[type="password"].focus,.menu3 input[type="search"]:focus,.menu3 input[type="search"].focus{border: solid 1px #707070;box-shadow: 0 0 5px 1px #969696;}
 .menu3 span{position:relative;display:inline;float:left;}
 .menu span a,.menu3 span a{height:16px;margin-right:0}
 .menu3 .s_menu{display:none;float:left;margin:0;padding:0;border:0;}
-.menu3 span:hover > .s_menu{display:block;position:absolute;right:0;top:23px;}
+.menu3 span:hover > .s_menu{display:block;position:absolute;right:0;top:23px;background-color:#FFF;}
 #tpl a{width:65px}
 #lang a{width:115px}
-#ak input {width:10px;background-color:#CCC;border:solid 1px #DDD;margin:0px;padding:3px;color:#000;}
+#ak input {width:10px;background-color:#EEE;border:solid 1px #DDD;margin:0px;padding:3px;color:#DDD;}
 #ak .s_menu{width:250px;padding:3px;}
 /* Hidden input submit button, IE workaround */
 #hide_ie {position:absolute;opacity:0;width:0;height:0;border:0;padding:0;}
@@ -130,18 +131,18 @@ hr.full{margin-left:0;margin-right:0;}
 .menu span{position:relative;display:block;float:left;}
 .menu span a{float:left;}
 .menu .s_menu{display:none;float:left;margin-left:0;margin-top:0;padding:0;border:0;width:200px;}
-.menu span:hover > .s_menu{display:block;position:absolute;left:0;top:23px;z-index:10;}
+.menu span:hover > .s_menu{display:block;position:absolute;left:0;top:23px;z-index:10;background-color:#FFF;}
 .menu .s_menu a{width:220px;}
 .menu1,.button{font-size:14px;line-height:24px;}
 .menu1{clear:both;padding:5px;margin:5px;border-top:solid 1px #999;}
-.menu a,.menu1 a,.button a,input[type='submit']{background-color:#CCC;border:solid 1px #DDD;margin:0 -1px -1px 0;padding:3px;color:#000;}
+.menu a,.menu1 a,.button a,input[type='submit']{border:solid 1px #DDD;margin:0 -1px -1px 0;padding:3px;color:#000;}
 input[type='submit']{line-height:14px;height:24px;}
 .menu1 > span{display:block;margin:10px;}
 .button{white-space:nowrap;}
 .nobr{white-space:nowrap;}
 .hide{display:none;}
 .small{font-size:.7em;}
-#perso .col1,#perso .col2{float:left;padding:5px;margin:5px;}
+#perso .col1,#perso .col2{float:left;padding:5px;margin:0 5px 5px 5px;}
 #perso .col1{margin-right:0px;}
 #perso .col2{margin-left:-1px;}
 #perso .col2 > div{float:left;padding:5px;margin:5px;}
@@ -150,6 +151,7 @@ input[type='submit']{line-height:14px;height:24px;}
 #perso .col2 p{display:inline;}
 #perso .data1,#perso .person div{text-align:center;}
 #perso .person,#perso .event,#perso .notes,#perso .sources,#perso .relations{clear:both;overflow:auto;}
+#perso .notes p{margin:0 3px 10px 3px;}
 #perso .person_img{max-width:240px;max-height:240px;}
 #perso .image img{max-width:17em;max-height:17em;}
 #perso .image,#perso .image_sheet{float:left;width:17em;}
