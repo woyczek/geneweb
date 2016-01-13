@@ -20,7 +20,7 @@
   %else;en%end;
 %in;
 
-%if;(not cancel_links and evar.m != "MOD_DATA_OK" and evar.m != "DEL_IND_OK" and evar.m != "DEL_FAM_OK" and evar.templ = "templm")
+%if;(not cancel_links and evar.m != "MOD_DATA_OK" and evar.m != "DEL_IND_OK" and evar.m != "DEL_FAM_OK" and evar.m != "NOTES" and evar.m != "MISC_NOTES" and evar.templ = "templm")
   <div class="menu3" id="menu_trl">
     %if;(evar.n != "" or evar.i != "" or evar.ip !="" or evar.m !="")
     <span>%if;(referer != "")
