@@ -921,14 +921,16 @@
   %if;not cancel_links;%apply;timeline_tree(l_ref)%end;
 %end;
 %define;descmax()
-  %foreach;descendant_level;
-    %if;(max_desc_level > 1 and evar.maxlev=max_desc_level)
-    %elseif;(level = max_desc_level)
-      %if;(number_of_descendants = "1")
-        [*a descendant]0 / %nn;
-      %else;
-        %if;(level!= "1")   [up to] %number_of_descendants;%nn;
-        %sp;à %level; [generation/generations]1%end;
+  %if;has_children;
+    %foreach;descendant_level;
+      %if;(max_desc_level > 1 and evar.maxlev=max_desc_level)
+      %elseif;(level = max_desc_level)
+        %if;(number_of_descendants =1)
+          [*a descendant]0 / %nn;
+        %else;
+          %if;(level!= 1 and level!=0)   [up to] %number_of_descendants;%nn;
+          %sp;à %level; [generation/generations]1%end;
+         %end;
       %end;
     %end;
   %end;
@@ -1174,6 +1176,7 @@
   <div>%apply;consang()</div>
     %if;has_families;
       <div style="clear:both">
+      %if;has_children;
         <div style="display:inline-block;">
           <span class="menu" style="position:relative;">
           %let;lv;%if;(evar.maxlev!="")%evar.maxlev;%elseif(bvar.maxlev!="")%bvar.maxlev;%else;1%end;%in;
@@ -1210,6 +1213,7 @@
       </span>
     </span>
     </div><div><span class="menu" style="clear:both;position:relative"><small>%apply;descmax()</small></span><br/></div></div><br/>
+    %elseif;(not has_children)<h2 class="ch2">[*relation/relations]1</h2>%end;
         %foreach;family;
           <div class="fam">
             %if;(wizard and not cancel_links and family_cnt != 1)
