@@ -1,4 +1,4 @@
-<!-- $Id: trl.txt,v 7.00 2015/02/12 22:06:44 mr Exp $ -->
+<!-- $Id: copyr.txt,v 7.00 2016/01/13 17:54:44 mr Exp $ -->
 %if;(evar.templ!="templm")
 %if;not cancel_links;
   %if;(evar.templ!="templm" and (evar.n != "" or evar.i != "" or evar.ip !="" or evar.m !=""))
