@@ -156,7 +156,11 @@
   <dd><textarea id="e_notez1" name="e_notez1" placeholder="[*comment]" rows="1" class="enote" %l_on1s;>%nn;
     %if;(evar.m = "MOD_FAM" and comment != "" and bvar.move_comment = "yes" and event.e_note = "" and (event.e_name = "#marr" or event.e_name= "#nmar" or event.e_name= "#nmen" or event.e_name ="#enga"))%comment;%end;
     %event.e_note;%sq;</textarea></dd>
-  <dd><textarea id="e_srcz1" name="e_srcz1" placeholder="[*source/sources]1" rows="1" class="esrc" %l_on6; %l_on1s;>%event.e_src;%sq;</textarea></dd>
+  <dd>%if;(event.e_src="")
+        <input id="e_srcz1" name="e_srcz1" placeholder="[*source/sources]1" rows="1" class="esrc" %l_on6; %l_on1;/>
+      %else;
+        <textarea id="e_srcz1" name="e_srcz1" placeholder="[*source/sources]1" rows="1" class="esrc" %l_on1s;>%event.e_src;%sq;</textarea>
+      %end;</dd>
   %if;has_z3;%foreach;z3;%apply;one_witness(z1,wcnt,"z3")%end;%end;
   <dd id="new_ez1_witn"></dd>
   <dd> <a id="awz1" href="javascript:addWitness(1,1,'ez1_witn','%prefix;')">+ [witness/witnesses]0</a> %lt1; [first name/first names]0 [surname/surnames]0</dd>

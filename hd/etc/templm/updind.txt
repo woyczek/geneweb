@@ -215,7 +215,11 @@
     <span id="new_surname_alias"></span>
   </div>
   <div class="w1">
-    <label>%lpcP; [occupation/occupations]0<textarea name="occu" rows="1" maxlength="300" id="occu" %lpaP; %l_on4; %l_on1s;>%occupation;</textarea></label>
+    %if;(occupation="")
+    <label>%lpcP; [occupation/occupations]0<input name="occu" rows="1" maxlength="300" id="occu" %lpaP; %l_on4; %l_on1;/></label>
+    %else;
+    <label>%lpcP; [occupation/occupations]0<textarea name="occu" rows="1" maxlength="300" id="occu" %lpaP; %l_on1s;>%occupation;</textarea></label>
+    %end;
   </div>
   <div class="w1">
     <label>[source/sources]0 [person/persons]0<textarea name="src" rows="1" maxlength="800" id="src" %l_on6; %l_on1s;>%sources;</textarea></label>
