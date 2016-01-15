@@ -772,7 +772,7 @@
   %end;
 %end;
 %define;on_edate(z1)
-  %if;((bvar.event_age != "yes" or evar.age !="on") and event.age != "" and event.name != [death])<span title="%event.age;">%sp;%z1.on_date;</span>
+  %if;((bvar.event_age != "yes" and evar.age !="on") and event.age != "" and event.name != [death])<span title="%event.age;">%sp;%z1.on_date;</span>
   %else;%sp;%z1.on_date;
   %end;
   %if;((bvar.event_age = "yes" or evar.age = "on") and event.age != "" and event.name != [death]) · %event.age;%nn;
