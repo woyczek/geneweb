@@ -72,13 +72,13 @@
 %define;envkb()
       %hidden;
       %foreach;env_binding;
-        %if;(env.key = "cgl" or env.key = "dsrc" or env.key = "image" or env.key = "maxlev" or env.key = "spouse" or env.key = "wide" or env.key="templ" or env.key="iz" or env.key="nz" or env.key="ocz" or env.key="pz")
+        %if;(env.key = "cgl" or env.key = "dsrc" or env.key = "image" or env.key = "maxlev" or env.key = "spouse" or env.key = "wide" or env.key="templ" or env.key="iz" or env.key="nz" or env.key="ocz" or env.key="pz" or env.key="age")
         %else;
          <input type="hidden" name="%env.key;" value="%env.val.decoded;"/>
         %end;
       %end;
 %end;
-      
+
 %define;perso_gen()
   %if(not cancel_links)
     %let;maxvd;%if;(has_children and max_desc_level > 1)%max_desc_level;%else;3%end;%in;
@@ -87,6 +87,8 @@
     %apply;envkb()
     <label><input type="number" style="font-weight:bold;text-align:right;font-size:16px;width:2.5em" type="number" min="1" max="%maxvd;" id="maxlev"
     title="[*maximum][:] %maxvd; [generation/generations]1 %lcX;" name="maxlev" value="%l_maxlev;" %l_on; %laX;%/>
+    <input id="hide_ie" hidefocus="true" tabindex="-1" type="submit"/>
+    </label></form>
   %end;
 %end;
 
@@ -113,6 +115,8 @@
         %end;
         <label> <input type="checkbox" name="spouse" value="off" %l_on;
                %if;(evar.spouse = "off") checked="checked"%end;%/>[spouses not included]</label>
+        %let;ag;[visualize/show/hide/summary]1 [age]/[event/events]1%in;
+        %apply;checkbox("","age",ag,ag)
     </fieldset>
   </form>
 %end;

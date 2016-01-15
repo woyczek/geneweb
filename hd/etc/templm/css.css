@@ -75,7 +75,7 @@ h1{text-align:center;margin-top:28px}
 #tpl a{width:65px}
 #lang a{width:115px}
 #ak input {width:10px;background-color:#EEE;border:solid 1px #DDD;margin:0px;padding:3px;color:#DDD;}
-#ak .s_menu{width:250px;padding:3px;}
+#ak .s_menu{width:240px;padding:3px;}
 /* Hidden input submit button, IE workaround */
 #hide_ie {position:absolute;opacity:0;width:0;height:0;border:0;padding:0;}
 /* Properties of the footer block. All pages. */
@@ -129,13 +129,13 @@ hr.full{margin-left:0;margin-right:0;}
 #perso .consang{width:90%;}
 .menu{margin:0;padding:0;border:0;position:absolute;top:0;left:0;font-size:14px;}
 .menu span{position:relative;display:block;float:left;}
-.menu span a{float:left;}
-.menu .s_menu{display:none;float:left;margin-left:0;margin-top:0;padding:0;border:0;width:200px;}
+.menu span a{float:left;border:none}
+.menu .s_menu{display:none;float:left;margin-left:0;margin-top:0;padding:0;border:0;}
 .menu span:hover > .s_menu{display:block;position:absolute;left:0;top:23px;z-index:10;background-color:#FFF;}
-.menu .s_menu a{width:220px;}
+.menu .s_menu a{width:212px;}
 .menu1,.button{font-size:14px;line-height:24px;}
 .menu1{clear:both;padding:5px;margin:5px;border-top:solid 1px #999;}
-.menu a,.menu1 a,.button a,input[type='submit']{border:solid 1px #DDD;margin:0 -1px -1px 0;padding:3px;color:#000;}
+.menu a,.menu1 a,.button a,input[type='submit']{border:solid 1px #DDD;margin:0 -1px -1px 0;padding:5px;color:#000;}
 input[type='submit']{line-height:14px;height:24px;}
 .menu1 > span{display:block;margin:10px;}
 .button{white-space:nowrap;}
