@@ -116,7 +116,7 @@
           %if;(version = l_version)
             <a href="%l1;gwstp?v=main.htm;" title="Gwstp">Gwstp</a>
           %else;
-            <a href="%l1;gwsetup?v=main.htm;" title="Gwsetup">%if;(evar.oc!="" evar.oc!="0")%evar.oc;%else;📂%end;</a>
+            <a href="%l1;gwsetup?v=main.htm;" title="Gwsetup">%if;(evar.oc!="" and evar.oc!="0")%evar.oc;%else;📂%end;</a>
           %end;
           %if;(has_parents or has_children)
             <span class="s_menu">
@@ -1191,7 +1191,7 @@
                 %apply;envkb()
                 %for;i;1;l2;
                    <span style="width:22px;"><input type="submit" id="maxlev" style="%if;((evar.maxlev="" and i=2) or i=evar.maxlev)background-color:#EEE;%end;" name="maxlev"
-                   value="%if;(i<10)%sp;%end;%i;" title="%i; %if;(i=1)[generation/generations]0%else;[generation/generations]1%end;%nl; %if;(ll="1") [a descendant]0%else; %apply;desc(i) [descendants]%end;"/></span>
+                   value="%if;(i<10)%sp;%end;%i;" title="%i; %if;(i=1)[generation/generations]0%else;[generation/generations]1%end;%nl;%if;(i=1 and nb_children=1)[a descendant]0%else;%apply;desc(i) [descendants]%end;"/></span>
                  %end;
                  </form>
             </span>
