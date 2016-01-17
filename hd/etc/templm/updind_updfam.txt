@@ -1,4 +1,4 @@
-<!-- $Id: updind_updfam.txt,v 7.00 2016/01/13 00:17:54 mr Exp $ -->
+<!-- $Id: updind_updfam.txt,v 7.00 2016/01/17 23:10:33 mr Exp $ -->
 
 %import;js_perso_accesskey
 
@@ -61,7 +61,7 @@
            1787.1789, 1787.07/1789, 1787.14/07/1789 [between (date)]
            [text]
 %in;
-%let;l_on1; onkeydown="if (event.keyCode == 13) javascript:document.upd.submit()";%in;
+%let;l_on1; onkeydown="if (event.keyCode == 13) javascript:document.upd.submit()"%in;
 %let;l_on1s; onkeydown="if (event.keyCode == 13) if (!event.shiftKey) javascript:document.upd.submit()"%in;
 %let;l_on2; onblur="tUC(this)" onkeydown="if(event.keyCode == 13)tUC(this)"%in;
 %let;l_on3; onblur="tUC1(this)" onkeydown="if(event.keyCode == 13)tUC1(this)"%in;
@@ -166,20 +166,16 @@
   <dd> <a id="awz1" href="javascript:addWitness(1,1,'ez1_witn','%prefix;')">+ [witness/witnesses]0</a> %lt1; [first name/first names]0 [surname/surnames]0</dd>
 %end;
 %define;one_witness(z1,z2,z3)
-  %let;l1;%z3.create.sex;%in;
-  %let;l2;%if;(l1 = "male")M%elseif;(l1 = "female")F%else;N%end;%in;
-  %let;l3;%if;(z3.create = "create" or z3.create)create%else;link%end;%in;
-  %let;l4;%if;(l3 = "create")%if;(l1 = "male")0%elseif;(l1 = "female")1%else;2%end;%end;%in;
-  %let;l5;ez1_witnz2%in;
-  <dd id="%l5;"
-      ><input type="hidden" id="%l5;_kind" name="%l5;_kind" value="%if;(witness_kind != "")%witness_kind;%end;"
-      %/><input type="hidden" id="%l5;_sex" name="%l5;_sex" value="%l2;"
-      %/><input type="hidden" id="%l5;_p" name="%l5;_p" value="%l3;"
-      %/><input id="%l5;_occ" name="%l5;_occ" class="occ%l4;" placeholder="%l2;" autocomplete="off" size="5" maxlength="8"
-       onkeypress="javascript:return oKP2(event,'witn','z2','_occ','ez1_witn')" onblur="oB2('%l5;')"
-       %if;(z3.create="create" or z3.create) value="" %elseif;(z3.occ="") value="0" %else; value="%z3.occ;" %end;
-      %/><input id="%l5;_fn" name="%l5;_fn" class="fn ar" size="30" maxlength="200" value="%z3.first_name;" %l_on3;
-      %/><input id="%l5;_sn" name="%l5;_sn" class="sn" size="30" maxlength="200" value="%z3.surname;" %apply;onjq1(l5,"") %l_on7;
-      %/><span id="%l5;_jq1"> </span>
+  %let;l1;ez1_witnz2%in;
+  <dd id="%l1;"
+      ><input type="hidden" id="%l1;_kind" name="%l1;_kind" value="%if;(z3_kind != "")%z3_kind;%end;"
+      %/><input type="hidden" id="%l1;_sex" name="%l1;_sex" value=""
+      %/><input type="hidden" id="%l1;_p" name="%l1;_p" value="link"
+      %/><input id="%l1;_occ" name="%l1;_occ" class="occ" placeholder="N" autocomplete="off" size="5" maxlength="8"
+       onkeypress="javascript:return oKP2(event,'witn','z2','_occ','ez1_witn')" onblur="oB2('%l1;')"
+       %if;(z3.occ="") value="0" %else; value="%z3.occ;" %end;
+      %/><input id="%l1;_fn" name="%l1;_fn" class="fn ar" size="30" maxlength="200" value="%z3.first_name;" %l_on3;
+      %/><input id="%l1;_sn" name="%l1;_sn" class="sn" size="30" maxlength="200" value="%z3.surname;" %apply;onjq1(l1,"") %l_on7;
+      %/><span id="%l1;_jq1"> </span>
   </dd>
 %end;
