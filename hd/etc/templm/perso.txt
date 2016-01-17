@@ -779,7 +779,9 @@
   %elseif;(event.name = [birth] and computable_age)
     %if;(today.year >= birth_date.year and l_nbd != "") · %apply;compute_age("today","birth_date")%else; · %age;%end;
     %if;birthday; ([happy birthday to you!])%end;
-    %if;(today = birth_date.date)[today]%end;
+    %if;(version = l_version)
+      %if;(today = birth_date.date)[today]%end;
+    %end;
   %elseif;(event.age != "" and event.name = [death])
     %if;(death_date.year >= birth_date.year and l_nbd != "") · %apply;compute_age("death_date","birth_date")%else; · %event.age;%end;
   %end;
