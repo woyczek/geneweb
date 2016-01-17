@@ -1190,7 +1190,7 @@
               <form style="display:inline" name="tools" method="get" action="%action;">
                 %apply;envkb()
                 %for;i;1;l2;
-                   <span style="width:22px;"><input type="submit" id="maxlev" style="%if;((evar.maxlev="" and i=2) or i=evar.maxlev)background-color:#EEE;%end;" name="maxlev"
+                   <span style="width:22px;"><input type="submit" id="maxlev" style="%if;((evar.maxlev="" and i=2) or i=evar.maxlev)background-color:%if;(bvar.css=1)#666;%else;#EEE;%end;%end;" name="maxlev"
                    value="%if;(i<10)%sp;%end;%i;" title="%i; %if;(i=1)[generation/generations]0%else;[generation/generations]1%end;%nl;%if;(i=1 and nb_children=1)[a descendant]0%else;%apply;desc(i) [descendants]%end;"/></span>
                  %end;
                  </form>
