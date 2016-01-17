@@ -202,9 +202,9 @@
 %end;
 %define;a_title1(z1,z2)
   %nl;   [father/mother]0%sp;
-  %if;(z1.father.death_date.year != "" and z2 >= z1.father.death_date.year)
+  %if;(z1.father.death_date.year != "" and z1.father.death_date.prec != ".." and z1.father.death_date.prec != "|" and z2 >= z1.father.death_date.year)
     %death_symbol;%nn; -%expr(z2 - z1.father.death_date.year)
-  %elseif;(z1.father.birth_date.year != "" and z2 > z1.father.birth_date.year)
+  %elseif;(z1.father.birth_date.year != "" and z1.father.birth_date.prec != ".." and z1.father.birth_date.prec != "|"  and z2 > z1.father.birth_date.year)
     %expr(z2 - z1.father.birth_date.year)%nn;
   %else;
     ?%nn;
