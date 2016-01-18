@@ -815,6 +815,7 @@
 %end;
 %define;birth_event()
 %let;parents_age;
+  %if;has_parents;
       %apply;a_of_b%with;
         %if(is_male)[*son/daughter/child]0%elseif;(is_female)[*son/daughter/child]1%else;[*son/daughter/child]2%end;
       %and;
@@ -827,6 +828,7 @@
         %if;(mother_age_at_birth != ""), %if;(bvar.event_age="yes" or evar.age="on")<span class="nobr">%mother_age_at_birth;</span>%else;%mother_age_at_birth;%end;
         %end;
       %end;
+  %end;
 %in;
   <dt>
     %if;(bvar.event_age!="yes" and evar.age!="on")<span title="%parents_age;">%apply;capitalize(event.name)</span>%else;%apply;capitalize(event.name)%end;
