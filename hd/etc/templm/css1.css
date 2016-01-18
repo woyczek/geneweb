@@ -158,6 +158,7 @@ input[type='submit']{line-height:14px;height:24px;}
 #perso .image img{border:0;margin:0;padding:0;}
 #perso .image_sheet{border:0;margin:4px;padding:5px;background-color:#666;text-align:center;}
 #perso .del{cursor:crosshair;color:#900;border-bottom:dotted 2px #F00;}
+#evnote p{margin:0 0 5px}
 /* updind.txt,updfam.txt */
 #upd legend{font-size:16px;font-weight:bold;text-align:left}
 #upd form,#upd input,#upd select,#upd textarea{font-size:14px;}

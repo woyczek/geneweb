@@ -202,17 +202,17 @@
 %end;
 %define;a_title1(z1,z2)
   %nl;   [father/mother]0%sp;
-  %if;(z1.father.death_date.year != "" and z1.father.death_date.prec != ".." and z1.father.death_date.prec != "|" and z2 >= z1.father.death_date.year)
+  %if;(z1.father.death_date.year != "" and z1.father.death_date.prec = "" and z2 >= z1.father.death_date.year)
     %death_symbol;%nn; -%expr(z2 - z1.father.death_date.year)
-  %elseif;(z1.father.birth_date.year != "" and z1.father.birth_date.prec != ".." and z1.father.birth_date.prec != "|"  and z2 > z1.father.birth_date.year)
+  %elseif;(z1.father.birth_date.year != "" and z1.father.birth_date.prec = "" and z2 > z1.father.birth_date.year)
     %expr(z2 - z1.father.birth_date.year)%nn;
   %else;
     ?%nn;
   %end;
   %nl;   [father/mother]1%sp;
-  %if;(z1.mother.death_date.year != "" and z1.mother.death_date.prec != ".." and z1.mother.death_date.prec != "|" and z2 >= z1.mother.death_date.year)
+  %if;(z1.mother.death_date.year != "" and z1.mother.death_date.prec = "" and z2 >= z1.mother.death_date.year)
     %death_symbol;%nn; -%expr(z2 - z1.mother.death_date.year)
-  %elseif;(z1.mother.birth_date.year != "" and z1.mother.birth_date.prec != ".." and z1.mother.birth_date.prec != "|" and z2 > z1.mother.birth_date.year)
+  %elseif;(z1.mother.birth_date.year != "" and z1.mother.birth_date.prec = "" and z2 > z1.mother.birth_date.year)
     %expr(z2 - z1.mother.birth_date.year)%nn;
   %else;
     ?%nn;
@@ -224,9 +224,9 @@
     %if;(z1.has_families)
       %foreach;z1.family;
            [spouse/spouses]0%sp;
-        %if;(spouse.death_date.year != "" and spouse.death_date.prec != ".." and spouse.death_date.prec !="|" and z2 >= spouse.death_date.year)
+        %if;(spouse.death_date.year != "" and spouse.death_date.prec = "" and z2 >= spouse.death_date.year)
           %death_symbol;%nn; -%expr(z2 - spouse.death_date.year)
-        %elseif;(spouse.birth_date.year != "" and spouse.birth_date.prec != ".." and spouse.birth_date.prec !="|" and z2 > spouse.birth_date.year)
+        %elseif;(spouse.birth_date.year != "" and spouse.birth_date.prec = "" and z2 > spouse.birth_date.year)
           %expr(z2 - spouse.birth_date.year)%nn;
         %else;
           ?%nn;
@@ -772,18 +772,24 @@
   %end;
 %end;
 %define;on_edate(z1)
-  %if;((bvar.event_age != "yes" and evar.age !="on") and event.age != "" and event.name != [death])<span title="%event.age;">%sp;%z1.on_date;</span>
+  %if;((bvar.event_age != "yes" and evar.age !="on") and event.age != "")<span title="%event.age;">%sp;%z1.on_date;</span>
   %else;%sp;%z1.on_date;
   %end;
-  %if;((bvar.event_age = "yes" or evar.age = "on") and event.age != "" and event.name != [death]) · %event.age;%nn;
+  %if;((bvar.event_age = "yes" or evar.age = "on") and event.age != "") · %event.age;%nn;
   %elseif;(event.name = [birth] and computable_age)
-    %if;(today.year >= birth_date.year and l_nbd != "") · %apply;compute_age("today","birth_date")%else; · %age;%end;
-    %if;birthday; ([happy birthday to you!])%end;
-    %if;(version = l_version)
-      %if;(today = birth_date.date)[today]%end;
-    %end;
   %elseif;(event.age != "" and event.name = [death])
-    %if;(death_date.year >= birth_date.year and l_nbd != "") · %apply;compute_age("death_date","birth_date")%else; · %event.age;%end;
+  %end;
+%end;
+%define;curr_age()
+  %foreach;event;
+    %if;(event.name=[death])
+     %if;(death_date.prec="" and birth_date.prec="" and death_date.year >= birth_date.year)%apply;compute_age("death_date","birth_date")%else;%event.age;%end;
+   %end;
+  %end;
+  %if;(computable_age)
+    %if;(today.year >= birth_date.year and l_nbd != "")%apply;compute_age("today","birth_date")%else;%age;%end;
+    %if;birthday; ([happy birthday to you!])%end;
+    %if;(version = l_version and today = birth_date.date)[today]%end;
   %end;
 %end;
 %define;timeline_tree(z1)
@@ -835,7 +841,7 @@
     %if;event.has_date;%apply;on_edate("event")%end;
     %if;event.has_place; · %apply;advanced("birth_place",event.place)%end;
   %if;((bvar.event_age = "yes" or evar.age="on") and has_parents)
-    · %parents_age;.
+    <br%/> └ %parents_age;.
   %end;
   </dt>
 %end;
@@ -890,10 +896,10 @@
   %else;%apply;other_event()
   %end;
   %if;event.has_witnesses;
-       [witness/witnesses]1[:]
+     └ [*witness/witnesses]1[:]
     %foreach;event_witness;
       %if;(not is_first), %nl;%end;
-      %apply;somebody("event_witness")
+      %apply;somebody("event_witness").
       %( <!-- Begin personalization mickroue --> %)
         %if;(event_witness.has_qualifiers and event_witness.title=", <em>Cousin</em>")
             <a %l_on1;
@@ -905,7 +911,7 @@
     %end;
   %end;
   %if;event.has_note;
-    <dd>%event.note;</dd>
+    <dd id="evnote">%event.note;</dd>
   %end;
 %end;
 %define;witness_at_event(xx)
@@ -1060,8 +1066,8 @@
           %apply;link_s("n",surname_alias)%nn;
         %end;
       %end;
-    </p>
-    <p>
+      <br%/>
+      %apply;curr_age()
     </p>
   </div>
   %apply;timeline()
