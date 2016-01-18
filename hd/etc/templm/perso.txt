@@ -210,9 +210,9 @@
     ?%nn;
   %end;
   %nl;   [father/mother]1%sp;
-  %if;(z1.mother.death_date.year != "" and z2 >= z1.mother.death_date.year)
+  %if;(z1.mother.death_date.year != "" and z1.mother.death_date.prec != ".." and z1.mother.death_date.prec != "|" and z2 >= z1.mother.death_date.year)
     %death_symbol;%nn; -%expr(z2 - z1.mother.death_date.year)
-  %elseif;(z1.mother.birth_date.year != "" and z2 > z1.mother.birth_date.year)
+  %elseif;(z1.mother.birth_date.year != "" and z1.mother.birth_date.prec != ".." and z1.mother.birth_date.prec != "|" and z2 > z1.mother.birth_date.year)
     %expr(z2 - z1.mother.birth_date.year)%nn;
   %else;
     ?%nn;
@@ -224,9 +224,9 @@
     %if;(z1.has_families)
       %foreach;z1.family;
            [spouse/spouses]0%sp;
-        %if;(spouse.death_date.year != "" and z2 >= spouse.death_date.year)
+        %if;(spouse.death_date.year != "" and spouse.death_date.prec != ".." and spouse.death_date.prec !="|" and z2 >= spouse.death_date.year)
           %death_symbol;%nn; -%expr(z2 - spouse.death_date.year)
-        %elseif;(spouse.birth_date.year != "" and z2 > spouse.birth_date.year)
+        %elseif;(spouse.birth_date.year != "" and spouse.birth_date.prec != ".." and spouse.birth_date.prec !="|" and z2 > spouse.birth_date.year)
           %expr(z2 - spouse.birth_date.year)%nn;
         %else;
           ?%nn;
