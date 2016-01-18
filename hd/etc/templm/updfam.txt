@@ -1,7 +1,7 @@
 %doctype;
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <!-- $Id: updfam.txt,v 7.00 2016/01/12 23:39:27 mr Exp $ -->
+  <!-- $Id: updfam.txt,v 7.00 2016/01/18 21:20:15 mr Exp $ -->
   <title>%nn;
     %if;(evar_m = "ADD_FAM" or evar_m = "ADD_FAM_OK")
       [*add::family/families]0%nn;
@@ -34,7 +34,7 @@
       %elseif;(marriage.prec != "sure")
         sIV('lfc3')%nn;
       %else;
-        addChild(1,1)%nn;
+        addChild(1,1,'%prefix;')%nn;
       %end;
     %end;
     "%nn;
