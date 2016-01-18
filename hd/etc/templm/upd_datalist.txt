@@ -1,17 +1,18 @@
-<!-- $Id: upd_datalist.txt,v 7.00 2016/01/12 23:25:14 mr Exp $ -->
+<!-- $Id: upd_datalist.txt,v 7.00 2016/01/18 01:09:32 mr Exp $ -->
 
 %define;dlist(z1)
-  %if;(bvar.datalist_z1 > 0)
-    <datalist id="dlz1"
-     onkeyup="%nn;
+  <datalist id="dlz1" %nn;
+    %if;(bvar.datalist_z1 = 2)
+      onkeyup="%nn;
       %if;("z1"="sn" and bvar.uppercase="yes")tUC(this);%end;
-      ldl(this,'z1',event,'%prefix;')">
-      <option id="oz1">0
+      ldl(this,'z1',event,'%prefix;')"
+    %end;
+  >
+  <option id="oz1">0
     %if;(bvar.datalist_z1 = 1)
       <script type=text/javascript>$("#dlz1").delay(2000).load("%prefix;m=MOD_DATA;data=z1;datalist=on");</script>
     %end;
-    </datalist>
-  %end;
+  </datalist>
 %end;
 
 %apply;dlist("occu")
