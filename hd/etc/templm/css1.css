@@ -72,7 +72,7 @@ h1{text-align:center;margin-top:28px}
 .menu3 .s_menu{display:none;float:left;margin:0;padding:0;border:0;}
 .menu3 span:hover > .s_menu{display:block;position:absolute;right:0;top:23px;background-color:#666;color:#EE9;}
 #tpl a{width:65px}
-#lang a{width:115px}
+#lang a{width:170px}
 #ak input {width:10px;background-color:#EEE;border:solid 1px #DDD;margin:0px;padding:3px;color:#DDD;}
 #ak .s_menu{width:240px;padding:3px;}
 /* Hidden input submit button, IE workaround */
