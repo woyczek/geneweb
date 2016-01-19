@@ -50,7 +50,7 @@
               %end;">[*ascendants tree]</a>
         </span>
         <span>
-          <a href="%l_url1;i=%index;">[*descendant tree view]0 (bug %index;?)</a>
+          <a href="%if;(bvar.access_by_key="no")%l_url1;i=%evar.i;%else;#%end;" title="%if(bvar.access_by_key!="no")Link not working atm if access_by_key=yes, sorry!%end;">[*descendant tree view]0</a>
         </span>
       %end;
     %end;
