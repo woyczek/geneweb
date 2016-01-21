@@ -132,7 +132,7 @@ hr.full{margin-left:0;margin-right:0;}
 .menu span a{float:left;border:none}
 .menu .s_menu{display:none;float:left;margin-left:0;margin-top:0;padding:0;border:0;}
 .menu span:hover > .s_menu{display:block;position:absolute;left:0;top:23px;z-index:10;background-color:#FFF;}
-.menu .s_menu a{width:212px;}
+.menu .s_menu a{width:220px;}
 .menu1,.button{font-size:14px;line-height:24px;}
 .menu1{clear:both;padding:5px;margin:5px;border-top:solid 1px #999;}
 .menu a,.menu1 a,.button a,input[type='submit']{border:solid 1px #DDD;margin:0 -1px -1px 0;padding:5px;color:#000;}

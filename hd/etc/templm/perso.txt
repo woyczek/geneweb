@@ -51,7 +51,7 @@
 %let;l_maxlev0;%if;(evar.maxlev != "" and evar.maxlev > 0)%evar.maxlev;%elseif;(bvar.maxlev != "")%bvar.maxlev;%else;1%end;%in;
 %let;l_maxlev;%if;(has_children and max_desc_level > 1 and l_maxlev0 > max_desc_level)%max_desc_level;%else;%l_maxlev0;%end;%in;
 %let;l_ref;%if;browsing_with_sosa_ref;%sosa_ref.index;%else;%index;%end;%in;
-%let;l_url;;wide=%evar.wide;;maxlev=%l_maxlev;;image=%evar.image;;spouse=%evar.spouse;;%in;
+%let;l_url;;wide=%evar.wide;;maxlev=%l_maxlev;;image=%evar.image;;spouse=%evar.spouse;;age=%evar.age;;%in;
 %let;l_on1; target="_blank"%in;
 %let;l_ldates;
   %if;wizard;
@@ -189,14 +189,11 @@
         %end;
       </span>
     </span>
-      <form style="display:inline" name="tools" method="get" action="%action;">
-      %apply;envkb()
-      <label><button type="submit" name="spouse" title="[visualize/show/hide/summary]1 [spouse/spouses]1" value="%if;(evar.spouse="off")on%else;off%end;" onclick="this.focus()" onkeydown="if (event.keyCode == 13) javascript:document.tools.submit();">%if;(evar.spouse!="" or evar.spouse="off")👫%else;👤%end;</button></label>
-      <label><button type="submit" name="age" title="[visualize/show/hide/summary]1 [age]/[event/events]1" value="%if;(evar.age="" or evar.age="off")on%else;off%end;" %l_on;>🎂</button></label>
+        <a href="%prefix;%access;;wide=%evar.wide;;maxlev=%evar.maxlev;;image=%evar.image;;age=%evar.age;;spouse=%if;(evar.spouse!="off")off%else;%end;" title="[visualize/show/hide/summary]1 [spouse/spouses]1">%if;(evar.spouse!="off")👤%else;👫%end;</a>
+        <a href="%prefix;%access;;wide=%evar.wide;;maxlev=%evar.maxlev;;image=%evar.image;;spouse=%evar.spouse;;age=%if;(evar.age!="on")on%else;%end;" title="[visualize/show/hide/summary]1 [age]/[event/events]1">%if;(evar.age!="on")🎂%else;<s>A</s>%end;</a>
       %if;(bvar.no_image_for_visitor != "yes" or friend or wizard)
-        <label><button type="submit" name="image" title="[visualize/show/hide/summary]1 [picture/pictures]1" value="%if;(evar.image="off")on%else;off%end;" %l_on;>%if;(evar.image="" or evar.image="off")IM%else;<s>IM</s>%end;</button></label>
+        <a href="%prefix;%access;;wide=%evar.wide;;maxlev=%evar.maxlev;;spouse=%evar.spouse;;age=%evar.age;;image=%if;(evar.image="off" or evar.image="")on%else;%end;" title="[visualize/show/hide/summary]1 [picture/pictures]1">%if;(evar.image="" or evar.image="off")IM%else;<s>IM</s>%end;</a>
       %end;
-      </form>
     </span>
   </div>
 %end;
@@ -1202,16 +1199,12 @@
           %if;(not cancel_links)
             <span class="s_menu" style="font-size:1em">
             %if;(max_desc_level>1)
-            <span>
               %let;l2;%expr(max_desc_level+1)%in;
-              <form style="display:inline" name="tools" method="get" action="%action;">
-                %apply;envkb()
-                %for;i;1;l2;
-                   <span style="width:22px;"><input type="submit" id="maxlev" style="%if;((evar.maxlev="" and i=2) or i=evar.maxlev)background-color:%if;(bvar.css=1)#666;%else;#EEE;%end;%end;" name="maxlev"
-                   value="%if;(i<10)%sp;%end;%i;" title="%i; %if;(i=1)[generation/generations]0%else;[generation/generations]1%end;%nl;%if;(i=1 and nb_children=1)[a descendant]0%else;%apply;desc(i) [descendants]%end;"/></span>
-                 %end;
-                 </form>
-            </span>
+              %for;i;1;l2;
+                %if;(i<10)%sp;%end;<a href="%prefix;%access;;wide=%evar.wide;;image=%evar.image;;age=%evar.age;;spouse=%evar.spouse;;maxlev=%i;"
+                style="%if;((evar.maxlev="" and i=2) or i=evar.maxlev)background-color:%if;(bvar.css=1)#666;%else;#EEE;%end;%end;width:13px"
+                title="%i; %if;(i=1)[generation/generations]0%else;[generation/generations]1%end;%nl;%if;(i=1 and nb_children=1)[a descendant]0%else;%apply;desc(i) [descendants]%end;">%i;</a>
+              %end;
             %end;
             <a href="%prefix;m=D;t=T;v=4;image=on;%access"%if;(not has_parents) %laY;%end;>[*descendants tree]</a>%nn;
             %let;l1;%apply;min(max_desc_level,5)%in;
