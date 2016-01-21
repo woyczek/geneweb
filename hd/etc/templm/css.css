@@ -120,7 +120,7 @@ hr.full{margin-left:0;margin-right:0;}
 /* perso.txt */
 #perso,#dag,#anctree{margin:0;padding:2em 2px 2em 2px}
 #perso{padding-top:0}
-#perso h1{margin:5px;padding:5px;}
+#perso h1{margin:24px 10px 10px 0;padding:5px;}
 #perso .ch1{font-size:1.5em;}
 #perso .ch2{font-size:1.2em;}
 #perso .relations ul,#perso .sources ul{margin-left:-15px;margin-top:0;margin-bottom:0;}
@@ -143,7 +143,7 @@ input[type='submit']{line-height:14px;height:24px;}
 .hide{display:none;}
 .small{font-size:.7em;}
 #perso .col1,#perso .col2{float:left;padding:5px;margin:0 5px 5px 5px;}
-#perso .col1{margin-right:0px;}
+#perso .col1{margin-right:0px;margin-top:-18px;}
 #perso .col2{margin-left:-1px;}
 #perso .col2 > div{float:left;padding:5px;margin:5px;}
 #perso .col2 .fam{margin-bottom:10px;clear:both;}

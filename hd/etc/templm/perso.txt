@@ -145,9 +145,13 @@
           %end;
         </span>
       %end;
-      <span><a id="upd" href="%prefix;m=U;%access;" %laU;>[*update]</a>
+      <span><a id="upd" href="%prefix;m=U;%access;" %laU;>⚙ [*update]</a>
         <span class="s_menu">
           <a id="mod_ind" href="%prefix;m=MOD_IND;i=%index;" %laP; %l_on1;>[*modify::person/persons]0</a>%nn;
+          %if;(bvar.history_diff="yes" and has_history)
+            <a href="%prefix;m=HIST_DIFF;t=SUM;f=%history_file;">[*history]</a>
+            <a id="hist" href="%prefix;m=HIST_DIFF;t=DIFF;f=%history_file;&new=0;old=1" %laD;>[*diff]</a>
+          %end;
           %foreach;family;
             %if;(family_cnt < 4)
               %let;a_k;%if;(family_cnt = 1)F%elseif;(family_cnt = 2)G%elseif;(family_cnt = 3)H%end;%in;
@@ -167,14 +171,7 @@
         </span>
       </span>
     %end;
-    %if;(bvar.history_diff="yes" and has_history)
-      <span><a href="%prefix;m=HIST_DIFF;t=SUM;f=%history_file;">[*history]</a>
-        <span class="s_menu">
-          <a id="hist" href="%prefix;m=HIST_DIFF;t=DIFF;f=%history_file;&new=0;old=1" style="width:280px" %laD;>[*difference between the two revisions]</a>
-        </span>
-      </span>
-    %end;
-    <span><a id="rela_comp" href="%prefix;m=R;%access;" %laR;>[*relationship]</a>
+    <span><a id="rela_comp" href="%prefix;m=R;%access;" %laR;>👪 [*relationship]</a>
       <span class="s_menu">
         %if;(browsing_with_sosa_ref)
           %if;(sosa_ref.index != "" and sosa_ref.index != index)
@@ -191,6 +188,15 @@
           <a href="%prefix;%access;;m=C;v1=1;v2=2">[*nephews and nieces]</a>%nn;
         %end;
       </span>
+    </span>
+      <form style="display:inline" name="tools" method="get" action="%action;">
+      %apply;envkb()
+      <label><button type="submit" name="spouse" title="[visualize/show/hide/summary]1 [spouse/spouses]1" value="%if;(evar.spouse="off")on%else;off%end;" onclick="this.focus()" onkeydown="if (event.keyCode == 13) javascript:document.tools.submit();">%if;(evar.spouse!="" or evar.spouse="off")👫%else;👤%end;</button></label>
+      <label><button type="submit" name="age" title="[visualize/show/hide/summary]1 [age]/[event/events]1" value="%if;(evar.age="" or evar.age="off")on%else;off%end;" %l_on;>🎂</button></label>
+      %if;(bvar.no_image_for_visitor != "yes" or friend or wizard)
+        <label><button type="submit" name="image" title="[visualize/show/hide/summary]1 [picture/pictures]1" value="%if;(evar.image="off")on%else;off%end;" %l_on;>%if;(evar.image="" or evar.image="off")IM%else;<s>IM</s>%end;</button></label>
+      %end;
+      </form>
     </span>
   </div>
 %end;
@@ -986,9 +992,9 @@
   %end;
 %end;
 <div class="col1">
-  <div style="float:right">%apply;sosainfo()</div>
+  <div id="sosainfo" style="height:16px;%if;(evar.wide!="yes")position:relative;float:right;padding-right:10px;%else;position:absolute;right:44%%;%end;">%apply;sosainfo()</div>
   <div class="person"> %( <!-- Begin display image, person --> %)
-    <h1 class="ch1 h1_%sex; h1_%has_families;%has_sosa;">
+    <h1 class="ch1 h1_%sex; h1_%has_families;%has_sosa;" style="%if;(evar.wide!="yes")margin-top:8px;%end;">
       %if;(has_public_name)
         %apply;link_s("n",public_name)
       %else;
