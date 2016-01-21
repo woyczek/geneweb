@@ -141,7 +141,7 @@ h1
 /* Properties of the footer block. All pages. */
 #footer
 {
- clear: both;
+ clear: both;float: right;padding: 8px
 }
 
 #footer hr
