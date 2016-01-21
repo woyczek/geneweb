@@ -112,14 +112,13 @@ zh: 已经有 %nb_accesses; 次访问数据库，其中 %nb_accesses_to_welcome;
 %end;
 
 <body%body_prop; id="welcome">
-<div style="float:right">
-<br/><br/>
+<div style="float:right;margin-top:1.8em;margin-right:1.8em;">
 %apply;login()
 </div>
-<div>
+<div style="margin-top:1.7em;margin-left:1.7em">
   <img src="%image_prefix;/gwlogo.png" width="280px" alt="GeneWeb logo"%/>
 </div>
-<div>
+<div style="margin-left:7.5em">
 %if;(bvar.motd != "")%apply;interp(bvar.motd)%end;
 </div>
 <div>
@@ -206,10 +205,11 @@ zh: 网络家谱
             <li><a href="%prefix;m=MOD_NOTES">[*add base notes]</a></li>
           %end;
           %if;(wizard)
+            <li><a href="%prefix;m=MOD_DATA;data=fn">%apply;book_of([first name/first names]1)</a></li>
+            <li><a href="%prefix;m=MOD_DATA;data=sn">%apply;book_of([surname/surnames]1)</a></li>
             <li><a href="%prefix;m=MOD_DATA;data=place">%apply;book_of([places])</a></li>
             <li><a href="%prefix;m=MOD_DATA;data=src">%apply;book_of([source/sources]1)</a></li>
             <li><a href="%prefix;m=MOD_DATA;data=occu">%apply;book_of([occupation/occupations]1)</a></li>
-            <li><a href="%prefix;m=MOD_DATA;data=sn">%apply;book_of([surname/surnames]1)</a></li>
           %end;
       </ul>
     </td>

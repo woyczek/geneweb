@@ -27,6 +27,7 @@
   %if;(evar.data = "occu")%apply;ldl0(bvar.datalist_occu)
   %elseif;(evar.data = "place")%apply;ldl0(bvar.datalist_place)
   %elseif;(evar.data = "sn")%apply;ldl0(bvar.datalist_sn)
+  %elseif;(evar.data = "fn")%apply;ldl0(bvar.datalist_fn)
   %elseif;(evar.data = "src")%apply;ldl0(bvar.datalist_src)
   %end;
 %else;
