@@ -1,4 +1,4 @@
-<!-- $Id: trl.txt,v 7.00 2015/02/12 22:06:44 mr Exp $ -->
+<!-- $Id: menu_search.txt,v 7.00exp 2016/01/21 22:06:44 mr Exp $ -->
 %import;js_perso_accesskey
 
 %define;lang(xx)
@@ -9,9 +9,10 @@
 %define;link_lang()
   %for;i;1;30;
     %let;l1;%apply;lang(i)%in;
-     <a href="%prefix_base;templ=%evar.templ;;lang=%l1;;%suffix;" title="%apply;language_name(l1)">
-     %if;(bvar.hideflag != "yes")
-     <img src="%image_prefix;/flags/l-%l1;.jpg" width="20" height="11" alt="" id="i%tt;" style="border:0"%/> %end;%l1; %apply;language_name(l1)</a>
+    <a href="%prefix_base;templ=%evar.templ;;lang=%l1;;%suffix;" title="%apply;language_name(l1)" 
+      style="%if;((bvar.default_lang=l1 and evar.lang="") or evar.lang=l1)background-color:%if;(bvar.css=1)#666;%else;#EEE;%end;%end;">
+       %if;(bvar.show_flag = "yes")<img src="%image_prefix;/flags/l-%l1;.jpg" width="20" height="11" alt="" id="i%tt;" style="border:0"%/> %end;
+       %l1; %apply;language_name(l1)</a>
   %end;
 %end;
 %let;lg;
@@ -19,17 +20,21 @@
   %elseif;(bvar.default_lang != "")%bvar.default_lang;
   %else;en%end;
 %in;
+%define;bg(xx)
+  style="%if;(evar.templ="xx")background-color:%if;(bvar.css=1)#666;%else;#EEE;%end;%end;"
+%end;
 
-%if;(not cancel_links and evar.m != "MOD_DATA_OK" and evar.m != "DEL_IND_OK" and evar.m != "DEL_FAM_OK" and evar.m != "NOTES" and evar.m != "MISC_NOTES" and evar.templ = "templm")
+%if;(not cancel_links and evar.m != "MOD_DATA_OK" and evar.m != "DEL_IND_OK" and evar.m != "DEL_FAM_OK" and evar.m != "NOTES" and evar.m != "MISC_NOTES" and evar.templ="templm" and evar.m!="RL")
   <div class="menu3" id="menu_trl">
+    %if;(referer != "")
+      <span><a href="%referer;" alt="[*back]" title="[*back]">⇦</a></span>
+    %end;
+    %if;(evar.n != "" or evar.i != "" or evar.m !="")
+      <span><a href="%prefix;" title="[*home]"> ⇧ </a></span>
+    %end;
     %if;(evar.n != "" or evar.i != "" or evar.ip !="" or evar.m !="")
-    <span>%if;(referer != "")
-            <span><a href="%referer;" alt="[*back]" title="[*back]%nl;%nl;[*select] %nl;%lg %apply;language_name(lg)">⇦</a></span>
-            %elseif;(bvar.hideflag != "yes")<img src="%image_prefix;/flags/l-%lg;.jpg" width="32" height="24" alt="flag" title="%lg; %apply;language_name(lg)"/>%else;<a href="#">%lg;</a>%end;
-         <span class="s_menu" id="lang">%apply;link_lang()</span>
-    </span>
     <form style="display:inline" id="ak" method="get" action="">
-      <span><input id="acckey" name="acckey" %laZ; maxlength="1" %if;(evar.m!="A")autofocus="on"%end; placeholder=""
+      <span><input id="acckey" name="acckey" %laZ; %if;(evar.m!="A")autofocus="on"%end; placeholder=" " style="height:17px"
        onkeypress="javascript:return acc_key(this,event,'sib_1','spo_1','chi_1_1','mod_ind','add_par','add_fam','mod_fam_1');"/>
         <span class="s_menu">
           <h4>[*shortcuts] (Alt+%laZk;)</h4>
@@ -84,20 +89,20 @@
            %if;(evar.t = "T")<input id="tT" type="hidden" name="t" value="T"/>
            <input id="v" type="hidden" name="v" value="%evar.v"/>%end;
            %if;(evar.m = "A")<input id="mA" type="hidden" name="m" value="A"/>%end;
-           <input type="search" id="mSn" name="n" accesskey="%laWk;" size="34" maxlength="200" autofocus="on" 
+           <input type="search" id="mSn" name="n" accesskey="%laWk;" size="30" maxlength="200" autofocus="on" 
              title="[*search/case sensitive]0 (W)%nl;%nl;* = [starting with]%nl;%nl;
-                    (*+/-) [search/case sensitive]0 [with] [n° Sosa][:]%nl;
-                    (*) [father/mother]0 (×2)%nl;
-                    (+) [father/mother]1 (×2+1)%nl;
-                    (/) [child/children]0 [Sosa] (div)%nl;
-                    (-) %apply;a_of_b%with;[spouse/spouses]0%and;[child/children]0 [Sosa] (div+1)%end;%nl;
-                    (/+) or (*-) [spouse/spouses]0%nl;
+                    [*search/case sensitive]0 [with] [n° Sosa]*+/- [:]%nl;
+                     * [father/mother]0%nl;
+                     + [father/mother]1%nl;
+                     / [child/children]0 [Sosa]%nl;
+                     - %apply;a_of_b%with;[spouse/spouses]0%and;[child/children]0 [Sosa]%end;%nl;%nl;
                     ×      +%nl;
                       \   /%nl;
-                        n°     ÷+ = ×-%nl;
+                        n°     ÷+ = ×-
                           \   /%nl;
-                            ÷      - = ÷÷+%nl;
-                              \   /%nl;"
+                            ÷      -
+                              \   /%nl;
+                                ÷÷"
 %(
 ═╦════╦════╦════╗
  ║ /  ║ *  ║ -  ║
@@ -109,35 +114,37 @@
              placeholder="[surname/surnames]0*%if;(evar.t != "T"), [public name], [alias], n° Sosa%end;"
              onfocus="%evar.n;%if;(evar.m = "S" and evar.n != "")%evar.n;%end;"
              onkeypress="javascript:return computeSosa(event,'mSn')"
-           %/><input type="search" id="mSp" name="p" size="17" maxlength="200"
+           %/><input type="search" id="mSp" name="p" size="15" maxlength="200"
              placeholder="[first name/first names]0*, n° index"
              title="* = [starting with]"
            %/><input id="hide_ie" hidefocus="true" tabindex="-1" type="submit" value="Ok" title="[*search/case sensitive]0 (W)"/>
     </form>
     </span>
-    %if;(bvar.hide_advanced_request != "yes")
-      <span>
-      <a href="%prefix;m=H;v=advanced" title="[*advanced request]">🔍</a>
+    <span>
+    <a href="%if;(bvar.hide_advanced_request != "yes")%prefix;m=H;v=advanced%else;#%end;" 
+    title="[*advanced request]%nl;%nl;[*select]%nl;%if;(evar.templ != "")%evar.templ;%else;templ%end;">%if;(bvar.hide_advanced_request != "yes")🔍%else;templ%end;</a>
+    %if;(evar.digest = "")
+      <span class="s_menu" id="tpl">
+        <a href="%prefix_no_templ;templ=;%suffix;" %apply;bg("")>default</a>
+        <a href="%prefix_no_templ;templ=templ502;%suffix;" %apply;bg("templ502")>templ502</a>
+        <a href="%prefix_no_templ;templ=templa;%suffix;" %apply;bg("templa")>templa</a>
+        <a href="%prefix_no_templ;templ=templb;%suffix;" %apply;bg("templb")>templb</a>
+        <a href="%prefix_no_templ;templ=templc;%suffix;" %apply;bg("templc")>templc</a>
+        <a href="%prefix_no_templ;templ=templd;%suffix;" %apply;bg("templd")>templd</a>
+        <a href="%prefix_no_templ;templ=templf;%suffix;" %apply;bg("templf")>templf</a>
+        <a href="%prefix_no_templ;templ=templh;%suffix;" %apply;bg("templh")>templh</a>
+        %( <a href="%prefix_no_templ;templ=templ_cpl;%suffix;" %apply;bg("templ_cpl")>templ_cpl</a> %)
+        <a href="%prefix_no_templ;templ=templm;%suffix;" %apply;bg("templm")>templm</a>
+        %if;(wizard or bvar.wizard_passwd = "")
+          <small><a href="%prefix;m=H;v=doc_templm">doc templm</a></small>
+        %end;
       </span>
     %end;
-    <span><a href="%prefix;" title="%if;(evar.n != "" or evar.i != "" or evar.m !="")[*home]%nl;%nl;%end[*select]%nl;%if;(evar.templ != "")%evar.templ;%else;templ%end;">%if;(evar.n != "" or evar.i != "" or evar.m!="")⇧%else;templ%end;</a>
-      %if;(evar.digest = "")
-        <span class="s_menu" id="tpl">
-          <a href="%prefix_no_templ;templ=;%suffix;">default</a>
-          <a href="%prefix_no_templ;templ=templ502;%suffix;">templ502</a>
-          <a href="%prefix_no_templ;templ=templa;%suffix;">templa</a>
-          <a href="%prefix_no_templ;templ=templb;%suffix;">templb</a>
-          <a href="%prefix_no_templ;templ=templc;%suffix;">templc</a>
-          <a href="%prefix_no_templ;templ=templd;%suffix;">templd</a>
-          <a href="%prefix_no_templ;templ=templf;%suffix;">templf</a>
-          <a href="%prefix_no_templ;templ=templh;%suffix;">templh</a>
-          %( <a href="%prefix_no_templ;templ=templ_cpl;%suffix;">templm_cpl</a> %)
-          <a href="%prefix_no_templ;templ=templm;%suffix;">templm</a>
-          %if;(wizard or bvar.wizard_passwd = "")
-            <small><sup><strong><a href="%prefix;m=H;v=doc_templm">doc templm</a></strong></sup></small>
-          %end;
-        </span>
-      %end;
+    </span>
+    <span>
+      <a href="%if;(evar.i !="" or evar.n!="")%url;cgl=on%end;" 
+      title="%if;(evar.i !="" or evar.n!="")[*cancel GeneWeb links] %nl;%nl;%end;[*select] %nl;%lg; %apply;language_name(lg)">%if;(evar.i !="" or evar.n!="")⇨%else;%lg;%end;</a>
+      <span class="s_menu" id="lang">%apply;link_lang()</span>
     </span>
   </div>
   %if;(evar.em = "R" and (evar.et = "A" or evar.et = "M") and evar.select = "")

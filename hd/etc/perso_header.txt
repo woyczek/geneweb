@@ -3,6 +3,7 @@
 %import;perso_utils
 
 %if;(evar.templm="templm" and evar.m!="SND_IMAGE")
+%else;
   %include.menubar;
 %end;
 

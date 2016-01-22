@@ -145,7 +145,7 @@
           %end;
         </span>
       %end;
-      <span><a id="upd" href="%prefix;m=U;%access;" %laU;>⚙ [*update]</a>
+      <span><a id="upd" href="%prefix;m=U;%access;" %laU;>↻ [*update]</a>
         <span class="s_menu">
           <a id="mod_ind" href="%prefix;m=MOD_IND;i=%index;" %laP; %l_on1;>[*modify::person/persons]0</a>%nn;
           %if;(bvar.history_diff="yes" and has_history)
@@ -189,12 +189,18 @@
         %end;
       </span>
     </span>
-        <a href="%prefix;%access;;wide=%evar.wide;;maxlev=%evar.maxlev;;image=%evar.image;;age=%evar.age;;spouse=%if;(evar.spouse!="off")off%else;%end;" title="[visualize/show/hide/summary]1 [spouse/spouses]1">%if;(evar.spouse!="off")👤%else;👫%end;</a>
-        <a href="%prefix;%access;;wide=%evar.wide;;maxlev=%evar.maxlev;;image=%evar.image;;spouse=%evar.spouse;;age=%if;(evar.age!="on")on%else;%end;" title="[visualize/show/hide/summary]1 [age]/[event/events]1">%if;(evar.age!="on")🎂%else;<s>A</s>%end;</a>
-      %if;(bvar.no_image_for_visitor != "yes" or friend or wizard)
-        <a href="%prefix;%access;;wide=%evar.wide;;maxlev=%evar.maxlev;;spouse=%evar.spouse;;age=%evar.age;;image=%if;(evar.image="off" or evar.image="")on%else;%end;" title="[visualize/show/hide/summary]1 [picture/pictures]1">%if;(evar.image="" or evar.image="off")IM%else;<s>IM</s>%end;</a>
-      %end;
-    </span>
+  </div>
+%end;
+%define;buttons()
+  <div id="button" style="position:absolute;float:right;top:30px;right:3px;">
+    <a href="%prefix;%access;;wide=%evar.wide;;maxlev=%evar.maxlev;;image=%evar.image;;age=%evar.age;;spouse=%if;(evar.spouse!="off")off%else;on%end;"
+      title="%if;(evar.spouse="off")[visualize/show/hide/summary]1%else;[visualize/show/hide/summary]2%end; [spouse/spouses]1">%if;(evar.spouse="off")👫%else;👤%end;</a>
+    <a href="%prefix;%access;;wide=%evar.wide;;maxlev=%evar.maxlev;;image=%evar.image;;spouse=%evar.spouse;;age=%if;(evar.age!="on")on%else;%end;" 
+      title="%if;(evar.age!="on")[visualize/show/hide/summary]1%else;[visualize/show/hide/summary]2%end; [age]/[event/events]1" style="%if;(evar.age="on")color:red;%end;">🎂</a>
+  %if;(bvar.no_image_for_visitor != "yes" or friend or wizard)
+    <a href="%prefix;%access;;wide=%evar.wide;;maxlev=%evar.maxlev;;spouse=%evar.spouse;;age=%evar.age;;image=%if;(evar.image!="on" or evar.image="")on%else;%end;" 
+    title="%if;(evar.image!="on")[visualize/show/hide/summary]1%else;[visualize/show/hide/summary]2%end; [image/images]1" style="%if;(evar.image="on")color:red;%end;">🎴</a>
+  %end;
   </div>
 %end;
 %define;init_count(prev_count)
@@ -1201,9 +1207,9 @@
             %if;(max_desc_level>1)
               %let;l2;%expr(max_desc_level+1)%in;
               %for;i;1;l2;
-                %if;(i<10)%sp;%end;<a href="%prefix;%access;;wide=%evar.wide;;image=%evar.image;;age=%evar.age;;spouse=%evar.spouse;;maxlev=%i;"
-                style="%if;((evar.maxlev="" and i=2) or i=evar.maxlev)background-color:%if;(bvar.css=1)#666;%else;#EEE;%end;%end;width:13px"
-                title="%i; %if;(i=1)[generation/generations]0%else;[generation/generations]1%end;%nl;%if;(i=1 and nb_children=1)[a descendant]0%else;%apply;desc(i) [descendants]%end;">%i;</a>
+                <a href="%prefix;%access;;wide=%evar.wide;;image=%evar.image;;age=%evar.age;;spouse=%evar.spouse;;maxlev=%i;"
+                style="%if;((evar.maxlev="" and i=2) or i=evar.maxlev)background-color:%if;(bvar.css=1)#666;%else;#EEE;%end;%end;width:17px;"
+                title="%i; %if;(i=1)[generation/generations]0%else;[generation/generations]1%end;%nl;%if;(i=1 and nb_children=1)[a descendant]0%else;%apply;desc(i) [descendants]%end;">%if;(i<10) %end;%i;</a>
               %end;
             %end;
             <a href="%prefix;m=D;t=T;v=4;image=on;%access"%if;(not has_parents) %laY;%end;>[*descendants tree]</a>%nn;
@@ -1223,7 +1229,7 @@
             %if;(wizard and not cancel_links and family_cnt != 1)
               %if;(family_cnt != 1)
                 <span class="button"><a href="%prefix;m=INV_FAM;i=%index;;f=%family.index;
-                " title="[invert::family/families]0">^</a></span>
+                " title="[*invert::family/families]1" style="border:0px;font-size:17px">⇪</a></span>
                 %if;(family.father.index = prev_family.father.index
                   and family.mother.index = prev_family.mother.index)
                   <span class="button"><a href=%nn;
@@ -1273,7 +1279,8 @@
 %if;(not cancel_links)
   <div>
     %apply;menu()
-    %apply;tools_perso()
+    %apply;buttons()
+ %( %apply;tools_perso() %)
   <div>
   %base_trailer;
   %include.copyr

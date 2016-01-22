@@ -68,11 +68,11 @@ h1{text-align:center;margin-top:28px}
 .login input[type="password"],.menu3 input[type="search"]{padding:4px;border: solid 1px #dcdcdc;transition: box-shadow 0.3s, border 0.3s;color:black}
 .login input[type="password"]:focus,.login input[type="password"].focus,.menu3 input[type="search"]:focus,.menu3 input[type="search"].focus{border: solid 1px #707070;box-shadow: 0 0 5px 1px #969696;background-color:white;}
 .menu3 span{position:relative;display:inline;float:left;}
-.menu span a,.menu3 span a{height:16px;margin-right:0}
+.menu span a,.menu3 span a{height:17px;margin-right:0}
 .menu3 .s_menu{display:none;float:left;margin:0;padding:0;border:0;}
 .menu3 span:hover > .s_menu{display:block;position:absolute;right:0;top:23px;background-color:#666;color:#EE9;}
 #tpl a{width:65px}
-#lang a{width:170px}
+#lang a{width:180px}
 #ak input {width:10px;background-color:#EEE;border:solid 1px #DDD;margin:0px;padding:3px;color:#DDD;}
 #ak .s_menu{width:240px;padding:3px;}
 /* Hidden input submit button, IE workaround */
@@ -131,7 +131,7 @@ hr.full{margin-left:0;margin-right:0;}
 .menu span a{float:left;border:none;}
 .menu .s_menu{display:none;float:left;margin-left:0;margin-top:0;padding:0;border:0;}
 .menu span:hover > .s_menu{display:block;position:absolute;left:0;top:23px;z-index:10;background-color:black;color:#EE9;}
-.menu .s_menu a{width:212px;}
+.menu .s_menu a{width:260px;}
 .menu1,.button{font-size:14px;line-height:24px;}
 .menu1{clear:both;padding:5px;margin:5px;border-top:solid 1px #333;}
 .menu a,.menu1 a,.button a,input[type='submit']{background-color:black;border:solid 1px #333;margin:0 -1px -1px 0;padding:5px;color:#EE9;}
@@ -325,7 +325,7 @@ input[type='checkbox'],input[type='radio']{width:auto;height:auto;vertical-align
 .div1{clear:both;margin:2px;padding:2px;border:solid 1px #333;}
 .div2{clear:both;margin:5px;padding:10px;border-top:solid 1px #333;border-bottom:solid 1px #333;}
 .div3{clear:both;margin:5px;padding:5px;border-top:solid 1px #333;}
-#trl{clear:both;margin:5px;padding:5px;}
+#trl{clear:both;}
 #templ{display:block;font-size:12px;padding:5px;margin:5px;text-align:center;}
 #templ a{text-decoration:none;padding:.2em 1em;color:#EEF;background-color:#360;}
 #templ a:hover{color:#EEF;background-color:#390;}

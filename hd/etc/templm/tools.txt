@@ -72,7 +72,7 @@
 %define;envkb()
       %hidden;
       %foreach;env_binding;
-        %if;(env.key = "cgl" or env.key = "dsrc" or env.key = "image" or env.key = "maxlev" or env.key = "spouse" or env.key = "wide" or env.key="templ" or env.key="iz" or env.key="nz" or env.key="ocz" or env.key="pz" or env.key="age")
+        %if;(env.key="age" or env.key = "cgl" or env.key = "dsrc" or env.key = "image" or env.key = "maxlev" or env.key = "spouse" or env.key = "wide" or env.key="templ" or env.key="iz" or env.key="nz" or env.key="ocz" or env.key="pz")
         %else;
          <input type="hidden" name="%env.key;" value="%env.val.decoded;"/>
         %end;
