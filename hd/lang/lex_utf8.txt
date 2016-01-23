@@ -4412,6 +4412,10 @@ oc: diferéncia entre las doas revisions
 pt: diferença entre as duas revisões
 sv: skillnad mellan två uppdateringar
 
+    diff
+en: last update
+fr: dernière mise à jour
+
     diploma
 de: Diplom
 en: Diploma
