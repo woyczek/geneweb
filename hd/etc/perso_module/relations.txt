@@ -45,7 +45,7 @@
         %event_witness_relation.event.name;,%sp;
         %apply;short_display_person("event_witness_relation.person")
         %if;(event_witness_relation.event.spouse != "")
-          [and]
+          %sp;[and]
           %apply;short_display_person("event_witness_relation.event.spouse")
         %end;
       </li>
