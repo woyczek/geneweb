@@ -146,7 +146,9 @@ function update_old () {
   </tr>
   %end;
   %foreach;pevent;
-    %if;(before.pevent_name!=after.pevent_name)
+    %if;(before.pevent_name!=after.pevent_name or before.pevent_date!=after.pevent_date
+      or before.pevent_place!=after.pevent_place or before.pevent_note!=after.pevent_note
+      or before.pevent_src!=after.pevent_src or before.pevent_witness!=after.pevent_witness)
     <tr>
       <td class="hist_label">[*event/events]0</td>
       <td class="odd">%before.pevent_name;</td>
@@ -231,7 +233,9 @@ function update_old () {
 %define;print_diff_family()
   %foreach;family;
     %foreach;fevent;
-      %if;(before.fevent_name!=after.fevent_name)
+      %if;(before.fevent_name!=after.fevent_name or before.fevent_date!=after.fevent_date
+        or before.fevent_place!=after.fevent_place or before.fevent_note!=after.fevent_note
+        or before.fevent_src!=after.fevent_src or before.fevent_witness!=after.fevent_witness)
       <tr>
         <td class="hist_label">[*event/events]0</td>
         <td class="odd">%before.fevent_name;: %before.spouse;</td>
@@ -291,7 +295,7 @@ function update_old () {
     <tr>
       <td width="20%%">%if;(evar.old!=history_len-1)<a href="%prefix;;m=%evar.m;;t=%evar.t;;f=%evar.f;;new=%evar.old;;old=%expr(evar.old+1)" title="[*previous diff]"><= [previous/next diff]0%else;&nbsp;%end;</a></td>
       <td width="250px" align="center"><a href="%prefix;;m=%evar.m;;t=SUM;f=%evar.f;">%if;(evar.old-evar.new>1)%expr(evar.old-evar.new-1) [intermediate revisions not shown]%else;[revision history]%end;</a></td>
-      <td width="20%%">%if;(evar.new!=0)<a href="%prefix;;m=%evar.m;;t=%evar.t;;f=%evar.f;;new=%expr(evar.new-1);old=%evar.new;" title="[*next diff]">=> [previous/next diff]1</a>%else;&nbsp;%end;</td>
+      <td width="20%%">%if;(evar.new!=0)<a href="%prefix;;m=%evar.m;;t=%evar.t;;f=%evar.f;;new=%expr(evar.new-1);old=%evar.new;" title="[*next diff]">=> [previous/next diff]1</a>%elseif;(evar.new=0)[last diff]%end;</td>
     </tr>
   </table>
   <br/>
