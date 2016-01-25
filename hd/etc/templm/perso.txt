@@ -96,6 +96,9 @@
     %end;
   %end;
 %in;
+%define;chg_evt_fam_ord(xx)
+  [*modify family %s event order:::xx]0
+%end;
 %define;menu()
   %if;(evar.del = "on")
     <div class="menu">
@@ -148,25 +151,40 @@
       <span><a id="upd" href="%prefix;m=U;%access;" %laU;>↻ [*update]</a>
         <span class="s_menu">
           <a id="mod_ind" href="%prefix;m=MOD_IND;i=%index;" %laP; %l_on1;>[*modify::person/persons]0</a>%nn;
+          <a id="chg_evt_ind" href="%prefix;m=CHG_EVT_IND_ORD;i=%index;" %_lon1;>[*invert::event/events]1 [person/persons]0%(<br/>[*modify person event order]0%)</a>
           %if;(bvar.history_diff="yes" and has_history)
-            <a href="%prefix;m=HIST_DIFF;t=SUM;f=%history_file;">[*history]</a>
-            <a id="hist" href="%prefix;m=HIST_DIFF;t=DIFF;f=%history_file;&new=0;old=1" %laD;>[*diff]</a>
+            <a id="hist" href="%prefix;m=HIST_DIFF;t=DIFF;f=%history_file;&new=0;old=1" %laD;>[*last diff]</a>
+            <a href="%prefix;m=HIST_DIFF;t=SUM;f=%history_file;">[*revision history]</a>
           %end;
           %foreach;family;
+            %if;(family_cnt>1)
+            <a href="%prefix;m=INV_FAM;f=%family.index;;i=%index;" %_lon1;>[*invert::family/families]1 %expr(family_cnt-1) [and] %family_cnt;</a>
+            %end;
             %if;(family_cnt < 4)
               %let;a_k;%if;(family_cnt = 1)F%elseif;(family_cnt = 2)G%elseif;(family_cnt = 3)H%end;%in;
-              <a id="mod_fam_%family_cnt;" href="%prefix;m=MOD_FAM;i=%family.index;;ip=%index;" title="[*modify::family/families]0 %family_cnt; (%a_k;)"
-                 accesskey="%a_k;" %l_on1;>[*modify::family/families]0 %family_cnt;</a>%nn;
+              <a id="mod_fam_%family_cnt;" href="%prefix;m=MOD_FAM;i=%family.index;;ip=%index;" title="[*modify::family/families]0 %if;(family_cnt != 1)%family_cnt;%end; (%a_k;)"
+                 accesskey="%a_k;" %l_on1;>[*modify::family/families]0 %if;(family_cnt!=1)%family_cnt;%end;</a>%nn;
             %else;
-              <a id="mod_fam_%family_cnt;" href="%prefix;m=MOD_FAM;i=%family.index;;ip=%index;" title="[*modify::family/families]0 %family_cnt;"
-                 %l_on1;>[*modify::family/families]0 %family_cnt;</a>%nn;
+              <a id="mod_fam_%family_cnt;" href="%prefix;m=MOD_FAM;i=%family.index;;ip=%index;" title="[*modify::family/families]0 %if;(family_cnt!=1)%family_cnt;%end;"
+                 %l_on1;>[*modify::family/families]0 %if;(family_cnt!=1)%family_cnt;%end;</a>%nn;
             %end;
+            <a href="%prefix;m=CHG_EVT_FAM_ORD;i=%family.index;;ip=%index;" %_lon1;>[*invert::event/events]1 [family/families]0 %if;(family_cnt!=1)%family_cnt;%end;%(<br/>%apply;chg_evt_fam_ord(family_cnt)%)</a>
+          %end;
+          
+          %if;has_children;
+            <a href="%prefix;m=CHG_CHN;ip=%index;">[*change children's names]</a>
           %end;
           %if;(is_male or is_female)
             <a id="add_fam" href="%prefix;m=ADD_FAM;ip=%index;" %laA; %l_on1;>[*add::family/families]0</a>%nn;
           %end;
+          %if;(bvar.can_send_image != "no" and image = "" and first_name != "?" and surname != "?")
           <a id="snd_image" href="%prefix;m=SND_IMAGE;i=%index;" %laI; >[*send::image/images]0</a>%nn;
-          <a href="%prefix;m=MRG;i=%index;">[*merge]0 (oc=%occ;)</a>%nn;
+            %if;(auto_image_file_name != "")<a href="%prefix;m=DEL_IMAGE;i=%index;">[*delete::image/images]0</a>%end;
+          %end;
+          %if;has_possible_duplications;
+            <a href="%prefix;m=MRG_DUP;ip=%index;">[*merge::possible duplications] (oc=%occ;)</a>
+          %end;
+          <a href="%prefix;m=MRG;i=%index;">[*merge]0</a>%nn;
           <a href="%prefix;%access;%l_url;i=%index;;del=on;">[*delete::]</a>%nn;
         </span>
       </span>
@@ -197,10 +215,21 @@
       title="%if;(evar.spouse="off")[visualize/show/hide/summary]1%else;[visualize/show/hide/summary]2%end; [spouse/spouses]1">%if;(evar.spouse="off")👫%else;👤%end;</a>
     <a href="%prefix;%access;;wide=%evar.wide;;maxlev=%evar.maxlev;;image=%evar.image;;spouse=%evar.spouse;;age=%if;(evar.age!="on")on%else;%end;" 
       title="%if;(evar.age!="on")[visualize/show/hide/summary]1%else;[visualize/show/hide/summary]2%end; [age]/[event/events]1" style="%if;(evar.age="on")color:red;%end;">🎂</a>
-  %if;(bvar.no_image_for_visitor != "yes" or friend or wizard)
-    <a href="%prefix;%access;;wide=%evar.wide;;maxlev=%evar.maxlev;;spouse=%evar.spouse;;age=%evar.age;;image=%if;(evar.image!="on" or evar.image="")on%else;%end;" 
-    title="%if;(evar.image!="on")[visualize/show/hide/summary]1%else;[visualize/show/hide/summary]2%end; [image/images]1" style="%if;(evar.image="on")color:red;%end;">🎴</a>
+  %if;(bvar.event_age!="on")
+    %if;(bvar.no_image_for_visitor != "yes" or friend or wizard)
+      <a href="%prefix;%access;;wide=%evar.wide;;maxlev=%evar.maxlev;;spouse=%evar.spouse;;age=%evar.age;;image=%if;(evar.image!="on" or evar.image="")on%else;%end;" 
+      title="%if;(evar.image!="on")[visualize/show/hide/summary]1%else;[visualize/show/hide/summary]2%end; [image/images]1" style="%if;(evar.image="on")color:red;%end;">🎴</a>
+    %end;
   %end;
+  <br/>
+    %if;(bvar.wide!="yes")
+      <a href="%prefix;%access;;maxlev=%evar.maxlev;;image=%evar.image;;spouse=%evar.spouse;;age=%evar.age;;wide=%if;(evar.wide!="yes")yes%else;%end;" 
+      title="%if;(evar.wide="yes")affichage en colonnes%else;affichage large%end;">%if;(evar.wide!="yes")W%else;<s>W</s>%end;</a>
+    %end;
+    %if;(bvar.misc!="yes")
+      <a href="%prefix;%access;;maxlev=%evar.maxlev;;image=%evar.image;;spouse=%evar.spouse;;age=%evar.age;;wide=%evar.wide;;misc=%if;(evar.misc!="yes")yes%else;%end;" 
+      title="%if;(evar.misc!="yes")afficher infos diverses%else;masquer infos diverses%end;">%if;(evar.misc!="yes")M%else;<s>M</s>%end;</a>
+    %end;
   </div>
 %end;
 %define;init_count(prev_count)
@@ -1259,12 +1288,12 @@
 </div>
 %( <!-- End display ancestors/descendants --> %)
 %( <!-- Begin display menu --> %)
-%if;(not cancel_links and wizard and (evar.opt = "misc" or bvar.misc = "yes"))
+%if;(not cancel_links and wizard and (evar.misc = "yes" or bvar.misc = "yes"))
   <div class="div3">
     <form name="syntax" method="get" action="">
       <ul>
         <li>
-          <label>wiki<input onclick="javascript: this.select();" type="text" name="wiki" size="70"
+          <label>wikitext <input onclick="javascript: this.select();" type="text" name="wiki" size="70"
                           value="%[%[%first_name_key;/%surname_key;/%occ;/%first_name; %surname;%]%]"%/></label></li>
       </ul>
     </form>

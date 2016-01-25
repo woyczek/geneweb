@@ -25,9 +25,8 @@
               <a href="%prefix;m=MOD_IND;i=%index;">[*modify::person/persons]0</a>
             </li>
             <li>
-              <a href="%prefix;m=CHG_EVT_IND_ORD;i=%index;">[*changed order of person's events]</a>
+              <a href="%prefix;m=CHG_EVT_IND_ORD;i=%index;">[*invert::event/events]1</a>
             </li>
-
             %if;(bvar.can_send_image != "no" and image = "" and first_name != "?" and surname != "?")
               <li>
                 <a href="%prefix;m=SND_IMAGE;i=%index;" class="add_portrait">
@@ -95,7 +94,7 @@
                         <a href="%prefix;m=MOD_FAM;i=%family.index;;ip=%index;">[*modify::family/families]0</a>
                       </li>
                       <li>
-                        <a href="%prefix;m=CHG_EVT_FAM_ORD;i=%family.index;;ip=%index;">[*changed order of family's events]</a>
+                        <a href="%prefix;m=CHG_EVT_FAM_ORD;i=%family.index;;ip=%index;">[*invert::event/events]1 [family/families]0</a>
                       </li>
                       <li>
                         <a href="%prefix;m=MOD_FAM;i=%family.index;;ip=%index;#child">[*add::child/children]0</a>

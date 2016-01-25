@@ -4400,21 +4400,17 @@ sl: umrl mlad/umrla mlada/umrl(a) mlad(a)
 sv: dog ung
 
     difference between the two revisions
-de: Unterschied zwischen den zwei Revisionen
-en: revision history
-es: diferencia entre las dos revisiones
+de: Unterschied zwischen den Revisionen
+en: difference between the revisions
+es: diferencia entre las revisiones
 fi: Tarkistushistoria
-fr: différence entre les deux révisions
-it: divario tra le due versioni
-nl: verschil tussen de twee revisies
+fr: différence entre les révisions
+it: divario tra le versioni
+nl: verschil tussen de revisies
 no: Revisjonshistorikk
-oc: diferéncia entre las doas revisions
-pt: diferença entre as duas revisões
+oc: diferéncia entre las revisions
+pt: diferença entre as revisões
 sv: skillnad mellan två uppdateringar
-
-    diff
-en: last update
-fr: dernière mise à jour
 
     diploma
 de: Diplom
@@ -14024,3 +14020,23 @@ fr: arborescence descendante
     home
 en: home
 fr: accueil
+
+    last diff
+en: last revision
+fr: dernière révision
+
+    intermediate revisions not shown
+en: intermediate revisions not shown
+fr: révisions intermédiaires masquées
+
+    previous/next diff
+en: previous revision/next revision
+fr: révision précédente/révision suivante
+
+    modify person event order
+en: permute personnal events
+fr: permuter les événéments individuels
+
+    modify family %s event order
+en: permute the events of family %s
+fr: permuter les événements de la famille %s
