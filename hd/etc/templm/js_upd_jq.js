@@ -1,17 +1,19 @@
-/* $Id: js_upd_jq.js,v 7.00 2016/01/10 15:28:35 mr Exp $ */
+/* $Id: js_upd_jq.js,v 7.00 2016/01/26 10:49:18 mr Exp $ */
 
 var ldlLen = 0;
 var ldlTim;
 var ldlVal = "";
-function ldl(z1,z2,z3,z4)
+function ldl(z1,z2,z3)
 {
   var a1 = "o" + z2;
   var a2 = z1.value.length;
   var a3 = document.getElementById(a1).value;
   var a4 = z1.value.slice(0,3);
+  var a5 = z1.value.charAt(a2 - 1).toUpperCase();
   var key = z3.keyCode ? z3.keyCode : z3.which ? z3.which : z3.charCode;
+  var charKey = String.fromCharCode(key).toUpperCase();
   if(a3 > 20 && ldlVal == a4)ldlVal = "";
-  if(ldlVal != a4 && a2 != ldlLen && a2 > 2 && key != "8" && key != "46")
+  if(ldlVal != a4 && a2 != ldlLen && a2 > 2 && charKey == a5)
   {
     clearTimeout(ldlTim);
     ldlVal = a4;
@@ -21,12 +23,12 @@ function ldl(z1,z2,z3,z4)
     {
       var b1 = encodeURI(z1.value);
       var b2 = "#dl" + z2;
-      var b3 = z4 + "m=MOD_DATA;data=" + z2 + ";s=" + b1 + ";datalist=on;";
+      var b3 = g_prefix + "m=MOD_DATA;data=" + z2 + ";s=" + b1 + ";datalist=on;";
       $(b2).load(b3);
     },1000);
   }
 }
-function jq1(z1,z2,z3)
+function jq1(z1,z2)
 {
   var e7 = document.getElementById(z1 + "_occ");
   var v7 = e7.value;
@@ -47,7 +49,7 @@ function jq1(z1,z2,z3)
       e1.title = t1;
       if (v7 != "")
       {
-        var l = (u8 == "" || u8 == "?" || u9 == "?") ? z3 + "m=U;jq1=on;i=" + v7: z3 + "m=U;jq1=on;oc=" + v7 + ";p=" + u8 + ";n=" + u9;
+        var l = (u8 == "" || u8 == "?" || u9 == "?") ? g_prefix + "m=U;jq1=on;i=" + v7: g_prefix + "m=U;jq1=on;oc=" + v7 + ";p=" + u8 + ";n=" + u9;
         $("#jq").load(l, function()
         {
           if(document.getElementById("jql"))
@@ -71,12 +73,12 @@ function jq1(z1,z2,z3)
       }
       else
       {
-        var l = z3 + "m=U;oc=0;p=" + u8 + ";n=" + u9 + ";jq1=on";
+        var l = g_prefix + "m=U;oc=0;p=" + u8 + ";n=" + u9 + ";jq1=on";
         $("#jq").load(l, function()
         {
           if(document.getElementById("jql"))
           {
-            var l1 = z3 + "m=S;p="+ u8 +";n=" + u9;
+            var l1 = g_prefix + "m=S;p="+ u8 +";n=" + u9;
             e1.innerHTML = ' <a onclick="window.open(this.href); return false;" href="'+ l1 +'">&lt;!&gt;<\/a>';
           }
         })
@@ -84,7 +86,7 @@ function jq1(z1,z2,z3)
     }
   }
 }
-function jq1a(z1,z2)
+function jq1a(z1)
 {
   var e7 = document.getElementById(z1 + "_occ");
   var v7 = e7.value;
@@ -112,7 +114,7 @@ function jq1a(z1,z2)
       e4.innerHTML = "";
       if (v7 != "")
       {
-        var l = (u8 == "" || u8 == "?" || u9 == "?") ? z2 + "m=U;jq1a=on;i=" + v7: z2 + "m=U;jq1a=on;oc=" + v7 + ";p=" + u8 + ";n=" + u9;
+        var l = (u8 == "" || u8 == "?" || u9 == "?") ? g_prefix + "m=U;jq1a=on;i=" + v7: g_prefix + "m=U;jq1a=on;oc=" + v7 + ";p=" + u8 + ";n=" + u9;
         $("#jq").load(l, function()
         {
           if(document.getElementById("jql"))
@@ -143,12 +145,12 @@ function jq1a(z1,z2)
       }
       else
       {
-        var l = z2 + "m=U;oc=0;p=" + u8 + ";n=" + u9 + ";jq1a=on";
+        var l = g_prefix + "m=U;oc=0;p=" + u8 + ";n=" + u9 + ";jq1a=on";
         $("#jq").load(l, function()
         {
           if(document.getElementById("jql"))
           {
-            var l1 = z2 + "m=S;p="+ u8 +";n=" + u9;
+            var l1 = g_prefix + "m=S;p="+ u8 +";n=" + u9;
             e1.innerHTML = ' <a onclick="window.open(this.href); return false;" href="'+ l1 +'">&lt;!&gt;<\/a>';
           }
         })
@@ -188,7 +190,7 @@ function jq1b1(z1)
       e7.className = "occ" + d11;
     }
 }
-function jq1b(z1,z2)
+function jq1b(z1)
 {
   var e8 = document.getElementById("pa1_fn");
   var v8 = e8.value;
@@ -202,7 +204,7 @@ function jq1b(z1,z2)
     var u9 = encodeURI(v9);
     if (u8 != "?" || u9 != "?")
     {
-      var l = z2 + "m=U;jq1b=on;ifam=" + z1 + ";oc=" + v7 + ";p=" + u8 + ";n=" + u9;
+      var l = g_prefix + "m=U;jq1b=on;ifam=" + z1 + ";oc=" + v7 + ";p=" + u8 + ";n=" + u9;
       $("#jq").load(l, function()
       {
         if(document.getElementById("jql"))
@@ -221,6 +223,6 @@ function jq1b(z1,z2)
   }
   else
   {
-    if (document.getElementById("pa2_fn").value != "")jq1a('pa2',z2);
+    if (document.getElementById("pa2_fn").value != "")jq1a('pa2');
   }
 }

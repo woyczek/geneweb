@@ -1,7 +1,7 @@
 %doctype;
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <!-- $Id: updind.txt,v 7.00 2016/01/13 00:18:16 mr Exp $ -->
+  <!-- $Id: updind.txt,v 7.00 2016/01/26 10:49:01 mr Exp $ -->
   <title>%nn;
     %if;(evar_m = "MRG_IND_OK" or evar_m = "MRG_MOD_IND_OK")
       [*merge::person/persons]1 # %index;
@@ -17,35 +17,30 @@
   %include.css;
   %import;js_upd
   %base_header;
-  %define;load_focus()
-    onload="oL1(); %nn;
-    %if;(evar_m = "MOD_IND")
-      %if;(not is_male and not is_female)
-        sIV('sex1')%nn;
-      %elseif;(birth.prec != "sure")
-        sIV('lpc2')%nn;
-      %elseif;(birth.year < "1900" and death.prec != "sure")
-        sIV('lpc3')%nn;
-      %else;
-        sIV('notes')%nn;
-      %end;
-    %end;
-    "%nn;
-  %end;
-</head>
-<body%body_prop; id="upd" %apply;load_focus()>
-%message_to_wizard;
+  %import;updind_updfam
 
 %(<!-- Begin define  -->%)
 
-%import;updind_updfam
-
 %let;l_r_father; placeholder="M" %in;
 %let;l_r_mother; placeholder="F" %in;
-
+%define;load_focus()
+  onload="oL1(); %nn;
+  %if;(evar_m = "MOD_IND")
+    %if;(not is_male and not is_female)
+      sIV('sex1')%nn;
+    %elseif;(birth.prec != "sure")
+      sIV('lpc2')%nn;
+    %elseif;(birth.year < "1900" and death.prec != "sure")
+      sIV('lpc3')%nn;
+    %else;
+      sIV('notes')%nn;
+    %end;
+  %end;
+  "%nn;
+%end;
 %define;one_title(z1)
   <tr id="tz1">
-    <td class="bg7"><input id="tz1_occ" name="tz1_occ" class="t_occ" maxlength="1" placeholder="&bull;" onkeypress="javascript:return oKP2(event,'t',z1,'_occ')" onblur="this.value='';"%/></td>
+    <td class="bg7"><input id="tz1_occ" name="tz1_occ" class="t_occ" maxlength="1" placeholder="&bull;" onkeypress="javascript:return oKP2(event,'t',z1,'_occ','')" onblur="this.value='';"%/></td>
     <td><input id="t_identz1" name="t_identz1" size="30" value="%title.t_ident;"%/></td>
     <td><input id="t_placez1" name="t_placez1" size="30" value="%title.t_estate;" %/></td>
     <td><input id="t_namez1" name="t_namez1" size="30" value="%title.t_name;" %/></td>
@@ -54,7 +49,6 @@
         <span class="dmyt">%apply;date("t_date_endz1","title_date_end","","")</span></td>
   </tr>
 %end;
-
 %define;relations(z1)
   <tr id="rz1">
     %apply;one_relation("z1","fath","r_father","0")
@@ -64,7 +58,6 @@
     %apply;one_relation("z1","moth","r_mother","1")
   </tr>
 %end;
-
 %define;relation_type(z1)
   <select id="rz1_type" name="rz1_type">
     <option value="GodParent"%if;relation.rt_godparent;%sp;selected="selected"%end;>
@@ -79,21 +72,24 @@
       %sp;[*foster father/foster mother/foster parents]2</option>
   </select>
 %end;
-
 %define;one_relation(z1,z2,z3,z4)
     %let;l1;rz1_z2%in;
     <td>
         <input type="hidden" id="%l1;_p" name="%l1;_p" value="%if;(relation.z3.create)create%else;link%end;"%/>
         <input id="%l1;_occ" name="%l1;_occ" class="occz4" autocomplete="off" %l_z3; size="3" maxlength="8"
         value="%if;(relation.z3.link and relation.z3.occ = "")0%else;%relation.z3.occ;%end;"
-        onkeypress="javascript:return oKP2(event,'r',z1,'_fath_occ')"
+        onkeypress="javascript:return oKP2(event,'r',z1,'_fath_occ','')"
         onblur="oB3('%l1;')"%/></td>
-    <td><input id="%l1;_fn" name="%l1;_fn" class="ar fn" size="30" maxlength="200" value="%relation.z3.first_name;" %l_on3;%/></td>
+    <td><input id="%l1;_fn" name="%l1;_fn" class="ar fn" size="30" maxlength="200" value="%relation.z3.first_name;" %l_on3; %l_on8;%/></td>
     <td><input id="%l1;_sn" name="%l1;_sn" class="sn" size="30" maxlength="200" value="%relation.z3.surname;"
          %apply;onjq1(l1,z4) %l_on7;%/></dt><td><span id="%l1;_jq1"> </span></td>
 %end;
 
 %(<!-- End define  -->%)
+
+</head>
+<body%body_prop; id="upd" %apply;load_focus()>
+%message_to_wizard;
 
 <form name="upd" method="post" action="%action;">
 <div id="jq" style="display:none"> </div>
@@ -170,7 +166,7 @@
     <label><input name="occ" style="text-align:center;" title="[*number] oc" autocomplete="off" size="2" maxlength="8" value="%if(occ="")0%else;%occ;%end;" id="occ"%/></label></span>
   </legend>
   <div class="w1">
-    %lpc1; <label %lpa1;>[first name/first names]0<input id="first_name" name="first_name" size="30" maxlength="200" value="%first_name;" %l_on3;%/></label>
+    %lpc1; <label %lpa1;>[first name/first names]0<input id="first_name" name="first_name" size="30" maxlength="200" value="%first_name;" %l_on3; %l_on8;%/></label>
     <label>[surname/surnames]0<input id="surname" name="surname" size="30" maxlength="200" value="%surname;" %l_on2; %l_on7;%/></label>
   </div>
   <div class="w1">
@@ -250,7 +246,7 @@
       %if;has_pevents;%foreach;pevent;%apply;one_event(cnt,"","witness")%end;%end;
       %if;(not has_pevent_death)%apply;one_event(next_pevent,"-","witness")%incr_next_pevent;%end;
       <dt id="new_event"></dt>
-      <dt><a href="javascript:addEvent('%prefix;')" title="(+) [*death]" %lpa4;> + [event/events]0</a> %lpc4; %lt2; [place] [note/notes]1 [source/sources]1</dt>
+      <dt><a href="javascript:addEvent()" title="(+) [*death]" %lpa4;> + [event/events]0</a> %lpc4; %lt2; [place] [note/notes]1 [source/sources]1</dt>
       %incr_next_pevent;
     </dl>
 </fieldset>
@@ -269,7 +265,7 @@
       %apply;relations("1")
     %end;
     <tr id="new_relation"></tr>
-    <tr><td class="bg7"><a href="javascript:addRelation(1,1,'%prefix;')" %lpa6;> + </a></td></tr>
+    <tr><td class="bg7"><a href="javascript:addRelation(1,1)" %lpa6;> + </a></td></tr>
   </table>
 </fieldset>
 <fieldset class="t">

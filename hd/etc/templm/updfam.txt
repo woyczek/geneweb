@@ -1,7 +1,7 @@
 %doctype;
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <!-- $Id: updfam.txt,v 7.00 2016/01/18 21:20:15 mr Exp $ -->
+  <!-- $Id: updfam.txt,v 7.00 2016/01/26 10:48:51 mr Exp $ -->
   <title>%nn;
     %if;(evar_m = "ADD_FAM" or evar_m = "ADD_FAM_OK")
       [*add::family/families]0%nn;
@@ -21,31 +21,9 @@
   %include.css;
   %import;js_upd
   %base_header;
-  %define;load_focus()
-    onload="oL1();oL2();%nn;
-    %if;(evar_m = "ADD_FAM" or evar_m = "ADD_PAR" or evar_m = "MOD_FAM")
-      jq1b('%evar.i;','%prefix;');%nn;
-      %if;(evar_m = "ADD_FAM" or evar_m = "ADD_PAR")
-        %if;(father.first_name = "")
-          sIV('pa1_fn')%nn;
-        %else;
-          sIV('pa2_fn')%nn;
-        %end;
-      %elseif;(marriage.prec != "sure")
-        sIV('lfc3')%nn;
-      %else;
-        addChild(1,1,'%prefix;')%nn;
-      %end;
-    %end;
-    "%nn;
-  %end;
-</head>
-<body%body_prop; id="upd" %apply;load_focus()>
-%message_to_wizard;
+  %import;updind_updfam
 
 %( <!-- Begin define  --> %)
-
-%import;updind_updfam
 
 %let;lt1;<abbr title="%ak1;%ak2;%ak3;%ak7;">#</abbr>%in;
 %let;lt2;<abbr title="%lta;%ltb;%ltc;">[date/dates]0</abbr>%in;
@@ -62,8 +40,26 @@
 %in;
 %let;lt4;title="%ak1;%ak2;%ak3;%ak7;%ak4;"%in;
 %let;lt5;<abbr title="%lta;%ltb;">[date/dates]0</abbr>%in;
-%define;onjq1a(z1) onkeydown="if(event.keyCode == 13)tUC(this)" onblur="tUC(this);jq1a('z1','%prefix;')"%end;
-%define;onjq1a1(z1) onkeydown="if(event.keyCode == 13)tUC1(this)" onblur="tUC1(this);jq1a('z1','%prefix;')"%end;
+%define;load_focus()
+  onload="oL1();oL2();%nn;
+  %if;(evar_m = "ADD_FAM" or evar_m = "ADD_PAR" or evar_m = "MOD_FAM")
+    jq1b('%evar.i;');%nn;
+    %if;(evar_m = "ADD_FAM" or evar_m = "ADD_PAR")
+      %if;(father.first_name = "")
+        sIV('pa1_fn')%nn;
+      %else;
+        sIV('pa2_fn')%nn;
+      %end;
+    %elseif;(marriage.prec != "sure")
+      sIV('lfc3')%nn;
+    %else;
+      addChild(1,1)%nn;
+    %end;
+  %end;
+  "%nn;
+%end;
+%define;onjq1a(z1) onkeydown="if(event.keyCode == 13)tUC(this)" onblur="tUC(this);jq1a('z1')"%end;
+%define;onjq1a1(z1) onkeydown="if(event.keyCode == 13)tUC1(this)" onblur="tUC1(this);jq1a('z1')"%end;
 %define;accesskey(z1)
   %if;("z1"="marr") %lfa3; %end;
 %end;
@@ -104,7 +100,7 @@
   %let;l2;%if;(xx.create="create")%if;(l="male")0%elseif;(l="female")1%else;2%end;%end;%in;
   <input type="hidden" id="z1z2_sex" name="z1z2_sex" value="%l1;"%/>
   <input type="hidden" id="z1z2_p" name="z1z2_p" value="%xx.create;"%/>
-  <input id="z1z2_occ" name="z1z2_occ" class="occ%l2;" placeholder="%l1;" autocomplete="off" size="5" maxlength="8" onkeypress="javascript:return oKP2(event,'z1','z2','_occ')" onblur="oB2('z1z2')"
+  <input id="z1z2_occ" name="z1z2_occ" class="occ%l2;" placeholder="%l1;" autocomplete="off" size="5" maxlength="8" onkeypress="javascript:return oKP2(event,'z1','z2','_occ','')" onblur="oB2('z1z2')"
    %if;(xx.create="create") value="" %elseif;(xx.occ = "") value="0" %else; value="%xx.occ;" %end;>
 %end;
 %define;one_parent(z1)
@@ -113,9 +109,9 @@
     <tr>
       <td>%apply;link_create1("pa","z1","0","parent")<div id="pa1_jq1"> </div></td>
       <td><input id="pa1_fn" name="pa1_fn" size="30" maxlength="200" placeholder="[first name/first names]0" value="%parent.first_name;" %lfa1;
-           %sp;onkeypress="javascript:return cF2(event,'pa',1,'_fn');" %l_on3;%/><br
+           %sp;onkeypress="javascript:return cF2(event,'pa',1,'_fn');" %l_on3; %l_on8;%/><br
        %/><input id="pa1_sn" name="pa1_sn" class="ar" size="30" maxlength="200" placeholder="[surname/surnames]0" value="%parent.surname;"
-           onkeypress="javascript:return cF2(event,'pa',1,'_sn');" %apply;onjq1a("pa1") %l_on7;%/></td>
+           onkeypress="javascript:return cF2(event,'pa',1,'_sn');" %apply;onjq1a("pa1") %l_on2; %l_on7;%/></td>
       <td class="jq2"><div id="pa1_jq2"></div><div id="pa1_jq3"></div>
         <span id="dppa1" class="%l1;">%nn;
           %apply;date_place("parent","birth","pa1b","pa","1","b_yy")
@@ -127,7 +123,7 @@
     <tr>
       <td>%apply;link_create1("pa","z1","1","parent")<div id="pa2_jq1"> </div></td>
       <td><input id="pa2_fn" name="pa2_fn" size="30" maxlength="200" placeholder="[first name/first names]0" value="%parent.first_name;"
-           onkeypress="javascript:return cF2(event,'pa',2,'_fn');" %l_on3;%/><br
+           onkeypress="javascript:return cF2(event,'pa',2,'_fn');" %l_on3; %l_on8;%/><br
        %/><input id="pa2_sn" name="pa2_sn" class="ar" size="30" maxlength="200" placeholder="[surname/surnames]0" value="%parent.surname;"
            onkeypress="javascript:return cF2(event,'pa',2,'_sn');" %apply;onjq1a("pa2") %l_on7;%/></td>
       <td class="jq2"><div id="pa2_jq2"></div><div id="pa2_jq3"></div>
@@ -156,6 +152,10 @@
 %end;
 
 %( <!-- End define --> %)
+
+</head>
+<body%body_prop; id="upd" %apply;load_focus()>
+%message_to_wizard;
 
 <form name="upd" method="post" action="%action;">
 <div id="jq" style="display:none"> </div>
@@ -225,7 +225,7 @@
     </tr>
     %foreach;child;%apply;one_child(cnt)%end;
     <tr id="new_child"></tr>
-    <tr><td class="bg7"><a id="ach" href="javascript:addChild(1,1,'%prefix;')" %lfa2;> + </a></td><td style="text-align:left;border:0"> %lfc2;</td></tr>
+    <tr><td class="bg7"><a id="ach" href="javascript:addChild(1,1)" %lfa2;> + </a></td><td style="text-align:left;border:0"> %lfc2;</td></tr>
   </table>
 </fieldset>
 <fieldset class="event" style="border:0">
@@ -233,7 +233,7 @@
   <dl>
     %if;has_fevents;%foreach;fevent;%apply;one_event(cnt,"","fwitness")%end;%else;%apply;one_event(1,"#marr","fwitness")%end;
     <dt id="new_event"></dt>
-    <dt><a href="javascript:addEvent('%prefix;')" %lfa4;>+ [event/events]0</a> %lfc4; %lt2; [place] [note/notes]1 [source/sources]1</dt>
+    <dt><a href="javascript:addEvent()" %lfa4;>+ [event/events]0</a> %lfc4; %lt2; [place] [note/notes]1 [source/sources]1</dt>
   </dl>
 </fieldset>
 <fieldset class="f2 al" style="border:0">
