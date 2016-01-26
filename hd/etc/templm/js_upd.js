@@ -1,4 +1,4 @@
-/* $Id: js_upd.js,v 7.00 2016/01/26 10:48:38 mr Exp $ */
+/* $Id: js_upd.js,v 7.00 2016/01/26 11:28:57 mr Exp $ */
   function oKP1(event)
   {
     var key = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
@@ -492,7 +492,7 @@
           <input id="' + t1 + '_occ" name="' + t1 + '_occ" class="occ2" autocomplete="off" size="5" maxlength="8" placeholder="N" value="" onkeypress="javascript:return oKP2(event,\'ch\',' + c1 + ',\'_occ\')" onblur="oB2(\'' + t1 + '\')">\n\
           <div id="' + t1 + '_jq1"> <\/div>\n\
         <\/td>\n\
-        <td><input id="' + t1 + '_fn" name="' + t1 + '_fn" size="30" maxlength="200" value="" onkeypress="javascript:return cF2(event,\'ch\',' + c1 + ',\'_fn\');" onkeydown="if(event.keyCode == 13)tUC1(this)" onblur="tUC1(this);jq1a(\'' + t1 + '\')"><br>\
+        <td><input id="' + t1 + '_fn" name="' + t1 + '_fn" size="30" maxlength="200" value="" onkeypress="javascript:return cF2(event,\'ch\',' + c1 + ',\'_fn\');" onkeydown="if(event.keyCode == 13)tUC1(this)" onblur="tUC1(this);jq1a(\'' + t1 + '\')" ' + g_fn + '><br>\
             <input type="' + v2 + '" id="' + t1 + '_sn" name="' + t1 + '_sn" class="ar" size="30" maxlength="200" value="' + v3 + '" placeholder="' + v1 + '" onkeypress="javascript:return cF2(event,\'ch\',' + c1 + ',\'_sn\');" onblur="tUC(this);jq1a(\'' + t1 + '\')" onkeydown="if(event.keyCode == 13)tUC(this)" ' + g_sn + '><\/td>\n\
         <td class="jq2"><div id="' + t1 + '_jq2"> <\/div><div id="' + t1 + '_jq3"> <\/div>\n\
             <span id="dp' + t1 + '" class="vis">\n\

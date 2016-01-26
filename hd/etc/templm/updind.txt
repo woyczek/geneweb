@@ -1,7 +1,7 @@
 %doctype;
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <!-- $Id: updind.txt,v 7.00 2016/01/26 10:49:01 mr Exp $ -->
+  <!-- $Id: updind.txt,v 7.00 2016/01/26 12:01:19 mr Exp $ -->
   <title>%nn;
     %if;(evar_m = "MRG_IND_OK" or evar_m = "MRG_MOD_IND_OK")
       [*merge::person/persons]1 # %index;
@@ -194,10 +194,10 @@
     %if;has_first_names_aliases;
       %foreach;first_name_alias;
         %let;cnt1;%expr(cnt+1)%in;
-        <label>[first name alias]0 %cnt1;<input id="first_name_alias%cnt;" name="first_name_alias%cnt;" size="30" value="%first_name_alias;"%/></label><a href="javascript:addItem('first_name_alias',%cnt1;,'[first name alias]0')"> + </a>
+        <label>[first name alias]0 %cnt1;<input id="first_name_alias%cnt;" name="first_name_alias%cnt;" size="30" value="%first_name_alias;" %l_on8;%/></label><a href="javascript:addItem('first_name_alias',%cnt1;,'[first name alias]0')"> + </a>
       %end;
     %else;
-      <label>[first name alias]0 1<input id="first_name_alias0" name="first_name_alias0" size="30" value=""%/></label><a href="javascript:addItem('first_name_alias',1,'[first name alias]0')"> + </a>
+      <label>[first name alias]0 1<input id="first_name_alias0" name="first_name_alias0" size="30" value="" %l_on8;%/></label><a href="javascript:addItem('first_name_alias',1,'[first name alias]0')"> + </a>
     %end;
     <span id="new_first_name_alias"></span>
     %if;has_surnames_aliases;
