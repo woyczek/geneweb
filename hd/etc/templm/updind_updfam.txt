@@ -159,7 +159,7 @@
       %else;
         <textarea id="e_srcz1" name="e_srcz1" placeholder="[*source/sources]1" rows="1" class="esrc" %l_on1s;>%event.e_src;%sq;</textarea>
       %end;</dd>
-  %if;has_z3;%foreach;z3;%apply;one_witness(z1,wcnt,"z3")%end;%end;
+  %foreach;z3;%apply;one_witness(z1,wcnt,"z3")%end;
   <dd id="new_ez1_witn"></dd>
   <dd> <a id="awz1" href="javascript:addWitness(1,1,'ez1_witn')">+ [witness/witnesses]0</a> %lt1; [first name/first names]0 [surname/surnames]0</dd>
 %end;
