@@ -151,7 +151,7 @@
       <span><a id="upd" href="%prefix;m=U;%access;" %laU;>↻ [*update]</a>
         <span class="s_menu">
           <a id="mod_ind" href="%prefix;m=MOD_IND;i=%index;" %laP; %l_on1;>[*modify::person/persons]0</a>%nn;
-          <a id="chg_evt_ind" href="%prefix;m=CHG_EVT_IND_ORD;i=%index;" %_lon1;>[*invert::event/events]1 [person/persons]0%(<br/>[*modify person event order]0%)</a>
+          <a id="chg_evt_ind" href="%prefix;m=CHG_EVT_IND_ORD;i=%index;" %_lon1;>[*invert::event/events]1%(<br/>[*modify person event order]0%)</a>
           %if;(bvar.history_diff="yes" and has_history)
             <a id="hist" href="%prefix;m=HIST_DIFF;t=DIFF;f=%history_file;&new=0;old=1" %laD;>[*last diff]</a>
             <a href="%prefix;m=HIST_DIFF;t=SUM;f=%history_file;">[*revision history]</a>
@@ -162,13 +162,13 @@
             %end;
             %if;(family_cnt < 4)
               %let;a_k;%if;(family_cnt = 1)F%elseif;(family_cnt = 2)G%elseif;(family_cnt = 3)H%end;%in;
-              <a id="mod_fam_%family_cnt;" href="%prefix;m=MOD_FAM;i=%family.index;;ip=%index;" title="[*modify::family/families]0 %if;(family_cnt != 1)%family_cnt;%end; (%a_k;)"
-                 accesskey="%a_k;" %l_on1;>[*modify::family/families]0 %if;(family_cnt!=1)%family_cnt;%end;</a>%nn;
+              <a id="mod_fam_%family_cnt;" href="%prefix;m=MOD_FAM;i=%family.index;;ip=%index;" title="[*modify::family/families]0 %if;(nb_families>1)%family_cnt;%end; (%a_k;)"
+                 accesskey="%a_k;" %l_on1;>[*modify::family/families]0 %if;(nb_families>1)%family_cnt;%end;</a>%nn;
             %else;
-              <a id="mod_fam_%family_cnt;" href="%prefix;m=MOD_FAM;i=%family.index;;ip=%index;" title="[*modify::family/families]0 %if;(family_cnt!=1)%family_cnt;%end;"
-                 %l_on1;>[*modify::family/families]0 %if;(family_cnt!=1)%family_cnt;%end;</a>%nn;
+              <a id="mod_fam_%family_cnt;" href="%prefix;m=MOD_FAM;i=%family.index;;ip=%index;" title="[*modify::family/families]0 %family_cnt;"
+                 %l_on1;>[*modify::family/families]0 %family_cnt;</a>%nn;
             %end;
-            <a href="%prefix;m=CHG_EVT_FAM_ORD;i=%family.index;;ip=%index;" %_lon1;>[*invert::event/events]1 [family/families]0 %if;(family_cnt!=1)%family_cnt;%end;%(<br/>%apply;chg_evt_fam_ord(family_cnt)%)</a>
+            <a href="%prefix;m=CHG_EVT_FAM_ORD;i=%family.index;;ip=%index;" %_lon1;>[*invert::event/events]1 [family/families]0 %if;(nb_families>1)%family_cnt;%end;%(<br/>%apply;chg_evt_fam_ord(family_cnt)%)</a>
           %end;
           
           %if;has_children;
