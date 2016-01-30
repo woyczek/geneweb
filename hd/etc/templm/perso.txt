@@ -51,7 +51,7 @@
 %let;l_maxlev0;%if;(evar.maxlev != "" and evar.maxlev > 0)%evar.maxlev;%elseif;(bvar.maxlev != "")%bvar.maxlev;%else;1%end;%in;
 %let;l_maxlev;%if;(has_children and max_desc_level > 1 and l_maxlev0 > max_desc_level)%max_desc_level;%else;%l_maxlev0;%end;%in;
 %let;l_ref;%if;browsing_with_sosa_ref;%sosa_ref.index;%else;%index;%end;%in;
-%let;l_url;;wide=%evar.wide;;maxlev=%l_maxlev;;image=%evar.image;;spouse=%evar.spouse;;age=%evar.age;;%in;
+%let;l_url;;wide=%evar.wide;;maxlev=%l_maxlev;;asclev=%evar.asclev;;image=%evar.image;;spouse=%evar.spouse;;age=%evar.age;;%in;
 %let;l_on1; target="_blank"%in;
 %let;l_ldates;
   %if;wizard;
@@ -621,7 +621,11 @@
       </span>
       </span>
       </span></div><div style="clear:both">
-      %if;(evar.asclev>3)
+      %if(evar.asclev=3 or evar.asclev="")
+        %if;father.has_parents;<small>%apply;parents(3,"    ",4)</small>%end;
+        %apply;parents(2,"",2)
+        %if;mother.has_parents;<small>%apply;parents(3,"    ",6)</small>%end;
+      %elseif;(evar.asclev>3)
         %if;father.has_parents;
           <small>
             %if;father.father.has_parents;%apply;parents(4,"        ",8)%end;
@@ -637,10 +641,6 @@
             %if;mother.mother.has_parents;%apply;parents(4,"        ",14)%end;
           </small>
         %end;
-      %elseif(evar.asclev=3 or evar.asclev="")
-        %if;father.has_parents;<small>%apply;parents(3,"    ",4)</small>%end;
-        %apply;parents(2,"",2)
-        %if;mother.has_parents;<small>%apply;parents(3,"    ",6)</small>%end;
       %end;
     </div>
     %if;(father.nb_children > 1 or mother.nb_children > 1)
@@ -831,7 +831,7 @@
 %end;
 %define;curr_age()
   %foreach;event;
-    %if;(event.name=[death])
+    %if;(event.name=[death] and has_death_date and has_birth_date)
      %if;(death_date.prec="" and birth_date.prec="" and death_date.year >= birth_date.year)%apply;compute_age("death_date","birth_date")%else;%event.age;%end;
    %end;
   %end;
