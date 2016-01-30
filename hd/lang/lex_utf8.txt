@@ -14040,3 +14040,7 @@ fr: permuter les événéments individuels
     modify family %s event order
 en: permute the events of family %s
 fr: permuter les événements de la famille %s
+
+    full width/columns
+en: full width display/columns display
+fr: affichage pleine largeur/affichage sur deux colonnes

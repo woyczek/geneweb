@@ -210,25 +210,25 @@
   </div>
 %end;
 %define;buttons()
-  <div id="button" style="position:absolute;float:right;top:30px;right:3px;">
+  <div id="button" style="position:absolute;float:right;top:30px;right:0px;">
     <a href="%prefix;%access;;wide=%evar.wide;;maxlev=%evar.maxlev;;image=%evar.image;;age=%evar.age;;spouse=%if;(evar.spouse!="off")off%else;on%end;"
       title="%if;(evar.spouse="off")[visualize/show/hide/summary]1%else;[visualize/show/hide/summary]2%end; [spouse/spouses]1">%if;(evar.spouse="off")👫%else;👤%end;</a>
-    <a href="%prefix;%access;;wide=%evar.wide;;maxlev=%evar.maxlev;;image=%evar.image;;spouse=%evar.spouse;;age=%if;(evar.age!="on")on%else;%end;" 
+    <br/><a href="%prefix;%access;;wide=%evar.wide;;maxlev=%evar.maxlev;;image=%evar.image;;spouse=%evar.spouse;;age=%if;(evar.age!="on")on%else;%end;" 
       title="%if;(evar.age!="on")[visualize/show/hide/summary]1%else;[visualize/show/hide/summary]2%end; [age]/[event/events]1" style="%if;(evar.age="on")color:red;%end;">🎂</a>
-  %if;(bvar.event_age!="on")
-    %if;(bvar.no_image_for_visitor != "yes" or friend or wizard)
-      <a href="%prefix;%access;;wide=%evar.wide;;maxlev=%evar.maxlev;;spouse=%evar.spouse;;age=%evar.age;;image=%if;(evar.image!="on" or evar.image="")on%else;%end;" 
-      title="%if;(evar.image!="on")[visualize/show/hide/summary]1%else;[visualize/show/hide/summary]2%end; [image/images]1" style="%if;(evar.image="on")color:red;%end;">🎴</a>
+    %if;(bvar.event_age!="on")
+      %if;(bvar.no_image_for_visitor != "yes" or friend or wizard)
+        <br/><a href="%prefix;%access;;wide=%evar.wide;;maxlev=%evar.maxlev;;spouse=%evar.spouse;;age=%evar.age;;image=%if;(evar.image!="on" or evar.image="")on%else;%end;" 
+        title="%if;(evar.image!="on")[visualize/show/hide/summary]1%else;[visualize/show/hide/summary]2%end; [image/images]1" style="%if;(evar.image="on")color:red;%end;">🎴</a>
+      %end;
     %end;
-  %end;
-  <br/>
+
     %if;(bvar.wide!="yes")
-      <a href="%prefix;%access;;maxlev=%evar.maxlev;;image=%evar.image;;spouse=%evar.spouse;;age=%evar.age;;wide=%if;(evar.wide!="yes")yes%else;%end;" 
-      title="%if;(evar.wide="yes")affichage en colonnes%else;affichage large%end;">%if;(evar.wide!="yes")W%else;<s>W</s>%end;</a>
+      <br/><a href="%prefix;%access;;maxlev=%evar.maxlev;;image=%evar.image;;spouse=%evar.spouse;;age=%evar.age;;wide=%if;(evar.wide!="yes")yes%else;%end;" 
+      title="%if;(evar.wide="yes")[full width/columns]1%else;[full width/columns]0%end;">%if;(evar.wide!="yes")⚊%else;⚋%end;</a>
     %end;
     %if;(bvar.misc!="yes")
-      <a href="%prefix;%access;;maxlev=%evar.maxlev;;image=%evar.image;;spouse=%evar.spouse;;age=%evar.age;;wide=%evar.wide;;misc=%if;(evar.misc!="yes")yes%else;%end;" 
-      title="%if;(evar.misc!="yes")afficher infos diverses%else;masquer infos diverses%end;">%if;(evar.misc!="yes")M%else;<s>M</s>%end;</a>
+      <br/><a href="%prefix;%access;;maxlev=%evar.maxlev;;image=%evar.image;;spouse=%evar.spouse;;age=%evar.age;;wide=%evar.wide;;misc=%if;(evar.misc!="yes")yes%else;%end;" 
+      title="%if;(evar.misc!="yes")[visualize/show/hide/summary]1%else;[visualize/show/hide/summary]2%end; wikitext">%if;(evar.misc!="yes")M%else;<s>M</s>%end;</a>
     %end;
   </div>
 %end;
@@ -599,6 +599,17 @@
         %if;(not cancel_links)<a href="%prefix;m=A;%access;">%end;<h2 style="margin-top:-5px">[*ancestors]</h2>%if;(not cancel_links)</a>%end;
         %if;(not cancel_links)
         <span class="s_menu">
+          %if;(max_anc_level>3)
+            %let;l2;%if;(max_anc_level<6)%max_anc_level;%else;5%end;%in;
+            %for;i;1;l2;
+              %if;(i=1 or i=2)<span style="width:27px;"> </span>
+              %else;
+                <a href="%prefix;%access;;wide=%evar.wide;;image=%evar.image;;age=%evar.age;;spouse=%evar.spouse;;maxlev=%evar.maxlev;;asclev=%i;"
+                style="%if;((evar.asclev="" and i=3) or i=evar.asclev)background-color:%if;(bvar.css=1)#666;%else;#EEE;%end;%end;width:17px;"
+                title="%i; [generation/generations]1%nl;%apply;asc(i) [ancestors]">%if;(i<10) %end;%i;</a>
+              %end;
+            %end;
+          %end;
           <a id="anc_tree" href="%prefix;m=A;t=T;v=4;image=on;marriage=on;%access;" %laY;>[*ascendants tree]</a>%nn;
           <a href="%prefix;m=A;t=H;v=%l1;;maxv=%max_anc_level;;i=%index;">[*horizontal tree]</a>%nn;
           <a href="%prefix;m=A;t=Z;image=%evar.image;;v=7;maxv=%max_anc_level;;%access;">[*table] [ancestors]</a>%nn;
@@ -610,7 +621,7 @@
       </span>
       </span>
       </span></div><div style="clear:both">
-      %if;(l_maxlev > 1)
+      %if;(evar.asclev>3)
         %if;father.has_parents;
           <small>
             %if;father.father.has_parents;%apply;parents(4,"        ",8)%end;
@@ -626,7 +637,7 @@
             %if;mother.mother.has_parents;%apply;parents(4,"        ",14)%end;
           </small>
         %end;
-      %else;
+      %elseif(evar.asclev=3 or evar.asclev="")
         %if;father.has_parents;<small>%apply;parents(3,"    ",4)</small>%end;
         %apply;parents(2,"",2)
         %if;mother.has_parents;<small>%apply;parents(3,"    ",6)</small>%end;
@@ -853,7 +864,7 @@
   %end;
   "
   %if;(count < 3)style="display:none;"%end;
-  >[*tree] des témoins de ses événements et son lien avec le numéro Sosa racine de la base</a></span>
+  >[*tree] [witness/witnesses]1/cujus</a></span>
   %reset_count;
   </div>
 %end;
@@ -996,6 +1007,11 @@
     %end;
   %end;
 %end;
+%define;asc(xx)
+  %foreach;ancestor_level;
+    %if;(level = xx)%number_of_ancestors;%end;
+  %end;
+%end;
 %define;sosainfo()
   %if;not cancel_links;
     %if;(sosa=1)[*Sosa] 1
@@ -1026,7 +1042,7 @@
 <div class="col1">
   <div id="sosainfo" style="height:16px;%if;(evar.wide!="yes")position:relative;float:right;padding-right:10px;%else;position:absolute;right:44%%;%end;">%apply;sosainfo()</div>
   <div class="person"> %( <!-- Begin display image, person --> %)
-    <h1 class="ch1 h1_%sex; h1_%has_families;%has_sosa;" style="%if;(evar.wide!="yes")margin-top:8px;%end;">
+    <h1 class="ch1 h1_%sex; h1_%has_families;%has_sosa;" style="%if;(evar.wide="yes")margin-right:24px;margin-left:24px%else;margin-top:8px;%end;">
       %if;(has_public_name)
         %apply;link_s("n",public_name)
       %else;
@@ -1147,9 +1163,9 @@
             %apply;a_of_b%with;%event_witness_relation.event.name;%and;%end;%end;
             <nobr>%apply;somebody("event_witness_relation.person")</nobr>%if;(event_witness_relation.event.spouse = "").%end;
             %if;(event_witness_relation.event.spouse != "")
-             %sp;<nobr>%if;(event_witness_relation.event.has_date)%sp;<a href="%prefix;MOD_FAM;i=%event_witness_relation.person.family.index;;ip=%event_witness_relation.person.index;"
+             %sp;<nobr>%if;(event_witness_relation.event.has_date)%sp;<span %( cant have link atm, a href="%prefix;MOD_FAM;i=%event_witness_relation.person.family.index;;ip=%event_witness_relation.person.index;" %)
                 title="%if;(event_witness_relation.event.has_date)%event_witness_relation.event.date;%nl;%end;%nn;
-                       %if;event_witness_relation.event.has_place;%event_witness_relation.event.place;%end;">&%event_witness_relation.event.date.year;</a>
+                       %if;event_witness_relation.event.has_place;%event_witness_relation.event.place;%end;">&%event_witness_relation.event.date.year;</span>
                 %else;<span title="%if;event_witness_relation.event.has_place;%event_witness_relation.event.place;%end;"> &</span>
               %end;
               %apply;somebody("event_witness_relation.event.spouse")</nobr>.
@@ -1236,7 +1252,7 @@
             %if;(max_desc_level>1)
               %let;l2;%expr(max_desc_level+1)%in;
               %for;i;1;l2;
-                <a href="%prefix;%access;;wide=%evar.wide;;image=%evar.image;;age=%evar.age;;spouse=%evar.spouse;;maxlev=%i;"
+                <a href="%prefix;%access;;wide=%evar.wide;;image=%evar.image;;age=%evar.age;;spouse=%evar.spouse;;maxlev=%i;;asclev=%evar.asclev;"
                 style="%if;((evar.maxlev="" and i=2) or i=evar.maxlev)background-color:%if;(bvar.css=1)#666;%else;#EEE;%end;%end;width:17px;"
                 title="%i; %if;(i=1)[generation/generations]0%else;[generation/generations]1%end;%nl;%if;(i=1 and nb_children=1)[a descendant]0%else;%apply;desc(i) [descendants]%end;">%if;(i<10) %end;%i;</a>
               %end;
