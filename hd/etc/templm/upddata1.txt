@@ -3,7 +3,7 @@
    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <!-- $Id: upddata1.txt,v 7.00 2015/04/03 11:35:14 mr Exp $ -->
+  <!-- $Id: upddata1.txt,v 7.00 2016/01/31 00:01:16 mr Exp $ -->
   <title>%title;</title>
   <meta http-equiv="Content-Type" content="text/html; charset=%charset;"%/>
   <meta http-equiv="Content-Style-Type" content="text/css"%/>
@@ -19,14 +19,18 @@
    var x1 = document.getElementById('nx_a');
    var x2 = "%prefix;m=MOD_DATA_OK;data=%evar.data;;s=%encode.evar.s;;"
    var x3 = x1.title;
-   var x4 = "nx_input="
+   var x4 = "nx_input=";
    var x5 = document.getElementById('nx_input').value;
-   var x6 = document.getElementById('nx_span');
-   parent.ifr.location.href = x2 + x3 + x4 + x5;
+   var x60 = "%if;(evar.data = "sn")surname_aliases%elseif;(evar.data = "fn")first_name_aliases%end;"
+   var x61 = (x60 == "") ? "": document.getElementById(x60).checked;
+   var x62 = (x61 == true) ? "=yes;": "=;";
+   var x63 = ";" + x60 + x62;
+   var x7 = document.getElementById('nx_span');
+   parent.ifr.location.href = x2 + x3 + x4 + x5 + x63;
    x1.firstChild.nodeValue = x5;
    x1.setAttribute("style","color:#C0C0C0;font-style:italic;","false");
    x1.focus();
-   x6.setAttribute("style","visibility:hidden","false");
+   x7.setAttribute("style","visibility:hidden","false");
    return false;
   }
   function lhr()
