@@ -13953,6 +13953,10 @@ fr: arbre complet
 en: compact tree
 fr: arbre compact
 
+    implex/implexes
+en: implex/implexes
+fr: implexe/implexes
+
     implex links
 en: link implexes
 fr: relier les implexes

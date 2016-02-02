@@ -23,7 +23,8 @@
       .col1,.col2{width:99%%;}
       .image_sheet{font-size:89%%;}
     %else;
-       .col1,.col2{width:48.5%%;min-width:290px;}
+       .col1{width:57%%;min-width:290px;}
+       .col2{width:40%%;min-width:290px;}
        .image_sheet {font-size: 71%%;}
     %end;
   </style>
@@ -119,7 +120,7 @@
           %if;(version = l_version)
             <a href="%l1;gwstp?v=main.htm;" title="Gwstp">Gwstp</a>
           %else;
-            <a href="%l1;gwsetup?v=main.htm;" title="Gwsetup">%if;(evar.oc!="" and evar.oc!="0")%evar.oc;%else;📂%end;</a>
+            <a href="%l1;gwsetup?v=main.htm;" title="Gwsetup">📂</a>
           %end;
           %if;(has_parents or has_children)
             <span class="s_menu">
@@ -148,7 +149,7 @@
           %end;
         </span>
       %end;
-      <span><a id="upd" href="%prefix;m=U;%access;" %laU;>↻ [*update]</a>
+      <span><a id="upd" href="%prefix;m=U;%access;" %laU;>↻</a>
         <span class="s_menu">
           <a id="mod_ind" href="%prefix;m=MOD_IND;i=%index;" %laP; %l_on1;>[*modify::person/persons]0</a>%nn;
           <a id="chg_evt_ind" href="%prefix;m=CHG_EVT_IND_ORD;i=%index;" %_lon1;>[*invert::event/events]1%(<br/>[*modify person event order]0%)</a>
@@ -189,7 +190,7 @@
         </span>
       </span>
     %end;
-    <span><a id="rela_comp" href="%prefix;m=R;%access;" %laR;>👪 [*relationship]</a>
+    <span><a id="rela_comp" href="%prefix;m=R;%access;" %laR;>👪</a>
       <span class="s_menu">
         %if;(browsing_with_sosa_ref)
           %if;(sosa_ref.index != "" and sosa_ref.index != index)
@@ -210,10 +211,11 @@
   </div>
 %end;
 %define;buttons()
-  <div id="button" style="position:absolute;float:right;top:30px;right:0px;">
-    <a href="%prefix;%access;;wide=%evar.wide;;maxlev=%evar.maxlev;;image=%evar.image;;age=%evar.age;;spouse=%if;(evar.spouse!="off")off%else;on%end;"
+  <div id="button" style="position:absolute;top:30px;right:0px;">
+    %apply;sosainfo()
+    <span style="position:absolute;right:0px"><a href="%prefix;%access;;wide=%evar.wide;;maxlev=%evar.maxlev;;image=%evar.image;;age=%evar.age;;spouse=%if;(evar.spouse!="off")off%else;on%end;"
       title="%if;(evar.spouse="off")[visualize/show/hide/summary]1%else;[visualize/show/hide/summary]2%end; [spouse/spouses]1">%if;(evar.spouse="off")👫%else;👤%end;</a>
-    <br/><a href="%prefix;%access;;wide=%evar.wide;;maxlev=%evar.maxlev;;image=%evar.image;;spouse=%evar.spouse;;age=%if;(evar.age!="on")on%else;%end;" 
+     <br/><a href="%prefix;%access;;wide=%evar.wide;;maxlev=%evar.maxlev;;image=%evar.image;;spouse=%evar.spouse;;age=%if;(evar.age!="on")on%else;%end;" 
       title="%if;(evar.age!="on")[visualize/show/hide/summary]1%else;[visualize/show/hide/summary]2%end; [age]/[event/events]1" style="%if;(evar.age="on")color:red;%end;">🎂</a>
     %if;(bvar.event_age!="on")
       %if;(bvar.no_image_for_visitor != "yes" or friend or wizard)
@@ -221,7 +223,6 @@
         title="%if;(evar.image!="on")[visualize/show/hide/summary]1%else;[visualize/show/hide/summary]2%end; [image/images]1" style="%if;(evar.image="on")color:red;%end;">🎴</a>
       %end;
     %end;
-
     %if;(bvar.wide!="yes")
       <br/><a href="%prefix;%access;;maxlev=%evar.maxlev;;image=%evar.image;;spouse=%evar.spouse;;age=%evar.age;;wide=%if;(evar.wide!="yes")yes%else;%end;" 
       title="%if;(evar.wide="yes")[full width/columns]1%else;[full width/columns]0%end;">%if;(evar.wide!="yes")⚊%else;⚋%end;</a>
@@ -230,6 +231,7 @@
       <br/><a href="%prefix;%access;;maxlev=%evar.maxlev;;image=%evar.image;;spouse=%evar.spouse;;age=%evar.age;;wide=%evar.wide;;misc=%if;(evar.misc!="yes")yes%else;%end;" 
       title="%if;(evar.misc!="yes")[visualize/show/hide/summary]1%else;[visualize/show/hide/summary]2%end; wikitext">%if;(evar.misc!="yes")M%else;<s>M</s>%end;</a>
     %end;
+    </span>
   </div>
 %end;
 %define;init_count(prev_count)
@@ -561,46 +563,52 @@
 %end;
 %define;consang()
   %if;(has_parents)
-      %reset_count;
-      %foreach;ancestor_level
-        %foreach;ancestor
-          %if;(ancestor.same != "")
-            %incr_count;
-          %end;
-        %end;
+    %reset_count;
+    %foreach;ancestor_level
+      %foreach;ancestor
+        %if;(ancestor.same != "")%incr_count;%end;
       %end;
-      %if;(has_consanguinity or count != 0)
-        <span class="nobr">
-        %if;(cancel_links)
-          [*consanguinity][:] %consanguinity;
-        %else;
-          <a href="%prefix;em=R;ei=%mother.index;;m=NG;t=PN;select=%father.index;;et=A;spouse=on;image=on" 
-             title="[relationship computing], [parents]">[*consanguinity][:] %consanguinity;</a>
-        %end;
-        %if;(count != 0) (%nn;
-          %if;(not cancel_links)
-            <a href="%prefix;m=A;t=N;v=%max_anc_level;;i=%index;;same=%count;"
-               title="[display smallest sosa number relative to ancestor]">%count; ==</a>%nn;
-          %else;
-            %count; ==%nn;
-          %end;)
-        %end;
-      %end;
-      </span>
     %end;
+    %if;(has_consanguinity or count != 0)
+      <span class="nobr">
+      %if;(cancel_links)
+        [consanguinity][:] %consanguinity;
+      %else;
+        <a href="%prefix;em=R;ei=%mother.index;;m=NG;t=PN;select=%father.index;;et=A;spouse=on;image=on" 
+           title="[relationship computing], [parents]">[consanguinity][:] %consanguinity;</a>
+      %end;
+    %end;
+    </span>
+  %end;
+%end;
+%define;implex()
+  %if;(has_parents)
+    %reset_count;
+    %foreach;ancestor_level
+      %foreach;ancestor
+        %if;(ancestor.same != "")%incr_count;%end;
+      %end;
+    %end;
+    %if;(count != 0)
+      %if;(not cancel_links), <a href="%prefix;m=A;t=N;v=%max_anc_level;;i=%index;;same=%count;" style="float:none;padding:0px;"
+         title="[display smallest sosa number relative to ancestor]">%count; %if;(count=1)[implex/implexes]0%else[implex/implexes]1%end;</a>
+      %else;, %count; %if;(count=1)[implex/implexes]0%else[implex/implexes]1%end;
+      %end;
+    %end;
+  %end;
 %end;
 %define;anc_families()
   %if;has_parents;
    <div>
     <span class="menu" style="display:inline;position:relative;background-color:#AAA;">
-      <span style="margin-left:20px"><small>[up to] %apply;ascmax()</small></span><br/>
+      <span style="margin-left:20px"><small>[up to] %apply;ascmax()%apply;implex()</small></span><br/>
       %let;l1;%apply;min(max_anc_level,5)%in;
       <span>
-        %if;(not cancel_links)<a href="%prefix;m=A;%access;">%end;<h2 style="margin-top:-5px">[*ancestors]</h2>%if;(not cancel_links)</a>%end;
+        %if;(not cancel_links)<a href="%prefix;m=A;%access;">%end;<h2 style="margin-top:-5px;">[*ancestors]</h2>%if;(not cancel_links)</a>%end;
         %if;(not cancel_links)
         <span class="s_menu">
           %if;(max_anc_level>3)
-            %let;l2;%if;(max_anc_level<6)%max_anc_level;%else;5%end;%in;
+            %let;l2;%if;(max_anc_level<6)%expr(max_anc_level+1)%else;5%end;%in;
             %for;i;1;l2;
               %if;(i=1 or i=2)<span style="width:27px;"> </span>
               %else;
@@ -644,8 +652,9 @@
       %end;
     </div>
     %if;(father.nb_children > 1 or mother.nb_children > 1)
-      <div>
-      <h2 class="ch2">[*full siblings]</h2>
+      <div style="display:inline;position:relative;clear:both">
+      <span style="margin-left:14px;"><small>%apply;consang()</small></span><br/>
+      <h2 class="ch2" style="margin-top:0px;">[*full siblings]</h2>
         <ol>
           %foreach;father.child;
             <li class="li_%sex; li_%has_families;%has_sosa;">
@@ -1003,7 +1012,7 @@
   %foreach;ancestor_level;
     %if;(level = max_anc_level)
       %number_of_ancestors; à %level;
-      %if;(level = "1") [generation/generations]0 %else; [generation/generations]1%end;
+      %if;(level = "1") [generation/generations]0%else; [generation/generations]1%end;
     %end;
   %end;
 %end;
@@ -1017,8 +1026,8 @@
     %if;(sosa=1)[*Sosa] 1
     %elseif;(has_sosa and sosa != 1)
       %let;l_sosa_ref;%apply;a_of_b%with;%and;%apply;link_name("sosa_ref")%end;%in;
-      <a href="%prefix;m=A;t=D;image=%evar.image;;i=%sosa_ref.index;;i1=%index;;l=%max_desc_level;" title="%apply;a_of_b%with;[*ancestors]%and;%sosa_ref;%end; [up to] %self;">[*Sosa] %sosa;</a>
-      %l_sosa_ref;%nn;
+      <small><a href="%prefix;m=A;t=D;image=%evar.image;;i=%sosa_ref.index;;i1=%index;;l=%max_desc_level;" title="%apply;a_of_b%with;[*ancestors]%and;%sosa_ref;%end; [up to] %self;">[*Sosa] %sosa;</a>
+      %l_sosa_ref;%nn;</small>
     %end;
     %if;(not browsing_with_sosa_ref or sosa_ref.index!=index)
       %apply;nav_with_sosa_ref%with;%self;%end; 
@@ -1040,9 +1049,8 @@
   %end;
 %end;
 <div class="col1">
-  <div id="sosainfo" style="height:16px;%if;(evar.wide!="yes")position:relative;float:right;padding-right:10px;%else;position:absolute;right:44%%;%end;">%apply;sosainfo()</div>
   <div class="person"> %( <!-- Begin display image, person --> %)
-    <h1 class="ch1 h1_%sex; h1_%has_families;%has_sosa;" style="%if;(evar.wide="yes")margin-right:24px;margin-left:24px%else;margin-top:8px;%end;">
+    <h1 class="ch1 h1_%sex; h1_%has_families;%has_sosa;" style="%if;(evar.wide="yes")margin-right:24px;margin-left:24px%end;">
       %if;(has_public_name)
         %apply;link_s("n",public_name)
       %else;
@@ -1237,7 +1245,6 @@
   <hr %if;(lwide = "no")style="display:none"%end; %/>
 %( <!-- Begin display ancestors /descendants --> %)
   %apply;anc_families()
-  <div>%apply;consang()</div>
     %if;has_families;
       <div style="clear:both">
       %if;has_children;
