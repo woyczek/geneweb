@@ -56,7 +56,7 @@
 %let;l_maxlev0;%if;(evar.maxlev != "" and evar.maxlev > 0)%evar.maxlev;%elseif;(bvar.maxlev != "")%bvar.maxlev;%else;1%end;%in;
 %let;l_maxlev;%if;(has_children and max_desc_level > 1 and l_maxlev0 > max_desc_level)%max_desc_level;%else;%l_maxlev0;%end;%in;
 %let;l_ref;%if;browsing_with_sosa_ref;%sosa_ref.index;%else;%index;%end;%in;
-%let;l_url;;wide=%evar.wide;;maxlev=%l_maxlev;;asclev=%evar.asclev;;image=%evar.image;;spouse=%evar.spouse;;age=%evar.age;;%in;
+%let;l_url;%if;(evar.wide!="");wide=%evar.wide;%end;%if;(evar.maxlev!="");maxlev=%l_maxlev;%end;%if;(evar.asclev!="");asclev=%evar.asclev;%end;%if;(evar.image!="");image=%evar.image;%end;%if;(evar.spouse!="");spouse=%evar.spouse;%end;%if;(evar.age!="");age=%evar.age;%end;%in;
 %let;l_on1; target="_blank"%in;
 %let;l_ldates;
   %if;wizard;
@@ -215,24 +215,25 @@
   </div>
 %end;
 %define;buttons()
-  <div id="button" style="position:absolute;top:30px;right:0px;">
-    %apply;sosainfo()
-    <span style="position:absolute;right:0px"><a href="%prefix;%access;;wide=%evar.wide;;maxlev=%evar.maxlev;;image=%evar.image;;age=%evar.age;;spouse=%if;(evar.spouse!="off")off%else;on%end;"
+  <div id="button">
+    <span style="position:absolute;top:30px;right:0px;">%apply;sosainfo()</span>
+    <span style="position:absolute;right:0px;top:47px">
+     <a href="%prefix;%access;%if;(evar.spouse!="off");spouse=off%else;%end;%if;(evar.age!="");age=%evar.age;%end;%if;(evar.image!="");image=%evar.image;%end;%if;(evar.wide!="");wide=%evar.wide;%end;%if;(evar.misc!="")misc=%evar.misc;%end;%if;(evar.maxlev!="");maxlev=%evar.maxlev;%end;%if;(evar.asclev!="");asclev=%evar.asclev;%end;"
       title="%if;(evar.spouse="off")[visualize/show/hide/summary]1%else;[visualize/show/hide/summary]2%end; [spouse/spouses]1">%if;(evar.spouse="off")👫%else;👤%end;</a>
-     <br/><a href="%prefix;%access;;wide=%evar.wide;;maxlev=%evar.maxlev;;image=%evar.image;;spouse=%evar.spouse;;age=%if;(evar.age!="on")on%else;%end;" 
+     <br/><a href="%prefix;%access;%if;(evar.spouse!="");spouse=%evar.spouse;%end;%if;(evar.age!="on");age=on%else;%end;%if;(evar.image!="");image=%evar.image;%end;%if;(evar.wide!="");wide=%evar.wide;%end;%if;(evar.misc!="")misc=%evar.misc;%end;%if;(evar.maxlev!="");maxlev=%evar.maxlev;%end;%if;(evar.asclev!="");asclev=%evar.asclev;%end;"
       title="%if;(evar.age!="on")[visualize/show/hide/summary]1%else;[visualize/show/hide/summary]2%end; [age]/[event/events]1" style="%if;(evar.age="on")color:red;%end;">🎂</a>
     %if;(bvar.event_age!="on")
       %if;(bvar.no_image_for_visitor != "yes" or friend or wizard)
-        <br/><a href="%prefix;%access;;wide=%evar.wide;;maxlev=%evar.maxlev;;spouse=%evar.spouse;;age=%evar.age;;image=%if;(evar.image!="on" or evar.image="")on%else;%end;" 
+        <br/><a href="%prefix;%access;%if;(evar.spouse!="");spouse=%evar.spouse;%end;%if;(evar.age!="");age=%evar.age;%end;%if;(evar.image!="on" or evar.image="");image=on%else;%end;%if;(evar.wide!="");wide=%evar.wide;%end;%if;(evar.misc!="")misc=%evar.misc;%end;%if;(evar.maxlev!="");maxlev=%evar.maxlev;%end;%if;(evar.asclev!="");asclev=%evar.asclev;%end;"
         title="%if;(evar.image!="on")[visualize/show/hide/summary]1%else;[visualize/show/hide/summary]2%end; [image/images]1" style="%if;(evar.image="on")color:red;%end;">🎴</a>
       %end;
     %end;
     %if;(bvar.wide!="yes")
-      <br/><a href="%prefix;%access;;maxlev=%evar.maxlev;;image=%evar.image;;spouse=%evar.spouse;;age=%evar.age;;wide=%if;(evar.wide!="yes")yes%else;%end;" 
+      <br/><a href="%prefix;%access;%if;(evar.spouse!="");spouse=%evar.spouse;%end;%if;(evar.age!="");age=%evar.age;%end;%if;(evar.image!="");image=%evar.image;%end;%if;(evar.wide!="yes");wide=yes%else;%end;%if;(evar.misc!="")misc=%evar.misc;%end;%if;(evar.maxlev!="");maxlev=%evar.maxlev;%end;%if;(evar.asclev!="");asclev=%evar.asclev;%end;"
       title="%if;(evar.wide="yes")[full width/columns]1%else;[full width/columns]0%end;">%if;(evar.wide!="yes")⚊%else;⚋%end;</a>
     %end;
     %if;(bvar.misc!="yes")
-      <br/><a href="%prefix;%access;;maxlev=%evar.maxlev;;image=%evar.image;;spouse=%evar.spouse;;age=%evar.age;;wide=%evar.wide;;misc=%if;(evar.misc!="yes")yes%else;%end;" 
+      <br/><a href="%prefix;%access;%if;(evar.spouse!="");spouse=%evar.spouse;%end;%if;(evar.age!="");age=%evar.age;%end;%if;(evar.image!="");image=%evar.image;%end;%if;(evar.wide!="");wide=%evar.wide;%end;%if;(evar.misc!="yes");misc=yes%else;%end;%if;(evar.maxlev!="");maxlev=%evar.maxlev;%end;%if;(evar.asclev!="");asclev=%evar.asclev;%end;"
       title="%if;(evar.misc!="yes")[visualize/show/hide/summary]1%else;[visualize/show/hide/summary]2%end; wikitext">%if;(evar.misc!="yes")M%else;<s>M</s>%end;</a>
     %end;
     </span>
@@ -616,7 +617,7 @@
             %for;i;1;l2;
               %if;(i=1 or i=2)<span style="width:27px;"> </span>
               %else;
-                <a href="%prefix;%access;;wide=%evar.wide;;image=%evar.image;;age=%evar.age;;spouse=%evar.spouse;;maxlev=%evar.maxlev;;asclev=%i;"
+                <a href="%prefix;%access;%if;(evar.spouse!="");spouse=%evar.spouse;%end;%if;(evar.age!="");age=%evar.age;%end;%if;(evar.image!="");image=%evar.image;%end;%if;(evar.wide!="");wide=%evar.wide;%end;%if;(evar.misc!="");misc=%evar.misc;%end;%if;(evar.maxlev!="");maxlev=%evar.maxlev;%end;;asclev=%i;"
                 style="%if;((evar.asclev="" and i=3) or i=evar.asclev)background-color:%if;(bvar.css=1)#666;%else;#EEE;%end;%end;width:17px;"
                 title="%i; [generation/generations]1%nl;%apply;asc(i) [ancestors]">%if;(i<10) %end;%i;</a>
               %end;
@@ -768,53 +769,50 @@
      >[*relations tree]</a>%nn;
      %reset_count;
 %end;
-
 %define;relation_computing(himxx, herxx, typexx)
   %let;l_rt;
-	%if;(relation_type = [godfather/godmother/godparents]2
-	  or relation_type = [godfather/godmother/godparents]1
-	  or relation_type = [godfather/godmother/godparents]0)
-	  godfather/godmother/godparents%nn;
-	%elseif;(relation_type = [adoptive father/adoptive mother/adoptive parents]2
-		  or relation_type = [adoptive father/adoptive mother/adoptive parents]1
-		  or relation_type = [adoptive father/adoptive mother/adoptive parents]0)
-	  adoptive father/adoptive mother/adoptive parents%nn;
-	%elseif;(relation_type = [recognizing father/recognizing mother/recognizing parents]2
-		  or relation_type = [recognizing father/recognizing mother/recognizing parents]1
-		  or relation_type = [recognizing father/recognizing mother/recognizing parents]0)
-	  recognizing father/recognizing mother/recognizing parents%nn;
-	%elseif;(relation_type = [candidate father/candidate mother/candidate parents]2
-		  or relation_type = [candidate father/candidate mother/candidate parents]1
-		  or relation_type = [candidate father/candidate mother/candidate parents]0)
-	  candidate father/candidate mother/candidate parents%nn;
-	%elseif;(relation_type = [foster father/foster mother/foster parents]2
-		  or relation_type = [foster father/foster mother/foster parents]1
-		  or relation_type = [foster father/foster mother/foster parents]0)
-	  foster father/foster mother/foster parents%nn;
-	%else;
-	*%nn;
-	%end;
-  %in;  
+  %if;(relation_type = [godfather/godmother/godparents]2
+    or relation_type = [godfather/godmother/godparents]1
+    or relation_type = [godfather/godmother/godparents]0)
+    godfather/godmother/godparents%nn;
+  %elseif;(relation_type = [adoptive father/adoptive mother/adoptive parents]2
+      or relation_type = [adoptive father/adoptive mother/adoptive parents]1
+      or relation_type = [adoptive father/adoptive mother/adoptive parents]0)
+    adoptive father/adoptive mother/adoptive parents%nn;
+  %elseif;(relation_type = [recognizing father/recognizing mother/recognizing parents]2
+      or relation_type = [recognizing father/recognizing mother/recognizing parents]1
+      or relation_type = [recognizing father/recognizing mother/recognizing parents]0)
+    recognizing father/recognizing mother/recognizing parents%nn;
+  %elseif;(relation_type = [candidate father/candidate mother/candidate parents]2
+      or relation_type = [candidate father/candidate mother/candidate parents]1
+      or relation_type = [candidate father/candidate mother/candidate parents]0)
+    candidate father/candidate mother/candidate parents%nn;
+  %elseif;(relation_type = [foster father/foster mother/foster parents]2
+      or relation_type = [foster father/foster mother/foster parents]1
+      or relation_type = [foster father/foster mother/foster parents]0)
+    foster father/foster mother/foster parents%nn;
+  %else;
+  *%nn;
+  %end;
+  %in;
   %let;l_rt0;%if;(l_rt != "*")%apply;lex(l_rt,0)%else;typexx%end;%in;
   %let;l_rt1;%if;(l_rt != "*")%apply;lex(l_rt,1)%else;typexx%end;%in;
   %if;cancel_links;
-	♆%nn;
+  ♆%nn;
   %else;
-	%reset_count;
-	<a href="%prefix;spouse=on;m=RLM;image=%evar.image;;%nn;
-	%incr_count;i%count;=%himxx.index;;t%count;=%l_rt0;;%nn;
-	%if;(herxx != "");
-	  %incr_count;i%count;=%herxx.index;;t%count;=%l_rt1;;%nn;
-	%end;
-	%if;(browsing_with_sosa_ref)
+  %reset_count;
+  <a href="%prefix;spouse=on;m=RLM;image=%evar.image;;%nn;
+  %incr_count;i%count;=%himxx.index;;t%count;=%l_rt0;;%nn;
+  %if;(herxx != "");
+    %incr_count;i%count;=%herxx.index;;t%count;=%l_rt1;;%nn;
+  %end;
+  %if;(browsing_with_sosa_ref)
       %incr_count;i%count;=%sosa_ref.index;;t%count;=sosa_1;%nn;
     %end;
-	%incr_count;i%count;=%index;;t%count;=%l_hh;;%nn;
-	" title="[shortest path]">♆</a>%nn;
+  %incr_count;i%count;=%index;;t%count;=%l_hh;;%nn;
+  " title="[*shortest path]">♆</a>%nn;
   %end;
 %end;
-  
-  
 %define;age_at(xx)
   [age at %s birth date:::xx]%nn;
 %end;
@@ -1074,11 +1072,11 @@
 %end;
 %define;sosainfo()
   %if;not cancel_links;
-    %if;(sosa=1)[*Sosa] 1
+    %if;(sosa=1)<small><a href="%prefix_no_iz;%self.access;%l_url;" title="[*user/password/cancel]2 [navigation] [with] [*Sosa] 1">[*Sosa] 1</a></small> 
     %elseif;(has_sosa and sosa != 1)
       %let;l_sosa_ref;%apply;a_of_b%with;%and;%apply;link_name("sosa_ref")%end;%in;
       <small><a href="%prefix;m=A;t=D;image=%evar.image;;i=%sosa_ref.index;;i1=%index;;l=%max_desc_level;" title="%apply;a_of_b%with;[*ancestors]%and;%sosa_ref;%end; [up to] %self;">[*Sosa] %sosa;</a>
-      %l_sosa_ref;%nn;</small>
+      %l_sosa_ref;%sp;%nn;</small>
     %end;
     %if;(not browsing_with_sosa_ref or sosa_ref.index!=index)
       %apply;nav_with_sosa_ref%with;%self;%end; 
@@ -1310,7 +1308,7 @@
             %if;(max_desc_level>1)
               %let;l2;%expr(max_desc_level+1)%in;
               %for;i;1;l2;
-                <a href="%prefix;%access;;wide=%evar.wide;;image=%evar.image;;age=%evar.age;;spouse=%evar.spouse;;maxlev=%i;;asclev=%evar.asclev;"
+                <a href="%prefix;%access;%if;(evar.spouse!="");spouse=%evar.spouse;%end;%if;(evar.age!="");age=%evar.age;%end;%if;(evar.image!="");image=%evar.image;%end;%if;(evar.wide!="");wide=%evar.wide;%end;%if;(evar.misc!="");misc=%evar.misc;%end;;maxlev=%i;%if;(evar.asclev!="");asclev=%evar.asclev;%end;"
                 style="%if;((evar.maxlev="" and i=2) or i=evar.maxlev)background-color:%if;(bvar.css=1)#666;%else;#EEE;%end;%end;width:17px;"
                 title="%i; %if;(i=1)[generation/generations]0%else;[generation/generations]1%end;%nl;%if;(i=1 and nb_children=1)[a descendant]0%else;%apply;desc(i) [descendants]%end;">%if;(i<10) %end;%i;</a>
               %end;
