@@ -10,7 +10,7 @@
 <script type="text/javascript">
   <!--
   function over1(xx)
-  { 
+  {
    document.getElementById(xx).style.%if;(evar.sosa2="on")outline="#CBFECE solid 6px"%else;backgroundColor="#CBFECE"%end;;
    return false;
   }
@@ -144,7 +144,7 @@
           %if;(evar.sosa2!="on")<tt>%end;<a id="s%ancestor.anc_sosa.v;" style="top:%top;px;left:%left;px;" %nn;
           %if;(ancestor.same != "")%apply;implex1(ancestor.same.v)%end;
           href="%prefix;%ancestor.access;%if;(evar.nav="on")%nav;%end;"%if;(evar.nav!="on") target="_blank"%end;
-          title="[*generation/generations]0 %level; – Sosa %if;(ancestor.interval != "") = Sosa %ancestor.interval;%else;%ancestor.anc_sosa; & %expr(ancestor.anc_sosa+1)%end;&#013;
+          title="[*generation/generations]0 %level; – Sosa %if;("ancestor.interval" != "") = Sosa %ancestor.interval;%else;%ancestor.anc_sosa; & %expr(ancestor.anc_sosa+1)%end;&#013;
             %if;(ancestor.is_male) ♂%else; ♀%end; %ancestor; (%ancestor.occ)&#013;
             %if;(ancestor.birth_date.year != "")° %ancestor.birth_date.year;%end;
             %if;(ancestor.birth_date.year != "" and ancestor.is_dead) – %end;
