@@ -6,7 +6,7 @@
 %end;
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <!-- $Id: perso.txt,v 7.00 Mar 2 fév 2016 18:56:15 CET hg Exp $ -->
+  <!-- $Id: perso.txt,v 7.00 Mer 3 fév 2016 09:03:11 CET hg Exp $ -->
   <title>%first_name_key;/%surname_key;/%occ; - #%index;</title>
   <meta name="robots" content="none"%/>
   <meta name="format-detection" content="telephone=no"%/>
@@ -771,6 +771,7 @@
 %end;
 %define;relation_computing(himxx, herxx, typexx)
   %let;l_rt;
+  %if;("typexx" = "")
   %if;(relation_type = [godfather/godmother/godparents]2
     or relation_type = [godfather/godmother/godparents]1
     or relation_type = [godfather/godmother/godparents]0)
@@ -791,6 +792,7 @@
       or relation_type = [foster father/foster mother/foster parents]1
       or relation_type = [foster father/foster mother/foster parents]0)
     foster father/foster mother/foster parents%nn;
+  %end;
   %else;
   *%nn;
   %end;
@@ -803,7 +805,7 @@
   %reset_count;
   <a href="%prefix;spouse=on;m=RLM;image=%evar.image;;%nn;
   %incr_count;i%count;=%himxx.index;;t%count;=%l_rt0;;%nn;
-  %if;(herxx != "");
+  %if;("herxx" != "");
     %incr_count;i%count;=%herxx.index;;t%count;=%l_rt1;;%nn;
   %end;
   %if;(browsing_with_sosa_ref)
