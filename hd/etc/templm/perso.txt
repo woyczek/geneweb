@@ -6,7 +6,7 @@
 %end;
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <!-- $Id: perso.txt,v 7.00 Mer 3 fév 2016 09:03:11 CET hg Exp $ -->
+  <!-- $Id: perso.txt,v 7.00 Mer 3 fév 2016 16:26:11 CET hg Exp $ -->
   <title>%first_name_key;/%surname_key;/%occ; - #%index;</title>
   <meta name="robots" content="none"%/>
   <meta name="format-detection" content="telephone=no"%/>
@@ -1009,6 +1009,7 @@
      └ %if;(count>1)[witness/witnesses]1%else;[witness/witnesses]0%end;[:]
     %foreach;event_witness;
       %if;(not is_first), %nl;%end;
+      %apply;relation_computing("event_witness", "", [witness/witnesses]0 )%sp;
       %apply;somebody("event_witness")
       %( <!-- Begin personalization mickroue --> %)
         %if;(event_witness.has_qualifiers and event_witness.title=", <em>Cousin</em>")
