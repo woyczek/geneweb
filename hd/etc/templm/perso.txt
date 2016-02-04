@@ -6,7 +6,7 @@
 %end;
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <!-- $Id: perso.txt,v 04/02/2016 06:34:33 A2 Exp $ -->
+  <!-- $Id: perso.txt,v Jeu 4 fév 2016 18:45:11 CET hg Exp $ -->
   <title>%apply;capitalize(self.first_name) %apply;capitalize(self.surname)%if(occ!=0) (%occ;)%end; - #%index;</title>
   <meta name="robots" content="none"%/>
   <meta name="format-detection" content="telephone=no"%/>
@@ -896,6 +896,11 @@
 %end;
 %define;timeline_tree(z1)
   %reset_count;
+  %foreach;event;
+    %if;(event.has_witnesses)%incr_count;%end;
+  %end;
+  %if;(count > 1)
+  %reset_count;
   <div class="button" style="position:relative;float:right;">
   <span><a href="%prefix;spouse=on;m=RLM;image=%evar.image;;%nn;
   %foreach;event;
@@ -920,6 +925,28 @@
   >[*tree of witnesses]</a></span>
   %reset_count;
   </div>
+  %end;
+%end;
+%define;event_tree(z1)
+  %reset_count;
+  <span><a href="%prefix;spouse=on;m=RLM;image=%evar.image;;%nn;
+    %foreach;event_witness;
+        %incr_count;i%count;=%event_witness.index;;t%count;=%event.name;;%nn;
+        %incr_count;%nn;
+        i%count;=z1;%nn;
+    %end;
+  %incr_count;%nn;
+  i%count;=%index;;%nn;
+  t%count;=%l_hh;;%nn;
+  %if;browsing_with_sosa_ref;
+    %incr_count;%nn;
+    i%count;=%sosa_ref.index;;%nn;
+    t%count;=sosa_1;%nn;
+  %end;
+  "
+  %if;(count < 3)style="display:none;"%end;
+  >└</a></span>
+  %reset_count;
 %end;
 %define;birth_event()
 %let;parents_age;
@@ -998,11 +1025,15 @@
   %else;%apply;other_event()
   %end;
   %if;event.has_witnesses;
+    <div class="tree">
+    %apply;event_tree(l_ref)%nn;
     %reset_count;%foreach;event_witness;%incr_count;%end;
-     └ %if;(count>1)[witness/witnesses]1%else;[witness/witnesses]0%end;[:]
+    %if;(count>1)[witness/witnesses]1%else;[witness/witnesses]0%end;[:]
     %foreach;event_witness;
       %if;(not is_first), %nl;%end;
-      %apply;relation_computing("event_witness", "", [witness/witnesses]0 )%sp;
+      %if;(count > 1 )
+    	%apply;relation_computing("event_witness", "", [witness/witnesses]0 )%sp;
+	  %end;
       %apply;somebody("event_witness")
       %( <!-- Begin personalization mickroue --> %)
         %if;(event_witness.has_qualifiers and event_witness.title=", <em>Cousin</em>")
@@ -1013,6 +1044,7 @@
         %end;%nn;
       %( <!-- End personalization mickroue --> %)
     %end;
+    </div>
   %end;
   %if;event.has_note;
     <dd id="evnote">%event.note;</dd>
