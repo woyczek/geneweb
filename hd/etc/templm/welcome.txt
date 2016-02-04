@@ -230,7 +230,7 @@ zh: 网络家谱
                   <input id="mTT" type="hidden" name="m" value="TT"/>
                   <li><a href="%prefix;m=TT;t=" title="[*all the titles], [display by/branch/alphabetic order]0 [display by/branch/alphabetic order]2">[*title/titles]1</a><input type=text name="t" size="10" maxlength="100" title="[*search/case sensitive]0 [title/titles]0"%/></li>
                   <li><a href="%prefix;m=TT;p=*" title="[*all the estates], [display by/branch/alphabetic order]0 [display by/branch/alphabetic order]2">[*estate]0s</a><input type=text name="p" size="10" maxlength="100" title="[*search/case sensitive]0 [estate]0"%/>
-                  <input id="hide_ie" "hidefocus="true" tabindex="-1" type="submit" value="Ok"/>
+                  <input id="hide_ie" hidefocus="true" tabindex="-1" type="submit" value="Ok"/>
                   </li>
           </form>
         %end;

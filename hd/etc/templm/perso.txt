@@ -53,16 +53,14 @@
 %let;l_maxlev;%if;(has_children and max_desc_level > 1 and l_maxlev0 > max_desc_level)%max_desc_level;%else;%l_maxlev0;%end;%in;
 %let;l_ref;%if;browsing_with_sosa_ref;%sosa_ref.index;%else;%index;%end;%in;
 %let;l_url;%if;(evar.wide!="");wide=%evar.wide;%end;%if;(evar.maxlev!="");maxlev=%l_maxlev;%end;%if;(evar.asclev!="");asclev=%evar.asclev;%end;%if;(evar.image!="");image=%evar.image;%end;%if;(evar.spouse!="");spouse=%evar.spouse;%end;%if;(evar.age!="");age=%evar.age;%end;;%in;
-%let;l_on1; target="_blank"%in;
+%let;l_on1;%sp;target="_blank"%in;
 %let;l_ldates;
   %if;wizard;
     %if;(evar.del="on")
       class="nobr del" target="ifr" onclick="javascript:deleted(this);"
       href="%prefix;m=DEL_IND_OK;i=%nn;
     %else;
-      %l_on1;
-      class="nobr"
-      href="%prefix;m=MOD_IND;i=%nn;
+      class="nobr" %l_on1; href="%prefix;m=MOD_IND;i=%nn;
     %end;
   %else;
     href="#%nn;
@@ -82,7 +80,7 @@
     class="del" target="ifr" onclick="javascript:deleted(this);"
     href="%prefix;m=DEL_FAM_OK;%nn;
   %elseif;(wizard)
-    %l_on1;
+    %l_on1;%sp;
     href="%prefix;m=MOD_FAM;%nn;
   %else;
     href="#%nn;
@@ -403,7 +401,7 @@
   %apply;somebody1%with;
     child%and;
     %l_child;%and;
-    %if;(curlev = 1)id="chi_%family_cnt;_%child_cnt;"%if;(child.has_sosa) name="sosa" %end;
+    %if;(curlev = 1)id="chi_%family_cnt;_%child_cnt;"%if;(child.has_sosa) name="sosa" %end;%sp;
       onkeypress="javascript:return acc_key(this,event,'sib_1','spo_%family_cnt;','%next_chi;','child_%child.index;','0','0','0');"
     %end;
   %end;
@@ -537,7 +535,7 @@
           %apply;link_name1%with;
             ancestor%and;
             ancestor%and;
-            id="par_%l_sosa;"
+            id="par_%l_sosa;"%sp;
             onkeypress="javascript:return acc_key(this,event,'sib_1','spo_1','chi_1_1','ancestor_%ancestor.index;','add_par_%l_sosa;','par_%l_sosa;','par_%l_sosa;');"
           %end;
           %apply;link_dates("ancestor")
@@ -612,7 +610,6 @@
             </span>
           %end;
         </span>
-        </span>
       </span>
     </div>
     <div style="clear:both">
@@ -664,7 +661,6 @@
           </span>
         %end;
       </span>
-      </span>
     </span>
     </div>
       <div style="clear:both">
@@ -676,7 +672,7 @@
               %apply;link_name1%with;
                 child%and;
                 %l_child;%and;
-                id="sib_%child_cnt;"
+                id="sib_%child_cnt;"%sp;
                 onkeypress="javascript:return acc_key(this,event,'%next_sib;','spo_1','chi_1_1','child_%child.index;','0','0','0');"
               %end;
               %if;is_self;</em>%end;
@@ -1339,13 +1335,13 @@
           <div class="fam">
             %if;(wizard and not cancel_links and family_cnt != 1)
               %if;(family_cnt != 1)
-                <span class="button"><a href="%prefix;m=INV_FAM;i=%index;;f=%family.index;
-                " title="[*invert::family/families]1" style="border:0px;font-size:17px">⇪</a></span>
+                <span class="button">
+                  <a href="%prefix;m=INV_FAM;i=%index;;f=%family.index;" 
+                   title="[*invert::family/families]1" style="border:0px;font-size:17px">⇪</a>
+                </span>
                 %if;(family.father.index = prev_family.father.index
                   and family.mother.index = prev_family.mother.index)
-                  <span class="button"><a href=%nn;
-                  "%prefix;m=MRG_FAM;i=%prev_family.index;;i2=%family.index;
-                  ;ip=%index;">%nn;
+                  <span class="button"><a href="%prefix;m=MRG_FAM;i=%prev_family.index;;i2=%family.index;;ip=%index;">%nn;
                   [*merge::]</a></span>
                 %end;
               %end;

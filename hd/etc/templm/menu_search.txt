@@ -161,7 +161,7 @@
       </span>
     </div>
   %end;
-  <div id="trl"/>
+  <div id="trl"></div>
   %if;(wizard)
     <script type="text/javascript">
     <!--
