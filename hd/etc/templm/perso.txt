@@ -6,7 +6,7 @@
 %end;
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <!-- $Id: perso.txt,v Jeu 4 fév 2016 18:45:11 CET hg Exp $ -->
+  <!-- $Id: perso.txt,v 04/02/2016 20:34:14 A2 Exp $ -->
   <title>%apply;capitalize(self.first_name) %apply;capitalize(self.surname)%if(occ!=0) (%occ;)%end; - #%index;</title>
   <meta name="robots" content="none"%/>
   <meta name="format-detection" content="telephone=no"%/>
@@ -769,8 +769,7 @@
         i%count;=%sosa_ref.index;;%nn;
         t%count;=sosa_1;%nn;
       %end;
-    "
-     >[*relations tree]</a>%nn;
+    " title="[*relations tree]">
      %reset_count;
 %end;
 %define;relation_computing(himxx, herxx, typexx)
@@ -814,7 +813,7 @@
        %incr_count;i%count;=%sosa_ref.index;;t%count;=sosa_1;%nn;
      %end;
      %incr_count;i%count;=%index;;t%count;=%l_hh;;%nn;
-     " title="[*shortest path]">♆</a>%nn;
+     " title="[*shortest path] ♆">•</a>%nn;
     %end;
 %end;
 %define;age_at(xx)
@@ -877,7 +876,7 @@
   %if;((bvar.event_age != "yes" and evar.age !="on") and event.age != "")<span title="%event.age;">%sp;%z1.on_date;</span>
   %else;%sp;%z1.on_date;
   %end;
-  %if;((bvar.event_age = "yes" or evar.age = "on") and event.age != "") · %event.age;%nn;
+  %if;((bvar.event_age = "yes" or evar.age = "on") and event.age != "") • %event.age;%nn;
   %elseif;(event.name = [birth] and computable_age)
   %elseif;(event.age != "" and event.name = [death])
   %end;
@@ -968,7 +967,7 @@
   <dt>
     %if;(bvar.event_age!="yes" and evar.age!="on")<span title="%parents_age;">%apply;capitalize(event.name)</span>%else;%apply;capitalize(event.name)%end;
     %if;event.has_date;%apply;on_edate("event")%end;
-    %if;event.has_place; · %apply;advanced("birth_place",event.place)%end;
+    %if;event.has_place; • %apply;advanced("birth_place",event.place)%end;
   %if;((bvar.event_age = "yes" or evar.age="on") and has_parents)
     <br%/> └ %parents_age;.
   %end;
@@ -978,14 +977,14 @@
   <dt>
     %apply;capitalize(event.name)
     %if;event.has_date;%apply;on_edate("event")%end;
-    %if;event.has_place; · %apply;advanced("bapt_place",event.place)%end;
+    %if;event.has_place; • %apply;advanced("bapt_place",event.place)%end;
   </dt>
 %end;
 %define;death_event()
   <dt>
     %apply;capitalize(event.name)
     %if;event.has_date;%apply;on_edate("event")%end;
-    %if;event.has_place; · %apply;advanced("death_place",event.place)%end;
+    %if;event.has_place; • %apply;advanced("death_place",event.place)%end;
   </dt>
   %if;has_linked_page.DEATH;<dd>%linked_page.DEATH;</dd>%end;
 %end;
@@ -993,27 +992,25 @@
   <dt>
     %apply;capitalize(event.name)
     %if;event.has_date;%apply;on_edate("event")%end;
-    %if;event.has_place; · %apply;advanced("burial_place",event.place)%end;
+    %if;event.has_place; • %apply;advanced("burial_place",event.place)%end;
   </dt>
 %end;
 %define;marriage_event()
   <dt>
     %if;(evar.spouse="off")<span title="[with] %event.spouse;">%apply;capitalize(event.name)</span>
     %else;%apply;capitalize(event.name)%end;
+    %if;(event.has_spouse and evar.spouse!="off") [with] %event.spouse;%end;
     %if;event.has_date;%apply;on_edate("event")%end;
-    %if;event.has_place; · %apply;advanced("marriage_place",event.place)%end;
-    %if;(event.has_spouse and evar.spouse!="off") · [with] %event.spouse;
-    %(%if;(bvar.event_age="yes" or evar.age="on")%event.spouse.age;%end; n'affiche rien ? %)
-    %end;
+    %if;event.has_place; • %apply;advanced("marriage_place",event.place)%end;
   </dt>
 %end;
 %define;other_event()
   <dt>
     %if;(evar.spouse="off")<span title="[with] %event.spouse;">%if;(event.name=[no mention])[*relation/relations]0%else;%apply;capitalize(event.name)%end;</span>
     %else;%if;(event.name=[no mention])[*relation/relations]0%else;%apply;capitalize(event.name)%end;%end;
+    %if;(event.has_spouse and evar.spouse!="off" and event.name!=[divorce event] and event.name!=[separate event] and event.name!=[annulation]) [with] %event.spouse;%end;
     %if;event.has_date;%apply;on_edate("event")%end;
-    %if;event.has_place; · %event.place;%end;
-    %if;(event.has_spouse and evar.spouse!="off" and event.name!=[divorce event] and event.name!=[separate event] and event.name!=[annulation]) · [with] %event.spouse;%end;
+    %if;event.has_place; • %event.place;%end;
   </dt>
 %end;
 %define;one_event(z1)
@@ -1030,10 +1027,8 @@
     %reset_count;%foreach;event_witness;%incr_count;%end;
     %if;(count>1)[witness/witnesses]1%else;[witness/witnesses]0%end;[:]
     %foreach;event_witness;
-      %if;(not is_first), %nl;%end;
-      %if;(count > 1 )
-    	%apply;relation_computing("event_witness", "", [witness/witnesses]0 )%sp;
-	  %end;
+      %if;(not is_first)%sp;%nl;%end;
+      %if;(count>1)%apply;relation_computing("event_witness", "", [witness/witnesses]0 )%sp;%end;
       %apply;somebody("event_witness")
       %( <!-- Begin personalization mickroue --> %)
         %if;(event_witness.has_qualifiers and event_witness.title=", <em>Cousin</em>")
@@ -1231,9 +1226,12 @@
       %include.perso_mickroue1;
     %else;
       <div class="relations">
-        <div style="width=30%%;display:inline-block"><h2 class="ch2" style="float:left;display:inline">[*relation/relations]1</h2></div>
-         %if;not cancel_links;<div class="button" style="padding-top:16px;padding-right:1px;float:right;position:relative">
-         <span>%apply;relations_tree(l_ref)</span></div>%end;
+        <div style="display:inline-block">
+        %reset_count;
+          %foreach;relation;%if;(has_relation_him or has_relation_her)%incr_count%end;%end;
+          %foreach;related;%incr_count%end;
+          %foreach;event_witness_relation%incr_count%end;
+         %if;(not cancel_links and count>1)%apply;relations_tree(l_ref)%end<h2 class="ch2" style="float:left;display:inline">[*relation/relations]1</h2>%if;(not cancel_links)</a>%end;</div>
         %(<ul style="list-style-type:none">%)
           %foreach;relation;
             <div class="tree">%apply;relation_computing("relation_him", "relation_her", "") %apply;capitalize(relation_type)[:]
@@ -1272,12 +1270,9 @@
   %end;
   <div class="notes">
     %if;(has_notes or has_linked_page.BNOTE or has_linked_page.NOTE)
-    <div style="width=30%%;display:inline-block"><h2 class="ch2" style="float:left;display:inline">[*note/notes]1</h2></div>
-         %if;(has_linked_pages and not cancel_links)
-           <div class="button" style="padding-top:16px;padding-right:1px;float:right;position:relative">
-               <span><a href="%prefix;m=LINKED;%access;">[*linked pages]</a></span>
-           </div>
-         %end;
+    <div style="display:inline-block">%if;(has_linked_pages and not cancel_links)<a href="%prefix;m=LINKED;%access;" 
+     title="[*linked pages]">%end;<h2 class="ch2" style="float:left;display:inline">
+     [*note/notes]1%if;(has_linked_pages)<small>*</small>%end;</h2>%if;(not cancel_links)</a>%end;</div>
       %if;(has_linked_page.BNOTE)
         <p>&gt;&gt; %linked_page.BNOTE;</p>
       %end;
