@@ -1,4 +1,4 @@
-<!-- $Id: accent.txt,v 7.00 2015/01/13 15:52:31 mr Exp $ -->
+<!-- $Id: accent.txt,v 7.00 2016/02/04 21:32:06 mr Exp $ -->
 %( How to : Copy this file to bases/etc/ %)
 
 <script type="text/javascript"><!--

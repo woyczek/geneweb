@@ -1,7 +1,7 @@
 %doctype;
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <!-- $Id: ancsosa.txt,v 7.00 2015/01/05 14:43:58 mr Exp $ -->
+  <!-- $Id: ancsosa.txt,v 7.00 2016/02/04 21:20:57 mr Exp $ -->
   %let;l_v0;%if;(evar.v != "")%if;(evar.v > max_anc_level)%max_anc_level;%else;%evar.v;%end;%else;1%end;%in;
   %let;l_v;%if;(bvar.max_anc_level = "")%l_v0;%elseif;(bvar.max_anc_level > l_v0)%l_v0;%else;%bvar.max_anc_level;%end;%in;
   %let;birth_symbol;%if;(bvar.birth_symbol != "")%bvar.birth_symbol;%else;&deg;%end;%in;
@@ -99,21 +99,13 @@
 </dl>
 
 %if;(evar.t = "G")
-  %if;(bvar.mickroue1 = "yes")
-    %include.ancsosa_tg_mickroue1;
-  %else;
-    %include.ancsosa_tg;
-  %end;
+  %include.ancsosa_tg;
 %elseif;(evar.t = "N" and evar.same != "")
   %include.ancsosa_same;
 %elseif;(evar.t = "M")
   %include.ancsosa_miss;
 %elseif;(evar.t = "D" or evar.t = "Z")
-  %if;(bvar.mickroue2 = "yes")
-    %include.ancsosa_tdz_mickroue2;
-  %else;
-    %include.ancsosa_tdz;
-  %end;
+  %include.ancsosa_tdz;
 %end;
 %if;not cancel_links;
   %import;tools;

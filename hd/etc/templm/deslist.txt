@@ -1,7 +1,7 @@
 %doctype;
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <!-- $Id: deslist.txt,v 7.00 2015/05/17 11:30:20 mr Exp $ -->
+  <!-- $Id: deslist.txt,v 7.00 2016/02/04 21:22:17 mr Exp $ -->
   <title>%nn;
     %apply;a_of_b_gr_eq_lev%with;
       [*descendants]%nn;
@@ -92,11 +92,7 @@
   %elseif;(evar.m = "D" and evar.t = "L" and evar.tl1 = "hrztl")
     %include.deslist_hrztl;
   %else;
-    %if;(bvar.mickroue1 = "yes")
-      %include.deslist_list_mickroue1;
-    %else;
-      %include.deslist_list;
-    %end;
+    %include.deslist_list;
   %end;
   %if;(evar.tl1 != "tag")
     %if;not cancel_links;

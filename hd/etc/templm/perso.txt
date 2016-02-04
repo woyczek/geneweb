@@ -6,7 +6,7 @@
 %end;
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <!-- $Id: perso.txt,v 04/02/2016 20:34:14 A2 Exp $ -->
+  <!-- $Id: perso.txt,v 2016/02/04 21:24:23 A2 mr Exp $ -->
   <title>%apply;capitalize(self.first_name) %apply;capitalize(self.surname)%if(occ!=0) (%occ;)%end; - #%index;</title>
   <meta name="robots" content="none"%/>
   <meta name="format-detection" content="telephone=no"%/>
@@ -1030,14 +1030,6 @@
       %if;(not is_first)%sp;%nl;%end;
       %if;(count>1)%apply;relation_computing("event_witness", "", [witness/witnesses]0 )%sp;%end;
       %apply;somebody("event_witness")
-      %( <!-- Begin personalization mickroue --> %)
-        %if;(event_witness.has_qualifiers and event_witness.title=", <em>Cousin</em>")
-            <a %l_on1;
-            <strong><a %l_on1;
-             href="http://geneaweb.org/%event_witness.qualifier;?templ=mobile;m=N;v=%surname;"
-             title="Arbre en ligne sur Geneanet">@</a>%nn;
-        %end;%nn;
-      %( <!-- End personalization mickroue --> %)
     %end;
     </div>
   %end;
@@ -1160,13 +1152,6 @@
         <br%/>
         %apply;lazy_print("")
         %foreach;qualifier;
-          %( <!-- Begin personalization mickroue --> %)
-            %if;is_first;
-              %if;(title=", <em>Cousin</em>")
-                <strong><a %l_on1; href="http://geneaweb.org/%qualifier;?templ=mobile;m=N;v=%surname;" title="Arbre en ligne sur Geneanet">Arbre en ligne</a></strong><br%/>
-              %end;
-            %end;
-          %( <!-- End personalization mickroue --> %)
           %if;not is_first;
              %if;(lazy_printed)/%end;
              %lazy_force;
@@ -1217,56 +1202,49 @@
   %apply;timeline()
   %if;(bvar.timeline="yes")%include.timeline;%end;
 %( <!-- End display image, person --> %)
-  %if;(bvar.mickroue2 = "yes" and (has_linked_pages or wizard))
-    %include.perso_mickroue2;
-  %end;
 %( <!-- Begin display relations, notes, sources --> %)
   %if;(has_relations)
-    %if;(bvar.mickroue1 = "yes")
-      %include.perso_mickroue1;
-    %else;
-      <div class="relations">
-        <div style="display:inline-block">
-        %reset_count;
-          %foreach;relation;%if;(has_relation_him or has_relation_her)%incr_count%end;%end;
-          %foreach;related;%incr_count%end;
-          %foreach;event_witness_relation%incr_count%end;
-         %if;(not cancel_links and count>1)%apply;relations_tree(l_ref)%end<h2 class="ch2" style="float:left;display:inline">[*relation/relations]1</h2>%if;(not cancel_links)</a>%end;</div>
-        %(<ul style="list-style-type:none">%)
-          %foreach;relation;
-            <div class="tree">%apply;relation_computing("relation_him", "relation_her", "") %apply;capitalize(relation_type)[:]
-                %if;has_relation_him;
-                  <nobr>%apply;somebody("relation_him")</nobr>
-                  %if;has_relation_her; <nobr>[and] %end;
-                %end;
-                %if;has_relation_her;
-                  %apply;somebody("relation_her")</nobr>.
-                %end;
-            </div>
-          %end;
-          %foreach;related;
-            <div class="tree">%apply;relation_computing("related", "", related_type) %apply;capitalize(related_type)[:]
-              <nobr>%apply;somebody("related")</nobr>.
-            </div>
-          %end;
-          %foreach;event_witness_relation;
-            <div class="tree">%apply;relation_computing("event_witness_relation.person", "", [witness/witnesses]0 )%sp;
-            %apply;a_of_b%with;[*witness/witnesses]0%and;
-            %apply;a_of_b%with;%event_witness_relation.event.name;%and;%end;%end;
-            <nobr>%apply;somebody("event_witness_relation.person")</nobr>%if;(event_witness_relation.event.spouse = "").%end;
-            %if;(event_witness_relation.event.spouse != "")
-             %sp;<nobr>%if;(event_witness_relation.event.has_date)%sp;<span %( cant have link atm, a href="%prefix;MOD_FAM;i=%event_witness_relation.person.family.index;;ip=%event_witness_relation.person.index;" %)
-                title="%if;(event_witness_relation.event.has_date)%event_witness_relation.event.date;%nl;%end;%nn;
-                       %if;event_witness_relation.event.has_place;%event_witness_relation.event.place;%end;">&%event_witness_relation.event.date.year;</span>
-                %else;<span title="%if;event_witness_relation.event.has_place;%event_witness_relation.event.place;%end;"> &</span>
+    <div class="relations">
+      <div style="display:inline-block">
+      %reset_count;
+        %foreach;relation;%if;(has_relation_him or has_relation_her)%incr_count%end;%end;
+        %foreach;related;%incr_count%end;
+        %foreach;event_witness_relation%incr_count%end;
+       %if;(not cancel_links and count>1)%apply;relations_tree(l_ref)%end<h2 class="ch2" style="float:left;display:inline">[*relation/relations]1</h2>%if;(not cancel_links)</a>%end;</div>
+      %(<ul style="list-style-type:none">%)
+        %foreach;relation;
+          <div class="tree">%apply;relation_computing("relation_him", "relation_her", "") %apply;capitalize(relation_type)[:]
+              %if;has_relation_him;
+                <nobr>%apply;somebody("relation_him")</nobr>
+                %if;has_relation_her; <nobr>[and] %end;
               %end;
-              %apply;somebody("event_witness_relation.event.spouse")</nobr>.
-            %end;%nn;
-            </div>
-          %end;
-        %(</ul>%)
-      </div>
-    %end;
+              %if;has_relation_her;
+                %apply;somebody("relation_her")</nobr>.
+              %end;
+          </div>
+        %end;
+        %foreach;related;
+          <div class="tree">%apply;relation_computing("related", "", related_type) %apply;capitalize(related_type)[:]
+            <nobr>%apply;somebody("related")</nobr>.
+          </div>
+        %end;
+        %foreach;event_witness_relation;
+          <div class="tree">%apply;relation_computing("event_witness_relation.person", "", [witness/witnesses]0 )%sp;
+          %apply;a_of_b%with;[*witness/witnesses]0%and;
+          %apply;a_of_b%with;%event_witness_relation.event.name;%and;%end;%end;
+          <nobr>%apply;somebody("event_witness_relation.person")</nobr>%if;(event_witness_relation.event.spouse = "").%end;
+          %if;(event_witness_relation.event.spouse != "")
+           %sp;<nobr>%if;(event_witness_relation.event.has_date)%sp;<span %( cant have link atm, a href="%prefix;MOD_FAM;i=%event_witness_relation.person.family.index;;ip=%event_witness_relation.person.index;" %)
+              title="%if;(event_witness_relation.event.has_date)%event_witness_relation.event.date;%nl;%end;%nn;
+                     %if;event_witness_relation.event.has_place;%event_witness_relation.event.place;%end;">&%event_witness_relation.event.date.year;</span>
+              %else;<span title="%if;event_witness_relation.event.has_place;%event_witness_relation.event.place;%end;"> &</span>
+            %end;
+            %apply;somebody("event_witness_relation.event.spouse")</nobr>.
+          %end;%nn;
+          </div>
+        %end;
+      %(</ul>%)
+    </div>
   %end;
   <div class="notes">
     %if;(has_notes or has_linked_page.BNOTE or has_linked_page.NOTE)

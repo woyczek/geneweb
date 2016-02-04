@@ -1,7 +1,7 @@
 %doctype;
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <!-- $Id: ancmenu.txt,v 7.00 2015/12/10 22:43:36 mr Exp $ -->
+  <!-- $Id: ancmenu.txt,v 7.00 2016/02/04 21:20:22 mr Exp $ -->
   <title>%nn;
     %apply;a_of_b%with;
       [*ancestors]%nn;
@@ -254,21 +254,6 @@
       <label><input type="checkbox" name="ms" value="on" %l_on1; %l_on;
              %/>[first name/first names]1, [surname/surnames]1 = ??</label>
     </fieldset>
-    %if;(bvar.mickroue2 = "yes")
-      <fieldset>
-        %let;l_on1;onchange="valid('tM');valid('tM2')"%in;
-        <legend>
-          <label><input type="radio" id="tM2" name="miss" value="M2" onclick="valid('tM')" %l_on;
-                 %/>[*miscellaneous notes]</label>
-        </legend>
-        <label><input type="checkbox" name="M2b" value="b" %l_on1; %l_on;
-               %/>%bvar.var_t_BIRTHA;</label><br%/>
-        <label><input type="checkbox" name="M2m" value="m" %l_on1; %l_on;
-               %/>%bvar.var_t_MARRIAGEA;</label><br%/>
-        <label><input type="checkbox" name="M2d" value="d" %l_on1; %l_on;
-               %/>%bvar.var_t_DEATHA;</label>
-      </fieldset>
-    %end;
     <fieldset>
       %let;l_on1;onchange="valid('tM');valid('tM3')"%in;
       <legend>

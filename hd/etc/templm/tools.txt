@@ -1,4 +1,6 @@
-﻿%let;l_on;onclick="this.focus()" onkeydown="if (event.keyCode == 13) javascript:document.tools.submit();"%in;
+<!-- $Id: tools.txt,v 2016/02/04 21:27:03 A2 Exp $ -->
+
+%let;l_on;onclick="this.focus()" onkeydown="if (event.keyCode == 13) javascript:document.tools.submit();"%in;
 %let;l_emaxv;%if;(evar.t != "T")%evar.maxv;%elseif;(bvar.max_anc_tree = "")7%else;%bvar.max_anc_tree;%end;%in;
 %define;checkbox(cc,xx,yy,uu)
   <label title="uu"> cc<input type="checkbox" name="xx" value="on" %l_on1; %l_on;
@@ -391,20 +393,6 @@
           <label><input type="checkbox" name="ms" value="on" onchange="valid('M1')" %l_on;
                   %if;(evar.ms = "on") checked="checked"%end;%/>[first name/first names]1, [surname/surnames]1 = ??</label>
         </fieldset>
-        %if;(bvar.mickroue2 = "yes")
-          <fieldset  style="border:0;">
-            <legend>
-              <label><input type="radio" name="miss" value="M2" id="M2" %l_on;
-                      %if;(evar.miss = "M2") checked="checked"%end;%/>[*miscellaneous notes]</label>
-            </legend>
-            <label><input type="checkbox" name="M2b" value="b" onchange="valid('M2')" %l_on;
-                    %if;(evar.M2b = "b") checked="checked"%end;%/>%bvar.var_t_BIRTHA;</label>
-            <label><input type="checkbox" name="M2m" value="m" onchange="valid('M2')" %l_on;
-                    %if;(evar.M2m = "m") checked="checked"%end;%/>%bvar.var_t_MARRIAGEA;</label>
-            <label><input type="checkbox" name="M2d" value="d" onchange="valid('M2')" %l_on;
-                    %if;(evar.M2d = "d") checked="checked"%end;%/>%bvar.var_t_DEATHA;</label>
-          </fieldset>
-        %end;
         <fieldset  style="border:0;">
           <legend>
             <label><input type="radio" name="miss" value="M3" id="M3" %l_on;
