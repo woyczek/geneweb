@@ -1,4 +1,4 @@
-<!-- $Id: menu_search.txt,v 7.00exp 2016/01/21 22:06:44 mr Exp $ -->
+<!-- $Id: menu_search.txt,v 7.00exp 04/02/2016 06:34:45 A2 Exp $ -->
 %import;js_perso_accesskey
 
 %define;lang(xx)
@@ -34,7 +34,7 @@
     %end;
     %if;(evar.n != "" or evar.i != "" or evar.ip !="" or evar.m !="")
     <form style="display:inline" id="ak" method="get" action="">
-      <span><input id="acckey" name="acckey" %laZ; %if;(evar.m!="A")autofocus="on"%end; placeholder=" " style="height:17px"
+      <span><input id="acckey" name="acckey" %laZ; %if;(evar.m!="A")autofocus="on"%end; placeholder=" " style="border:0px;width:1px;height:17px;color:transparent"
        onkeypress="javascript:return acc_key(this,event,'sib_1','spo_1','chi_1_1','mod_ind','add_par','add_fam','mod_fam_1');"/>
         <span class="s_menu">
           <h4>[*shortcuts] (Alt+%laZk;)</h4>
@@ -91,19 +91,19 @@
            %if;(evar.m = "A")<input id="mA" type="hidden" name="m" value="A"/>%end;
            <input type="search" id="mSn" name="n" accesskey="%laWk;" size="30" maxlength="200" autofocus="on" 
              title="[*search/case sensitive]0 (W)%nl;%nl;* = [starting with]%nl;%nl;
-                    [*search/case sensitive]0 [with] [n° Sosa]*+/- [:]%nl;
+                    [*Sosa]*+/- [:]%nl;
                      * [father/mother]0%nl;
                      + [father/mother]1%nl;
                      / [child/children]0 [Sosa]%nl;
-                     - %apply;a_of_b%with;[spouse/spouses]0%and;[child/children]0 [Sosa]%end;%nl;%nl;
-                    ×      +%nl;
+                     - %apply;a_of_b%with;[spouse/spouses]0%and;[child/children]0 [Sosa]%end;"
+%(                    ×      +%nl;
                       \   /%nl;
                         n°     ÷+ = ×-
                           \   /%nl;
                             ÷      -
                               \   /%nl;
                                 ÷÷"
-%(
+
 ═╦════╦════╦════╗
  ║ /  ║ *  ║ -  ║
  ║  ÷2║  ×2║÷2+1║
@@ -114,7 +114,7 @@
              placeholder="[surname/surnames]0*%if;(evar.t != "T"), [public name], [alias], n° Sosa%end;"
              onfocus="%evar.n;%if;(evar.m = "S" and evar.n != "")%evar.n;%end;"
              onkeypress="javascript:return computeSosa(event,'mSn')"
-           %/><input type="search" id="mSp" name="p" size="15" maxlength="200"
+           %/><input type="search" id="mSp" name="p" size="13" maxlength="200"
              placeholder="[first name/first names]0*, n° index"
              title="* = [starting with]"
            %/><input id="hide_ie" hidefocus="true" tabindex="-1" type="submit" value="Ok" title="[*search/case sensitive]0 (W)"/>

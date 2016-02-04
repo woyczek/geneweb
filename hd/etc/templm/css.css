@@ -1,4 +1,4 @@
-/* $Id: templm/css.css,v 7.00 2015/04/20 22:08:24 mr Exp $ /*
+/* $Id: templm/css.css,v 7.00 04/02/2016 06:34:59 mr Exp $ /*
 /* Properties of all html pages.*/
 input[type=number]::-webkit-inner-spin-button {opacity:1}
 html{color:#000;background-color:#EEE;}
@@ -57,22 +57,23 @@ a:hover{z-index:100;}
 h1{text-align:center;margin-top:28px}
 /* Properties of the menu2. All pages. */
 .menu2{position:absolute;top:0px;right:1px;z-index:10000}
-.menu2,.menu2 form,.menu2 form input{font-family:Arial;font-size:14px;}
+.menu2,.menu2 form,.menu2 form input{font-family:Arial;font-size:17px;}
 .menu2 a,.menu2 .s_menu{float:left;background-color:#CCC;border:solid 1px #DDD;margin:0 -1px -1px 0;padding:3px;color:#000;}
 .menu2 div{position:relative;display:block;float:left;}
 .menu2 .s_menu{display:none;float:left;width:350px;padding:5px;}
 .menu2 div:hover > .s_menu{display:block;position:absolute;right:0px;top:23px;z-index:10000;}
 /* Properties of the menu_3 (trailer). All pages. */
-.menu3{position:absolute;top:0px;right:0px;font-family:Arial;font-size:14px;}
-.menu3 a,.menu3 .s_menu{float:left;border:solid 1px #DDD;margin:0 -1px -1px 0;padding:3px;color:#000;}
-.menu3 input{margin:0;}
-.login input[type="password"],.menu3 input[type="search"]{padding:4px;border: solid 1px #dcdcdc;transition: box-shadow 0.3s, border 0.3s;}
+.menu3{position:absolute;top:0px;right:3px;font-family:Arial;font-size:14px;}
+.menu3 a,.menu3 .s_menu{float:left;border:solid 0px #DDD;margin:0 -1px -1px 0;padding:3px;color:#000;}
+.login input[type="password"],.menu3 input[type="search"]{line-height:15px;padding:4px;border: solid 1px #dcdcdc;transition: box-shadow 0.3s, border 0.3s;}
 .login input[type="password"]:focus,.login input[type="password"].focus,.menu3 input[type="search"]:focus,.menu3 input[type="search"].focus{border: solid 1px #707070;box-shadow: 0 0 5px 1px #969696;}
+.menu3 input{margin:0;border:0px;}
 .menu3 span{position:relative;display:inline;float:left;}
 .menu span a,.menu3 span a{height:17px;margin-right:0}
 .menu3 .s_menu{display:none;float:left;margin:0;padding:0;border:0;}
-.menu3 span:hover > .s_menu{display:block;position:absolute;right:0;top:23px;background-color:#FFF;}
+.menu3 span:hover > .s_menu{display:block;position:absolute;right:-3px;top:24px;background-color:#FFF;}
 #tpl a{width:65px}
+#rela_comp a{width:160px}
 #lang a{width:180px}
 #ak input {width:10px;background-color:#EEE;border:solid 1px #DDD;margin:0px;padding:3px;color:#DDD;}
 #ak .s_menu{width:240px;padding:3px;}
@@ -120,18 +121,19 @@ hr.full{margin-left:0;margin-right:0;}
 /* perso.txt */
 #perso,#dag,#anctree{margin:0;padding:2em 2px 2em 2px}
 #perso{padding-top:0}
-#perso h1{margin:24px 10px 10px 0;padding:5px;}
+#perso h1{margin:10px 10px 10px 0px;padding:5px;}
 #perso .ch1{font-size:1.5em;}
 #perso .ch2{font-size:1.3em;}
 #perso .relations ul,#perso .sources ul{margin-left:-15px;margin-top:0;margin-bottom:0;}
 #perso .relations li,#perso .sources li{padding:0px;}
 #perso li{margin:2px 0 0 0;padding:0 0 0 10px;}
 #perso .consang{width:90%;}
+#perso div.tree{margin-left:30px;text-indent:-18px;}
 .menu{margin:0;padding:0;border:0;position:absolute;top:0;left:0;font-size:14px;}
 .menu span{position:relative;display:block;float:left;}
 .menu span a{float:left;border:none}
 .menu .s_menu{display:none;float:left;margin-left:0;margin-top:0;padding:0;border:0;}
-.menu span:hover > .s_menu{display:block;position:absolute;left:0;top:23px;z-index:10;background-color:#FFF;}
+.menu span:hover > .s_menu{display:block;position:absolute;left:0px;top:0px;z-index:10;background-color:#FFF;}
 .menu .s_menu a{width:260px;}
 .menu1,.button{font-size:14px;line-height:24px;}
 .menu1{clear:both;padding:5px;margin:5px;border-top:solid 1px #999;}
@@ -142,8 +144,8 @@ input[type='submit']{line-height:14px;height:24px;}
 .nobr{white-space:nowrap;}
 .hide{display:none;}
 .small{font-size:.7em;}
-#perso .col1,#perso .col2{float:left;padding:5px;margin:0 5px 5px 5px;}
-#perso .col1{margin-right:0px;margin-top:-18px;}
+#perso .col1,#perso .col2{float:left;padding:0 5px 5px 5px;margin:0 5px 5px 5px;}
+#perso .col1{margin-right:0px;}
 #perso .col2{margin-left:-1px;}
 #perso .col2 > div{float:left;padding:5px;margin:5px;}
 #perso .col2 .fam{margin-bottom:10px;clear:both;}

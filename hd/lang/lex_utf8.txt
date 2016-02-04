@@ -13997,6 +13997,10 @@ fr: taille de police
 en: horizontal tree
 fr: arborescence ascendante
 
+    tree of witnesses
+en: tree of witnesses
+fr: arbre des témoins
+
     shortcuts
 en: keyboard shortcuts
 fr: raccourcis clavier
