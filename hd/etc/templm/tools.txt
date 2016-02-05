@@ -1,5 +1,4 @@
 <!-- $Id: tools.txt,v 2016/02/04 21:27:03 A2 Exp $ -->
-
 %let;l_on;onclick="this.focus()" onkeydown="if (event.keyCode == 13) javascript:document.tools.submit();"%in;
 %let;l_emaxv;%if;(evar.t != "T")%evar.maxv;%elseif;(bvar.max_anc_tree = "")7%else;%bvar.max_anc_tree;%end;%in;
 %define;checkbox(cc,xx,yy,uu)
@@ -89,7 +88,7 @@
     %apply;envkb()
     <label><input type="number" style="font-weight:bold;text-align:right;font-size:16px;width:2.5em" type="number" min="1" max="%maxvd;" id="maxlev"
     title="[*maximum][:] %maxvd; [generation/generations]1 %lcX;" name="maxlev" value="%l_maxlev;" %l_on; %laX;%/>
-    <input id="hide_ie" hidefocus="true" tabindex="-1" type="submit"/>
+    <input id="hide_ie" tabindex="-1" type="submit"/>
     </label></form>
   %end;
 %end;

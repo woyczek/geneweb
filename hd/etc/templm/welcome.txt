@@ -1,11 +1,10 @@
-%doctype;
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
 <head>
   <!-- $Id: welcome.txt,v 7.00 2015/08/14 16:19:14 mr Exp $ -->
+  <title>GeneWeb - %apply;capitalize(base.name)</title>
   <meta name="robots" content="none"%/>
   <meta name="format-detection" content="telephone=no"%/>
   <meta http-equiv="Content-Type" content="text/html; charset=%charset;"%/>
-  <meta http-equiv="Content-Style-Type" content="text/css"%/>
   <link rel="shortcut icon" href="%image_prefix;/favicon_gwd.png"%/>
   %include.css;
   %base_header;
@@ -116,7 +115,7 @@ zh: 已经有 %nb_accesses; 次访问数据库，其中 %nb_accesses_to_welcome;
 %apply;login()
 </div>
 <div style="margin-top:1.7em;margin-left:1.7em">
-  <img src="%image_prefix;/gwlogo.png" width="280px" alt="GeneWeb logo"%/>
+  <img src="%image_prefix;/gwlogo.png" width="280" alt="GeneWeb logo"%/>
 </div>
 <div style="margin-left:7.5em">
 %if;(bvar.motd != "")%apply;interp(bvar.motd)%end;
@@ -132,7 +131,7 @@ fr: Les droits des magiciens sont actuellement suspendus pour maintenance.
 %end;
 <table style="margin:auto;">
   <tr>
-    <td align=center colspan=3>
+    <td style="text-align:center" colspan=3>
     <h1>
     %apply;interp([
 af: Genealogiese databasis
@@ -199,18 +198,18 @@ zh: 网络家谱
     </td><td>
       <ul>
         %if;has_history;%nl;
-          <li><a href="%prefix;m=HIST;k=20">[*history of updates]</a></li>%sq;
+          <li><a href="%prefix;m=HIST;k=20">[*history of updates]</a></li>
         %end;%nl;
-          %if;(not base.has_notes)
-            <li><a href="%prefix;m=MOD_NOTES">[*add base notes]</a></li>
-          %end;
-          %if;(wizard)
-            <li><a href="%prefix;m=MOD_DATA;data=fn">%apply;book_of([first name/first names]1)</a></li>
-            <li><a href="%prefix;m=MOD_DATA;data=sn">%apply;book_of([surname/surnames]1)</a></li>
-            <li><a href="%prefix;m=MOD_DATA;data=place">%apply;book_of([places])</a></li>
-            <li><a href="%prefix;m=MOD_DATA;data=src">%apply;book_of([source/sources]1)</a></li>
-            <li><a href="%prefix;m=MOD_DATA;data=occu">%apply;book_of([occupation/occupations]1)</a></li>
-          %end;
+        %if;(not base.has_notes)
+          <li><a href="%prefix;m=MOD_NOTES">[*add base notes]</a></li>
+        %end;
+        %if;(wizard)
+          <li><a href="%prefix;m=MOD_DATA;data=fn">%apply;book_of([first name/first names]1)</a></li>
+          <li><a href="%prefix;m=MOD_DATA;data=sn">%apply;book_of([surname/surnames]1)</a></li>
+          <li><a href="%prefix;m=MOD_DATA;data=place">%apply;book_of([places])</a></li>
+          <li><a href="%prefix;m=MOD_DATA;data=src">%apply;book_of([source/sources]1)</a></li>
+          <li><a href="%prefix;m=MOD_DATA;data=occu">%apply;book_of([occupation/occupations]1)</a></li>
+        %end;
       </ul>
     </td>
         <td>
@@ -224,36 +223,30 @@ zh: 网络家谱
         <li>
           <a href="%prefix;m=N;tri=A" title="[*surname/surnames]1, [display by/branch/alphabetic order]0 [display by/branch/alphabetic order]2">[*surname/surnames]1</a>
           <a href="%prefix;m=N;tri=F" title="[*surname/surnames]1, [sort by/date begin/alphabetic order/nb individuals/nb events]0 [sort by/date begin/alphabetic order/nb individuals/nb events]3">🔢</a></li>
-        %if;(bvar.propose_titles != "no")
-          <form method="get" action="%action;">
+        </ul>%if;(bvar.propose_titles != "no")<form method="get" action="%action;">
                   %hidden;
                   <input id="mTT" type="hidden" name="m" value="TT"/>
-                  <li><a href="%prefix;m=TT;t=" title="[*all the titles], [display by/branch/alphabetic order]0 [display by/branch/alphabetic order]2">[*title/titles]1</a><input type=text name="t" size="10" maxlength="100" title="[*search/case sensitive]0 [title/titles]0"%/></li>
-                  <li><a href="%prefix;m=TT;p=*" title="[*all the estates], [display by/branch/alphabetic order]0 [display by/branch/alphabetic order]2">[*estate]0s</a><input type=text name="p" size="10" maxlength="100" title="[*search/case sensitive]0 [estate]0"%/>
-                  <input id="hide_ie" hidefocus="true" tabindex="-1" type="submit" value="Ok"/>
-                  </li>
+                  <ul><li><a href="%prefix;m=TT;t=" title="[*all the titles], [display by/branch/alphabetic order]0 [display by/branch/alphabetic order]2">[*title/titles]1</a><input type="text" name="t" size="10" maxlength="100" title="[*search/case sensitive]0 [title/titles]0"%/></li>
+                  <li><a href="%prefix;m=TT;p=*" title="[*all the estates], [display by/branch/alphabetic order]0 [display by/branch/alphabetic order]2">[*estate]0s</a><input type="text" name="p" size="10" maxlength="100" title="[*search/case sensitive]0 [estate]0"%/>
+                  <input id="hide_ie2" tabindex="-1" type="submit" value="Ok"/>
+                  </li></ul>
           </form>
         %end;
-          </ul>
         </td>
         </tr><tr>
         <td colspan="3">
         %if;(bvar.propose_place_surnames != "no")%nl;
-        <ul>
-          <li>
-            <form method="get" action="%prefix;">
-              %hidden;
-              [*place] / [event/events]1[:]
-              <input type="hidden" name="m" value="PS"%/>
-              <label><input type="checkbox" name="bi" value="on" checked="checked" %l_on1;%/>[birth]</label>
-              <label><input type="checkbox" name="ma" value="on" checked="checked" %l_on1;%/>[marriage/marriages]0</label>
-              <label><input type="checkbox" name="de" value="on" checked="checked" %l_on1;%/>[death]</label>
-              <label><input type="checkbox" name="bp" value="on" %l_on1;%/>[baptism]</label>
-              <label><input type="checkbox" name="bu" value="on" %l_on1;%/>[burial]</label>
-              <input type="submit" value="Ok"%/>
-            </form>
-          </li>
-        </ul>
+          <form method="get" action="%prefix;">
+            %hidden;
+            [*place] / [event/events]1[:]
+            <input type="hidden" name="m" value="PS"%/>
+            <label><input type="checkbox" name="bi" value="on" checked="checked" %l_on1;%/>[birth]</label>
+            <label><input type="checkbox" name="ma" value="on" checked="checked" %l_on1;%/>[marriage/marriages]0</label>
+            <label><input type="checkbox" name="de" value="on" checked="checked" %l_on1;%/>[death]</label>
+            <label><input type="checkbox" name="bp" value="on" %l_on1;%/>[baptism]</label>
+            <label><input type="checkbox" name="bu" value="on" %l_on1;%/>[burial]</label>
+            <input type="submit" value="Ok"%/>
+          </form>
         %end;
      </td></tr>
   </table>

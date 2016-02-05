@@ -78,7 +78,7 @@ h1{text-align:center;margin-top:28px}
 #ak input {width:10px;background-color:#EEE;border:solid 1px #DDD;margin:0px;padding:3px;color:#DDD;}
 #ak .s_menu{width:240px;padding:3px;}
 /* Hidden input submit button, IE workaround */
-#hide_ie {position:absolute;opacity:0;width:0;height:0;border:0;padding:0;}
+#hide_ie,#hide_ie2 {position:absolute;opacity:0;width:0;height:0;border:0;padding:0;}
 /* Properties of the footer block. All pages. */
 #footer{float:right;padding:3px;bottom:0;}
 /* Properties of the title block. All pages. */
@@ -123,7 +123,7 @@ hr.full{margin-left:0;margin-right:0;}
 #perso{padding-top:0}
 #perso h1{margin:10px 10px 10px 0px;padding:5px;}
 #perso .ch1{font-size:1.5em;}
-#perso .ch2{font-size:1.3em;}
+#perso .ch2{font-size:1.5em;color:#060;font-weight:bold;margin-top:1em;}
 #perso .relations ul,#perso .sources ul{margin-left:-15px;margin-top:0;margin-bottom:0;}
 #perso .relations li,#perso .sources li{padding:0px;}
 #perso li{margin:2px 0 0 0;padding:0 0 0 10px;}
@@ -161,7 +161,6 @@ input[type='submit']{line-height:14px;height:24px;}
 #perso .image img{border:0;margin:0;padding:0;}
 #perso .image_sheet{border:0;margin:4px;padding:5px;background-color:#FAFAFA;text-align:center;}
 #perso .del{cursor:crosshair;color:#900;border-bottom:dotted 2px #F00;}
-#evnote p{margin:0 0 5px}
 /* updind.txt,updfam.txt */
 #upd legend{font-size:16px;font-weight:bold;text-align:left}
 #upd form,#upd input,#upd select,#upd textarea{font-size:14px;}

@@ -1,6 +1,5 @@
 <!-- $Id: css.txt,v 7.00 2015/03/30 13:00:31 mr Exp $ -->
 <link type="text/css" href="%bvar.static_path;templm/css%bvar.css;.css" media="all" rel="stylesheet" title="css%bvar.css;"%/>
-
 <script type="text/javascript" src="%bvar.static_path;templm/js.js"></script>
 %if;(bvar.uppercase = "yes")
   <script type="text/javascript">

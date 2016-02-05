@@ -2,16 +2,15 @@
   <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 %else;
-  %doctype;
+  <!DOCTYPE html>
 %end;
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <!-- $Id: perso.txt,v 2016/02/04 21:24:23 A2 mr Exp $ -->
+  <!-- $Id: perso.txt,v 06/02/2016 05:32:06 A2 mr Exp $ -->
   <title>%apply;capitalize(self.first_name) %apply;capitalize(self.surname)%if(occ!=0) (%occ;)%end; - #%index;</title>
   <meta name="robots" content="none"%/>
   <meta name="format-detection" content="telephone=no"%/>
   <meta http-equiv="Content-Type" content="text/html; charset=%charset;"%/>
-  <meta http-equiv="Content-Style-Type" content="text/css"%/>
   <link rel="shortcut icon" href="%image_prefix;/favicon_gwd.png"%/>
   %include.css;
   %import;js_perso_accesskey;
@@ -46,7 +45,7 @@
   %end;
 %in;
 %let;birth_symbol;%if;(bvar.birth_symbol != "")%bvar.birth_symbol;%else;&deg;%end;%in;
-%let;death_symbol;%if;(bvar.death_symbol != "")%bvar.death_symbol;%else;&dagger;%end;%in;
+%let;death_symbol;%if;(bvar.death_symbol != "")%bvar.death_symbol;%else;†%end;%in;
 %let;l_child;%if;(bvar.always_surname = "yes" and evar.always_surname != "no")child%else;child_name%end;%in;
 %let;l_hh;%if;(sex=0)[him/her]0%elseif;(sex=1)[him/her]1%else;0%end;%in;
 %let;l_maxlev0;%if;(evar.maxlev != "" and evar.maxlev > 0)%evar.maxlev;%elseif;(bvar.maxlev != "")%bvar.maxlev;%else;1%end;%in;
@@ -60,7 +59,7 @@
       class="nobr del" target="ifr" onclick="javascript:deleted(this);"
       href="%prefix;m=DEL_IND_OK;i=%nn;
     %else;
-      class="nobr" %l_on1; href="%prefix;m=MOD_IND;i=%nn;
+      class="nobr" %l_on1 href="%prefix;m=MOD_IND;i=%nn;
     %end;
   %else;
     href="#%nn;
@@ -110,12 +109,12 @@
 %define;menu1()
   <div class="menu%bvar.menu;" style="left:0px;top:0px">
     %if;wizard;
-      <span><a id="upd" href="%prefix;m=U;%access;" %laU;>⟔%(⇱⌜⌌%)</a>
+      <span><a id="upd" href="%prefix;m=U;%access;" %laU;>⟔%(⇱%)</a>
         <span class="s_menu">
           <a id="mod_ind" href="%prefix;m=MOD_IND;i=%index;" %laP; %l_on1;>[*modify::person/persons]0</a>%nn;
           <a id="chg_evt_ind" href="%prefix;m=CHG_EVT_IND_ORD;i=%index;" %l_on1;>[*invert::event/events]1%(<br/>[*modify person event order]0%)</a>
           %if;(bvar.history_diff="yes" and has_history)
-            <a id="hist" href="%prefix;m=HIST_DIFF;t=DIFF;f=%history_file;new=0;old=1" %laD;>[*last diff]</a>
+            <a id="hist" href="%prefix;m=HIST_DIFF;t=DIFF;f=%history_file;;new=0;old=1" %laD;>[*last diff]</a>
             <a href="%prefix;m=HIST_DIFF;t=SUM;f=%history_file;">[*revision history]</a>
           %end;
           %foreach;family;
@@ -158,7 +157,7 @@
           %if;(version = l_version)
             <a href="%l1;gwstp?v=main.htm;" title="Gwstp">Gwstp</a>
           %else;
-            <a href="%l1;gwsetup?v=main.htm;" title="Gwsetup">˂</a>
+            <a href="%l1;gwsetup?v=main.htm;" title="Gwsetup">·</a>
           %end;
           %if;(has_parents or has_children)
             <span class="s_menu">
@@ -586,7 +585,7 @@
         <span style="margin-left:20px"><small>[up to] %apply;ascmax()%apply;implex()</small></span><br/>
         %let;l1;%apply;min(max_anc_level,5)%in;
         <span>
-          %if;(not cancel_links)<a href="%prefix;m=A;%access;" title="[*tools] [ancestors]">%end;<h2 style="margin-top:-5px;">[*ancestors]</h2>%if;(not cancel_links)</a>%end;
+          <span class="ch2" style="margin-top:-4px;">[*ancestors]</span>
           %if;(not cancel_links)
             <span class="s_menu">
               %if;(max_anc_level>3)
@@ -640,10 +639,10 @@
     <span class="menu" style="display:inline;position:relative;">
     <span style="margin-left:15px;"><small>%apply;consang()</small></span><br/>
       <span>
-        <h2 style="margin-top:-4px;">[*full siblings]</h2>
+        <span class="ch2" style="margin-top:-4px;">[*full siblings]</span>
         %if;(not cancel_links)
-          <span class="s_menu" id="rela_comp">
-          <a id="rela_comp" href="%prefix;m=R;%access;" %laR;>[*relationship computing] 👪</a>
+          <span class="s_menu">
+          <a href="%prefix;m=R;%access;" id="rela_comp" %laR;>[*relationship computing] 👪</a>
           %if;(browsing_with_sosa_ref)
             %if;(sosa_ref.index != "" and sosa_ref.index != index)
               <a href="%prefix;em=R;ei=%index;;i=%sosa_ref.index;;m=NG;n=1;t=PN;spouse=on;image=on;et=S" title="[*shortest path] [with] %sosa_ref;">[*shortest path] ♆</a>%nn;
@@ -736,7 +735,7 @@
 %end;
 %define;relations_tree(z1)
     %reset_count;
-    <a href="%prefix;spouse=on;m=RLM;image=%evar.image;;%nn;
+     <a href="%prefix;spouse=on;m=RLM;image=%evar.image;;%nn;
       %foreach;relation;
         %if;(has_relation_him)
           %incr_count;i%count;=%relation_him.index;;t%count;=%relation_him.type;;%nn;
@@ -769,7 +768,7 @@
         i%count;=%sosa_ref.index;;%nn;
         t%count;=sosa_1;%nn;
       %end;
-    " title="[*relations tree]">
+    " title="[*relations tree]" style="color:#060;">
      %reset_count;
 %end;
 %define;relation_computing(himxx, herxx, typexx)
@@ -806,12 +805,8 @@
     %reset_count;
     <a href="%prefix;spouse=on;m=RLM;image=%evar.image;;%nn;
      %incr_count;i%count;=%himxx.index;;t%count;=%l_rt0;;%nn;
-     %if;("herxx" != "");
-      %incr_count;i%count;=%herxx.index;;t%count;=%l_rt1;;%nn;
-     %end;
-     %if;(browsing_with_sosa_ref)
-       %incr_count;i%count;=%sosa_ref.index;;t%count;=sosa_1;%nn;
-     %end;
+     %if;("herxx" != "");%incr_count;i%count;=%herxx.index;;t%count;=%l_rt1;;%nn;%end;
+     %if;(browsing_with_sosa_ref)%incr_count;i%count;=%sosa_ref.index;;t%count;=sosa_1;%nn;%end;
      %incr_count;i%count;=%index;;t%count;=%l_hh;;%nn;
      " title="[*shortest path] ♆">•</a>%nn;
     %end;
@@ -928,7 +923,7 @@
 %end;
 %define;event_tree(z1)
   %reset_count;
-  <span><a href="%prefix;spouse=on;m=RLM;image=%evar.image;;%nn;
+  <br/><span><a href="%prefix;spouse=on;m=RLM;image=%evar.image;;%nn;
     %foreach;event_witness;
         %incr_count;i%count;=%event_witness.index;;t%count;=%event.name;;%nn;
         %incr_count;%nn;
@@ -964,54 +959,54 @@
       %end;
   %end;
 %in;
-  <dt>
+  <span>
     %if;(bvar.event_age!="yes" and evar.age!="on")<span title="%parents_age;">%apply;capitalize(event.name)</span>%else;%apply;capitalize(event.name)%end;
     %if;event.has_date;%apply;on_edate("event")%end;
     %if;event.has_place; • %apply;advanced("birth_place",event.place)%end;
   %if;((bvar.event_age = "yes" or evar.age="on") and has_parents)
     <br%/> └ %parents_age;.
   %end;
-  </dt>
+  </span>
 %end;
 %define;baptism_event()
-  <dt>
+  <span>
     %apply;capitalize(event.name)
     %if;event.has_date;%apply;on_edate("event")%end;
     %if;event.has_place; • %apply;advanced("bapt_place",event.place)%end;
-  </dt>
+  </span>
 %end;
 %define;death_event()
-  <dt>
+  <span>
     %apply;capitalize(event.name)
     %if;event.has_date;%apply;on_edate("event")%end;
     %if;event.has_place; • %apply;advanced("death_place",event.place)%end;
-  </dt>
+  </span>
   %if;has_linked_page.DEATH;<dd>%linked_page.DEATH;</dd>%end;
 %end;
 %define;burial_event()
-  <dt>
+  <span>
     %apply;capitalize(event.name)
     %if;event.has_date;%apply;on_edate("event")%end;
     %if;event.has_place; • %apply;advanced("burial_place",event.place)%end;
-  </dt>
+  </span>
 %end;
 %define;marriage_event()
-  <dt>
+  <span>
     %if;(evar.spouse="off")<span title="[with] %event.spouse;">%apply;capitalize(event.name)</span>
     %else;%apply;capitalize(event.name)%end;
     %if;(event.has_spouse and evar.spouse!="off") [with] %event.spouse;%end;
     %if;event.has_date;%apply;on_edate("event")%end;
     %if;event.has_place; • %apply;advanced("marriage_place",event.place)%end;
-  </dt>
+  </span>
 %end;
 %define;other_event()
-  <dt>
+  <span>
     %if;(evar.spouse="off")<span title="[with] %event.spouse;">%if;(event.name=[no mention])[*relation/relations]0%else;%apply;capitalize(event.name)%end;</span>
     %else;%if;(event.name=[no mention])[*relation/relations]0%else;%apply;capitalize(event.name)%end;%end;
     %if;(event.has_spouse and evar.spouse!="off" and event.name!=[divorce event] and event.name!=[separate event] and event.name!=[annulation]) [with] %event.spouse;%end;
     %if;event.has_date;%apply;on_edate("event")%end;
     %if;event.has_place; • %event.place;%end;
-  </dt>
+  </span>
 %end;
 %define;one_event(z1)
   %if;("z1" = [birth])%apply;birth_event()
@@ -1022,8 +1017,8 @@
   %else;%apply;other_event()
   %end;
   %if;event.has_witnesses;
-    <div class="tree">
     %apply;event_tree(l_ref)%nn;
+    <span>
     %reset_count;%foreach;event_witness;%incr_count;%end;
     %if;(count>1)[witness/witnesses]1%else;[witness/witnesses]0%end;[:]
     %foreach;event_witness;
@@ -1031,29 +1026,29 @@
       %if;(count>1)%apply;relation_computing("event_witness", "", [witness/witnesses]0 )%sp;%end;
       %apply;somebody("event_witness")
     %end;
-    </div>
+    </span>
   %end;
   %if;event.has_note;
-    <dd id="evnote">%event.note;</dd>
+    <div style="margin-left:30px;margin-top:-15px">%event.note;</div>
   %end;
 %end;
 %define;witness_at_event(xx)
   [*witness at %s of:::xx]%nn;
 %end;
 %define;timeline()
-  <div class="event">
+	<div class="highlight1">
     %if;has_occupation;
-      <span class="highlight1">%apply;advanced%with;occu%and;%apply;capitalize(occupation)%end;</span>%nn;
+      %apply;advanced%with;occu%and;%apply;capitalize(occupation)%end;%nn;
     %end;
+    </div>
     %if;(has_linked_pages and has_linked_page.OCCU)
+    <div>
       %if;has_occupation;, %end;%linked_page.OCCU;
+    </div>
     %end;
-    <dl>
-      %foreach;event;
-        %apply;one_event(event.name)
-      %end;
-    </dl>
-  </div>
+    %foreach;event;
+      <div>%apply;one_event(event.name)</div>
+    %end;
   %if;not cancel_links;%apply;timeline_tree(l_ref)%end;
 %end;
 %define;descmax()
@@ -1123,7 +1118,7 @@
 %end;
 <div class="col1">
   <div class="person"> %( <!-- Begin display image, person --> %)
-    <h1 class="ch1 h1_%sex; h1_%has_families;%has_sosa;" style="%if;(evar.wide!="yes")margin-top:0px;%end;">
+    <h1 class="ch1 h1_%sex; h1_%has_families;%has_sosa;" style="margin-top:%if;(evar.wide!="yes")15%else;30%end;px">
       %if;(has_public_name)
         %apply;link_s("n",public_name)
       %else;
@@ -1138,7 +1133,7 @@
     </h1>
     %if;has_image;
     <div>
-     <a %l_on1; href="%image_html_url;">
+     <a href="%image_html_url;" %l_on1;>
        <img class="person_img" src="%image_url;" alt="[image/images]0"%/>
      </a>
     </div>
@@ -1207,20 +1202,22 @@
     <div class="relations">
       <div style="display:inline-block">
       %reset_count;
-        %foreach;relation;%if;(has_relation_him or has_relation_her)%incr_count%end;%end;
-        %foreach;related;%incr_count%end;
-        %foreach;event_witness_relation%incr_count%end;
-       %if;(not cancel_links and count>1)%apply;relations_tree(l_ref)%end<h2 class="ch2" style="float:left;display:inline">[*relation/relations]1</h2>%if;(not cancel_links)</a>%end;</div>
+        %foreach;relation;%if;(has_relation_him or has_relation_her)%incr_count;%end;%end;
+        %foreach;related;%incr_count;%end;
+        %foreach;event_witness_relation;%incr_count;%end;
+        %let;cnt;%count;%in;
+        <br/><span class="ch2">%if;(not cancel_links and cnt>1)%apply;relations_tree(l_ref)%end[*relation/relations]1%if;(not cancel_links and cnt>1)</a>%end;</span></div>
       %(<ul style="list-style-type:none">%)
         %foreach;relation;
-          <div class="tree">%apply;relation_computing("relation_him", "relation_her", "") %apply;capitalize(relation_type)[:]
-              %if;has_relation_him;
-                <span style="white-space: nowrap">%apply;somebody("relation_him")</span>
-                %if;has_relation_her; <span style="white-space: nowrap">[and] %end;
-              %end;
-              %if;has_relation_her;
-                %apply;somebody("relation_her")</span>.
-              %end;
+          <div class="tree" style="clear:both">
+          %apply;relation_computing("relation_him", "relation_her", "") %apply;capitalize(relation_type)[:]
+            %if;has_relation_him;
+              <span style="white-space: nowrap">%apply;somebody("relation_him")</span>
+              %if;has_relation_her; <span style="white-space: nowrap">[and] %end;
+            %end;
+            %if;has_relation_her;
+              %apply;somebody("relation_her")</span>.
+            %end;
           </div>
         %end;
         %foreach;related;
@@ -1248,15 +1245,15 @@
   %end;
   <div class="notes">
     %if;(has_notes or has_linked_page.BNOTE or has_linked_page.NOTE)
-    <div style="display:inline-block">%if;(has_linked_pages and not cancel_links)<a href="%prefix;m=LINKED;%access;" 
-     title="[*linked pages]">%end;<h2 class="ch2" style="float:left;display:inline">
-     [*note/notes]1%if;(has_linked_pages)<small>*</small>%end;</h2>%if;(not cancel_links)</a>%end;</div>
+    <br/>
+    <span %if;(not has_linked_pages)class="ch2"%end;>%if;(has_linked_pages and not cancel_links)<a href="%prefix;m=LINKED;%access;" class="ch2"
+     title="[*linked pages]">%end;[*note/notes]1%if;(has_linked_pages and not cancel_links)<small>*</small>%end;%if;(has_linked_pages and not cancel_links)</a>%end;</span>
       %if;(has_linked_page.BNOTE)
-        <p>&gt;&gt; %linked_page.BNOTE;</p>
+        &gt;&gt; %linked_page.BNOTE;
       %end;
       %notes;
       %if;(has_linked_page.NOTE)
-        <p>&gt;&gt; %linked_page.NOTE;</p>
+        &gt;&gt; %linked_page.NOTE;
       %end;
     %end;
   </div>
@@ -1298,22 +1295,24 @@
       </ul>
     </div>
   %end;
-%( <!-- End display relations, notes, sources --> %)
 </div>
+%( <!-- End display relations, notes, sources --> %)
+%( <!-- Begin display ancestors /descendants --> %)
 <div class="col2">
   <hr %if;(lwide = "no")style="display:none"%end; %/>
-%( <!-- Begin display ancestors /descendants --> %)
-  <br/>
+  <br/><br/>
   %apply;anc_families()
-    %if;has_families;
-      <div style="clear:both">
-      %if;has_children;
-        <div><span class="menu" style="position:relative;margin-top:2em;margin-left:20px;"><small>%apply;descmax()</small></span></div>
-        <div style="display:inline-block;">
-          <span class="menu" style="position:relative;">
+  %if;has_families;
+    <div style="clear:both">
+    %if;not has_children;
+      <h2 class="ch2">%if;(nb_families>1)[*spouse/spouses]1%else;[*spouse/spouses]0%end;</h2>
+    %elseif;has_children;
+      <div><span class="menu" style="position:relative;margin-top:2em;margin-left:20px;"><small>%apply;descmax()</small></span></div>
+      <div style="display:inline-block;">
+        <span class="menu" style="position:relative;">
           %let;lv;%if;(evar.maxlev!="")%evar.maxlev;%elseif(bvar.maxlev!="")%bvar.maxlev;%else;1%end;%in;
           <span>
-          %if;(not cancel_links)<a href="%prefix;m=D;%access;">%end;<h2 style="margin-top:-5px">[*descendants]</h2>%if;(not cancel_links)</a>%end;
+          <span class="ch2" style="margin-top:-4px;">[*descendants]</span>
           %if;(not cancel_links)
             <span class="s_menu" style="font-size:1em">
             %if;(max_desc_level>1)
@@ -1330,50 +1329,50 @@
             <a href="%prefix;m=D;t=H;v=%max_desc_level;;birth=on;birth_place=on;marr=on;marr_date=on;marr_place=on;child=on;death=on;death_place=on;death_age=on;occu=on;gen=on;%access;">[*table] [descendants]</a>%nn;
             <a href="%prefix;m=D;t=L;v=3;maxv=%max_desc_level;;siblings=on;alias=on;spouse=on;parents=on;rel=on;witn=on;notes=on;src=on;upd=on;hide=on;%access;">[*long display]</a>%nn;
             <a href="%prefix;m=D;%access;">Menu [tools] [descendants]</a>%nn;
-            </span>%end;
             </span>
+          %end;
           </span>
-       </div>
-       </div>
-    %elseif;(not has_children)<h2 class="ch2">%if;(nb_families>1)[*spouse/spouses]1%else;[*spouse/spouses]0%end;</h2>%end;
-        %foreach;family;
-          <div class="fam">
-            %if;(wizard and not cancel_links and family_cnt != 1)
-              %if;(family_cnt != 1)
-                <span class="button">
-                  <a href="%prefix;m=INV_FAM;i=%index;;f=%family.index;" 
-                   title="[*invert::family/families]1" style="border:0px;font-size:17px">⇪</a>
-                </span>
-                %if;(family.father.index = prev_family.father.index
-                  and family.mother.index = prev_family.mother.index)
-                  <span class="button"><a href="%prefix;m=MRG_FAM;i=%prev_family.index;;i2=%family.index;;ip=%index;">%nn;
-                  [*merge::]</a></span>
-                %end;
-              %end;
+        </span>
+      </div>
+    %end;
+    </div>
+    %foreach;family;
+      <div class="fam">
+        %if;(wizard and not cancel_links and family_cnt != 1)
+          %if;(family_cnt != 1)
+            <span class="button">
+              <a href="%prefix;m=INV_FAM;i=%index;;f=%family.index;" 
+               title="[*invert::family/families]1" style="border:0px;font-size:17px">⇪</a>
+            </span>
+            %if;(family.father.index = prev_family.father.index
+              and family.mother.index = prev_family.mother.index)
+              <span class="button"><a href="%prefix;m=MRG_FAM;i=%prev_family.index;;i2=%family.index;;ip=%index;">%nn;
+              [*merge::]</a></span>
             %end;
-            %apply;content_family("self","spouse")
-            %if;(evar.opt = "from" and wizard)<em>(%origin_file;)</em>%nl;%end;
-            %if;(evar.image = "on" and nb_families > 1)<hr style="clear:both;"%/>%end;
-          </div>
+          %end;
+        %end;
+        %apply;content_family("self","spouse")
+        %if;(evar.opt = "from" and wizard)<em>(%origin_file;)</em>%nl;%end;
+        %if;(evar.image = "on" and nb_families > 1)<hr style="clear:both;"%/>%end;
+      </div>
+    %end;
+  %else;
+    %if;(wizard and not cancel_links)
+      <div class="button" style="clear:both">
+        %if;((first_name = "?" or surname = "?") and (nb_families != 0 or has_parents))
+        %elseif;(is_male or is_female)
+          <a href="%prefix;m=ADD_FAM;ip=%index;" title="[*add::family/families]0 (A)" %l_on1;>[*add::family/families]0</a>%nn;
+          <br%/>
         %end;
       </div>
-    %else;
-      %if;(wizard and not cancel_links)
-        <div class="button" style="clear:both">
-          %if;((first_name = "?" or surname = "?") and (nb_families != 0 or has_parents))
-          %elseif;(is_male or is_female)
-            <a href="%prefix;m=ADD_FAM;ip=%index;" title="[*add::family/families]0 (A)" %l_on1;>[*add::family/families]0</a>%nn;
-            <br%/>
-          %end;
-        </div>
-      %end;
     %end;
+  %end;
 </div>
 %( <!-- End display ancestors/descendants --> %)
 %( <!-- Begin display menu --> %)
 %if;(not cancel_links and wizard and (evar.misc = "yes" or bvar.misc = "yes"))
   <div class="div3">
-    <form name="syntax" method="get" action="">
+    <form name="syntax" method="get" action="#">
       <ul><li>
           <label>wikitext <input onclick="javascript: this.select();" type="text" name="wiki" size="70"
                           value="%[%[%apply;capitalize(first_name_key)/%apply;capitalize(surname_key)/%occ;/%first_name; %surname;%]%]"%/></label>
