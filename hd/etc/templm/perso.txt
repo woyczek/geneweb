@@ -113,14 +113,14 @@
       <span><a id="upd" href="%prefix;m=U;%access;" %laU;>⟔%(⇱⌜⌌%)</a>
         <span class="s_menu">
           <a id="mod_ind" href="%prefix;m=MOD_IND;i=%index;" %laP; %l_on1;>[*modify::person/persons]0</a>%nn;
-          <a id="chg_evt_ind" href="%prefix;m=CHG_EVT_IND_ORD;i=%index;" %_lon1;>[*invert::event/events]1%(<br/>[*modify person event order]0%)</a>
+          <a id="chg_evt_ind" href="%prefix;m=CHG_EVT_IND_ORD;i=%index;" %l_on1;>[*invert::event/events]1%(<br/>[*modify person event order]0%)</a>
           %if;(bvar.history_diff="yes" and has_history)
-            <a id="hist" href="%prefix;m=HIST_DIFF;t=DIFF;f=%history_file;&new=0;old=1" %laD;>[*last diff]</a>
+            <a id="hist" href="%prefix;m=HIST_DIFF;t=DIFF;f=%history_file;new=0;old=1" %laD;>[*last diff]</a>
             <a href="%prefix;m=HIST_DIFF;t=SUM;f=%history_file;">[*revision history]</a>
           %end;
           %foreach;family;
             %if;(family_cnt>1)
-            <a href="%prefix;m=INV_FAM;f=%family.index;;i=%index;" %_lon1;>[*invert::family/families]1 %expr(family_cnt-1) [and] %family_cnt;</a>
+            <a href="%prefix;m=INV_FAM;f=%family.index;;i=%index;" %l_on1;>[*invert::family/families]1 %expr(family_cnt-1) [and] %family_cnt;</a>
             %end;
             %if;(family_cnt < 4)
               %let;a_k;%if;(family_cnt = 1)F%elseif;(family_cnt = 2)G%elseif;(family_cnt = 3)H%end;%in;
@@ -130,7 +130,7 @@
               <a id="mod_fam_%family_cnt;" href="%prefix;m=MOD_FAM;i=%family.index;;ip=%index;" title="[*modify::family/families]0 %family_cnt;"
                  %l_on1;>[*modify::family/families]0 %family_cnt;</a>%nn;
             %end;
-            <a href="%prefix;m=CHG_EVT_FAM_ORD;i=%family.index;;ip=%index;" %_lon1;>[*invert::event/events]1 [family/families]0 %if;(nb_families>1)%family_cnt;%end;%(<br/>%apply;chg_evt_fam_ord(family_cnt)%)</a>
+            <a href="%prefix;m=CHG_EVT_FAM_ORD;i=%family.index;;ip=%index;" %l_on1;>[*invert::event/events]1 [family/families]0 %if;(nb_families>1)%family_cnt;%end;%(<br/>%apply;chg_evt_fam_ord(family_cnt)%)</a>
           %end;
           
           %if;has_children;
@@ -1215,31 +1215,31 @@
         %foreach;relation;
           <div class="tree">%apply;relation_computing("relation_him", "relation_her", "") %apply;capitalize(relation_type)[:]
               %if;has_relation_him;
-                <nobr>%apply;somebody("relation_him")</nobr>
-                %if;has_relation_her; <nobr>[and] %end;
+                <span style="white-space: nowrap">%apply;somebody("relation_him")</span>
+                %if;has_relation_her; <span style="white-space: nowrap">[and] %end;
               %end;
               %if;has_relation_her;
-                %apply;somebody("relation_her")</nobr>.
+                %apply;somebody("relation_her")</span>.
               %end;
           </div>
         %end;
         %foreach;related;
           <div class="tree">%apply;relation_computing("related", "", related_type) %apply;capitalize(related_type)[:]
-            <nobr>%apply;somebody("related")</nobr>.
+            <span style="white-space: nowrap">%apply;somebody("related")</span>.
           </div>
         %end;
         %foreach;event_witness_relation;
           <div class="tree">%apply;relation_computing("event_witness_relation.person", "", [witness/witnesses]0 )%sp;
           %apply;a_of_b%with;[*witness/witnesses]0%and;
           %apply;a_of_b%with;%event_witness_relation.event.name;%and;%end;%end;
-          <nobr>%apply;somebody("event_witness_relation.person")</nobr>%if;(event_witness_relation.event.spouse = "").%end;
+          <span style="white-space: nowrap">%apply;somebody("event_witness_relation.person")</span>%if;(event_witness_relation.event.spouse = "").%end;
           %if;(event_witness_relation.event.spouse != "")
-           %sp;<nobr>%if;(event_witness_relation.event.has_date)%sp;<span %( cant have link atm, a href="%prefix;MOD_FAM;i=%event_witness_relation.person.family.index;;ip=%event_witness_relation.person.index;" %)
+           %sp;<span style="white-space: nowrap">%if;(event_witness_relation.event.has_date)%sp;<span %( cant have link atm, a href="%prefix;MOD_FAM;i=%event_witness_relation.person.family.index;;ip=%event_witness_relation.person.index;" %)
               title="%if;(event_witness_relation.event.has_date)%event_witness_relation.event.date;%nl;%end;%nn;
-                     %if;event_witness_relation.event.has_place;%event_witness_relation.event.place;%end;">&%event_witness_relation.event.date.year;</span>
-              %else;<span title="%if;event_witness_relation.event.has_place;%event_witness_relation.event.place;%end;"> &</span>
+                     %if;event_witness_relation.event.has_place;%event_witness_relation.event.place;%end;">&amp;%event_witness_relation.event.date.year;</span>
+              %else;<span title="%if;event_witness_relation.event.has_place;%event_witness_relation.event.place;%end;"> &amp;</span>
             %end;
-            %apply;somebody("event_witness_relation.event.spouse")</nobr>.
+            %apply;somebody("event_witness_relation.event.spouse")</span>.
           %end;%nn;
           </div>
         %end;
@@ -1392,7 +1392,7 @@
     %apply;menu()
     %apply;buttons()
  %( %apply;tools_perso() %)
-  <div>
+  </div>
   %base_trailer;
   %include.copyr
 %end;
