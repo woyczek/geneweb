@@ -111,42 +111,41 @@
     %if;wizard;
       <span><a id="upd" href="%prefix;m=U;%access;" %laU;>⟔%(⇱%)</a>
         <span class="s_menu">
-          <a id="mod_ind" href="%prefix;m=MOD_IND;i=%index;" %laP; %l_on1;>[*modify::person/persons]0</a>%nn;
-          <a id="chg_evt_ind" href="%prefix;m=CHG_EVT_IND_ORD;i=%index;" %l_on1;>[*invert::event/events]1%(<br/>[*modify person event order]0%)</a>
-          %if;(bvar.history_diff="yes" and has_history)
-            <a id="hist" href="%prefix;m=HIST_DIFF;t=DIFF;f=%history_file;;new=0;old=1" %laD;>[*last diff]</a>
-            <a href="%prefix;m=HIST_DIFF;t=SUM;f=%history_file;">[*revision history]</a>
+          <a id="mod_ind" href="%prefix;m=MOD_IND;i=%index;" %laP; %l_on1;>↺ [*modify::person/persons]0</a>%nn;
+          <a id="chg_evt_ind" href="%prefix;m=CHG_EVT_IND_ORD;i=%index;" %l_on1;>⇳ [*invert::event/events]1%(<br/>[*modify person event order]0%)</a>
+          %if;(is_male or is_female)
+            <a id="add_fam" href="%prefix;m=ADD_FAM;ip=%index;" %laA; %l_on1;>👫 [*add::family/families]0</a>%nn;
           %end;
           %foreach;family;
             %if;(family_cnt>1)
-            <a href="%prefix;m=INV_FAM;f=%family.index;;i=%index;" %l_on1;>[*invert::family/families]1 %expr(family_cnt-1) [and] %family_cnt;</a>
+            <a href="%prefix;m=INV_FAM;f=%family.index;;i=%index;" %l_on1;>⇪ [*invert::family/families]1 %expr(family_cnt-1) [and] %family_cnt;</a>
             %end;
             %if;(family_cnt < 4)
               %let;a_k;%if;(family_cnt = 1)F%elseif;(family_cnt = 2)G%elseif;(family_cnt = 3)H%end;%in;
               <a id="mod_fam_%family_cnt;" href="%prefix;m=MOD_FAM;i=%family.index;;ip=%index;" title="[*modify::family/families]0 %if;(nb_families>1)%family_cnt;%end; (%a_k;)"
-                 accesskey="%a_k;" %l_on1;>[*modify::family/families]0 %if;(nb_families>1)%family_cnt;%end;</a>%nn;
+                 accesskey="%a_k;" %l_on1;>↺ [*modify::family/families]0 %if;(nb_families>1)%family_cnt;%end;</a>%nn;
             %else;
               <a id="mod_fam_%family_cnt;" href="%prefix;m=MOD_FAM;i=%family.index;;ip=%index;" title="[*modify::family/families]0 %family_cnt;"
-                 %l_on1;>[*modify::family/families]0 %family_cnt;</a>%nn;
+                 %l_on1;>↺ [*modify::family/families]0 %family_cnt;</a>%nn;
             %end;
-            <a href="%prefix;m=CHG_EVT_FAM_ORD;i=%family.index;;ip=%index;" %l_on1;>[*invert::event/events]1 [family/families]0 %if;(nb_families>1)%family_cnt;%end;%(<br/>%apply;chg_evt_fam_ord(family_cnt)%)</a>
+            <a href="%prefix;m=CHG_EVT_FAM_ORD;i=%family.index;;ip=%index;" %l_on1;>⇳ [*invert::event/events]1 [family/families]0 %if;(nb_families>1)%family_cnt;%end;%(<br/>%apply;chg_evt_fam_ord(family_cnt)%)</a>
           %end;
-          
           %if;has_children;
-            <a href="%prefix;m=CHG_CHN;ip=%index;">[*change children's names]</a>
+            <a href="%prefix;m=CHG_CHN;ip=%index;">👦👧 [*change children's names]</a>
           %end;
-          %if;(is_male or is_female)
-            <a id="add_fam" href="%prefix;m=ADD_FAM;ip=%index;" %laA; %l_on1;>[*add::family/families]0</a>%nn;
+          %if;(bvar.history_diff="yes" and has_history)
+            <a id="hist" href="%prefix;m=HIST_DIFF;t=DIFF;f=%history_file;;new=0;old=1" style="display:inline-block;width:125px" %laD;>≏ [*last diff]</a>
+            <a href="%prefix;m=HIST_DIFF;t=SUM;f=%history_file;" style="display:inline-block;width:125px" title="[*revision history]">∴ [*history]</a>
           %end;
           %if;(bvar.can_send_image != "no" and image = "" and first_name != "?" and surname != "?")
-          <a id="snd_image" href="%prefix;m=SND_IMAGE;i=%index;" %laI; >[*send::image/images]0</a>%nn;
-            %if;(auto_image_file_name != "")<a href="%prefix;m=DEL_IMAGE;i=%index;">[*delete::image/images]0</a>%end;
+          <a href="%prefix;m=SND_IMAGE;i=%index;" style="display:inline-block;width:125px" %laI; >🎴 [*send::image/images]0</a>%nn;
+            %if;(auto_image_file_name != "")<a href="%prefix;m=DEL_IMAGE;i=%index;" style="color:red;display:inline-block;width:125px"><small>[*delete::image/images]0</small></a>%end;
           %end;
           %if;has_possible_duplications;
             <a href="%prefix;m=MRG_DUP;ip=%index;">[*merge::possible duplications] (oc=%occ;)</a>
           %end;
-          <a href="%prefix;m=MRG;i=%index;">[*merge]0</a>%nn;
-          <a href="%prefix;%access;%l_url;i=%index;;del=on;">[*delete::]</a>%nn;
+          <a href="%prefix;m=MRG;i=%index;" style="display:inline-block;width:125px">⨇ [*merge]0</a>%nn;
+          <a href="%prefix;%access;%l_url;i=%index;;del=on;" style="color:red;display:inline-block;float:right;width:125px" title="[*delete::person/persons]1/[family/families]1%nl;[click on dates]">＋ <small>[*delete::person/persons]0</small></a>%nn;
         </span>
       </span>
       %if;(bvar.setup_link != "no")
@@ -1036,16 +1035,14 @@
   [*witness at %s of:::xx]%nn;
 %end;
 %define;timeline()
-	<div class="highlight1">
+    <div class="highlight1">
     %if;has_occupation;
-      %apply;advanced%with;occu%and;%apply;capitalize(occupation)%end;%nn;
+      %apply;advanced%with;occu%and;%apply;capitalize(occupation)%end%nn;
     %end;
-    </div>
     %if;(has_linked_pages and has_linked_page.OCCU)
-    <div>
       %if;has_occupation;, %end;%linked_page.OCCU;
-    </div>
     %end;
+    </div>
     %foreach;event;
       <div>%apply;one_event(event.name)</div>
     %end;
@@ -1351,6 +1348,8 @@
             %end;
           %end;
         %end;
+        %(<span class="button"><a id="chg_evt_fam" href="%prefix;m=CHG_EVT_FAM_ORD;i=%family.index;;ip=%index;" 
+         style="border:0px;font-size:17px" title="[*invert::event/events]1 [family/families]0">⇳</a></span>%)
         %apply;content_family("self","spouse")
         %if;(evar.opt = "from" and wizard)<em>(%origin_file;)</em>%nl;%end;
         %if;(evar.image = "on" and nb_families > 1)<hr style="clear:both;"%/>%end;
@@ -1361,7 +1360,7 @@
       <div class="button" style="clear:both">
         %if;((first_name = "?" or surname = "?") and (nb_families != 0 or has_parents))
         %elseif;(is_male or is_female)
-          <a href="%prefix;m=ADD_FAM;ip=%index;" title="[*add::family/families]0 (A)" %l_on1;>[*add::family/families]0</a>%nn;
+          <a href="%prefix;m=ADD_FAM;ip=%index;" title="[*add::family/families]0 (A)" %l_on1;>👫 [*add::family/families]0</a>%nn;
           <br%/>
         %end;
       </div>
@@ -1373,10 +1372,10 @@
 %if;(not cancel_links and wizard and (evar.misc = "yes" or bvar.misc = "yes"))
   <div class="div3">
     <form name="syntax" method="get" action="#">
-      <ul><li>
-          <label>wikitext <input onclick="javascript: this.select();" type="text" name="wiki" size="70"
-                          value="%[%[%apply;capitalize(first_name_key)/%apply;capitalize(surname_key)/%occ;/%first_name; %surname;%]%]"%/></label>
-      </li></ul>
+      <ul><li>index #%index;</li>
+      <li><label>wikitext <input onclick="javascript: this.select();" type="text" name="wiki" size="70"
+                          value="%[%[%apply;capitalize(first_name_key)/%apply;capitalize(surname_key)/%occ;/%first_name; %surname;%]%]"%/>
+      </label></li></ul>
     </form>
     %misc_names;
   </div>

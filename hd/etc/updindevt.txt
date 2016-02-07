@@ -1,13 +1,12 @@
-%doctype;
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
 <head>
   <!-- $Id: updindevt.txt,v 0.01 2016-01-24 22:15:30 flh Exp $ -->
-  <!-- Copyright (c) 2006-2007 INRIA -->
-  <title>%title;</title>
+  <!-- Copyright (c) 1998-2016 INRIA -->
+  <title>[*invert::event/events]1 [person/persons]0</title>
   <meta http-equiv="Content-Type" content="text/html; charset=%charset;"%/>
-  <meta http-equiv="Content-Style-Type" content="text/css"%/>
   <meta name="robots" content="none"%/>
   <link rel="shortcut icon" href="%image_prefix;/favicon_gwd.png"%/>
+  %include.js;
   %include.css;
   %base_header;
 </head>
@@ -18,7 +17,9 @@
 %define;one_pevent(xcnt)
   <li>
     <input type="hidden" name="e_idxcnt" value="xcnt"%/>
-    <input type="text" name="e_posxcnt" size="2" maxlength="2" value="xcnt"%/>
+    <input type="hidden" class="pos" name="e_posxcnt" size="2" maxlength="2" value="xcnt"%/>
+    <button type="button" class="up" title="[*move up/down]0">⇧</button>
+    <button type="button" class="down" title="[*move up/down]1">⇩</button>
     %event_str;
   </li>
 %end;
@@ -28,7 +29,7 @@
     %hidden;
     <input type="hidden" name="i" value="%index;"%/>
     <input type="hidden" name="m" value="CHG_EVT_IND_ORD_OK"%/>
-    <ul>
+    <ul id="sort_list">
       %foreach;pevent;
         %apply;one_pevent(cnt)
       %end;
@@ -44,5 +45,59 @@
 %base_trailer;
 %include.copyr;
 
+<script type="text/javascript">
+ $('.up').click(function () {
+   var $li = $(this).parent();
+   $li.find('.pos').val(function(i, old){return --old});
+   $li.prev().find('.pos').val(function(i, old){return ++old});
+   if ($li.is(':first-child'))
+     $('#sort_list').append($li);
+   else
+     $li.insertBefore($li.prev());
+
+   if ($li.is(':first-child')) {
+     $li.find('.up').css('visibility', 'hidden');
+     $li.next().find('.up').css('visibility', 'visible');
+   }
+   if ($li.next().is(':last-child')) {
+     $li.next().find('.down').css('visibility', 'hidden');
+     $li.find('.down').css('visibility', 'visible');
+   }
+ });
+
+ $('.down').click(function () {
+   var $li = $(this).parent();
+   $li.find('.pos').val(function(i, old){return ++old});
+   $li.prev().find('.pos').val(function(i, old){return --old});
+   if ($li.is(':last-child'))
+     $('#sort_list').prepend($li);
+   else
+     $li.insertAfter($li.next());
+
+   if ($li.is(':last-child')) {
+     $li.find('.down').css('visibility', 'hidden');
+     $li.prev().find('.down').css('visibility', 'visible');
+   }
+   if ($li.prev().is(':first-child')) {
+     $li.prev().find('.up').css('visibility', 'hidden');
+     $li.find('.up').css('visibility', 'visible');
+   }
+ });
+
+ $(document).ready(function(){
+   $(".up").each(function(){
+     var $li = $(this).parent();
+     if ($li.is(':first-child'))
+       $(this).css('visibility', 'hidden');
+   });
+   $(".down").each(function(){
+     var $li = $(this).parent();
+     if ($li.is(':last-child'))
+       $(this).css('visibility', 'hidden');
+   });
+ });
+</script>
+
 </body>
 </html>
+

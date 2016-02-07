@@ -45,14 +45,16 @@
           Alt+%lpc5k; [note/notes]1<br%/>
           Alt+%lpc6k; [relation/relations]1<br%/>
           Alt+%lpc7k; [title/titles]1<br%/>
-          Alt+%lpcPk; [occupation/occupations]0<br%/><br%/>
+          Alt+%lpcPk; [occupation/occupations]0<br%/>
+          Alt+%lpcOk; [invert::event/events]1<br%/><br%/>
           %elseif;(evar.m ="MOD_FAM" or evar.m ="ADD_FAM")
           Alt+%lfc1k; [first name/first names]0 [father/mother]0<br%/>
           Alt+%lfc2k; [add] [child/children]0<br%/>
           Alt+%lfc3k; [date of marriage]/[relation/relations]0<br%/>
           Alt+%lfc4k; [add] [event/events]0<br%/>
           Alt+%lfc5k; [marriage notes]<br%/>
-          Alt+%lfc6k; [source/sources]1<br%/><br%/>
+          Alt+%lfc6k; [source/sources]1<br%/>
+          Alt+%lpcOk; [invert::event/events]1 [family/families]0<br%/><br%/>
           %else;
           (0) [spouse/spouses]1<br%/>
           (1) [siblings]<br%/>
@@ -86,7 +88,7 @@
            %if;(evar.t = "T")<input id="tT" type="hidden" name="t" value="T"/>
            <input id="v" type="hidden" name="v" value="%evar.v"/>%end;
            %if;(evar.m = "A")<input id="mA" type="hidden" name="m" value="A"/>%end;
-           <input type="search" id="mSn" name="n" accesskey="%laWk;" size="30" maxlength="200" %if;(evar.m="A" or (evar.i="" or evar.p="" or evar.n=""))autofocus%end;%sp;
+           <input type="search" id="mSn" name="n" accesskey="%laWk;" size="30" maxlength="200" %if;(evar.i="" and evar.p="" and evar.n="")autofocus%end;%sp;
              title="[*search/case sensitive]0 (W)%nl;%nl;* = [starting with]%nl;%nl;
                     [*Sosa]*+/- [:]%nl;
                      * [father/mother]0%nl;

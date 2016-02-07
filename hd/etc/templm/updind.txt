@@ -240,7 +240,7 @@
   </span>
 </fieldset>
 <fieldset class="event">
-  <legend>[*event/events]1</legend>
+  <div style="display:inline-block;"><legend>[*event/events]1</legend></div><div style="display:inline-block" ><a id="chg_evt_ind" href="%prefix;m=CHG_EVT_IND_ORD;i=%index;" %lpaO; title="[*invert::event/events]1 (Alt+%lpcOk;)">⇳</a></div>
     <dl>
       %if;(not has_pevent_birth)%apply;one_event(next_pevent,"#birt","witness")%incr_next_pevent;%end;
       %if;has_pevents;%foreach;pevent;%apply;one_event(cnt,"","witness")%end;%end;
