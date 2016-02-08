@@ -1,10 +1,9 @@
-<!-- $Id: menu_search.txt,v 7.00exp 06/02/2016 07:41:28 A2 Exp $ -->
+<!-- $Id: menu_search.txt,v 7.00exp 08/02/2016 05:44:45 A2 Exp $ -->
 %import;js_perso_accesskey
-
-%define;lang(xx)
+%define;lang(x)
   %apply;nth%with;
     /af/bg/br/ca/cs/da/de/en/eo/es/et/fi/fr/he/is/it/lv/nl/no/oc/pl/pt/pt-br/ro/ru/sk/sl/sv/zh/
-  %and;xx%end;
+  %and;x%end;
 %end;
 %define;link_lang()
   %for;i;1;30;
@@ -23,19 +22,17 @@
 %define;bg(xx)
   style="%if;(evar.templ="xx")background-color:%if;(bvar.css=1)#666;%else;#EEE;%end;%end;"
 %end;
-
 %if;(not cancel_links and evar.m != "MOD_DATA_OK" and evar.m != "DEL_IND_OK" and evar.m != "DEL_FAM_OK" and evar.m != "NOTES" and evar.m != "MISC_NOTES" and evar.templ="templm" and evar.m!="RL")
-  <div class="menu3" id="menu_trl" style="display:inline">
+  <div class="menu3" id="menu_search">
     %if;(referer != "")
       <span><a href="%referer;" title="[*back]">⇦</a></span>
     %end;
     %if;(evar.n != "" or evar.i != "" or evar.m !="")
       <span><a href="%prefix;" title="[*home]"> ⇧ </a></span>
     %end;
-    %if;(evar.n != "" or evar.i != "" or evar.ip !="" or evar.m !="")
-    <form style="display:inline" id="ak" method="get" action="%action;">
-      <span><input id="acckey" name="acckey" %laZ; %if;(evar.m!="A")autofocus%end; style="border:0px;width:1px;height:17px;color:transparent"
-       onkeypress="javascript:return acc_key(this,event,'sib_1','spo_1','chi_1_1','mod_ind','add_par','add_fam','mod_fam_1');"/>
+    %if;((evar.m="MOD_FAM" or evar.m="ADD_FAM" or evar.m="MOD_IND" or evar.m="S" or evar.m="") and (evar.n != "" or evar.i != "" or evar.ip !=""))
+    <form id="ak" method="get" action="%action;">
+      <span><input id="acckey" name="acckey" %laZ; %if;(evar.m!="A")autofocus%end; onkeypress="javascript:return acc_key(this,event,'sib_1','spo_1','chi_1_1','mod_ind','add_par','add_fam','mod_fam_1');"/>
         <span class="s_menu">
           %if;(evar.m = "MOD_IND")
           Alt+%lpc1k; [first name/first names]0<br%/>
@@ -82,26 +79,28 @@
       </span>
     </form>
     %end;
-    <form style="display:inline" method="get" action="%action;" onsubmit="return oS3();">
+    <form method="get" action="%action;" onsubmit="return oS3();">
            %hidden;
            %if;(evar.m != "A")<input id="mS" type="hidden" name="m" value="S"/>%end;
            %if;(evar.t = "T")<input id="tT" type="hidden" name="t" value="T"/>
            <input id="v" type="hidden" name="v" value="%evar.v"/>%end;
            %if;(evar.m = "A")<input id="mA" type="hidden" name="m" value="A"/>%end;
-           <input type="search" id="mSn" name="n" accesskey="%laWk;" size="30" maxlength="200" %if;(evar.i="" and evar.p="" and evar.n="")autofocus%end;%sp;
-             title="[*search/case sensitive]0 (W)%nl;%nl;* = [starting with]%nl;%nl;
-                    [*Sosa]*+/- [:]%nl;
-                     * [father/mother]0%nl;
+           <input type="text" id="mSn" name="n" maxlength="200" accesskey="%laWk;" %if;((evar.i="" and evar.p="" and evar.n="") or evar.p!="" and evar.m!="ADD_FAM")autofocus%end;%sp;
+             title="[*search/case sensitive]0[:]%nl;
+                    [surname/surnames]0*%nl;
+                    %if;(evar.t != "T")[public name]%nl;[alias]%nl;[n° Sosa]%end;
+                    %nl;%nl;*[begin] [with]"
+%(                   * [father/mother]0%nl;
                      + [father/mother]1%nl;
                      / [child/children]0 [Sosa]%nl;
-                     - %apply;a_of_b%with;[spouse/spouses]0%and;[child/children]0 [Sosa]%end;"
-%(                    ×      +%nl;
+                     - %apply;a_of_b%with;[spouse/spouses]0%and;[child/children]0 [Sosa]%end;
+                      ×      +%nl;
                       \   /%nl;
                         n°     ÷+ = ×-
                           \   /%nl;
                             ÷      -
                               \   /%nl;
-                                ÷÷"
+                                ÷÷
 
 ═╦════╦════╦════╗
  ║ /  ║ *  ║ -  ║
@@ -110,13 +109,13 @@
    8*   +9 ║ +  ║
       4    ║×2+1║
    2/   -3 ║    ║%)
-             placeholder="[surname/surnames]0*%if;(evar.t != "T"), [public name], [alias], n° Sosa%end;"
-             onfocus="%evar.n;%if;(evar.m = "S" and evar.n != "")%evar.n;%end;"
-             onkeypress="javascript:return computeSosa(event,'mSn')"
-             /><input type="search" id="mSp" name="p" size="13" maxlength="200" placeholder="[first name/first names]0*, n° index" title="* = [starting with]"
+             placeholder="[*search/case sensitive]0"
+             onkeypress="javascript:return computeSosa(event,'mSn')" 
+             /><input type="text" id="mSp" name="p" maxlength="200" 
+             title="[*search/case sensitive]0 (%laWk;)[:]%nl;[first name/first names]0*%nl;n° index%nl;* = [starting with]"
              /><input id="hide_ie" tabindex="-1" type="submit" value="Ok" title="[*search/case sensitive]0 (W)"/>
     </form>
-    <span style="display:inline">
+    <span class="r_btn">
     <a href="%if;(bvar.hide_advanced_request != "yes")%prefix;m=H;v=advanced%else;#%end;" 
     title="[*advanced request]%nl;%nl;[*select]%nl;%if;(evar.templ != "")%evar.templ;%else;templ%end;">%if;(bvar.hide_advanced_request != "yes")🔍%else;templ%end;</a>
     %if;(evar.digest = "")
@@ -137,7 +136,7 @@
       </span>
     %end;
     </span>
-    <span style="display:inline">
+    <span class="r_btn">
       <a href="%if;(evar.i !="" or evar.n!="")%url;cgl=on%end;" 
       title="%if;(evar.i !="" or evar.n!="")[*cancel GeneWeb links] %nl;%nl;%end;[*select] %nl;%lg; %apply;language_name(lg)">%if;(evar.i !="" or evar.n!="")⇨%else;%lg;%end;</a>
       <span class="s_menu" id="lang">%apply;link_lang()</span>
@@ -157,9 +156,9 @@
       </span>
     </div>
   %end;
-  <div id="trl"></div>
+  <div id="X_trl"></div>
   %if;(wizard)
-    <script type="text/javascript">
+    <script>
     <!--
     function reloadClose()
     {
@@ -177,8 +176,8 @@
     {
       if (window.opener && !window.opener.closed) 
       {
-        document.getElementById("menu_trl").innerHTML = "";
-        document.getElementById("trl").innerHTML = "<a id=\"reloadclose\" href=\"javascript:reloadClose()\">[X]</a>";
+        document.getElementById("menu_search").innerHTML = "";
+        document.getElementById("X_trl").innerHTML = "<a id=\"reloadclose\" href=\"javascript:reloadClose()\">[X]</a>";
         document.getElementById("reloadclose").focus();
       }
     }

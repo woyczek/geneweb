@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="fr">
 <head>
   <!-- $Id: doc_templm.txt,v 7.00 07/02/2016 23:04:55 A2 $ -->
   <title>Config templm</title>

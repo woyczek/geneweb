@@ -1,4 +1,4 @@
-/* $Id: js_upd.js,v 7.00 2016/01/26 11:28:57 mr Exp $ */
+/* $Id: js_upd.js,v 7.00 10/02/2016 07:29:56 mr Exp $ */
   function oKP1(event)
   {
     var key = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
@@ -97,7 +97,7 @@
     e1.style.height="270px";
     document.getElementById('accent').style.display="none";
     document.getElementById('accent0').style.display="none";
-    document.getElementById('accent1').style.display="block";
+    document.getElementById('accent1').style.display="inline";
     document.getElementById('notes1').style.width="420px";
     document.getElementById('accent2').style.width="auto";
     window.scrollBy(0,-300);
@@ -108,8 +108,8 @@
     var e1=document.getElementById('notes');
     e1.style.width="99%";
     e1.style.height="400px";
-    document.getElementById('accent').style.display="block";
-    document.getElementById('accent0').style.display="block";
+    document.getElementById('accent').style.display="inline";
+    document.getElementById('accent0').style.display="inline";
     document.getElementById('accent1').style.display="none";
     document.getElementById('notes1').style.width="99%";
     document.getElementById('accent2').style.width="98%";

@@ -1,5 +1,5 @@
-%doctype;
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!doctype html>
+<html>
 <head>
   <!-- $Id: updfam.txt,v 7.00 2016/01/26 11:55:06 mr Exp $ -->
   <title>%nn;
@@ -13,18 +13,14 @@
       [*merge::family/families]1 - #%evar_i;
     %end;
   </title>
-  <meta name="robots" content="none"%/>
-  <meta name="format-detection" content="telephone=no"%/>
-  <meta http-equiv="Content-Type" content="text/html; charset=%charset;"%/>
-  <meta http-equiv="Content-Style-Type" content="text/css"%/>
-  <link rel="shortcut icon" href="%image_prefix;/favicon_gwd.png"%/>
+  <meta name="robots" content="none"/>
+  <meta charset="%charset;"/>
+  <link rel="shortcut icon" href="%image_prefix;/favicon_gwd.png"/>
   %include.css;
   %import;js_upd
   %base_header;
   %import;updind_updfam
-
 %( <!-- Begin define  --> %)
-
 %let;lt1;<abbr title="%ak1;%ak2;%ak3;%ak7;">#</abbr>%in;
 %let;lt2;<abbr title="%lta;%ltb;%ltc;">[date/dates]0</abbr>%in;
 %let;lt3;
@@ -141,8 +137,8 @@
     <td>%apply;link_create2("ch","z1","child")<div id="chz1_jq1"> </div></td>
     <td><input id="chz1_fn" name="chz1_fn" size="30" maxlength="200" value="%child.first_name;"
          onkeypress="javascript:return cF2(event,'ch',z1,'_fn');" %apply;onjq1a1("chz1") %l_on8;%/><br
-     %/><input type="hidden" id="chz1_sn" name="chz1_sn" class="ar" size="30" maxlength="200" value="%child.surname;"
-         onkeypress="javascript:return cF2(event,'ch',z1,'_sn');" %apply;onjq1a("chz1") %l_on7;%/></td>
+     %/><input type="hidden" id="chz1_sn" name="chz1_sn" class="ar" value="%child.surname;"
+         onkeypress="javascript:return cF2(event,'ch',z1,'_sn');" %apply;onjq1a("chz1")%/></td>
     <td class="jq2"><div id="chz1_jq2"> </div><div id="chz1_jq3"> </div>
       <span id="dpchz1" class="%l2;">%nn;
         %apply;date_place("child","birth","chz1b","ch","z1","b_yy")
@@ -150,13 +146,10 @@
     <td class="jq4"><div id="chz1_jq4"> </div><input id="chz1_occupation" name="chz1_occupation" class="occu %l2;" size="40" maxlength="200" value="%child.create.occupation" %l_on4;%/></td>
   </tr>
 %end;
-
 %( <!-- End define --> %)
-
 </head>
 <body%body_prop; id="upd" %apply;load_focus()>
 %message_to_wizard;
-
 <form name="upd" method="post" action="%action;">
 <div id="jq" style="display:none"> </div>
 <p style="display:none;">
@@ -191,7 +184,7 @@
   %apply;hevent("marr","marriage")
   %apply;hevent("div","divorce")
 </p>
-<fieldset style="border:0">
+<fieldset>
   <legend>
     %if;(evar_m = "ADD_FAM" or evar_m = "ADD_FAM_OK")
       [*add::family/families]0
@@ -205,15 +198,15 @@
     %end;
     &nbsp;&nbsp;<input type="submit" value="Ok"%/>
   </legend>
-  <table summary="parents" cellspacing=0 cellpadding=0>
+  <table>
     %foreach;parent;%apply;one_parent(cnt)%end;
- <tr><td colspan=5 style="border:0;text-align:left;padding:5px"><label><input type="checkbox" id="nsck" name="nsck" value="on"
+ <tr><td colspan=4 style="border:0;text-align:left;padding:5px"><label><input type="checkbox" id="nsck" name="nsck" value="on"
     %if;(mrel = "nsck" or mrel = "nsckm") checked="checked"%end;%/> [no sexes check]</label></td></tr>
   </table>
 </fieldset>
-<fieldset style="border:0">
+<fieldset>
   <legend>[*child/children]1</legend>
-  <table summary="children" cellspacing=0 cellpadding=0>
+  <table>
     <tr>
       <td class="bg7"><abbr %lt4;>#</abbr></td>
       <td class="bg7">[first name/first names]0 /
@@ -221,26 +214,25 @@
         <a id="ch_vis" style="display:inline;" href="javascript:visHid('ch','_sn')" title="[visualize/show/hide/summary]1 [surname/surnames]0"><em>[surname/surnames]0</em></a></td>
       <td class="bg7">[birth] / [death][:] %lt5; %lt3;</td>
       <td class="bg7">[occupation/occupations]0</td>
-      <td class="bd0"></td>
     </tr>
     %foreach;child;%apply;one_child(cnt)%end;
-    <tr id="new_child"></tr>
-    <tr><td class="bg7"><a id="ach" href="javascript:addChild(1,1)" %lfa2;> + </a></td><td style="text-align:left;border:0"> %lfc2;</td></tr>
+    <tr id="new_child"><td colspan=4 style="display:none"></td></tr>
+    <tr><td class="bg7"><a id="ach" href="javascript:addChild(1,1)" %lfa2;> + </a></td><td colspan=3 style="text-align:left;border:0"> %lfc2;</td></tr>
   </table>
 </fieldset>
-<fieldset class="event" style="border:0">
-  <div style="display:inline-block;"><legend>[*event/events]1</legend></div>%if;(evar.m!="ADD_FAM")<div style="display:inline-block" ><a id="chg_evt_fam" href="%prefix;m=CHG_EVT_FAM_ORD;i=%evar.i;;ip=%evar.ip;" %lpaO; title="[*invert::event/events]1 [family/families]0 (Alt+%lpcOk;)">⇳</a></div>%end;
+<fieldset class="event">
+  <legend>[*event/events]1 %if;(evar.m!="ADD_FAM")<a id="chg_evt_fam" href="%prefix;m=CHG_EVT_FAM_ORD;i=%evar.i;;ip=%evar.ip;" %lpaO; title="[*invert::event/events]1 [family/families]0 (Alt+%lpcOk;)">⇳</a>%end;</legend>
   <dl>
     %if;has_fevents;%foreach;fevent;%apply;one_event(cnt,"","fwitness")%end;%else;%apply;one_event(1,"#marr","fwitness")%end;
-    <dt id="new_event"></dt>
-    <dt><a href="javascript:addEvent()" %lfa4;>+ [event/events]0</a> %lfc4; %lt2; [place] [note/notes]1 [source/sources]1</dt>
+    <dt id="new_event"></dt><dd></dd>
+    <dt><a href="javascript:addEvent()" %lfa4;>+ [event/events]0</a> %lfc4; %lt2; [place] [note/notes]1 [source/sources]1</dt><dd></dd>
   </dl>
 </fieldset>
-<fieldset class="f2 al" style="border:0">
+<fieldset class="f2 al">
   <legend>
     <label style="font-size:inherit" for="comment" %lfa5;>[*marriage notes]0</label>
   </legend>
-  <textarea id="comment" rows="1" placeholder="[*comment]" name="comment" %l_on1s;>
+  <label><textarea id="comment" name="comment" placeholder="[*comment]" rows="1" %l_on1s;>
     %if;(comment != "" and bvar.move_comment = "yes")
       %foreach;fevent;
         %if;((fevent.e_name = "#marr" or fevent.e_name = "#nmar" or fevent.e_name = "#nmen" or fevent.e_name ="#enga") and fevent.e_note != "")%comment;%end;
@@ -248,12 +240,17 @@
     %else;
       %comment;%sq;
     %end;
-  </textarea>
+  </textarea></label>
 </fieldset>
-<fieldset class="f2 w3" style="border:0">
+<fieldset class="f2 w3">
   <legend>[*source/sources]1</legend>
-    <label><textarea id="src" name="src" placeholder="[*source/sources]1 [family/families]0" rows="1" maxlength="800" %lfa6; %l_on6; %l_on1s;>%fsources;</textarea></label>
-    <label><textarea id="psrc" name="psrc" placeholder="[*source/sources]1 [person/persons]0" rows="1" maxlength="800" %l_on6;% %l_on1s;/>%if;(evar_psrc != "")%evar_psrc;%else;%evar_dsrc;%end;</textarea></label>
+    <label>
+    %if;(fsources="")
+    <input id="src" name="src" placeholder="[*source/sources]1 [family/families]0" maxlength="800" %lfa6; %l_on6; %l_on1s; value="%fsources;"/></label>
+    %else;
+    <textarea id="src" name="src" placeholder="[*source/sources]1 [family/families]0" rows="1" maxlength="800" %lfa6; %l_on1s;>%fsources;</textarea></label>
+    %end;
+    <label><textarea id="psrc" name="psrc" placeholder="[*source/sources]1 [person/persons]0" rows="1" maxlength="800" %l_on1s;>%if;(evar_psrc != "")%evar_psrc;%else;%evar_dsrc;%end;</textarea></label>
     %if;(bvar.origin_file = "on")
       <label>[file]<input name="origin_file" size="50" maxlength="200" value="%origin_file;"%/></label>
     %end;
@@ -261,7 +258,7 @@
 </form>
 %base_trailer;
 %include.copyr;
-</body>
-<script type="text/javascript" src="%bvar.static_path;templm/autosize.min.js"></script>
+<script src=%bvar.static_path;templm/autosize.min.js></script>
 <script>autosize(document.querySelectorAll('textarea'));</script>
+</body>
 </html>

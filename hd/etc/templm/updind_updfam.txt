@@ -1,7 +1,5 @@
-<!-- $Id: updind_updfam.txt,v 7.00 2016/01/26 10:49:10 mr Exp $ -->
-
+<!-- $Id: updind_updfam.txt,v 7.00 10/02/2016 07:29:39 mr Exp $ -->
 %import;js_perso_accesskey
-
 %(updind and updfam %)
 %let;ak1;[*link] [any individual in the base] [with][:]
            [number] occurence (oc=), [first name/first names]0, [surname/surnames]0
@@ -14,7 +12,6 @@
            (M) [male/female/neuter]0
            (F) [male/female/neuter]1
            (N) [male/female/neuter]2
-
 %in;
 %let;ak3;
          [*tools] [and] [relationship shortcut]
@@ -71,7 +68,6 @@
 %let;l_on7; list="dlsn"%if;(bvar.datalist_sn = 2) onkeyup="tUC(this);ldl(this,'sn',event)"%end;%in;
 %let;l_on8; list="dlfn"%if;(bvar.datalist_fn = 2) onkeyup="tUC1(this);ldl(this,'fn',event)"%end;%in;
 %let;ldmy;%if;([ !dates order]0 = "ddmmyyyy")dd%elseif;([ !dates order]0 = "mmddyyyy")mm%else;yy%end;%in;
-
 %define;date(z1,z2,z3,z4)
   %let;l_dd;%if;(z2.day != "" and z2.day < 10)0%end;%z2.day;%in;
   %let;l_mm;%if;(z2.month != "" and z2.month < 10)0%end;%z2.month;%in;
@@ -145,8 +141,8 @@
   %let;l4;%if;(l1 = "#deat" or l1 = "-")%lpc3;%end;%in;
   %let;l5;%if;(l1 = "#deat" or l1 = "-")%lpa3;%end;%in;
   <dt id="ez1">
-      <input type="hidden" id="e_namez1" name="e_namez1" size="10" maxlength="20" value="%l1;"
-      %/><input id="e_namez1_dl" name="e_namez1_dl" class="e" size="20" maxlength="200" value="%l1;" list="dlevent" %l5;
+      <input type="hidden" id="e_namez1" name="e_namez1" value="%l1;"
+      %/><input id="e_namez1_dl" name="e_namez1_dl" class="e" size="20" maxlength="200"  placeholder="[*event/events]0" value="%l1;" list="dlevent" %l5;
       %sp;autocomplete="off" onkeypress="javascript:return oKP3(event,this)" onblur="oB6('z1')" onkeydown="if(event.keyCode == 13)oB6('z1')"
       %/>%l4;%apply;date("e_datez1","event_date",l2,l3)%sp;
       <input id="e_placez1" name="e_placez1" class="pl" size="70" placeholder="[*place]" value="%event.e_place;" %l_on5;%/>
@@ -155,7 +151,7 @@
     %if;(evar.m = "MOD_FAM" and comment != "" and bvar.move_comment = "yes" and event.e_note = "" and (event.e_name = "#marr" or event.e_name= "#nmar" or event.e_name= "#nmen" or event.e_name ="#enga"))%comment;%end;
     %event.e_note;%sq;</textarea></dd>
   <dd>%if;(event.e_src="")
-        <input id="e_srcz1" name="e_srcz1" placeholder="[*source/sources]1" rows="1" class="esrc" %l_on6; %l_on1;/>
+        <input id="e_srcz1" name="e_srcz1" placeholder="[*source/sources]1" class="esrc" %l_on6; %l_on1;/>
       %else;
         <textarea id="e_srcz1" name="e_srcz1" placeholder="[*source/sources]1" rows="1" class="esrc" %l_on1s;>%event.e_src;%sq;</textarea>
       %end;</dd>
@@ -177,12 +173,10 @@
       %/><span id="%l1;_jq1"> </span>
   </dd>
 %end;
-
 %define;g_oku(z1,z2,z3)
   var g_z1 = "list=\"dlz1\"%if;(bvar.datalist_z1 = 2) onkeyup=\"%if;("z2" = "yes")z3(this);%end;ldl(this,'z1',event)\"%end;";
 %end;
-
-<script type="text/javascript">
+<script>
   <!--
     var g_prefix = "%prefix;";
     %apply;g_oku("fn",bvar.uppercase,"tUC1")
