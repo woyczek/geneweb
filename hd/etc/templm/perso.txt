@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="%if;(bvar.default_lang!="" and evar.lang="")%bvar.default_lang;%elseif;(evar.lang!="")%evar.lang;%else;en%end;">
 <head>
-  <!-- $Id: perso.txt,v 08/02/2016 05:45:05 A2 Exp$ -->
+  <!-- $Id: perso.txt,v7 29/02/2016 11:08:07 A2 Exp$ -->
   <title>%apply;capitalize(self.first_name) %apply;capitalize(self.surname)%if(occ!=0) (%occ;)%end; - #%index;</title>
   <meta name="robots" content="none"%/>
   <meta charset=%charset;%/>
@@ -615,12 +615,11 @@
         %end;
       %end;
     </div>
-    %if;(father.nb_children > 1 or mother.nb_children > 1)
     <div style="clear:both">
     <span class="menu" style="display:inline;position:relative;">
     <span style="margin-left:15px;"><small>%apply;consang()</small></span><br/>
       <span>
-        <span class="ch2" style="margin-top:-4px;">[*full siblings]</span>
+        <span class="ch2" style="margin-top:-4px;">%if;(father.nb_children > 1 or mother.nb_children > 1)[*full siblings]%else;[*relationship]%end;</span>
         %if;(not cancel_links)
           <span class="s_menu">
           <a href="%prefix;m=R;%access;" id="rela_comp" %laR;>[*relationship computing] 👪</a>
@@ -643,66 +642,67 @@
       </span>
     </span>
     </div>
-      <div style="clear:both">
-        <ol>
-          %foreach;father.child;
-            <li class="li_%sex; li_%has_families;%has_sosa;">
-              %if;is_self;<em>%end;
-              %let;next_sib;sib_%expr(child_cnt + 1)%in;
-              %apply;link_name1%with;
-                child%and;
-                %l_child;%and;
-                id="sib_%child_cnt;"%sp;
-                onkeypress="javascript:return acc_key(this,event,'%next_sib;','spo_1','chi_1_1','child_%child.index;','0','0','0');"
+    %if;(father.nb_children > 1 or mother.nb_children > 1)
+    <div style="clear:both">
+      <ol>
+        %foreach;father.child;
+          <li class="li_%sex; li_%has_families;%has_sosa;">
+            %if;is_self;<em>%end;
+            %let;next_sib;sib_%expr(child_cnt + 1)%in;
+            %apply;link_name1%with;
+              child%and;
+              %l_child;%and;
+              id="sib_%child_cnt;"%sp;
+              onkeypress="javascript:return acc_key(this,event,'%next_sib;','spo_1','chi_1_1','child_%child.index;','0','0','0');"
+            %end;
+            %if;is_self;</em>%end;
+            %apply;link_dates("child")
+          </li>
+        %end;
+      </ol>
+      %foreach;father.family;
+        %if;(spouse.index != mother.index)
+          %if;has_children;
+            <ol>
+              <li>[*on %s's side:::] %father; [and] %apply;somebody("spouse")[:]</li>
+              %foreach;child;
+                <li class="li_%sex; li_%has_families;%has_sosa;">
+                  %if;is_self;<em>%end;
+                  %let;next_sib;sib_%expr(child_cnt + 1)%in;
+                  %apply;link_name1%with;
+                    child%and;
+                    %l_child;%and;
+                  %end;
+                  %if;is_self;</em>%end;
+                  %apply;link_dates("child")
+                </li>
               %end;
-              %if;is_self;</em>%end;
-              %apply;link_dates("child")
-            </li>
-          %end;
-        </ol>
-        %foreach;father.family;
-          %if;(spouse.index != mother.index)
-            %if;has_children;
-              <ol>
-                <li>[*on %s's side:::] %father; [and] %apply;somebody("spouse")[:]</li>
-                %foreach;child;
-                  <li class="li_%sex; li_%has_families;%has_sosa;">
-                    %if;is_self;<em>%end;
-                    %let;next_sib;sib_%expr(child_cnt + 1)%in;
-                    %apply;link_name1%with;
-                      child%and;
-                      %l_child;%and;
-                    %end;
-                    %if;is_self;</em>%end;
-                    %apply;link_dates("child")
-                  </li>
-                %end;
-              </ol>
-            %end;
+            </ol>
           %end;
         %end;
-        %foreach;mother.family;
-          %if;(spouse.index != father.index)
-            %if;has_children;
-              <ol>
-                <li>[*on %s's side:::] %mother; [and] %apply;somebody("spouse")[:]</li>
-                %foreach;child;
-                  <li class="li_%sex; li_%has_families;%has_sosa;">
-                    %if;is_self;<em>%end;
-                    %let;next_sib;sib_%expr(child_cnt + 1)%in;
-                    %apply;link_name1%with;
-                      child%and;
-                      %l_child;%and;
-                    %end;
-                    %if;is_self;</em>%end;
-                    %apply;link_dates("child")
-                  </li>
-                %end;
-              </ol>
-            %end;
+      %end;
+      %foreach;mother.family;
+        %if;(spouse.index != father.index)
+          %if;has_children;
+            <ol>
+              <li>[*on %s's side:::] %mother; [and] %apply;somebody("spouse")[:]</li>
+              %foreach;child;
+                <li class="li_%sex; li_%has_families;%has_sosa;">
+                  %if;is_self;<em>%end;
+                  %let;next_sib;sib_%expr(child_cnt + 1)%in;
+                  %apply;link_name1%with;
+                    child%and;
+                    %l_child;%and;
+                  %end;
+                  %if;is_self;</em>%end;
+                  %apply;link_dates("child")
+                </li>
+              %end;
+            </ol>
           %end;
         %end;
-      </div>
+      %end;
+    </div>
     %end;
   %elseif;(wizard and not cancel_links and first_name != "?" and surname != "?")
      <div class="fam2 button">
