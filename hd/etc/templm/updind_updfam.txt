@@ -1,4 +1,4 @@
-<!-- $Id: updind_updfam.txt,v 7.00 10/02/2016 07:29:39 mr Exp $ -->
+<!-- $Id: updind_updfam.txt,v 7.00 2016/03/21 15:24:07 a2 mr Exp $ -->
 %import;js_perso_accesskey
 %(updind and updfam %)
 %let;ak1;[*link] [any individual in the base] [with][:]
@@ -140,24 +140,27 @@
   %let;l3;%if;(l1 = "#marr")%lfa3;%elseif;(l1 = "#birt")%lpa2;%elseif;(l1 = "#deat" or l1 = "-")%end;%in;
   %let;l4;%if;(l1 = "#deat" or l1 = "-")%lpc3;%end;%in;
   %let;l5;%if;(l1 = "#deat" or l1 = "-")%lpa3;%end;%in;
-  <dt id="ez1">
-      <input type="hidden" id="e_namez1" name="e_namez1" value="%l1;"
-      %/><input id="e_namez1_dl" name="e_namez1_dl" class="e" size="20" maxlength="200"  placeholder="[*event/events]0" value="%l1;" list="dlevent" %l5;
-      %sp;autocomplete="off" onkeypress="javascript:return oKP3(event,this)" onblur="oB6('z1')" onkeydown="if(event.keyCode == 13)oB6('z1')"
-      %/>%l4;%apply;date("e_datez1","event_date",l2,l3)%sp;
-      <input id="e_placez1" name="e_placez1" class="pl" size="70" placeholder="[*place]" value="%event.e_place;" %l_on5;%/>
-  </dt>
-  <dd><textarea id="e_notez1" name="e_notez1" placeholder="[*comment]" rows="1" class="enote" %l_on1s;>%nn;
-    %if;(evar.m = "MOD_FAM" and comment != "" and bvar.move_comment = "yes" and event.e_note = "" and (event.e_name = "#marr" or event.e_name= "#nmar" or event.e_name= "#nmen" or event.e_name ="#enga"))%comment;%end;
-    %event.e_note;%sq;</textarea></dd>
-  <dd>%if;(event.e_src="")
-        <input id="e_srcz1" name="e_srcz1" placeholder="[*source/sources]1" class="esrc" %l_on6; %l_on1;/>
-      %else;
-        <textarea id="e_srcz1" name="e_srcz1" placeholder="[*source/sources]1" rows="1" class="esrc" %l_on1s;>%event.e_src;%sq;</textarea>
-      %end;</dd>
-  %foreach;z3;%apply;one_witness(z1,wcnt,"z3")%end;
-  <dd id="new_ez1_witn"></dd>
-  <dd> <a id="awz1" href="javascript:addWitness(1,1,'ez1_witn')">+ [witness/witnesses]0</a> %lt1; [first name/first names]0 [surname/surnames]0</dd>
+  <dl id="ez1">
+    <dt id="ez1">
+        <input type="hidden" id="e_namez1" name="e_namez1" value="%l1;"
+        %/><input id="ez1_occ" name="ez1_occ" class="e_occ" maxlength="1" placeholder="#" onkeypress="javascript:return oKP2(event,'e',z1,'_occ','')" onblur="this.value='';"
+        %/><input id="e_namez1_dl" name="e_namez1_dl" class="e" size="20" maxlength="200" placeholder="[*event/events]0" value="%l1;" list="dlevent" %l5;
+        %sp;autocomplete="off" onkeypress="javascript:return oKP3(event,this)" onblur="oB6('z1')" onkeydown="if(event.keyCode == 13)oB6('z1')"
+        %/>%l4;%apply;date("e_datez1","event_date",l2,l3)%sp;
+        <input id="e_placez1" name="e_placez1" class="pl" size="70" placeholder="[*place]" value="%event.e_place;" %l_on5;%/>
+    </dt>
+    <dd><textarea id="e_notez1" name="e_notez1" placeholder="[*comment]" rows="1" class="enote" %l_on1s;>%nn;
+      %if;(evar.m = "MOD_FAM" and comment != "" and bvar.move_comment = "yes" and event.e_note = "" and (event.e_name = "#marr" or event.e_name= "#nmar" or event.e_name= "#nmen" or event.e_name ="#enga"))%comment;%end;
+      %event.e_note;%sq;</textarea></dd>
+    <dd>%if;(event.e_src="")
+          <input id="e_srcz1" name="e_srcz1" placeholder="[*source/sources]1" class="esrc" %l_on6; %l_on1;/>
+        %else;
+          <textarea id="e_srcz1" name="e_srcz1" placeholder="[*source/sources]1" rows="1" class="esrc" %l_on1s;>%event.e_src;%sq;</textarea>
+        %end;</dd>
+    %foreach;z3;%apply;one_witness(z1,wcnt,"z3")%end;
+    <dd id="new_ez1_witn"></dd>
+    <dd> <a id="awz1" href="javascript:addWitness(1,1,z1)">+ [witness/witnesses]0</a> %lt1; [first name/first names]0 [surname/surnames]0</dd>
+  </dl>
 %end;
 %define;one_witness(z1,z2,z3)
   %let;l1;ez1_witnz2%in;

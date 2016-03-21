@@ -1,4 +1,4 @@
-/* $Id: templm/css1.css,v 7.00 04/02/2016 06:35:07 mr Exp $ /*
+/* $Id: templm/css1.css,v 7.00 2016/03/21 22:03:01 a2 mr Exp $ /*
 /* Properties of all html pages.*/
 input[type=number]::-webkit-inner-spin-button {opacity:1}
 html{color:#EEF;background-color:#000;}
@@ -61,7 +61,8 @@ h1{text-align:center;margin-top:28px}
 .menu2 a,.menu2 .s_menu{float:left;background-color:#666;border:solid 1px #333;margin:0 -1px -1px 0;padding:3px;color:#EE9;}
 .menu2 div{position:relative;display:block;float:left;}
 .menu2 .s_menu{display:none;float:left;width:350px;padding:5px;}
-.menu2 div:hover > .s_menu{display:block;position:absolute;right:0px;top:23px;z-index:10000;}/* Properties of the menu_3 (trailer). All pages. */
+.menu2 div:hover > .s_menu{display:block;position:absolute;right:0px;top:23px;z-index:10000;}
+/* Properties of the menu_3 (trailer). All pages. */
 /* Properties of the menu_search + login input on welcome */
 .menu3{position:absolute;top:0px;right:3px;font-family:Arial;font-size:14px;}
 .login input[type="password"],.menu3 input[type="text"]{line-height:15px;padding:4px;transition:box-shadow 0.3s,border 0.3s;color:black}
@@ -181,10 +182,10 @@ input[type='submit']{line-height:14px;height:24px;}
 #upd #pa1_jq4,#upd #ch1_jq4{width:282px;}
 #upd .occu{width:275px;}
 #upd .pl{width:440px;}
-#upd .e{width:182px;}
+#upd .e{width:162px;}
 #upd .jq2,#upd .jq4{text-align:left;}
 code{font-size:12px;color:#999;font-family:monospace;}
-#upd #notes{min-height:270px;max-height:540px;width:405px;height:270px;}
+#upd #notes{min-height:270px;max-height:540px;width:415px;height:270px;}
 #notes:focus{background-color:#FAFAFA}
 #upd #notes1{min-height:1em;}
 #notes1 textarea{color:black}
@@ -218,7 +219,7 @@ code{font-size:12px;color:#999;font-family:monospace;}
 .occ0{background-color:#36C;}
 .occ1{background-color:#F6C;}
 .occ2{background-color:#999;}
-.t_occ{width:10px;text-align:center;background-color:#000;color:#CCC;border:0;}
+e_occ,.t_occ{width:10px;text-align:center;background-color:#000;color:#CCC;}
 #upd .vis{display:inline;}
 #upd .hid{display:none;}
 input,select,textarea{padding:3px;border:solid 1px #CCC;background-color:#EEE;color:#000;}

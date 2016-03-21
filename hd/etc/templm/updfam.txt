@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-  <!-- $Id: updfam.txt,v 7.00 2016/01/26 11:55:06 mr Exp $ -->
+  <!-- $Id: updfam.txt,v 7.00 2016/03/21 22:16:53 a2 mr Exp $ -->
   <title>%nn;
     %if;(evar_m = "ADD_FAM" or evar_m = "ADD_FAM_OK")
       [*add::family/families]0%nn;
@@ -35,7 +35,8 @@
          [place]</abbr>
 %in;
 %let;lt4;title="%ak1;%ak2;%ak3;%ak7;%ak4;"%in;
-%let;lt5;<abbr title="%lta;%ltb;">[date/dates]0</abbr>%in;
+%let;lt5;<abbr title="%ak3;%ak7;">#</abbr>%in;
+%let;lt6;<abbr title="%lta;%ltb;">[date/dates]0</abbr>%in;
 %define;load_focus()
   onload="oL1();oL2();%nn;
   %if;(evar_m = "ADD_FAM" or evar_m = "ADD_PAR" or evar_m = "MOD_FAM")
@@ -212,7 +213,7 @@
       <td class="bg7">[first name/first names]0 /
         <a id="ch_hid" style="display:none;" href="javascript:visHid('ch','_sn')" title="[visualize/show/hide/summary]2 [surname/surnames]0">[surname/surnames]0</a>
         <a id="ch_vis" style="display:inline;" href="javascript:visHid('ch','_sn')" title="[visualize/show/hide/summary]1 [surname/surnames]0"><em>[surname/surnames]0</em></a></td>
-      <td class="bg7">[birth] / [death][:] %lt5; %lt3;</td>
+      <td class="bg7">[birth] / [death][:] %lt6; %lt3;</td>
       <td class="bg7">[occupation/occupations]0</td>
     </tr>
     %foreach;child;%apply;one_child(cnt)%end;
@@ -222,11 +223,9 @@
 </fieldset>
 <fieldset class="event">
   <legend>[*event/events]1 %if;(evar.m!="ADD_FAM")<a id="chg_evt_fam" href="%prefix;m=CHG_EVT_FAM_ORD;i=%evar.i;;ip=%evar.ip;" %lpaO; title="[*invert::event/events]1 [family/families]0 (Alt+%lpcOk;)">⇳</a>%end;</legend>
-  <dl>
-    %if;has_fevents;%foreach;fevent;%apply;one_event(cnt,"","fwitness")%end;%else;%apply;one_event(1,"#marr","fwitness")%end;
-    <dt id="new_event"></dt><dd></dd>
-    <dt><a href="javascript:addEvent()" %lfa4;>+ [event/events]0</a> %lfc4; %lt2; [place] [note/notes]1 [source/sources]1</dt><dd></dd>
-  </dl>
+  %if;has_fevents;%foreach;fevent;%apply;one_event(cnt,"","fwitness")%end;%else;%apply;one_event(1,"#marr","fwitness")%end;
+  <dl id="new_event"></dl>
+  <dl><dt><a href="javascript:addEvent(1,1)" %lfa4;>+ [event/events]0</a> %lfc4; %lt5; %lt2; [place] [note/notes]1 [source/sources]1</dt></dl>
 </fieldset>
 <fieldset class="f2 al">
   <legend>

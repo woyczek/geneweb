@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-<!-- $Id: updind.txt,v 7.00 10/02/2016 07:30:05 mr Exp$ -->
+<!-- $Id: updind.txt,v 7.00 2016/03/21 15:22:41 a2 mr Exp$ -->
 <title>%nn;
   %if;(evar_m = "MRG_IND_OK" or evar_m = "MRG_MOD_IND_OK")
     [*merge::person/persons]1 # %index;
@@ -239,14 +239,12 @@
 </fieldset>
 <fieldset class="event">
   <legend style="display:inline-block">[*event/events]1 <a id="chg_evt_ind" href="%prefix;m=CHG_EVT_IND_ORD;i=%index;" %lpaO; title="[*invert::event/events]1 (Alt+%lpcOk;)">⇳</a></legend>
-    <dl>
-      %if;(not has_pevent_birth)%apply;one_event(next_pevent,"#birt","witness")%incr_next_pevent;%end;
-      %if;has_pevents;%foreach;pevent;%apply;one_event(cnt,"","witness")%end;%end;
-      %if;(not has_pevent_death)%apply;one_event(next_pevent,"","witness")%incr_next_pevent;%end;
-      <dt id="new_event"></dt><dd></dd>
-      <dt><a href="javascript:addEvent()" title="(+) [*death]" %lpa4;> + [event/events]0</a> %lpc4; %lt2; [place] [note/notes]1 [source/sources]1</dt><dd></dd>
-      %incr_next_pevent;
-    </dl>
+    %if;(not has_pevent_birth)%apply;one_event(next_pevent,"#birt","witness")%incr_next_pevent;%end;
+    %if;has_pevents;%foreach;pevent;%apply;one_event(cnt,"","witness")%end;%end;
+    %if;(not has_pevent_death)%apply;one_event(next_pevent,"","witness")%incr_next_pevent;%end;
+    <dl id="new_event"></dl>
+    <dl><dt><a href="javascript:addEvent(1,1)" title="(+) [*death]" %lpa4;> + [event/events]0</a> %lpc4; <abbr %lt5;>#</abbr> %lt2; [place] [note/notes]1 [source/sources]1</dt></dl>
+    %incr_next_pevent;
 </fieldset>
 <fieldset class="f2">
   <legend>[*relation/relations]1</legend>
