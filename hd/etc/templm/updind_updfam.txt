@@ -169,7 +169,7 @@
       %/><input type="hidden" id="%l1;_sex" name="%l1;_sex" value=""
       %/><input type="hidden" id="%l1;_p" name="%l1;_p" value="link"
       %/><input id="%l1;_occ" name="%l1;_occ" class="occ" placeholder="N" autocomplete="off" size="5" maxlength="8"
-       onkeypress="javascript:return oKP2(event,'witn','z2','_occ','ez1_witn')" onblur="oB2('%l1;')"
+       onkeypress="javascript:return oKP2(event,'witn','z2','_occ','z1')" onblur="oB2('%l1;')"
        %if;(z3.occ="") value="0" %else; value="%z3.occ;" %end;
       %/><input id="%l1;_fn" name="%l1;_fn" class="fn ar" size="30" maxlength="200" value="%z3.first_name;" %l_on3; %l_on8;
       %/><input id="%l1;_sn" name="%l1;_sn" class="sn" size="30" maxlength="200" value="%z3.surname;" %apply;onjq1(l1,"") %l_on7;
