@@ -177,12 +177,13 @@ value source_file_name conf fname =
   let bname = conf.bname in
   let lang = conf.lang in
   let fname1 =
-    List.fold_right Filename.concat [Util.base_path ["src"] bname; lang]
+    (*List.fold_right Filename.concat [Util.base_path ["src"] bname; lang]*)
+    List.fold_right Filename.concat [Util.base_path [] (bname ^ ".gwb/src"); lang]
       (Filename.basename fname ^ ".txt")
   in
   if Sys.file_exists fname1 then fname1
   else
-    Filename.concat (Util.base_path ["src"] bname)
+    Filename.concat (Util.base_path [] (bname ^ ".gwb/src"))
       (Filename.basename fname ^ ".txt")
 ;
 
