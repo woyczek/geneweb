@@ -764,8 +764,8 @@ and eval_simple_variable conf =
       in
       let c = conf.command ^ "?" in
       List.fold_left (fun c (k, v) ->
-        if ( k = "oc" || k = "ocz" && v = "" || v = "0" ) || v = "" then c else c ^ k ^ "=" ^ v ^ ";") c
-        (henv @ conf.senv)
+        if ( k = "oc" || k = "ocz" && v = "" || v = "0" ) || v = "" then
+          c else c ^ k ^ "=" ^ v ^ ";") c (henv @ conf.senv)
   | "prefix_no_pmod" ->
       let henv =
         List.fold_right
@@ -774,8 +774,8 @@ and eval_simple_variable conf =
       in
       let c = conf.command ^ "?" in
       List.fold_left (fun c (k, v) ->
-        if ( k = "oc" || k = "ocz" && v = "" || v = "0" ) || v = "" then c else c ^ k ^ "=" ^ v ^ ";") c
-        (henv @ conf.senv)
+        if ( k = "oc" || k = "ocz" && v = "" || v = "0" ) || v = "" then
+          c else c ^ k ^ "=" ^ v ^ ";") c (henv @ conf.senv)
   | "prefix_no_wide" ->
       let henv =
         List.fold_right
@@ -784,8 +784,8 @@ and eval_simple_variable conf =
       in
       let c = conf.command ^ "?" in
       List.fold_left (fun c (k, v) ->
-        if ( k = "oc" || k = "ocz" && v = "" || v = "0" ) || v = "" then c else c ^ k ^ "=" ^ v ^ ";") c
-        (henv @ conf.senv)
+        if ( k = "oc" || k = "ocz" && v = "" || v = "0" ) || v = "" then
+          c else c ^ k ^ "=" ^ v ^ ";") c (henv @ conf.senv)
   | "prefix_no_lang" ->
       let henv =
         List.fold_right
@@ -794,18 +794,18 @@ and eval_simple_variable conf =
       in
       let c = conf.command ^ "?" in
       List.fold_left (fun c (k, v) -> 
-        if ( k = "oc" || k = "ocz" && v = "" || v = "0" ) || v = "" then c else c ^ k ^ "=" ^ v ^ ";") c
-        (henv @ conf.senv)
+        if ( k = "oc" || k = "ocz" && v = "" || v = "0" ) || v = "" then
+          c else c ^ k ^ "=" ^ v ^ ";") c (henv @ conf.senv)
   | "prefix_no_all" ->
       let henv =
         List.fold_right
-          (fun (k, v) henv -> if k = "templ" || k = "p_mod" || k = "wide" then henv else [(k, v) :: henv])
-          conf.henv []
+          (fun (k, v) henv -> if k = "templ" || k = "p_mod" || k = "wide" then
+            henv else [(k, v) :: henv]) conf.henv []
       in
       let c = conf.command ^ "?" in
       List.fold_left (fun c (k, v) ->
-        if ( k = "oc" || k = "ocz" && v = "" || v = "0" ) || v = "" then c else c ^ k ^ "=" ^ v ^ ";") c
-        (henv @ conf.senv)
+        if ( k = "oc" || k = "ocz" && v = "" || v = "0" ) || v = "" then 
+          c else c ^ k ^ "=" ^ v ^ ";") c (henv @ conf.senv)
   | "referer" -> Util.get_referer conf
   | "right" -> conf.right
   | "setup_link" -> if conf.setup_link then " - " ^ setup_link conf else ""
@@ -819,8 +819,8 @@ and eval_simple_variable conf =
       in
       List.fold_left
         (fun c (k, v) ->
-        if ( k = "oc" || k = "ocz" && v = "" || v = "0" ) || v = "" then c else c ^ k ^ "=" ^ v ^ ";")
-        "" l
+        if ( k = "oc" || k = "ocz" && v = "" || v = "0" ) || v = "" then c 
+          else c ^ k ^ "=" ^ v ^ ";") "" l
   | "url" ->
       let c = Util.commd conf in
       (* On supprime de env toutes les paires qui sont dans (henv @ senv) *)
