@@ -38,8 +38,8 @@
     }
 
     function menu(ss0,ssx,ii0,iix)
-    {
-      var i = jQuery("#cur-i").val();
+    { var i = localStorage.getItem("index");
+      if (i==null) { i = 0 };
       var j = Number(i)+1;
       var j1 = j+1;
       var k = j+1;
@@ -48,7 +48,7 @@
       if (drmode=="d") {jQuery("#iz-string").val(iz+"s"+j+"="+ssx+","); }
       else { jQuery("#iz-string").val(iz+"i"+j+"="+iix+","+"i"+j1+"="+ii0+",");
              j = j+1; }
-      jQuery("#cur-i").val(j);
+      localStorage.setItem("index", j);
       oncontextmenu="return false";
       return false;
     }
@@ -61,31 +61,66 @@
       jQuery("#iz-string").val(news);
     }
         
-    function recode_and_go()
-    {
-      var olds = jQuery("#iz-string").val();
+    function store_and_go()
+    { var prevs = localStorage.getItem("iz-string");
+      if (prevs==null) { prevs = "" };
+      var curs = jQuery("#iz-string").val();
+      var tmps = prevs+curs;
       var patt = /,/g;
-      var news = olds.replace(patt, ";");
+      var news = tmps.replace(patt, ";");
       var oldHref = jQuery("#hg-href").attr('href');
       var newHref = oldHref+news;
       jQuery("#hg-href").attr('href', newHref);
+      localStorage.setItem("iz-string", tmps);
+      localStorage.setItem("url", newHref);
       return true;
     }
     
-    function resetiz()
-    {
-      jQuery('#iz-string').val("");
-      jQuery('#cur-i').val("0");
+    function store()
+    { var prevs = localStorage.getItem("iz-string");
+      if (prevs==null) { prevs = "" };
+      var curs = jQuery("#iz-string").val();
+      var tmps = prevs+curs;
+      var patt = /,/g;
+      var news = tmps.replace(patt, ";");
+      var oldHref = jQuery("#hg-href").attr('href');
+      var newHref = oldHref+news;
+      localStorage.setItem("iz-string", tmps);
+      localStorage.setItem("url", newHref);
       return false;
     }
     
+    function reset_url()
+    {
+      var url = window.location.search;
+      localStorage.setItem("url", url);
+      return false;
+    }
+
+    function reset_iz()
+    {
+      jQuery('#iz-string').val("");
+      return false;
+    }
+
+    function reset_all()
+    {
+      jQuery('#iz-string').val("");
+      localStorage.setItem("index", 0);
+      localStorage.setItem("iz-string", "");
+      localStorage.setItem("url", "");
+      return false;
+    }
+
     function urlParam(name){
-    var results1 = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.search);
-    var results2 = new RegExp('[\?;]' + name + '=([^;#]*)').exec(window.location.search);
-    if (results1==null){
-      if (results2==null) {return null; }
-      else {return decodeURI(results2[1]) || 0; } }
-    else{return decodeURI(results1[1]) || 0; }
+      var url = localStorage.getItem("url");
+      var patt = /&/g;
+      var urlb = url.replace(patt, ";");
+      var results1 = new RegExp('[\?&]' + name + '=([^&#]*)').urlb;
+      if (results1==null){ 
+        if (name=="drm") {return "d"; }
+        else { return null; } }
+      else { return decodeURI(results1[1]) || 0; }
     }
 
   </script>

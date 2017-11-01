@@ -690,23 +690,25 @@ Arbre des ancêtres de %first_name; %surname; %dates;
 
 Select ancestors in the HI tree by clicking with the right button on the sosa number.<br>
 <input id="iz-string" type="input" name="iz-string" value="">
-Reset <button type="button" class="btn btn-light" id="p_mod_clear" onclick="resetiz()"
-  title="[*validate/delete]1"><i class="fa fa-close fa-lg text-danger"></i></button>
+Clear <button type="button" class="btn btn-light btn-sm" id="iz_clear" onclick="reset_iz()"
+  title="[*reset current string]1"><i class="fa fa-close fa-lg text-danger"></i></button>
+Reset all <button type="button" class="btn btn-light btn-sm" id="all_clear" onclick="reset_all()"
+  title="[*reset all]1"><i class="fa fa-close fa-lg text-danger"></i></button>
+Store <button type="button" class="btn btn-light btn-sm" id="all_clear" onclick="store()"
+  title="[*reset all]1"><i class="fa fa-plus fa-lg"></i></button>
   
 %let;root;%if;(evar.drm="d");m=DAG;p1=%first_name;;n1=%surname;;oc1=%occ;;%else;;m=RLM;%end;%in;
-<a id="hg-href" href="%prefix;%root;" onclick="recode_and_go('This works!');"><i class="fa fa-check fa-lg text-success"></i></a>
+Store and go <a id="hg-href" href="%prefix;%root;" class="btn btn-light btn-sm" onclick="store_and_go('This works!');"><i class="fa fa-check fa-lg text-success"></i></a>
 
-<div class="btn-group mx-1 mb-2 ml-2">
+Mode <div class="btn-group mx-1 mb-2 ml-2">
   %if;(evar.drm="d")
-  <a href='%apply;rebuild_url_gen()drm=r'
-    class="btn btn-outline-secondary btn-sm border-0 px-0"
+  <a href='%apply;rebuild_url_gen()drm=r' onclick="clear_url()"
+    class="btn btn-light btn-sm border-0 px-0"
     title="[*mode DRM/mode RLM]1">&nbsp;R&nbsp;</a>
   %else;
-  <a href='%apply;rebuild_url_gen()drm=d'
-    class="btn btn-outline-secondary btn-sm border-0 px-0"
+  <a href='%apply;rebuild_url_gen()drm=d'  onclick="clear_url()"
+    class="btn btn-light btn-sm border-0 px-0"
     title="[*mode DRM/mode RLM]0">&nbsp;D&nbsp;</a>
   %end;
 </div>
-
-<input id="cur-i" type="hidden" name="cur-i" value="0">
 
