@@ -12,8 +12,6 @@
     #tools p input{text-align:right;width:40px;}
   </style>
   <script type="text/javascript">
-  <!--
-  
     function over1(xx)
     { 
      document.getElementById(xx).style.outline="#00F solid 4px";
@@ -41,25 +39,43 @@
 
     function menu(xx, yy)
     {
-      var i = $("#cur-i").val();
+      var i = jQuery("#cur-i").val();
       var j = Number(i)+1;
       var k = j+1;
       var iz = $('#iz-string').val();
-      $('#iz-string').val(iz+"iz"+j+"="+yy+";");
-      $("#cur-i").val(j);
+      jQuery("#iz-string").val(iz+"s"+j+"="+xx+",");
+      jQuery("#cur-i").val(j);
       oncontextmenu="return false";
       return false;
     }
 
+    function recode()
+    {
+      var olds = jQuery("#iz-string").val();
+      var patt = /,/g;
+      var news = olds.replace(patt, ";");
+      jQuery("#iz-string").val(news);
+    }
+        
+    function recode_and_go()
+    {
+      var olds = jQuery("#iz-string").val();
+      var patt = /,/g;
+      var news = olds.replace(patt, ";");
+      var oldHref = jQuery("#hg-href").attr('href');
+      var newHref = oldHref+news;
+      jQuery("#hg-href").attr('href', newHref);
+      return true;
+    }
+    
     function resetiz()
     {
-      $('#iz-string').val(";");
-      $('#cur-i').val("0");
+      jQuery('#iz-string').val("");
+      jQuery('#cur-i').val("0");
       return false;
     }
-   -->
   </script>
-
+  
 %let;l_on;onclick="this.focus()" onkeydown="if (event.keyCode == 13) javascript:document.tools.submit();"%in;
 %let;l_emaxv;%if;(evar.t != "T")%evar.maxv;%elseif;(bvar.max_anc_tree = "")7%else;%bvar.max_anc_tree;%end;%in;
 

@@ -28,7 +28,6 @@
 #hi-tree1 a{position:absolute;line-height:10pt;}
 </style>
 
-<script>$.noConflict();</script>
 
   <script type="text/javascript" src="%if;(cgi)%bvar.static_path;%end;jquery.min.js"></script>
   <script type="text/javascript" src="%if;(cgi)%bvar.static_path;%end;templm/jquery.line.js"></script>
@@ -36,9 +35,9 @@
 %define;implexc()
   <span style="top:%top;px;left:%left;px;font-family:monospace;">x
     <script type="text/javascript">
-      jQuery( document ).ready(function( $ ) {
-        $(function() {
-          $('#hi-tree1').line(%left1;, %top1;, %left2;, %top2;, {color:"red", stroke:1, opacity:0.5, zindex:1});
+      jQuery( document ).ready(function( jQuery ) {
+        jQuery(function() {
+          jQuery('#hi-tree1').line(%left1;, %top1;, %left2;, %top2;, {color:"red", stroke:1, opacity:0.5, zindex:1});
         });
       });
     </script>
@@ -47,9 +46,9 @@
 
 %define;implexs()
   <script type="text/javascript">
-    jQuery( document ).ready(function( $ ) {
-      $(function() {
-        $('#hi-tree1').line(%left1;, %top1;, %left2;, %top2;, {color:"red", stroke:1, opacity:0.5, zindex:1});
+    jQuery( document ).ready(function( jQuery ) {
+      jQuery(function() {
+        jQuery('#hi-tree1').line(%left1;, %top1;, %left2;, %top2;, {color:"red", stroke:1, opacity:0.5, zindex:1});
       });
     });
   </script>
@@ -57,9 +56,9 @@
 
 %define;line(x0,y0,x1,y1)
   <script type="text/javascript">
-    jQuery( document ).ready(function( $ ) {
-      $(function() {
-        $('#hi-tree1').line(x0, y0, x1, y1, {stroke:2, opacity:0.3, zindex:-1});
+    jQuery( document ).ready(function( jQuery ) {
+      jQuery(function() {
+        jQuery('#hi-tree1').line(x0, y0, x1, y1, {stroke:2, opacity:0.3, zindex:-1});
       });
     });
   </script>
@@ -67,9 +66,9 @@
 
 %define;get_val(xx)
   <script type="text/javascript">
-    jQuery( document ).ready(function( $ ) {
-    $(function() {
-      var v = $('#xx').val();
+    jQuery( document ).ready(function( jQuery ) {
+    jQuery(function() {
+      var v = jQuery('#xx').val();
       window.alert('alert');
       document.write('TEST');
     });
@@ -81,12 +80,14 @@
   %if;(evar.xx!="")xx=%evar.xx;;%end;%nn;
 %end;
 
-%let;plist;/p/n/oc/pz/nz/ocz/sosa/image/marriage/t/t1/hi/cpl/%in;
+%let;plist;/p/n/oc/pz/nz/ocz/i/sosa/image/marriage/t/t1/hi/cpl/scale/fs/wide/v/maxv/%nn;
+            birth/birth_place/marr/marr_date/marr_place/child/death/death_place/death_age/%nn;
+            num/occu/gen/cgl//%in; %(32 %)
 
 %define;rebuild_url_gen()
   %let;url;%nn;
-    %for;i;1;13;%nn;
-      %apply;one_param;with;%apply;nth%with;%i%and;%plist;%end;%end;%in;%nn;
+    %for;i;1;33;%nn;
+      %apply;one_param%with;%apply;nth%with;%plist;%and;%i;%end;%end;
     %end;%nn;
   %in;
   %url;
@@ -683,16 +684,20 @@ Arbre des ancêtres de %first_name; %surname; %dates;
   %end;
 %end;
 
-iz: <input id="iz-string" type="input" name="iz-string" value=";">
+iz: <input id="iz-string" type="input" name="iz-string" value="">
 <button type="button" class="btn btn-light" id="p_mod_clear" onclick="resetiz()"
   title="[*validate/delete]1"><i class="fa fa-close fa-lg text-danger"></i></button>
-<a href="%action;?%url_no_bname;"><i class="fa fa-check fa-lg text-success"></i></a>
+  
+%let;root;;m=DAG;p1=%first_name;;n1=%surname;;oc1=%occ;;%in;
+<a id="hg-href" href="%prefix;%root;" onclick="recode_and_go('This works!');"><i class="fa fa-check fa-lg text-success"></i></a>
+<button type="button" class="btn btn-light" id="p_mod_clear" onclick="recode()"
+  title="[*validate/delete]1"><i class="fa fa-plus fa-lg text-danger"></i></button>
+  
 
 %(
 <input id="dum" type="hidden" name="dum" value=";p=henri;n=gouraud;m=A;t=T;t1=CT;hi=H;sosa=on;v=5;scale=100;fs=17;sosa=on;">
 %)
 <input id="cur-i" type="hidden" name="cur-i" value="0">
-<input id="iz-string" type="hidden" name="iz-string" value="0">
 <br>
 test =
 <br>
