@@ -37,13 +37,17 @@
       <\/style>';
     }
 
-    function menu(xx, yy)
+    function menu(ss0,ssx,ii0,iix)
     {
       var i = jQuery("#cur-i").val();
       var j = Number(i)+1;
+      var j1 = j+1;
       var k = j+1;
       var iz = $('#iz-string').val();
-      jQuery("#iz-string").val(iz+"s"+j+"="+xx+",");
+      var drmode = urlParam("drm");
+      if (drmode=="d") {jQuery("#iz-string").val(iz+"s"+j+"="+ssx+","); }
+      else { jQuery("#iz-string").val(iz+"i"+j+"="+iix+","+"i"+j1+"="+ii0+",");
+             j = j+1; }
       jQuery("#cur-i").val(j);
       oncontextmenu="return false";
       return false;
@@ -74,6 +78,16 @@
       jQuery('#cur-i').val("0");
       return false;
     }
+    
+    function urlParam(name){
+    var results1 = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.search);
+    var results2 = new RegExp('[\?;]' + name + '=([^;#]*)').exec(window.location.search);
+    if (results1==null){
+      if (results2==null) {return null; }
+      else {return decodeURI(results2[1]) || 0; } }
+    else{return decodeURI(results1[1]) || 0; }
+    }
+
   </script>
   
 %let;l_on;onclick="this.focus()" onkeydown="if (event.keyCode == 13) javascript:document.tools.submit();"%in;
