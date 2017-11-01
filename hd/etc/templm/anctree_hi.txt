@@ -29,20 +29,6 @@
 </style>
 
 <script>$.noConflict();</script>
-<script type="text/javascript">
-  <!--
-  function over1(xx)
-  {
-   document.getElementById(xx).style.%if;(evarso="on")outline="#C0FEFF solid 6px"%else;backgroundColor="#CBFECE"%end;;
-   return false;
-  }
-  function out1(xx)
-  {
-   document.getElementById(xx).style.%if;(evarso="on")outline="none"%else;backgroundColor=""%end;;
-   return false;
-  }
-  -->
-</script>
 
   <script type="text/javascript" src="%if;(cgi)%bvar.static_path;%end;jquery.min.js"></script>
   <script type="text/javascript" src="%if;(cgi)%bvar.static_path;%end;templm/jquery.line.js"></script>
@@ -70,17 +56,48 @@
 %end;
 
 %define;line(x0,y0,x1,y1)
-    <script type="text/javascript">
-      jQuery( document ).ready(function( $ ) {
+  <script type="text/javascript">
+    jQuery( document ).ready(function( $ ) {
       $(function() {
         $('#hi-tree1').line(x0, y0, x1, y1, {stroke:2, opacity:0.3, zindex:-1});
-        });
       });
-    </script>
+    });
+  </script>
+%end;
+
+%define;get_val(xx)
+  <script type="text/javascript">
+    jQuery( document ).ready(function( $ ) {
+    $(function() {
+      var v = $('#xx').val();
+      window.alert('alert');
+      document.write('TEST');
+    });
+  });
+  </script>
+%end;
+
+%define;one_param(xx)
+  %if;(evar.xx!="")xx=%evar.xx;;%end;%nn;
+%end;
+
+%let;plist;/p/n/oc/pz/nz/ocz/sosa/image/marriage/t/t1/hi/cpl/%in;
+
+%define;rebuild_url_gen()
+  %let;url;%nn;
+    %for;i;1;13;%nn;
+      %apply;one_param;with;%apply;nth%with;%i%and;%plist;%end;%end;%in;%nn;
+    %end;%nn;
+  %in;
+  %url;
 %end;
 
 %define;implex1(xx)
-  onmouseover="over1('sxx')" onmouseout="out1('sxx')" %nn;
+  onmouseover="over1('sxx')" onmouseout="out1('sxx')"%nn;
+%end;
+
+%define;lclick(xx, yy, ii)
+  oncontextmenu="menu(yy, ii)"%nn;
 %end;
 
 %define;bg(xx)
@@ -230,7 +247,7 @@
           href="%apply;rebuild_url_2%with;%evarv;%and;%evarhi;%and;%nn;
                   %evarim;%and;%evarix;%and;%evarso;%and;%evarcpl;%and;%evarsms;%and;%evarscl;%and;%evarfs;%nn;
                 %end;%aaaaccess;;t=T;t1=CT;"
-          %if;(aaasame!="")%apply;implex1(aaasame.v)%end;%nn;
+          %if;(aaasame!="")%apply;implex1(aaasame.v)%end;%apply;lclick(aaasame.v,aaaanc_sosa,aaaindex)%nn;
           title='[*generation/generations]0 %level; – Sosa %nn;
             %if;(evarcpl="")%aaaanc_sosa; %if;(aaasame!="")=Sosa %aaasame;%end;
             %else;%aaaanc_sosa; & %expr(aaaanc_sosa+1)%nn;
@@ -308,7 +325,7 @@
   <div id="s%aaaanc_sosa.v;" style="font-family:monospace;margin:0">
     <a style="top:tttpx;left:lllpx;"
       href='%prefix_no_all;%apply;prefix_all();%aaaaccess;;'
-      %if;(aaasame!="")%apply;implex1(aaasame.v)%end;
+      %if;(aaasame!="")%apply;implex1(aaasame.v)%end;%apply;lclick(aaasame.v,aaaanc_sosa,aaaindex)%nn;
       title='[*generation/generations]0 %level; – Sosa %nn;
         %if;(evarcpl="")%aaaanc_sosa; %if;(aaasame!="")=Sosa %aaasame;%end;
         %else;%aaaanc_sosa; & %expr(aaaanc_sosa+1)%nn;
@@ -665,3 +682,27 @@ Arbre des ancêtres de %first_name; %surname; %dates;
     %end;
   %end;
 %end;
+
+iz: <input id="iz-string" type="input" name="iz-string" value=";">
+<button type="button" class="btn btn-light" id="p_mod_clear" onclick="resetiz()"
+  title="[*validate/delete]1"><i class="fa fa-close fa-lg text-danger"></i></button>
+<a href="%action;?%url_no_bname;"><i class="fa fa-check fa-lg text-success"></i></a>
+
+%(
+<input id="dum" type="hidden" name="dum" value=";p=henri;n=gouraud;m=A;t=T;t1=CT;hi=H;sosa=on;v=5;scale=100;fs=17;sosa=on;">
+%)
+<input id="cur-i" type="hidden" name="cur-i" value="0">
+<input id="iz-string" type="hidden" name="iz-string" value="0">
+<br>
+test =
+<br>
+%prefix; (%%prefix;)<br>
+%suffix; (%%suffix;)<br>
+%action; (%%action;)<br>
+%url_no_bname; (%%url_no_bname;)<br>
+%url; (%%url;)<br>
+%prefix;%suffix; (%%prefix;%%suffix;)<br>
+%action;?%url_no_bname; (%%action;?%%url_no_bname;)<br>
+
+rebuilt url: %apply;rebuild_url_gen()<br>
+

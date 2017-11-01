@@ -38,10 +38,27 @@
         #htree{position:relative;font-size:'+a[0]+'px;width:'+a[1]+'px;height:'+a[2]+'px;margin:3em}\n\
       <\/style>';
     }
+
+    function menu(xx, yy)
+    {
+      var i = $("#cur-i").val();
+      var j = Number(i)+1;
+      var k = j+1;
+      var iz = $('#iz-string').val();
+      $('#iz-string').val(iz+"iz"+j+"="+yy+";");
+      $("#cur-i").val(j);
+      oncontextmenu="return false";
+      return false;
+    }
+
+    function resetiz()
+    {
+      $('#iz-string').val(";");
+      $('#cur-i').val("0");
+      return false;
+    }
    -->
   </script>
-
-
 
 %let;l_on;onclick="this.focus()" onkeydown="if (event.keyCode == 13) javascript:document.tools.submit();"%in;
 %let;l_emaxv;%if;(evar.t != "T")%evar.maxv;%elseif;(bvar.max_anc_tree = "")7%else;%bvar.max_anc_tree;%end;%in;

@@ -666,6 +666,13 @@ value setup_link conf =
   [ Not_found -> "" ]
 ;
 
+value url conf =
+  let c = "" in
+  List.fold_left (fun c (k, v) ->
+    if ( k = "oc" || k = "ocz" && v = "" || v = "0" ) || v = "" then
+      c else c ^ k ^ "=" ^ v ^ ";") c (conf.henv @ conf.senv)
+;
+
 value rec eval_variable conf =
   fun
   [ ["bvar"; v] ->
@@ -818,11 +825,20 @@ and eval_simple_variable conf =
           conf.env (conf.henv @ conf.senv)
       in
       List.fold_left
-        (fun c (k, v) ->
-        if ( k = "oc" || k = "ocz" && v = "" || v = "0" ) || v = "" then c 
-          else c ^ k ^ "=" ^ v ^ ";") "" l
+        (fun c (k, v) -> c ^ k ^ "=" ^ v ^ ";") "" l
   | "url" ->
       let c = Util.commd conf in
+      (* On supprime de env toutes les paires qui sont dans (henv @ senv) *)
+      let l =
+        List.fold_left
+          (fun accu (k, v) -> List.remove_assoc k accu)
+          conf.env (conf.henv @ conf.senv)
+      in
+      List.fold_left
+        (fun c (k, v) -> c ^ k ^ "=" ^ v ^ ";")
+        c l
+  | "url_no_bname" ->
+      let c = url conf in
       (* On supprime de env toutes les paires qui sont dans (henv @ senv) *)
       let l =
         List.fold_left
