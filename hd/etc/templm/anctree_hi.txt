@@ -607,7 +607,7 @@
 
 Arbre des ancêtres de %first_name; %surname; %dates;
 %let;b_index;%index;%in;
-%let;b_sosa;%sosa;%in;
+%let;b_sosa;%if;(sosa!="")%sosa;%else;1%end;%in;
   %let;boxsize;%if;((evarv<9 and evarcpl!="on") or (evarv<10 and evarcpl="on"))2%else;1%end;%in;
 %if;((evarcpl="on" and evarv < 4) or (evarcpl!="on" and evarv < 3))
   [*compact tree][:] [specify::generation/generations]0 > 3.
@@ -702,11 +702,11 @@ Store and go <a id="hg-href" href="%prefix;%root;" class="btn btn-light btn-sm" 
 
 Mode <div class="btn-group mx-1 mb-2 ml-2">
   %if;(evar.drm="d")
-  <a href='%apply;rebuild_url_gen()drm=r' onclick="clear_url()"
+  <a href='%apply;rebuild_url_gen()drm=r' onclick="reset_url()"
     class="btn btn-light btn-sm border-0 px-0"
     title="[*mode DRM/mode RLM]1">&nbsp;R&nbsp;</a>
   %else;
-  <a href='%apply;rebuild_url_gen()drm=d'  onclick="clear_url()"
+  <a href='%apply;rebuild_url_gen()drm=d' onclick="reset_url()"
     class="btn btn-light btn-sm border-0 px-0"
     title="[*mode DRM/mode RLM]0">&nbsp;D&nbsp;</a>
   %end;

@@ -13,19 +13,17 @@
   </style>
   <script type="text/javascript">
     function over1(xx)
-    { 
-     document.getElementById(xx).style.outline="#00F solid 4px";
+    {  document.getElementById(xx).style.outline="#00F solid 4px";
      return false;
     }
+
     function out1(xx)
-    {
-     document.getElementById(xx).style.outline="none";
+    { document.getElementById(xx).style.outline="none";
      return false;
     }
-  
+
     function ob()
-    {
-      var a = new Array(3)
+    { var a = new Array(3)
       for (var i=0; i < a.length; ++i)
       {
         a[i] = document.getElementById("e" + i).value;
@@ -54,8 +52,7 @@
     }
 
     function recode()
-    {
-      var olds = jQuery("#iz-string").val();
+    { var olds = jQuery("#iz-string").val();
       var patt = /,/g;
       var news = olds.replace(patt, ";");
       jQuery("#iz-string").val(news);
@@ -72,7 +69,6 @@
       var newHref = oldHref+news;
       jQuery("#hg-href").attr('href', newHref);
       localStorage.setItem("iz-string", tmps);
-      localStorage.setItem("url", newHref);
       return true;
     }
     
@@ -86,45 +82,43 @@
       var oldHref = jQuery("#hg-href").attr('href');
       var newHref = oldHref+news;
       localStorage.setItem("iz-string", tmps);
-      localStorage.setItem("url", newHref);
       return false;
     }
     
     function reset_url()
-    {
-      var url = window.location.search;
+    { var url = window.location.search;
       localStorage.setItem("url", url);
       return false;
     }
 
     function reset_iz()
-    {
-      jQuery('#iz-string').val("");
+    { jQuery('#iz-string').val("");
       return false;
     }
 
     function reset_all()
-    {
-      jQuery('#iz-string').val("");
+    { jQuery('#iz-string').val("");
       localStorage.setItem("index", 0);
       localStorage.setItem("iz-string", "");
-      localStorage.setItem("url", "");
       return false;
     }
 
-    function urlParam(name){
-      var url = localStorage.getItem("url");
+    function urlParam(name)
+    { 
+      var url = window.location.search;
       var patt = /&/g;
       var urlb = url.replace(patt, ";");
-      var results1 = new RegExp('[\?&]' + name + '=([^&#]*)').urlb;
-      if (results1==null){ 
-        if (name=="drm") {return "d"; }
-        else { return null; } }
-      else { return decodeURI(results1[1]) || 0; }
+      var params = urlb.substr(1).split(';')
+      for (var i = 0; i < params.length; i++) {
+        var p=params[i].split('=');
+        if (p[0] == name) { return decodeURIComponent(p[1]); }
+      }
+      alert("urlb: "+urlb);
+      if (name=="drm") {return "d"; }
+      else { return null; }
     }
-
   </script>
-  
+
 %let;l_on;onclick="this.focus()" onkeydown="if (event.keyCode == 13) javascript:document.tools.submit();"%in;
 %let;l_emaxv;%if;(evar.t != "T")%evar.maxv;%elseif;(bvar.max_anc_tree = "")7%else;%bvar.max_anc_tree;%end;%in;
 
