@@ -113,7 +113,6 @@
         var p=params[i].split('=');
         if (p[0] == name) { return decodeURIComponent(p[1]); }
       }
-      alert("urlb: "+urlb);
       if (name=="drm") {return "d"; }
       else { return null; }
     }
