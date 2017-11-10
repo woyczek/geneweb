@@ -1,0 +1,382 @@
+<!-- $Id: tree_build.txt,v 5.5 2017-07-25 13:15:18 hg Exp $ -->
+
+<script type="text/javascript" src="%if;(cgi)%bvar.static_path;%end;jquery.min.js"></script>
+<script type="text/javascript" src="%if;(cgi)%bvar.static_path;%end;templm/jquery.line.js"></script>
+<script type="text/javascript" src="%if;(cgi)%bvar.static_path;%end;templm/js_upd.js"></script>
+<script type="text/javascript" src="%if;(cgi)%bvar.static_path;%end;templm/js_upd_jq.js"></script>
+<script src=%if;(cgi)%bvar.static_path;%end;templm/js.js></script>
+%if;(bvar.uppercase = "yes")
+  <script>
+  <!--
+    %if;(bvar.uppercase = "yes")
+      %if;(bvar.particles != "")
+        var p_a = new Array(%bvar.particles;);
+      %else;
+        var p_a = new Array("AF","AV","D","DAL","DE","DEN","DES","DI","DU","OF","UND","VAN","VON","ZU","ZUR");
+      %end;
+    %end;
+  -->
+  </script>
+  <script src=%if;(cgi)%bvar.static_path;%end;templm/js_uppercase.js></script>
+%else;
+  <script src=%if;(cgi)%bvar.static_path;%end;templm/js_uppercase_no.js></script>
+%end;
+
+%import;templm/updind_updfam;
+
+<div class="container-fluid">
+<div class="row">
+<div class="col-6">
+<h1>%nn;
+[
+en: Interactive tree or graph build-up
+fr: Construction interactive d'un arbre ou d'un graphe
+]
+</h1>
+
+<script type="text/javascript">
+    function hg_menu(fn,sn,occ,ss,ii)
+    {
+      var i = localStorage.getItem("index");
+      if (i==null) { i = 0 };
+      var j = Number(i)+1;
+      var idfn   = j+"-fn";
+      var idsn   = j+"-sn";
+      var idocc  = j+"-occ";
+      var idss   = j+"-sosa";
+      var idindx = j+"-indx";
+      localStorage.setItem(idfn, fn);
+      localStorage.setItem(idsn, sn);
+      localStorage.setItem(idocc, occ);
+      localStorage.setItem(idss, ss);
+      localStorage.setItem(idindx, ii);
+      localStorage.setItem("index", j);
+      oncontextmenu="return false";
+      return false;
+    }
+
+    function hg_recode()
+    {
+      var olds = jQuery("#iz-string").val();
+      var patt = /,/g;
+      var news = olds.replace(patt, ";");
+      jQuery("#iz-string").val(news);
+    }
+    
+    function hg_go()
+    {
+      var prevs = localStorage.getItem("is_string");
+      if (prevs==null) { prevs = "" };
+      var curs = jQuery("#is_string").val();
+      var tmps = prevs+curs;
+      var patt = /,/g;
+      var news = tmps.replace(patt, ";");
+      var oldHref = jQuery("#hg-href").attr('href');
+      var newHref = oldHref+news;
+      jQuery("#hg-href").attr('href', newHref);
+      localStorage.setItem("is_string", tmps);
+      localStorage.setItem("url", newHref);
+      return true;
+    }
+
+    function hg_reload_g(name)
+    {
+      var id = "#"+name;
+      var loc_name = localStorage.getItem(name);
+      if (loc_name==null) { loc_name = "" };
+      jQuery(id).val(loc_name);
+      return true;
+    }
+    function hg_store_one(j)
+    {
+      var idfn   = j+"-fn";
+      var idsn   = j+"-sn";
+      var idocc  = j+"-occ";
+      var idss   = j+"-sosa";
+      var idindx = j+"-indx";
+      var idnfn   = "#"+j+"-fn";
+      var idnsn   = "#"+j+"-sn";
+      var idnocc  = "#"+j+"-occ";
+      var idnss   = "#"+j+"-sosa";
+      var idnindx = "#"+j+"-indx";
+      var fn = jQuery(idnfn).val();
+      var sn = jQuery(idnsn).val();
+      var occ = jQuery(idnocc).val();
+      var sosa = jQuery(idnsosa).val();
+      var indx = jQuery(idnindx).val();
+      localStorage.setItem(idfn, fn);
+      localStorage.setItem(idsn, sn);
+      localStorage.setItem(idocc, occ);
+      localStorage.setItem(idsosa, sosa);
+      localStorage.setItem(idindx, indx);
+      localStorage.setItem("index", j);
+      return true;
+    }
+
+    function hg_store_g(name)
+    {
+      var id = "#"+name;
+      var loc_name = jQuery(id).val();
+      localStorage.setItem(name, loc_name);
+      return true;
+    }
+        
+    function hg_store_to_url()
+    {
+      var url = window.location.search;
+      var patt = /&/g;
+      var urlb = url.replace(patt, ";").split(";");
+      return false;
+    }
+
+    function hg_view_store()
+    {
+      var j = jQuery("#item").val();
+      var idfn   = j+"-fn";
+      var idsn   = j+"-sn";
+      var idocc  = j+"-occ";
+      var idss   = j+"-sosa";
+      var idindx = j+"-indx";
+      var fn = localStorage.getItem(idfn);
+      var sn = localStorage.getItem(idsn);
+      var occ = localStorage.getItem(idocc);
+      var sosa = localStorage.getItem(idss);
+      var index = localStorage.getItem(idindx);
+      jQuery("#store").html(j+": "+fn+" "+sn+" ("+occ+") "+sosa+", "+index);
+      return false;
+    }
+    
+    function hg_no_store()
+    {
+      jQuery("#store").html("");
+      return false;
+    }
+
+    function hg_view_url()
+    {
+      var hg_url = window.location.search;
+      jQuery("#url").html("("+hg_url+")");
+      return false;
+    }
+
+    function hg_no_url()
+    {
+      jQuery("#url").html("");
+      return false;
+    }
+    
+    function hg_clear_store()
+    {
+      for (j=1;j<100;j++) {
+        var idfn   = j+"-fn";
+        var idsn   = j+"-sn";
+        var idocc  = j+"-occ";
+        var idss   = j+"-sosa";
+        var idindx = j+"-indx";
+        localStorage.setItem(idfn, "");
+        localStorage.setItem(idsn, "");
+        localStorage.setItem(idocc, "");
+        localStorage.setItem(idss, "");
+        localStorage.setItem(idindx, "");
+      }
+      localStorage.setItem("index", 0);
+      localStorage.setItem("url", "");
+    }
+
+    function hg_reset_iz()
+    {
+      jQuery('#iz-string').val("");
+      return false;
+    }
+
+    function hg_set()
+    {
+      jQuery("#set_root").val("on");
+      return false;
+    }
+
+    function hg_set_mode(mm)
+    {
+      jQuery("#mode").val(mm);
+      return false;
+    }
+
+    function urlParam(name){
+      var url = localStorage.getItem("url");
+      var patt = /&/g;
+      var urlb = url.replace(patt, ";");
+      var results1 = new RegExp('[\?&]' + name + '=([^&#]*)').urlb;
+      if (results1==null){ 
+        if (name=="drm") {return "d"; }
+        else { return null; } }
+      else { return decodeURI(results1[1]) || 0; }
+    }
+  </script>
+
+%define;get_val(xx)
+  <script type="text/javascript">
+    jQuery( document ).ready(function( jQuery ) {
+      jQuery(function() {
+        var v = jQuery('#xx').val();
+        window.alert('alert');
+        console.log('TEST'+'\n');
+    });
+  });
+  </script>
+%end;
+
+%define;one_param1(xx)
+  %if;(evar.xx!="")xx=%evar.xx;;%end;%nn;
+%end;
+
+%define;one_param(xx,vv,ff)
+  %if;(evar.xx!="" or "ff"="force")%nn;
+    <input type=vv id="xx" name="xx" value="%evar.xx;">
+  %end;
+%end;
+
+%define;one_p(xx)
+  <input type="hidden" id="ixx" name="ixx" value="">
+  <input type="hidden" id="txx" name="txx" value="">
+%end;
+
+%let;plist;/m/p/n/oc/pz/nz/ocz/i/sosa/image/marriage/t/t0/hi/cpl/scale/fs/wide/v/maxv/%nn;
+            birth/birth_place/marr/marr_date/marr_place/child/death/death_place/death_age/%nn;
+            num/occu/gen/cgl//%in; %(33 %)
+
+%define;rebuild_url_no_prfx()
+  %let;url;%nn;
+    %for;i;1;34;%nn;
+      %apply;one_param1%with;%apply;nth%with;%plist;%and;%i;%end;%end;
+    %end;%nn;
+  %in;
+  %url;
+%end;
+
+%if;not cancel_links;
+  <div>
+    %(include.home;%)
+  </div>
+%end;
+
+Current i1, t1: %evar.i1;, %evar.t1;, %pvar.1.surname;<br>
+
+%define;one_person(ccc)
+  Fn: <input type="submit" id="ccc-fn" name="ccc-fn" style="width:10em" value="">
+  Sn: <input type="submit" id="ccc-sn" name="ccc-sn" style="width:10em" value="">
+  Occ: <input type="submit" id="ccc-occ" name="ccc-occ" style="width:2em" value="">
+  So: <input type="submit" id="ccc-sosa" name="ccc-sosa" style="width:4em" value="">
+  Inx: <input type="submit" id="ccc-indx" name="ccc-indx" style="width:4em" value="">
+  <br>
+%end;
+
+%define;one_pvar(z0, z1)
+  %if;(evar.iz0!= "")
+    %if;(evar.iz0!="no")
+      <tr id="pz1">
+        <td class="b1"><a tabindex="10000" href="javascript:addPvar(z1,0);">+</a></td>
+        <td><input id="pz1_occ" name="ocz1" class="occ3" autocomplete="off" size="5" maxlength="8" value="%evar.iz0;.occ;"
+             onkeypress="javascript:return oKP2(event,'p','z1','_occ','')"%/></td>
+        <td class="b1"><a tabindex="10000" href="javascript:delS('p','z1','_occ',1,0,'');">x</a></td>
+        <td><input id="pz1_fn" name="pz1" class="ar" size="20" maxlength="200" value="%evar.iz0;.first_name;" onblur="tUC1(this)"%/></td>
+        <td><input id="pz1_sn" name="nz1" size="20" maxlength="200" value="%evar.iz0;.surname;" onblur="tUC(this);jq1('pz1','')"%/></td>
+        <td class="b1"><a tabindex="10000" href="javascript:invertS('p','z1','_occ',0,1,'');">&uarr;</a></td>
+        <td class="b1"><span id="pz1_jq1">
+            %if;evar.z1.has_birth_date; %evar.z1.slash_birth_date;
+            %elseif;evar.z1.has_baptism_date; %evar.z1.slash_baptism_date;
+            %end;
+             - %nn;
+            %if;evar.z1.has_death_date;%evar.z1.slash_death_date; 
+            %elseif;evar.z1.has_burial_date;%evar.z1.slash_burial_date; 
+            %elseif;evar.z1.has_cremation_date;%evar.z1.slash_cremation_date; 
+            %end;
+          </span></td>
+        <td class="b1"><a tabindex="10000" href="javascript:invertS('p','z1','_occ',1,1,'');">&darr;</a></td>
+        <td><input id="pz1_t" name="tz1" size="20" maxlength="200" value="%evar.tz1;"
+            %/><input type="hidden" id="pz1_i" name="iz1" size="5" value="%evar.iz0;" %/></td>
+      </tr>
+      %apply;one_pvar(z0+1,z1+1)
+    %else;
+      %apply;one_pvar(z0+1,z1)
+    %end;
+  %end;
+%end;
+
+  <input type="hidden" id="set_root" name="set_root" value="">
+  <button type="submit" class="btn btn-light btn-sm" id="url_to_store" onclick="hg_url_to_store()"
+    title="[*url_to_store]">Url to store</button>
+  <button type="submit" class="btn btn-light btn-sm" id="store_to_url" onclick="hg_store_to_url()"
+    title="[*store_to_url]">Store to url</button>
+  <button type="submit" class="btn btn-light btn-sm" id="clear_store" onclick="hg_clear_store()"
+    title="[*clear store]">Clear store</button>
+  <button type="submit" class="btn btn-light btn-sm" id="clear_url" onclick="hg_clear_url()"
+    title="[*clear url]">Clear url</button>
+  <button type="submit" class="btn btn-light btn-sm" id="view" 
+    onmouseover="hg_view_store()" onmouseout="hg_no_store()"
+    title="[*view store]">View store</button>
+  <button type="submit" class="btn btn-light btn-sm" id="view" 
+    onmouseover="hg_view_url()" onmouseout="hg_no_url()"
+    title="[*view url]">View Url</button>
+
+  %if;(evar.mode="RLM")
+    <input type="submit" class="btn btn-light btn-sm" id="tDAG" name="mode" value="DAG"
+      onclick="hg_set_mode('DAG')"%/>
+  %else;
+    <input type="submit" class="btn btn-light btn-sm" id="tRLM" name="mode" value="RLM"
+      onclick="hg_set_mode('RLM')"%/>
+  %end;
+
+<form id="upd" name="upd" method="post" action="%action;" onsubmit="oS1()">
+  <div id="jq" style="display:none"> </div>
+  <p style="display:none;">
+    %hidden;
+    <input type="hidden" name="m" value="RLM" %/>
+    <input type="hidden" name="mode" value="%evar.mode;" %/>
+    <input type="hidden" name="i0" value="%evar.i0;" %/>
+    <input type="hidden" name="t0" value="%evar.t0;" %/>
+    <input type="hidden" name="spouse" value="%evar.spouse;" %/>
+    <input type="hidden" name="image" value="%evar.image;" %/>
+    <input type="hidden" name="bd" value="%evar.bd;" %/>
+    <input type="hidden" name="color" value="%evar.color;" %/>
+    <input type="hidden" name="invert" value="%evar.invert;" %/>
+    <input type="hidden" name="lim" value="%evar.lim;" %/>
+    <input type="hidden" name="new" value="%evar.new;" %/>
+  </p>
+  <fieldset>
+    <legend>[*modify::tree] <input type="submit" value="ok" %/></legend>
+    <table id="upddag" summary="pvar" cellspacing=0 cellpadding=0>
+      <tr>
+        <td class="b1"><abbr title="[add::]">+</abbr></td>
+        <td class="bg7"><abbr %lt4;>#</abbr></td>
+        <td class="b1"><abbr title="[delete::]">x</abbr></td>
+        <td class="bg7">[first name/first names]0</td>
+        <td class="bg7">[surname/surnames]0</td>
+        <td class="b1"><abbr title="[invert::] 3..2">&uarr;</abbr></td>
+        <td class="bg7">[birth] - [death]</td>
+        <td class="b1"><abbr title="[invert::] 2..3">&darr;</abbr></td>
+        <td class="bg7">[text]</td>
+      </tr>
+      %apply;one_pvar(1,1)
+      <tr id="new_pvar"></tr>
+      <tr><td class="b1"><a id="add_pvar" style="display:block" href="javascript:addPvar(1,1)">+</a></td>
+          <td colspan="8" class="b1"> </td>
+      </tr>
+    </table>
+  </fieldset>
+</form>
+
+View item:<br>
+<input type="number" id="item" name="item" value="" style="width:3em">
+
+<button type="submit" class="btn btn-light btn-sm" id="setroot" 
+onclick="hg_menu('henri','gouraud',0,1,1694)">test</button>
+<button type="submit" class="btn btn-light btn-sm" id="setroot" 
+onmouseover="hg_view_store()" onmouseout="hg_no_store()">view</button>
+
+<div id="store" name="store" style="width:60em"></div>
+<div id="url" name="store" style="width:60em"></div>
+
+<br>
+
+</div>
+<div class="col-6">

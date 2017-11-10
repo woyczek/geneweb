@@ -621,7 +621,10 @@ value family_m conf base =
         trailer conf;
       }
   | Some "RL" -> RelationLink.print conf base
-  | Some "RLM" -> Relation.print_multi conf base
+  | Some "RLM" ->
+      match find_person_in_env conf base "" with
+      [ Some p -> Relation.print_multi conf base
+      | _ -> Relation.print_multi conf base ]
   | Some "S" -> SearchName.print conf base specify unknown
   | Some "SND_IMAGE" when conf.wizard && conf.can_send_image ->
       SendImage.print conf base

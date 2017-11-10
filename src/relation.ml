@@ -1654,6 +1654,7 @@ value print conf base p =
   | None -> relmenu_print conf base p ]
 ;
 
+(*
 value print_multi conf base =
   let assoc_txt = Hashtbl.create 53 in
   let pl =
@@ -1668,6 +1669,62 @@ value print_multi conf base =
             loop [p :: pl] (i + 1)
           }
       | None -> List.rev pl ]
+  in
+  let lim =
+    match p_getint conf.env "lim" with
+    [ Some x -> x
+    | None -> 0 ]
+  in
+  print_multi_relation conf base pl lim assoc_txt
+;
+*)
+
+value build_pl_r conf base p0 assoc_txt =
+  let pl =
+    loop [] 1 where rec loop pl i =
+      let k = string_of_int i in
+      match find_person_in_env conf base k with
+      [ Some p ->
+          do {
+            match p_getenv conf.env ("t" ^ k) with
+            [ Some x -> Hashtbl.add assoc_txt (get_key_index p) x
+            | None -> () ];
+            let pl = [p0 :: pl] in
+            loop [p :: pl] (i + 1)
+          }
+      | None -> List.rev pl ]
+  in
+  pl
+;
+
+value build_pl conf base assoc_txt =
+  let pl =
+    loop [] 1 where rec loop pl i =
+      let k = string_of_int i in
+      match find_person_in_env conf base k with
+      [ Some p ->
+          do {
+            match p_getenv conf.env ("t" ^ k) with
+            [ Some x -> Hashtbl.add assoc_txt (get_key_index p) x
+            | None -> () ];
+            loop [p :: pl] (i + 1)
+          }
+      | None -> List.rev pl ]
+  in
+  pl
+;
+
+value print_multi conf base =
+  let assoc_txt = Hashtbl.create 53 in
+  let pl = match find_person_in_env conf base "0" with
+    [ Some p ->
+        do {
+          match p_getenv conf.env "t0" with
+            [ Some x -> Hashtbl.add assoc_txt (get_key_index p) x
+            | None -> () ];
+          build_pl_r conf base p assoc_txt
+        }
+    | None -> build_pl conf base assoc_txt ]
   in
   let lim =
     match p_getint conf.env "lim" with

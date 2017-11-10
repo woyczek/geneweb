@@ -7,38 +7,28 @@
 	%( relations, related, witness at his event %)
   %reset_count;
   href="%prefix;spouse=on;m=RLM;image=%evar.image;;%nn;
-  %foreach;relation;
-    %if;(has_relation_him)
-      %incr_count;i%count;=%relation_him.index;;t%count;=%relation_him.type;;%nn;
-      %incr_count;%nn;
-      i%count;=z1;%nn;
+    i%count;=%index;;%nn;
+    t%count;=%if;(sex=0)[him/her]0%elseif;(sex=1)[him/her]1%else;0%end;;%nn;
+    %foreach;relation;
+      %if;(has_relation_him)
+        %incr_count;i%count;=%relation_him.index;;t%count;=%relation_him.type;;%nn;
+      %end;
+      %if;(has_relation_her)
+        %incr_count;i%count;=%relation_her.index;;t%count;=%relation_her.type;;%nn;
+      %end;
     %end;
-    %if;(has_relation_her)
-      %incr_count;i%count;=%relation_her.index;;t%count;=%relation_her.type;;%nn;
-      %incr_count;%nn;
-      i%count;=z1;%nn;
+    %foreach;related;
+      %incr_count;i%count;=%related.index;;t%count;=%related_type;;%nn;
     %end;
-  %end;
-  %foreach;related;
-    %incr_count;i%count;=%related.index;;t%count;=%related_type;;%nn;
-    %incr_count;%nn;
-    i%count;=z1;%nn;
-  %end;
-  %foreach;event_witness_relation;
-    %incr_count;%nn;
-    i%count;=%event_witness_relation.person.index;;%nn;
-    t%count;=%event_witness_relation.event.name;;%nn;
-    %incr_count;%nn;
-    i%count;=z1;%nn;
-  %end;
-  %incr_count;%nn;
-  i%count;=%index;;%nn;
-  t%count;=%if;(sex=0)[him/her]0%elseif;(sex=1)[him/her]1%else;0%end;%nn;
-  %if;browsing_with_sosa_ref;
-    %incr_count;%nn;
-    i%count;=%sosa_ref.index;;%nn;
-    t%count;=sosa_1;%nn;
-  %end;
+    %foreach;event_witness_relation;
+      %incr_count;%nn;
+      i%count;=%event_witness_relation.person.index;;%nn;
+      t%count;=%event_witness_relation.event.name;;%nn;
+    %end;
+    %if;browsing_with_sosa_ref;
+      %incr_count;%nn;
+      i%count;=%sosa_ref.index;;t%count;=sosa_1;%nn;
+    %end;
   " title="[*relations tree] (and witness at his event)"
   %reset_count;
 %end;

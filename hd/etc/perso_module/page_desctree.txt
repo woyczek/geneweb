@@ -1,0 +1,49 @@
+<!-- page_desctree.txt hg -->
+
+%reset_count2;%incr_count2;
+
+%define;one_member_v(xxx, ccc, lll, iii)
+  %incr_count;
+  %if;(evar.order="tree" or lll=iii)
+    %count;,ccc,0, %level; niveau=lll, %xxx.first_name; %xxx.surname; %xxx.dates;<br>
+  %end;
+  %let;husb;%count;%in;
+  %if;has_families;
+    %foreach;family;
+      %incr_count;
+      %let;ll1;%expr(lll+1)%in;
+      %if;(evar.order="tree" or ll1=iii)
+        %count;,%husb;,%if;(marriage_date.year!="")%marriage_date.year;%else;1%end;, niveau %ll1;, %xxx.spouse.first_name; %xxx.spouse.surname; %xxx.spouse.dates;<br>
+      %end;
+      %let;wife;%count;%in;
+      %let;niv;%expr(lll+2)%in;
+      %if;(xxx.has_children)
+        %foreach;child;
+          %let;ll2;%expr(lll+2)%in;
+          %apply;one_member_v("child", wife, ll2, iii)
+        %end;
+      %end;
+    %end;
+  %end;
+%end;
+
+
+%( Descendant tree %)
+Liste des noeuds de l'arbre de descendance de %first_name; %surname; %dates;<br>
+Format : Node#,Parent node,link type (child=0, marriage=1 or year),, n %family.desc_level;,first_name surname dates<br>
+
+%if;(evar.order="tree")
+  Parcour depth-first<br>
+  %reset_count;
+  %let;ccc;%count;%in;
+  %if;has_families;
+    %apply;one_member_v("self", 0, 0, i)
+  %end;
+%elseif;(evar.order="level")
+  Parcours width-first<br>
+  %for;i;0;6;
+    %reset_count;
+    %apply;one_member_v("self", 0, 0, i)
+  %end;
+%end;
+

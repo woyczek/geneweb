@@ -17,7 +17,7 @@
 </head>
 <body%body_prop;>
 %message_to_wizard;
-<div class="container">
+<div class="container-fluid">
 %if;not cancel_links;
   <div class="btn-group float-%right; mt-2">
     %if;(referer != "")
@@ -29,6 +29,27 @@
 %end;
 
 <a href="%prefix;" accesskey="T"></a>
+
+%define;show_templ(tpl)
+  %include.tpl;
+%end;
+
+%if;(evar.mode="DAG" or evar.mode="RLM")
+  %let;module;perso_module/page_tree_build%in;
+  %apply;show_templ(module)
+  <form method="post" action="%action;" onsubmit="oS1()">
+    <p>
+    <input type="hidden" name="m" value="RLM"%/>
+    %hidden;
+    %foreach;env_binding;
+      %if;(env.key != "m")
+        <input type="hidden" name="%env.key;" value="%env.val.decoded;"%/>
+      %end;
+    %end;
+    </p>
+  <p><input type="submit" value="[*update tree]"%/></p>
+  </form>
+%end;
 
 %if;(evar.slices = "on")
   <h1>%nn;
