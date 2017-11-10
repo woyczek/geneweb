@@ -39,15 +39,14 @@
   %apply;show_templ(module)
   <form method="post" action="%action;" onsubmit="oS1()">
     <p>
-    <input type="hidden" name="m" value="RLM"%/>
     %hidden;
     %foreach;env_binding;
-      %if;(env.key != "m")
+      %if;(env.key != "mode")
         <input type="hidden" name="%env.key;" value="%env.val.decoded;"%/>
       %end;
     %end;
     </p>
-  <p><input type="submit" value="[*update tree]"%/></p>
+  <p><input type="submit" value="[*suppress update mode]"%/></p>
   </form>
 %end;
 
