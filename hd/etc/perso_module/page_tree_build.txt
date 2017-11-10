@@ -183,14 +183,8 @@ fr: Construction interactive d'un arbre ou d'un graphe
       return true;
     }
 
-    function valid_key(kkk)
-    {
-      for (i=0;i<100;i++)
-      {
-         if (kkk == "i"+i || kkk == "t"+i) { return i }
-      }
-      return -1;
-    }
+    function valid_key_i(kkk){for(i=0;i<100;i++){if (kkk == "i"+i) {return i}}return -1;}
+    function valid_key_t(kkk){for(i=0;i<100;i++){if (kkk == "t"+i) {return i}}return -1;}
     
     function hg_url_to_store()
     {
@@ -201,8 +195,9 @@ fr: Construction interactive d'un arbre ou d'un graphe
         var item = url[j].split("=");
         var key = String(item[0]); 
         var val = String(item[1]);
-        var i = valid_key(key);
-        if (i >= 0)
+        var i = valid_key_i(key);
+        var t = valid_key_t(key);
+        if (i >= 0 || t >= 0)
         {
           var idfn = "fn"+i;
           var idsn = "sn"+i;
@@ -217,28 +212,25 @@ fr: Construction interactive d'un arbre ou d'un graphe
           var id2indx = "#i"+i;
           var id2txt = "#t"+i;
           var fn = jQuery(id2fn).val();
+          if (key == idfn) { if (fn=="" || fn == null) { fn = val };
+            localStorage.setItem(idfn,fn); jQuery(id2fn).val(fn); };
           var sn = jQuery(id2sn).val();
+          if (key == idsn) { if (sn=="" || sn == null) { sn = val };
+            localStorage.setItem(idsn,sn); jQuery(id2sn).val(sn); };
           var oc = jQuery(id2oc).val();
+          if (key == idoc) { if (oc=="" || oc == null) { oc = val };
+            localStorage.setItem(idoc,oc); jQuery(id2oc).val(oc); };
           var sosa = jQuery(id2ss).val();
+          if (key == idss) { if (sosa=="" || sosa == null) { sosa = val };
+            localStorage.setItem(idss,sosa); jQuery(id2ss).val(sosa); };
           var index = jQuery(id2indx).val();
+          if (key == idindx) { if (index=="" || index == null) { index = val };
+            localStorage.setItem(idindx,index); jQuery(id2indx).val(index); };
           var txt = jQuery(id2txt).val();
-          localStorage.setItem(idfn,fn);
-          localStorage.setItem(idsn,sn);
-          localStorage.setItem(idoc,oc);
-          localStorage.setItem(idss,sosa);
-          localStorage.setItem(idindx,index);
-          localStorage.setItem(idtxt,txt);
-          alert ("Store "+ key+" "+val+" "+index+" "+txt);
-          if (key == "i"+i && index != val) {alert("Index: "+index+", val: "+val)};
-          if (key == "t"+i && txt != val) {alert("Text: "+txt+", val: "+val)};
-          var txt = localStorage.getItem(idtxt);
-          jQuery(id2oc).val(oc);
-          jQuery(id2fn).val(fn);
-          jQuery(id2sn).val(sn);
-          jQuery(id2indx).val(index);
-          jQuery(id2txt).val(txt);
+          if (key == idtxt) { if (txt=="" || txt == null) { txt = val };
+            localStorage.setItem(idtxt,txt); jQuery(id2txt).val(txt); };
         }
-        if (key[0]=="i" && key.length == 2 && (val == "" || val == null)) { break; }
+        if (key == idindx && i>=0 && (val == "" || val == null)) { break; }
       }
       return true;
     }
@@ -479,10 +471,9 @@ Current i1, t1: %evar.i1;, %evar.t1;, %pvar.1.surname;<br>
       </tr>
     </table>
   </fieldset>
-    <input type="hidden" name="i7" value="33" %/>
-    <input type="hidden" name="t7" value="nouveau" %/>
+  %let;imax1;%expr(imax)%in;
   %let;imax2;%expr(imax+10)%in;
-  %for;i;imax;imax2;
+  %for;i;imax1;imax2;
     <input type="checkbox" id="chk%i;" name="chk%i;">
     <input type="input" id="oc%i;" name="oc%i;" value="" size="4"%/>
     <input type="input" id="fn%i;" name="fn%i;" value="" size="20"%/>
