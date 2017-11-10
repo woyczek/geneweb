@@ -35,24 +35,24 @@ fr: Construction interactive d'un arbre ou d'un graphe
 </h1>
 
 <script type="text/javascript">
-    function hg_menu(fn,sn,occ,ss,ii)
+    function hg_menu(zz,fn,sn,oc,ss,ii,tt)
     {
-      var i = localStorage.getItem("index");
-      if (i==null) { i = 0 };
-      var j = Number(i)+1;
-      var idfn   = j+"-fn";
-      var idsn   = j+"-sn";
-      var idocc  = j+"-occ";
-      var idss   = j+"-sosa";
-      var idindx = j+"-indx";
+      var j = zz;
+      if (j==null) { j = 0 };
+      var idfn   = "fn"+j;
+      var idsn   = "sn"+j;
+      var idoc  = "oc"+j;
+      var idss   = "sosa"+j;
+      var idindx = "i"+j;
+      var idtxt = "t"+j;
       localStorage.setItem(idfn, fn);
       localStorage.setItem(idsn, sn);
-      localStorage.setItem(idocc, occ);
+      localStorage.setItem(idoc, oc);
       localStorage.setItem(idss, ss);
       localStorage.setItem(idindx, ii);
-      localStorage.setItem("index", j);
+      localStorage.setItem(idtxt, tt);
       oncontextmenu="return false";
-      return false;
+      return true;
     }
 
     function hg_recode()
@@ -61,6 +61,7 @@ fr: Construction interactive d'un arbre ou d'un graphe
       var patt = /,/g;
       var news = olds.replace(patt, ";");
       jQuery("#iz-string").val(news);
+      return true;
     }
     
     function hg_go()
@@ -89,26 +90,30 @@ fr: Construction interactive d'un arbre ou d'un graphe
     }
     function hg_store_one(j)
     {
-      var idfn   = j+"-fn";
-      var idsn   = j+"-sn";
-      var idocc  = j+"-occ";
-      var idss   = j+"-sosa";
-      var idindx = j+"-indx";
-      var idnfn   = "#"+j+"-fn";
-      var idnsn   = "#"+j+"-sn";
-      var idnocc  = "#"+j+"-occ";
-      var idnss   = "#"+j+"-sosa";
-      var idnindx = "#"+j+"-indx";
+      var idfn   = "fn"+j;
+      var idsn   = "sn"+j;
+      var idoc  = "oc"+j;
+      var idss   = "sosa"+j;
+      var idindx = "i"+j;
+      var idtxt = "t"+j;
+      var idnfn   = "#fn"+j;
+      var idnsn   = "#sn"+j;
+      var idnoc  = "#oc"+j;
+      var idnss   = "#sosa"+j;
+      var idnindx = "#i"+j;
+      var idntxt = "#t"+j;
       var fn = jQuery(idnfn).val();
       var sn = jQuery(idnsn).val();
-      var occ = jQuery(idnocc).val();
+      var oc = jQuery(idnoc).val();
       var sosa = jQuery(idnsosa).val();
       var indx = jQuery(idnindx).val();
+      var txt = jQuery(idntxt).val();
       localStorage.setItem(idfn, fn);
       localStorage.setItem(idsn, sn);
-      localStorage.setItem(idocc, occ);
+      localStorage.setItem(idoc, oc);
       localStorage.setItem(idsosa, sosa);
       localStorage.setItem(idindx, indx);
+      localStorage.setItem(idtxt, txt);
       localStorage.setItem("index", j);
       return true;
     }
@@ -126,79 +131,184 @@ fr: Construction interactive d'un arbre ou d'un graphe
       var url = window.location.search;
       var patt = /&/g;
       var urlb = url.replace(patt, ";").split(";");
-      return false;
+      return true;
     }
 
     function hg_view_store()
     {
       var j = jQuery("#item").val();
-      var idfn   = j+"-fn";
-      var idsn   = j+"-sn";
-      var idocc  = j+"-occ";
-      var idss   = j+"-sosa";
-      var idindx = j+"-indx";
+      var idfn   = "fn"+j;
+      var idsn   = "sn"+j;
+      var idoc  = "oc"+j;
+      var idss   = "sosa"+j;
+      var idindx = "i"+j;
       var fn = localStorage.getItem(idfn);
       var sn = localStorage.getItem(idsn);
-      var occ = localStorage.getItem(idocc);
+      var oc = localStorage.getItem(idoc);
       var sosa = localStorage.getItem(idss);
       var index = localStorage.getItem(idindx);
-      jQuery("#store").html(j+": "+fn+" "+sn+" ("+occ+") "+sosa+", "+index);
-      return false;
+      jQuery("#store").html(j+": "+fn+" "+sn+" ("+oc+") "+sosa+", "+index);
+      return true;
+    }
+    
+    function hg_store_to_screen()
+    {
+      var i0 = jQuery("#item").val();
+      for (j=0;j<100;j++)
+      {
+        var idfn   = "fn"+j;
+        var idsn   = "sn"+j;
+        var idoc  = "oc"+j;
+        var idss   = "sosa"+j;
+        var idindx = "i"+j;
+        var idtxt = "t"+j;
+        var id2fn   = "#fn"+j;
+        var id2sn   = "#sn"+j;
+        var id2oc  = "#oc"+j;
+        var id2indx = "#i"+j;
+        var id2txt = "#t"+j;
+        var fn = localStorage.getItem(idfn);
+        var sn = localStorage.getItem(idsn);
+        var oc = localStorage.getItem(idoc);
+        var sosa = localStorage.getItem(idss);
+        var index = localStorage.getItem(idindx);
+        var txt = localStorage.getItem(idtxt);
+        jQuery(id2oc).val(oc);
+        jQuery(id2fn).val(fn);
+        jQuery(id2sn).val(sn);
+        jQuery(id2indx).val(index);
+        jQuery(id2txt).val(txt);
+        if (fn=="" || fn == null) { break; }
+      }
+      return true;
+    }
+
+    function valid_key(kkk)
+    {
+      for (i=0;i<100;i++)
+      {
+         if (kkk == "i"+i || kkk == "t"+i) { return i }
+      }
+      return -1;
+    }
+    
+    function hg_url_to_store()
+    {
+      var patt = /&/g;
+      var url = window.location.search.replace(patt, ";").split(";");
+      for (j=0;j<100;j++)
+      {
+        var item = url[j].split("=");
+        var key = String(item[0]); 
+        var val = String(item[1]);
+        var i = valid_key(key);
+        if (i >= 0)
+        {
+          var idfn = "fn"+i;
+          var idsn = "sn"+i;
+          var idoc = "oc"+i;
+          var idss = "sosa"+i;
+          var idindx = "i"+i;
+          var idtxt = "t"+i;
+          var id2fn = "#fn"+i;
+          var id2sn = "#sn"+i;
+          var id2oc  = "#oc"+i;
+          var id2ss = "#sosa"+i;
+          var id2indx = "#i"+i;
+          var id2txt = "#t"+i;
+          var fn = jQuery(id2fn).val();
+          var sn = jQuery(id2sn).val();
+          var oc = jQuery(id2oc).val();
+          var sosa = jQuery(id2ss).val();
+          var index = jQuery(id2indx).val();
+          var txt = jQuery(id2txt).val();
+          localStorage.setItem(idfn,fn);
+          localStorage.setItem(idsn,sn);
+          localStorage.setItem(idoc,oc);
+          localStorage.setItem(idss,sosa);
+          localStorage.setItem(idindx,index);
+          localStorage.setItem(idtxt,txt);
+          alert ("Store "+ key+" "+val+" "+index+" "+txt);
+          if (key == "i"+i && index != val) {alert("Index: "+index+", val: "+val)};
+          if (key == "t"+i && txt != val) {alert("Text: "+txt+", val: "+val)};
+          var txt = localStorage.getItem(idtxt);
+          jQuery(id2oc).val(oc);
+          jQuery(id2fn).val(fn);
+          jQuery(id2sn).val(sn);
+          jQuery(id2indx).val(index);
+          jQuery(id2txt).val(txt);
+        }
+        if (key[0]=="i" && key.length == 2 && (val == "" || val == null)) { break; }
+      }
+      return true;
     }
     
     function hg_no_store()
     {
       jQuery("#store").html("");
-      return false;
+      return true;
     }
 
     function hg_view_url()
     {
       var hg_url = window.location.search;
       jQuery("#url").html("("+hg_url+")");
-      return false;
+      return true;
     }
 
     function hg_no_url()
     {
       jQuery("#url").html("");
-      return false;
+      return true;
     }
     
     function hg_clear_store()
     {
-      for (j=1;j<100;j++) {
-        var idfn   = j+"-fn";
-        var idsn   = j+"-sn";
-        var idocc  = j+"-occ";
-        var idss   = j+"-sosa";
-        var idindx = j+"-indx";
+      for (j=0;j<100;j++) {
+        var idfn   = "fn"+j;
+        var idsn   = "sn"+j;
+        var idoc  = "oc"+j;
+        var idss   = "sosa"+j;
+        var idindx = "i"+j;
+        var idtxt = "t"+j;
+        var id2fn   = "#fn"+j;
+        var id2sn   = "#sn"+j;
+        var id2oc  = "#oc"+j;
+        var id2indx = "#i"+j;
+        var id2txt = "#t"+j;
         localStorage.setItem(idfn, "");
         localStorage.setItem(idsn, "");
-        localStorage.setItem(idocc, "");
+        localStorage.setItem(idoc, "");
         localStorage.setItem(idss, "");
         localStorage.setItem(idindx, "");
+        localStorage.setItem(idtxt, "");
+        jQuery(id2oc).val("");
+        jQuery(id2fn).val("");
+        jQuery(id2sn).val("");
+        jQuery(id2indx).val("");
+        jQuery(id2txt).val("");
       }
       localStorage.setItem("index", 0);
       localStorage.setItem("url", "");
+      return true;
     }
 
     function hg_reset_iz()
     {
       jQuery('#iz-string').val("");
-      return false;
+      return true;
     }
 
     function hg_set()
     {
       jQuery("#set_root").val("on");
-      return false;
+      return true;
     }
 
     function hg_set_mode(mm)
     {
       jQuery("#mode").val(mm);
-      return false;
+      return true;
     }
 
     function urlParam(name){
@@ -210,6 +320,7 @@ fr: Construction interactive d'un arbre ou d'un graphe
         if (name=="drm") {return "d"; }
         else { return null; } }
       else { return decodeURI(results1[1]) || 0; }
+      return true;
     }
   </script>
 
@@ -242,7 +353,7 @@ fr: Construction interactive d'un arbre ou d'un graphe
 
 %let;plist;/m/p/n/oc/pz/nz/ocz/i/sosa/image/marriage/t/t0/hi/cpl/scale/fs/wide/v/maxv/%nn;
             birth/birth_place/marr/marr_date/marr_place/child/death/death_place/death_age/%nn;
-            num/occu/gen/cgl//%in; %(33 %)
+            num/ocu/gen/cgl//%in; %(33 %)
 
 %define;rebuild_url_no_prfx()
   %let;url;%nn;
@@ -264,7 +375,7 @@ Current i1, t1: %evar.i1;, %evar.t1;, %pvar.1.surname;<br>
 %define;one_person(ccc)
   Fn: <input type="submit" id="ccc-fn" name="ccc-fn" style="width:10em" value="">
   Sn: <input type="submit" id="ccc-sn" name="ccc-sn" style="width:10em" value="">
-  Occ: <input type="submit" id="ccc-occ" name="ccc-occ" style="width:2em" value="">
+  oc: <input type="submit" id="ccc-oc" name="ccc-oc" style="width:2em" value="">
   So: <input type="submit" id="ccc-sosa" name="ccc-sosa" style="width:4em" value="">
   Inx: <input type="submit" id="ccc-indx" name="ccc-indx" style="width:4em" value="">
   <br>
@@ -275,12 +386,12 @@ Current i1, t1: %evar.i1;, %evar.t1;, %pvar.1.surname;<br>
     %if;(evar.iz0!="no")
       <tr id="pz1">
         <td class="b1"><a tabindex="10000" href="javascript:addPvar(z1,0);">+</a></td>
-        <td><input id="pz1_occ" name="ocz1" class="occ3" autocomplete="off" size="5" maxlength="8" value="%evar.iz0;.occ;"
-             onkeypress="javascript:return oKP2(event,'p','z1','_occ','')"%/></td>
-        <td class="b1"><a tabindex="10000" href="javascript:delS('p','z1','_occ',1,0,'');">x</a></td>
-        <td><input id="pz1_fn" name="pz1" class="ar" size="20" maxlength="200" value="%evar.iz0;.first_name;" onblur="tUC1(this)"%/></td>
-        <td><input id="pz1_sn" name="nz1" size="20" maxlength="200" value="%evar.iz0;.surname;" onblur="tUC(this);jq1('pz1','')"%/></td>
-        <td class="b1"><a tabindex="10000" href="javascript:invertS('p','z1','_occ',0,1,'');">&uarr;</a></td>
+        <td><input id="ocz1" name="ocz1" class="oc3" autocomplete="off" size="5" maxlength="8" value=""
+             onkeypress="javascript:return oKP2(event,'p','z1','_oc','')"%/></td>
+        <td class="b1"><a tabindex="10000" href="javascript:delS('p','z1','_oc',1,0,'');">x</a></td>
+        <td><input id="fnz1" name="fnz1" class="ar" size="20" maxlength="200" value="" onblur="tUC1(this)"%/></td>
+        <td><input id="snz1" name="snz1" size="20" maxlength="200" value="" onblur="tUC(this);jq1('z1','')"%/></td>
+        %(<td class="b1"><a tabindex="10000" href="javascript:invertS('p','z1','_oc',0,1,'');">&uarr;</a></td>
         <td class="b1"><span id="pz1_jq1">
             %if;evar.z1.has_birth_date; %evar.z1.slash_birth_date;
             %elseif;evar.z1.has_baptism_date; %evar.z1.slash_baptism_date;
@@ -291,9 +402,9 @@ Current i1, t1: %evar.i1;, %evar.t1;, %pvar.1.surname;<br>
             %elseif;evar.z1.has_cremation_date;%evar.z1.slash_cremation_date; 
             %end;
           </span></td>
-        <td class="b1"><a tabindex="10000" href="javascript:invertS('p','z1','_occ',1,1,'');">&darr;</a></td>
-        <td><input id="pz1_t" name="tz1" size="20" maxlength="200" value="%evar.tz1;"
-            %/><input type="hidden" id="pz1_i" name="iz1" size="5" value="%evar.iz0;" %/></td>
+        <td class="b1"><a tabindex="10000" href="javascript:invertS('p','z1','_oc',1,1,'');">&darr;</a></td>%)
+        <td><input id="iz1" name="iz1" value="" size="5"%/>
+        <td><input id="tz1" name="tz1" size="20" maxlength="200" value="%evar.tz1;"%/></td>
       </tr>
       %apply;one_pvar(z0+1,z1+1)
     %else;
@@ -302,31 +413,31 @@ Current i1, t1: %evar.i1;, %evar.t1;, %pvar.1.surname;<br>
   %end;
 %end;
 
-  <input type="hidden" id="set_root" name="set_root" value="">
-  <button type="submit" class="btn btn-light btn-sm" id="url_to_store" onclick="hg_url_to_store()"
-    title="[*url_to_store]">Url to store</button>
-  <button type="submit" class="btn btn-light btn-sm" id="store_to_url" onclick="hg_store_to_url()"
-    title="[*store_to_url]">Store to url</button>
-  <button type="submit" class="btn btn-light btn-sm" id="clear_store" onclick="hg_clear_store()"
-    title="[*clear store]">Clear store</button>
-  <button type="submit" class="btn btn-light btn-sm" id="clear_url" onclick="hg_clear_url()"
-    title="[*clear url]">Clear url</button>
-  <button type="submit" class="btn btn-light btn-sm" id="view" 
-    onmouseover="hg_view_store()" onmouseout="hg_no_store()"
-    title="[*view store]">View store</button>
-  <button type="submit" class="btn btn-light btn-sm" id="view" 
-    onmouseover="hg_view_url()" onmouseout="hg_no_url()"
-    title="[*view url]">View Url</button>
+%define;get_imax(y)
+  %if(evar.iy!="")%apply;get_imax(y+1)%else;y%end;
+%end;
+%let;imax;%apply;get_imax(1)%in;
 
-  %if;(evar.mode="RLM")
-    <input type="submit" class="btn btn-light btn-sm" id="tDAG" name="mode" value="DAG"
-      onclick="hg_set_mode('DAG')"%/>
-  %else;
-    <input type="submit" class="btn btn-light btn-sm" id="tRLM" name="mode" value="RLM"
-      onclick="hg_set_mode('RLM')"%/>
-  %end;
+<input type="hidden" id="set_root" name="set_root" value="">
+<button type="submit" class="btn btn-light btn-sm" id="url_to_store" onclick="hg_url_to_store()"
+  title="[*url_to_store]">Url to store</button>
+<button type="submit" class="btn btn-light btn-sm" id="store_to_url" onclick="hg_store_to_screen()()"
+  title="[*store_to_screen]">Store to screen</button>
+<button type="submit" class="btn btn-light btn-sm" id="clear_store" onclick="hg_clear_store()"
+  title="[*clear store]">Clear store</button>
+<button type="submit" class="btn btn-light btn-sm" id="view" 
+  onmouseover="hg_view_url()" onmouseout="hg_no_url()"
+  title="[*view url]">View Url</button>
 
-<form id="upd" name="upd" method="post" action="%action;" onsubmit="oS1()">
+%if;(evar.mode="RLM")
+  <input type="submit" class="btn btn-light btn-sm" id="tDAG" name="mode" value="DAG"
+    onclick="hg_set_mode('DAG')"%/>
+%else;
+  <input type="submit" class="btn btn-light btn-sm" id="tRLM" name="mode" value="RLM"
+    onclick="hg_set_mode('RLM')"%/>
+%end;
+
+<form id="upd" name="upd" method="get" action="%action;" onsubmit="oS1()">
   <div id="jq" style="display:none"> </div>
   <p style="display:none;">
     %hidden;
@@ -347,29 +458,45 @@ Current i1, t1: %evar.i1;, %evar.t1;, %pvar.1.surname;<br>
     <table id="upddag" summary="pvar" cellspacing=0 cellpadding=0>
       <tr>
         <td class="b1"><abbr title="[add::]">+</abbr></td>
-        <td class="bg7"><abbr %lt4;>#</abbr></td>
+        <td class="bg7"><abbr %lt4;>Occ</abbr></td>
         <td class="b1"><abbr title="[delete::]">x</abbr></td>
-        <td class="bg7">[first name/first names]0</td>
-        <td class="bg7">[surname/surnames]0</td>
-        <td class="b1"><abbr title="[invert::] 3..2">&uarr;</abbr></td>
+        <td class="bg7">[*first name/first names]0</td>
+        <td class="bg7">[*surname/surnames]0</td>
+        %(<td class="b1"><abbr title="[invert::] 3..2">&uarr;</abbr></td>
         <td class="bg7">[birth] - [death]</td>
-        <td class="b1"><abbr title="[invert::] 2..3">&darr;</abbr></td>
-        <td class="bg7">[text]</td>
+        <td class="b1"><abbr title="[invert::] 2..3">&darr;</abbr></td>%)
+        <td class="b1"><abbr title="Index">Index</abbr></td>
+        <td class="bg7">[*text]</td>
       </tr>
-      %apply;one_pvar(1,1)
+      %if;(evar.i0!="")
+        %apply;one_pvar(0,0)
+      %else;
+        %apply;one_pvar(1,1)
+      %end;
       <tr id="new_pvar"></tr>
       <tr><td class="b1"><a id="add_pvar" style="display:block" href="javascript:addPvar(1,1)">+</a></td>
           <td colspan="8" class="b1"> </td>
       </tr>
     </table>
   </fieldset>
+    <input type="hidden" name="i7" value="33" %/>
+    <input type="hidden" name="t7" value="nouveau" %/>
+  %let;imax2;%expr(imax+10)%in;
+  %for;i;imax;imax2;
+    <input type="checkbox" id="chk%i;" name="chk%i;">
+    <input type="input" id="oc%i;" name="oc%i;" value="" size="4"%/>
+    <input type="input" id="fn%i;" name="fn%i;" value="" size="20"%/>
+    <input type="input" id="sn%i;" name="sn%i;" value="" size="20"%/>
+    <input type="input" id="i%i;" name="i%i;" value="" size="5"%/>
+    <input type="input" id="t%i;" name="t%i;" value="" size="20"%/><br>
+  %end;
 </form>
 
 View item:<br>
-<input type="number" id="item" name="item" value="" style="width:3em">
+<input type="number" id="item" name="item" value="%imax;" style="width:3em">
 
 <button type="submit" class="btn btn-light btn-sm" id="setroot" 
-onclick="hg_menu('henri','gouraud',0,1,1694)">test</button>
+onclick="hg_menu(%imax;,'henri','gouraud',0,1,'1694','lui')">test</button>
 <button type="submit" class="btn btn-light btn-sm" id="setroot" 
 onmouseover="hg_view_store()" onmouseout="hg_no_store()">view</button>
 

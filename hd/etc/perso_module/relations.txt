@@ -3,22 +3,129 @@
 %( op_m=2 Relations complete (events) %)
 %let;op_m;%if;(op_m!="")%op_m;%else;1%end;%in;
 
-%define;relations_tree(z1)
-	%( relations, related, witness at his event %)
-  %reset_count;
-  href="%prefix;spouse=on;m=RLM;mode=RLM;image=%evar.image;;%nn;
-    i%count;=%index;;%nn;
-    t%count;=%if;(sex=0)[him/her]0%elseif;(sex=1)[him/her]1%else;0%end;;%nn;
+
+%define;implex()
+  %if;(evar.implx="on")
+    <script type="text/javascript">
+    $(function() {
+      $('#hi-tree1').line(%left1;, %top1;, %left2;, %top2;, {color:"red", stroke:1, opacity:0.3, zindex:1});
+      });
+    </script>
+  %end;
+%end;
+
+<script type="text/javascript">
+    function hg_raz_store()
+    {
+      for (j=0;j<100;j++) {
+        var idfn   = "fn"+j;
+        var idsn   = "sn"+j;
+        var idoc  = "oc"+j;
+        var idss   = "sosa"+j;
+        var idindx = "i"+j;
+        var idtxt = "t"+j;
+        var id2fn   = "#fn"+j;
+        var id2sn   = "#sn"+j;
+        var id2oc  = "#oc"+j;
+        var id2indx = "#i"+j;
+        var id2txt = "#t"+j;
+        localStorage.setItem(idfn, "");
+        localStorage.setItem(idsn, "");
+        localStorage.setItem(idoc, "");
+        localStorage.setItem(idss, "");
+        localStorage.setItem(idindx, "");
+        localStorage.setItem(idtxt, "");
+        jQuery(id2oc).val("");
+        jQuery(id2fn).val("");
+        jQuery(id2sn).val("");
+        jQuery(id2indx).val("");
+        jQuery(id2txt).val("");
+      }
+      localStorage.setItem("index", 0);
+      localStorage.setItem("url", "");
+      return true;
+    }
+    
+    function hg_menu(zz,fn,sn,occ,ss,ii,tt)
+    {
+      var i = zz;
+      if (i==null) { i = 0 };
+      var idfn   = "fn"+i;
+      var idsn   = "sn"+i;
+      var idocc  = "oc"+i;
+      var idss   = "sosa"+i;
+      var idindx = "i"+i;
+      var idtxt = "t"+i;
+      localStorage.setItem(idfn, fn);
+      localStorage.setItem(idsn, sn);
+      localStorage.setItem(idocc, occ);
+      localStorage.setItem(idss, ss);
+      localStorage.setItem(idindx, ii);
+      localStorage.setItem(idtxt, tt);
+      oncontextmenu="return false";
+      return true;
+    }
+
+    function hg_clear_store()
+    {
+    hg_raz_store();
+    %reset_count;
+    %let;text;%if;(sex=0)[him/her]0%elseif;(sex=1)[him/her]1%else;0%end;%in;
+    hg_menu("%count;","%first_name;","%surname;","%occ;",1,"%index;","%text;");
     %foreach;relation;
       %if;(has_relation_him)
-        %incr_count;i%count;=%relation_him.index;;t%count;=%relation_him.type;;%nn;
+        %incr_count;
+        hg_menu("%count;","%relation_him.first_name;","%relation_him.surname;",%nn;
+          "%relation_him.occ;","1","%relation_him.index;","%relation_him.type;");
       %end;
       %if;(has_relation_her)
-        %incr_count;i%count;=%relation_her.index;;t%count;=%relation_her.type;;%nn;
+        %incr_count;
+        hg_menu("%count;","%relation_her.first_name;","%relation_her.surname;",%nn;
+          "%relation_her.occ;","1","%relation_her.index;","%relation_her.type;");
       %end;
     %end;
     %foreach;related;
-      %incr_count;i%count;=%related.index;;t%count;=%related_type;;%nn;
+      %incr_count;
+      hg_menu("%count;","%related.first_name;","%related.surname;",%nn;
+        "%related.occ;","1","%related.index;","%related_type;");
+    %end;
+    %foreach;event_witness_relation;
+      %incr_count;%nn;
+      hg_menu("%count;","%event_witness_relation.person.first_name;",%nn;
+        "%event_witness_relation.person.surname;",%nn;
+        "%event_witness_relation.person.occ;",%nn;
+        "1","%event_witness_relation.person.index;","%event_witness_relation.event.name;");
+    %end;
+    %if;browsing_with_sosa_ref;
+      %incr_count;%nn;
+      hg_menu("%count;","%sosa_ref.first_name;","%sosa_ref.surname;",%nn;
+        "%sosa_ref.occ;","1","%sosa_ref.index;","sosa_1");
+    %end;
+    %incr_count;
+    hg_menu(%count;,"","","",1,"","");
+    }
+</script>
+
+%define;relations_tree(z1)
+  %( relations, related, witness at his event %)
+  %reset_count;
+  href="%prefix;spouse=on;m=RLM;mode=RLM;image=%evar.image;;%nn;
+    i%count;=%index;;%nn;
+    %let;text;%if;(sex=0)[him/her]0%elseif;(sex=1)[him/her]1%else;0%end;%in;
+    t%count;=%text;;%nn;
+    %foreach;relation;
+      %if;(has_relation_him)
+        %incr_count;i%count;=%relation_him.index;;%nn;
+        t%count;=%relation_him.type;;%nn;
+      %end;
+      %if;(has_relation_her)
+        %incr_count;i%count;=%relation_her.index;;%nn;
+        t%count;=%relation_her.type;;%nn;
+      %end;
+    %end;
+    %foreach;related;
+      %incr_count;i%count;=%related.index;;%nn;
+      t%count;=%related_type;;%nn;
     %end;
     %foreach;event_witness_relation;
       %incr_count;%nn;
@@ -27,9 +134,12 @@
     %end;
     %if;browsing_with_sosa_ref;
       %incr_count;%nn;
-      i%count;=%sosa_ref.index;;t%count;=sosa_1;%nn;
+      i%count;=%sosa_ref.index;;%nn;
+      t%count;=sosa_1;%nn;
     %end;
-  " title="[*relations tree] (and witness at his event)"
+  "
+  title="[*relations tree] (and witness at his event)"
+  onclick="hg_clear_store()"
   %reset_count;
 %end;
 
@@ -39,9 +149,9 @@
     %apply;test_templ(i)
   %end;
 %elseif;(p_mod!="" and p_mod!="zz")
-	%for;i;0;26;
-		%apply;test_templ(i)
-	%end;
+  %for;i;0;26;
+    %apply;test_templ(i)
+  %end;
 %end;
 %let;timeline;%if;(count>0)yes%else;no%end;%in;
 
