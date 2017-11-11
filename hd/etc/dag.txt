@@ -245,12 +245,12 @@
           %if;(evard=1)
             <a href="%apply;rebuild_url(prefix_a,evarv,evarim,evarma,evart,0)"%nn;
             class="btn btn-outline-secondary btn-sm border-0 px-0"%nn;
-            title="[*dag off]">
+            title="[*dag on/dag off]1">
             <i class="fa fa-minus fa-fw"></i></a>
           %else;
             <a href="%apply;rebuild_url(prefix_a,evarv,evarim,evarma,evart,1)"%nn;
             class="btn btn-outline-secondary btn-sm border-0 px-0"%nn;
-            title="[*dag on]">
+            title="[*dag on/dag on]0">
             <i class="fa fa-plus fa-fw"></i></a>
           %end;
         </div>
@@ -259,7 +259,7 @@
   </div>
   <a href="%prefix;" accesskey="T"></a>
   %elseif;(evar.m="RLM")
-    <h2 class="mt-2 mb-4">Multi relations tree</h2>
+    <h2 class="mt-2 mb-4">[*multi relations graph]</h2>
   %else;
     <h2>Tree</h2>
   %end; %( evar.m="A" %)
