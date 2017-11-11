@@ -1,5 +1,6 @@
-%(<!-- $Id: updmenu.txt,v 7.00 2015/04/20 22:06:07 mr Exp $ -->%)
+%(<!-- $Id: updmenu.txt,v 7.00 2017/11/11 22:06:07 mr hg Exp $ -->%)
 %( used for jquery. old updmenu.txt is in updmenu1.txt %)
+%( track modifications made in templm/updmenu.txt  %)
 %define;jq1()
   <div id="jql">
   %if;has_birth_date; %slash_birth_date;
