@@ -29,7 +29,7 @@
         %if;(env.key != "m")
           %env.key=%env.val;;%nn;
         %end;
-      %end;"><span class="fa fa-plus fa-lg" title="[*edit]"></span></a>
+      %end;"><span class="fa fa-plus fa-lg" title="[*edit tree]"></span></a>
   </div>
   <hr style="clear:both; visibility:hidden;"%/>
 %end;
