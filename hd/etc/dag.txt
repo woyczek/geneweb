@@ -39,7 +39,7 @@
 
 %if;not cancel_links;
   <div class="d-flex fixed_top_btn%if;(evar.m!="A")_col flex-column%end; %if;(evar.wide="on")fixed_top_btn_wide%end;"> 
-%import;home;
+    %import;home
   </div>
   
   %if;(evar.m="A")
