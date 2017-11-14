@@ -38,7 +38,7 @@
 <div class="container%if;(evar.wide="on")-fluid%end;">
 
 %if;not cancel_links;
-  <div class="d-flex fixed_top_btn%if;(evar.m!="A")_col flex-column%end; %if;(evar.wide="on")fixed_top_btn_wide%end;"> 
+  <div class="d-flex justify-content-center">
     %import;home
   </div>
   
