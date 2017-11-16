@@ -1754,6 +1754,37 @@ value make_efam conf base ip ifam =
   (fam, cpl, m_auth)
 ;
 
+(* get sosa so of person po *)
+(* returns ep or None *)
+(* value get_p_from_sosa config -> base -> person -> t -> person *)
+value get_p_from_sosa conf base po so =
+  let sexl = "" in
+  let rec make_sexl s =
+    if Sosa.eq s (Sosa.of_int 1) then sexl
+    else
+      if Sosa.even s then ((make_sexl (Sosa.half s)) ^ "M")
+      else (( make_sexl (Sosa.half s)) ^ "F")
+  in
+  if Sosa.gt so (Sosa.of_int 0) then 
+    let sexl = make_sexl so in
+    let rec find_anc p sexl =
+        if sexl = "" then p
+        else if sexl.[0] = 'M' then 
+          match get_parents p with
+          [ Some ifam ->
+            find_anc (poi base (get_father (foi base ifam))) (String.sub sexl 1 (String.length sexl - 1))
+          | None -> raise Not_found ]
+        else if sexl.[0] = 'F' then 
+          match get_parents p with
+          [ Some ifam ->
+            find_anc (poi base (get_mother (foi base ifam))) (String.sub sexl 1 (String.length sexl - 1))
+          | None -> raise Not_found ]
+        else raise Not_found
+    in
+    find_anc po sexl
+  else raise Not_found
+;
+
 value rec eval_var conf base env ep loc sl =
   try eval_simple_var conf base env ep sl with
   [ Not_found -> eval_compound_var conf base env ep loc sl ]
@@ -2428,6 +2459,35 @@ and eval_compound_var conf base env ((a, _) as ep) loc =
         if is_hidden (fst ep) then raise Not_found
         else eval_person_field_var conf base env ep loc sl
       else raise Not_found
+  | ["svar"; i :: sl] ->
+      (* find person identified by pi ni *)
+      (* if not found, use previous value *) 
+      let rec find_base_p j =
+        let s = string_of_int j in
+        let po = Util.find_person_in_env conf base s in
+        match po with
+        [ Some p -> p
+        | None -> if j = 1 then raise Not_found else find_base_p (j-1) ]
+      in
+      let p0 = find_base_p (int_of_string i) in
+      match p_getint conf.env ("s" ^ i) with
+        [ Some s ->
+            let s0 = Sosa.of_int s in
+            let p = get_p_from_sosa conf base p0 s0 in
+        let p_auth = authorized_age conf base p in
+        eval_person_field_var conf base env (p, p_auth) loc sl
+        | None -> raise Not_found ]
+  | ["tvar"; i :: [ s :: sl]] ->
+      (* %svar.index_i.sosa_s.first_name; *)
+      (* get first_name of sosa_s of person index_i  *) 
+      let i0 = int_of_string i in
+      if i0 < 0 || i0 >= nb_of_persons base then raise Not_found
+      else
+        let p0 = pget conf base (Adef.iper_of_int i0) in
+        let s0 = Sosa.of_string s in
+        let p = get_p_from_sosa conf base p0 s0 in
+        let p_auth = authorized_age conf base p in
+        eval_person_field_var conf base env (p, p_auth) loc sl
   | ["related" :: sl] ->
       match get_env "rel" env with
       [ Vrel {r_type = rt} (Some p) ->
