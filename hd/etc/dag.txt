@@ -242,7 +242,7 @@
             <i class="fa fa-photo fa-fw"></i> <i class="fa fa-toggle-%if;(evar.image="on")on%else;off%end; text-muted"></i></a>
         </div>
         <div class="form-inline mb-3">
-          <a href="%prefix;m=U;et=S;upddag=on;i=0;
+          <a href="%prefix;m=U;et=S;upddag=on;dag=on;i=0;
             %foreach;env_binding;
               %if;(env.key != "m")
                 %env.key=%env.val;;%nn;

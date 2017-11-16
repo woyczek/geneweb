@@ -68,11 +68,11 @@
 %end;
 
 %define;one_svar(z1) %( s1=;s2=;... list of sosa_nb relative to some index_i %)
-  %if;(evar.pz1 != "" and evar.nz1!="")
+  %if;((evar.pz1 != "" and evar.nz1!="") or evar.iz1!="")
     %apply;one_i_line(z1)
     %apply;one_s_line(z1)
     %apply;one_svar(z1+1)
-  %elseif;(evar.siz!="")
+  %elseif;(evar.sz1!="")
     %apply;one_s_line(z1)
     %apply;one_svar(z1+1)
   %end;
