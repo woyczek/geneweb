@@ -1,36 +1,34 @@
-<!-- $Id: perso_module/arbre_descendants v7.00 2017/12/04 20:02:08  hg Arbre descendant (vertical) -->
-
+<!-- $Id: perso_module/arbre_descendants v7.00 2017/12/04 20:02:08 hg -->
 %define;display_person(xxx)
   %if;(not cancel_links)
   <div class="list-group-item" style="zindex:0;">
     <a href="%prefix_no_pmod;%xxx.access;;m=D;t=V;%foreach;env_binding;%nn;
-        %if;(not (env.key="p" or env.key="n" or env.key="oc"  or env.key="m" or env.key="t"))%nn;
-          %env.key;=%env.val;;
+        %if;(not (env.key="p" or env.key="n" or env.key="oc" or env.key="m" or env.key="t"))%nn;
+          %env.key;=%env.val;;%nn;
         %end;%end;"
       class="big_anchor list-group-item-action" title="[*navigation]">
     </a>
   %end;
   %if;(xxx.has_sosa)%apply;display_sosa("xxx")<br>%end;
   %if;(cancel_links or xxx.is_restricted)
-    %if;(xxx.public_name!="")%xxx.public_name;</span>
-    %else;%xxx.first_name;</span>
+    %if;(xxx.public_name!="")%xxx.public_name;
+    %else;%xxx.first_name;
     %end; <span class="text-nowrap">%xxx.surname;</span>
   %else;
     <a style="zindex:10;" class="normal_anchor"
       href="%prefix_no_pmod;%xxx.access;;%foreach;env_binding;%nn;
       %if;(not (env.key="p" or env.key="n" or env.key="oc" or env.key="m" or env.key="t"))%nn;
-        %env.key;=%env.val;;%end;%end;"
-    >%if;(xxx.public_name!="")%xxx.public_name;</span>
-      %else;%xxx.first_name;</span>
+        %env.key;=%env.val;;%end;%end;">
+      %if;(xxx.public_name!="")%xxx.public_name;
+      %else;%xxx.first_name;
       %end; <span class="text-nowrap">%xxx.surname;</span>
     </a>
   %end;
   <br>%nn;
   %if;(wizard and not cancel_links)
     <a class="normal_anchor"
-      href="%prefix;m=MOD_IND;i=%xxx.index;" 
-      title="[*modify::] %xxx.first_name;%if;(xxx.occ!="0").%xxx.occ;%end; %xxx.surname;"
-    >
+      href="%prefix;m=MOD_IND;i=%xxx.index;"
+      title="[*modify::] %xxx.first_name;%if;(xxx.occ!="0").%xxx.occ;%end; %xxx.surname;">
   %end;
     <span class="font-italic">%nn;
       %if;(xxx.dates!="")%xxx.dates;%nn;
@@ -129,24 +127,24 @@ Person:            Child1     Child2          Child3
   %if;(lll>evarv)
   %( we are done %)
   %elseif;(lll<=nnn)
-    %if;(lll=nnn  and "xxx"!="")
+    %if;(lll=nnn and "xxx"!="")
       %( Print information at level lll %)
       %if;("ttt"="hbarc" and lll>0 and "xxx"!="self")
         %( Horizontal bar linking childrens%)
         %if;("fff"="none")
-          <td colspan="www" class="text-center py-0 mx-0"></td><td></td>
+          <td colspan="www" class="text-center"></td><td></td>
         %else;
-          <td colspan="www" class="text-fff py-0 mx-0"><hr class="fff"></td>
+          <td colspan="www" class="text-fff"><hr class="fff"></td>
           <td>%if;("fff"="full" or "fff"="right")<hr class="full">%end;</td>
         %end;
       %elseif;("ttt"="vbar" and lll>0 and "xxx"!="self")
         %if;(nb_children>0)
-          <td colspan="www" class="text-center py-0 mx-0">│</td><td>&nbsp;</td>
+          <td colspan="www" class="text-center">│</td><td>&nbsp;</td>
         %else;
-          <td colspan="www" class="text-center py-0 mx-0"></td><td>&nbsp;</td>
+          <td colspan="www" class="text-center"></td><td>&nbsp;</td>
         %end;
       %elseif;("ttt"="person" and "xxx"!="")
-        <td colspan="www" class="text-center py-0 mx-0" style="vertical-align:top">
+        <td colspan="www" class="text-center" style="vertical-align:top">
         %(xxx.first_name; %xxx.surname;%if;(xxx.occ!="0") (%xxx.occ;)%end;%)
         %(www<br>%)%if;(xxx.index!=baseindex)|%end;%apply;display_person("xxx")
         %if;(has_families and nb_families>1 and nnn<evarv-1)|%end;
@@ -172,14 +170,14 @@ Person:            Child1     Child2          Child3
             %let;vbar;%if;(evar.spouse="on")&%else;|%end;%in;
             %let;marr;%nn;
               %if;(not cancel_links)
-                <a href="%prefix;m=MOD_FAM;i=%family.index;;%ip=%index;;"
-                  title="[*update::family/families]0 of %first_name; %surname; (%occ;) 
+                <a href="%prefix;m=MOD_FAM;i=%family.index;;ip=%index;;"
+                  title="[*update::family/families]0 of %first_name; %surname; (%occ;)
                     [and] %spouse.first_name; %spouse.surname; (%spouse.occ;)"
                 >&</a>
               %else;&
               %end;
             %in;
-            <td colspan="%fcount;" class="text-center py-0 mx-0">
+            <td colspan="%fcount;" class="text-center">
               %if;(fmpos="right")<hr class="%fmpos;" style="valign:top;border-top: 2px dashed">
               %marr;%if(evar.marriage="on")%if;(marriage_date.year!="")<br>%marriage_date.year;%else;<br>-%end;%end;
               %elseif;(fmpos="center")<hr class="%fmpos;" style="valign:top;border-top: 2px dashed">
@@ -191,16 +189,16 @@ Person:            Child1     Child2          Child3
             </td>
             <td>&nbsp;</td>
           %elseif;("ttt"="spouse")
-            <td colspan="%fcount;" class="text-center py-0 mx-0" style="vertical-align:top">
+            <td colspan="%fcount;" class="text-center" style="vertical-align:top">
               %(spouse.first_name; %spouse.surname;%if;(spouse.occ!="0") (%spouse.occ;)%end;%)
               %(fcount;<br>%)%apply;display_person("spouse")
               %if;(has_children)|%end;
             </td><td>&nbsp;</td>
           %elseif;("ttt"="vbars")
             %if;(nb_children>0)
-              <td colspan="%fcount;" class="text-center py-0 mx-0">│</td><td></td>
+              <td colspan="%fcount;" class="text-center">│</td><td></td>
             %else;
-              <td colspan="%fcount;" class="text-center py-0 mx-0"></td><td></td>
+              <td colspan="%fcount;" class="text-center"></td><td></td>
             %end;
           %end;
         %end;
@@ -210,7 +208,7 @@ Person:            Child1     Child2          Child3
         %end;
       %end;
     %elseif;("ttt"!="skip")
-      %( Continue the recisrion %)
+      %( Continue the recursion %)
       %if;has_families;
         %foreach;family;
           %if;has_children;
@@ -251,22 +249,18 @@ Person:            Child1     Child2          Child3
 <div class="d-flex justify-content-between">
   <h2 id="a">[*descendants tree]</h2>
   <div class="form-inline">
-    <div class="btn-group mx-2">
+    <div class="btn-group btn-group-sm mx-2">
       <a href="%prefix_no_pmod;%nn;
           %foreach;env_binding;%if;(env.key!="v")%env.key;=%env.val;;%else;v=%expr(evarv-1);%end;%end;%nn;
           %if;(evar.v="")v=%expr(evarv-1);%end;"
-        class="btn btn-outline-secondary btn-sm border-0 px-0"
-        title="(+5) [visualize/show/hide/summary]1 %expr(evarv-1) [generation/generations]1"
-      >&nbsp;-
-      </a>&nbsp;
-      %evarv;&nbsp;
+        class="btn btn-outline-secondary border-0"
+        title="(-1) [visualize/show/hide/summary]1 %expr(evarv-1) [generation/generations]1">-</a>
+      <a class"=btn disabled" title="%evarv%if;(evarv>1)[generation/generations]1%else;[generation/generations]0%end;">%evarv;</a>
       <a href="%prefix_no_pmod;%nn;
           %foreach;env_binding;%if;(env.key!="v")%env.key;=%env.val;;%else;v=%expr(evarv+1);%end;%end;%nn;
           %if;(evar.v="")v=%expr(evarv+1);%end;"
-        class="btn btn-outline-secondary btn-sm border-0 px-0"
-        title="(+1) [visualize/show/hide/summary]1 %expr(evarv+1) [generation/generations]1"
-      >&nbsp;+
-      </a>
+        class="btn btn-outline-secondary border-0"
+        title="(+1) [visualize/show/hide/summary]1 %expr(evarv+1) [generation/generations]1">+</a>
     </div>
     <div class="mx-2">
       <a href="%prefix_no_pmod;%nn;
@@ -274,8 +268,8 @@ Person:            Child1     Child2          Child3
           %if;(evar.image!="off")image=off;%end;"
         class="btn btn-outline-secondary btn-sm border-0 px-0"
         title="%if;(evar.image!="off")[*visualize/show/hide/summary]2%else;%nn;
-          [*visualize/show/hide/summary]1%end; [image/images]1"
-      ><i class="fa fa-photo fa-fw"></i>
+          [*visualize/show/hide/summary]1%end; [image/images]1">
+        <i class="fa fa-photo fa-fw"></i>
         <i class="fa fa-toggle-%if;(evar.image!="off")on%else;off%end; text-muted"></i>
       </a>
     </div>
@@ -285,8 +279,8 @@ Person:            Child1     Child2          Child3
         %if;(evar.spouse!="on")spouse=on;%end;"
         class="btn btn-outline-secondary btn-sm border-0 px-0"
         title="%if;(evar.spouse!="on")[*visualize/show/hide/summary]1%else;%nn;
-           [*visualize/show/hide/summary]2%end; [spouse/spouses]1"
-      ><span class="mx-1">&</span>
+           [*visualize/show/hide/summary]2%end; [spouse/spouses]1">
+        <span class="mx-1">&</span>
         <i class="fa fa-toggle-%if;(evar.spouse!="on")off%else;on%end; text-muted"></i>
       </a>
     </div>
@@ -296,28 +290,25 @@ Person:            Child1     Child2          Child3
         %if;(evar.marriage!="on")marriage=on;%end;"
         class="btn btn-outline-secondary btn-sm border-0 px-0"
         title="%if;(evar.marriage!="on")[*visualize/show/hide/summary]1%else;
-            [*visualize/show/hide/summary]2%end; [date of marriage]"
-      ><i class="fa fa-calendar fa-fw"></i>
+            [*visualize/show/hide/summary]2%end; [date of marriage]">
+        <i class="fa fa-calendar fa-fw"></i>
         <i class="fa fa-toggle-%if;(evar.marriage!="on")on%else;off%end; text-muted%(success ?%)"></i>
       </a>
     </div>
-    <div class="mx-2 ">
+    <div class="ml-2 mr-4">
       <a href="%prefix_no_pmod;%nn;
           %foreach;env_binding;%if;(env.key != "border")%env.key;=%env.val;;%end;%end;%nn;
           %if;(evar.border="" or evar.border="0")border=1;%end;"
         class="btn btn-outline-secondary btn-sm border-0 px-0"
         title="%if;(evar.border="" or evar.border="0")[*activate/suppress]0%else;%nn;
-          [*activate/suppress]1%end; [border]"
-      ><i class="fa fa-%if;(evar.border="" or evar.border="0")plus%else;minus%end;-square-o fa-fw"></i>
+          [*activate/suppress]1%end; [border]">
+       <i class="fa fa-%if;(evar.border="" or evar.border="0")plus%else;minus%end;-square-o fa-fw"></i>
       </a>
-    </div>
-    <div class="mx-2">
-      &nbsp;&nbsp;
     </div>
   </div>
 </div>
 
-<div class="d-flex justify-content-between">
+<div class="d-flex justify-content-around">
   <div>
   %if;(has_parents and father.surname!="?" and father.first_name!="?")
   <a href="%prefix_no_pmod;m=D;t=V;%father.access;;%nn;
@@ -331,14 +322,12 @@ Person:            Child1     Child2          Child3
   <div>
   %if;has_siblings;
     %foreach;father.child;
-      %if;is_first;&nbsp;&nbsp;
-      %elseif;is_sibling_before;
+      %if;is_sibling_before;
         <a href="%prefix_no_pmod;m=D;t=V;%child.access;;%nn;
           %foreach;env_binding;%nn;
             %if;(not (env.key="p" or env.key="n" or env.key="oc" or env.key="m" or env.key="t"))%nn;
               %env.key;=%env.val;;%end;%nn;
-            %end;">
-        < </a>
+            %end;" class="mx-1">&lt;</a>
       %end;
     %end;
       [*siblings]
@@ -348,8 +337,7 @@ Person:            Child1     Child2          Child3
           %foreach;env_binding;%nn;
             %if;(not (env.key="p" or env.key="n" or env.key="oc" or env.key="m" or env.key="t"))%nn;
               %env.key;=%env.val;;%end;%nn;
-            %end;">
-        > </a>
+            %end;" class="mx-1">&gt;</a>%nn;
       %end;
     %end;
   %end;
@@ -365,25 +353,28 @@ Person:            Child1     Child2          Child3
   %end;
   </div>
 </div>
-<br>
+
 %reset_count;
 %apply;nb_column(0,evarv+1)
 %let;icount;%expr(2*count-1)%in;
-<table border="%evarborder;" cellspacing="0" cellpadding="0" align="center">
+<table class="destree_table mt-3 mx-auto%if;(evar.border=1) table-bordered%end;">
 %for;v;0;evarv;
   %( For each level, display all 6 kinds of data (except hbarc and vbar at level 0) %)
+  %if;(v!=0)
+    <tr>
+    %apply;descendants_at_level("self",0,v,"hbarc","center",icount)
+    </tr>
+  %end;
   <tr>
-  %apply;descendants_at_level("self",0,v,"hbarc","center",icount)
-  </tr><tr>
-  %apply;descendants_at_level("self",0,v,"person","center",icount)
+    %apply;descendants_at_level("self",0,v,"person","center",icount)
   </tr>
   %if;(v<evarv-1)
     <tr>
-    %apply;descendants_at_level("self",0,v,"hbars","center",icount)
+      %apply;descendants_at_level("self",0,v,"hbars","center",icount)
     </tr>
     %if;(evar.spouse="on")
       <tr>
-      %apply;descendants_at_level("self",0,v,"spouse","center",icount)
+        %apply;descendants_at_level("self",0,v,"spouse","center",icount)
       </tr>
     %end;
   %end;
