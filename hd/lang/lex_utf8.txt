@@ -1,3 +1,49 @@
+# some ALgolia stuff
+
+    names
+en: names
+fr: noms
+    
+    firstnames
+en: firstnames
+fr: prénoms
+    
+    firstnames, alias, etc
+en: firstnames, alias, etc
+fr: prénoms, alias, etc
+    
+    locations
+en: locations
+fr: lieux
+    
+    dates
+en: dates
+fr: dates
+    
+    notes
+en: notes
+fr: notes
+    
+    searching a geneweb base with Algolia
+en: searching a GeneWeb base with Algolia
+fr: rechercher dans une base GeneWeb avec Algolia
+
+    data extracted from base
+en: data extracted from base
+fr: données extraites de la base 
+
+    search a firstname, alias, etc
+en: search a firstname, alias, etc
+fr: rechercher un prénom, alias, etc
+
+    algolia search
+en: search with Algolia/search with Algolia
+fr: rechercher<br>avec Algolia/rechercher avec Algolia
+
+    no matching firstname
+en: no matching firstname
+fr: pas de prénom trouvé
+    
     choose a genealogy
 en: choose a genealogy
 fr: choisir une généalogie

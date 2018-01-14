@@ -1,0 +1,52 @@
+Proposal to integrate Algolia search into GeneWeb
+
+Algolia is a cloud based Saas solution to faceted search.
+It offers a free service for open source applications.
+This note describes what it would take to integrate Algolia search into GeneWeb.
+
+I have a manually managed trial setup for evaluation.
+It can be tested on https://demo.geneweb.tuxfamily.org/gw7/gwd?b=Grimaldi700;
+
+1/ records
+Algolia's solution si based on records and attributes. For GeneWeb, a record would hold
+all the information about a person, attributes being the kind of information:
+- surname and surname aliases
+- url
+- firstname, firstname aliases, aliases, nickname
+- image url
+- dates (birth, baptism, death, burial, marraiges, events)
+- locations (birth, baptism, death, burial, marraiges, events)
+- notes
+- sources
+- hash
+Note that none of the attribute refer to another person. This may seem to limit the query 
+capabilities, but is essential to avoid updates explosions.
+
+2/ facets
+Each attribute is a facet (as per Algolia proposal). Search can be done across
+the whole record, and/or refined through facets.
+
+3/ queries
+Queries can be of two kinds:
+- simple (word1 word2 word3) meaning words1 OR word2 OR word3
+- complex (wodr1 "word2" -word3) meaning maybe word1, certainly word2 AND NOT word3
+See Algolia for details.
+
+4/ Updating
+The following needs to be done in the GeneWeb context to operate effectively.
+- Init: a tool needs to be written, producing all the records of a base, and 
+  pushing them to Algolia. This tool must accomodate the potentially large size
+  of a base and Algolia's limitation on push chunks (10Mo).
+- Check: a tool to verify the coherence between an index and a base. 
+  Scan the base, compute the hash of each record, verify that it matches with the index.
+- Manage: an interface to remotely manage the index
+- Update:
+  Several of GeneWeb functions result in a record undate, deletion or creation:
+  - updating one person (one update)
+  - merging two persons (one update and one delete)
+  - adding parents (several creations depending on new parents and new children)
+  - updating family (several creation depending on new children)
+Note that GeneWeb offers the possibility to execute a function at each update
+(see notify_change in the .gwf file). 
+To be verified: does this cater for multiple record creation?
+

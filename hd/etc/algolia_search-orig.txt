@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8">
+  <title>GeneWeb search by Algolia</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.js@2.4.1/dist/instantsearch.min.css">
+  <link rel="stylesheet" type="text/css" href="algolia_main.css">
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@2.4.1/dist/instantsearch.min.js"></script>
+
+</head>
+<body>
+<h2>[*searching a geneweb base with Algolia]</h2>
+
+  <header class="row">
+    <div>
+      <a href="https://community.algolia.com/instantsearch.js/" class="is-logo"><img src="%image_prefix;/algolia_logo-is.png" width="40"></a>
+      <a href="https://geneweb.tuxfamily.org/wiki/GeneWeb" class="logo"><img src="%image_prefix;/gwlogo.png" height="40"></a>
+    </div>
+    <div class="searchbox-container">
+      <div class="input-group">
+        <input id="q" type="text" class="form-control"><span class="input-group-btn">
+          <button class="btn btn-default"><i class="fa fa-search"></i></button></span>
+      </div>
+    </div>
+  </header>
+  <section>
+    <aside style="overflow-y: auto;">
+      <ul class="nav nav-list">
+        <li><a href="%prefix;" title="%base.name;"><i class="fa fa-home"> </i>[*home]</a></li>
+        <li class="separator"></li>
+      </ul>
+      <h5><i class="fa fa-chevron-right"></i>[*firstnames, alias, etc]</h5>
+      <div id="firstnames"></div>
+      <h5><i class="fa fa-chevron-right"></i>[*locations]</h5>
+      <div id="locations"></div>
+      <h5><i class="fa fa-chevron-right"></i>[*dates]</h5>
+      <div id="dates"></div>
+      <div class="thank-you">[*data extracted from base] <a href="%prefix;">%base.name;</a><br></div>
+    </aside>
+    <article>
+      <div id="stats" class="text-right text-muted"></div>
+      <hr>
+      <div id="hits"></div>
+      <div id="pagination" class="text-center"></div>
+    </article>
+  </section>
+
+<script>
+/* global instantsearch */
+
+var search = instantsearch({
+  appId: 'GMGUNOIT8M',
+  apiKey: 'fee1e6e843a02903383fba1f5bc22245',
+  indexName: '%base.name;',
+  urlSync: true
+});
+
+search.addWidget(
+  instantsearch.widgets.searchBox({
+    container: '#q'
+  })
+);
+
+search.addWidget(
+  instantsearch.widgets.stats({
+    container: '#stats'
+  })
+);
+
+var hitTemplate =
+  '<div class="hit media">' +
+    '<div class="media-left">' +
+      '<div class="media-object" style="background-image: url(\'{{image}}\');"></div>' +
+    '</div>' +
+    '<div class="media-body">' +
+      '<div class="media-heading">[*names][:] ' +
+      '<a class="media-heading" href="{{url}}">{{{_highlightResult.names.value}}}</a></div>' +
+      '<div class="prenom">[*firstnames, alias, etc][:] {{{_highlightResult.firstnames.value}}}</div>' +
+      '<div class="places">[*locations][:] {{{_highlightResult.locations.value}}}</div>' +
+      '<div class="dates">[*dates][:] {{{_highlightResult.dates.value}}}</div>' +
+      '<div class="notes">[*notes][:] {{{_highlightResult.notes.value}}}</div>' +
+    '</div>' +
+  '</div>';
+  
+var noResultsTemplate =
+  '<div class="text">No results found matching <strong>{{query}}</strong>.</div>';
+
+search.addWidget(
+  instantsearch.widgets.hits({
+    container: '#hits',
+    hitsPerPage: 10,
+    templates: {
+      empty: noResultsTemplate,
+      item: hitTemplate
+    },
+    transformData: function(hit) {
+      hit.stars = [];
+      for (var i = 1; i <= 5; ++i) {
+        hit.stars.push(i <= hit.rating);
+      }
+      return hit;
+    }
+  })
+);
+
+search.addWidget(
+  instantsearch.widgets.pagination({
+    container: '#pagination',
+    cssClasses: {
+      root: 'pagination',
+      active: 'active'
+    }
+  })
+);
+
+search.addWidget(
+  instantsearch.widgets.refinementList({
+    container: '#firstnames',
+    attributeName: 'firstnames',
+    operator: 'and',
+    limit: 10,
+    searchForFacetValues: {
+      placeholder: '[*search a firstname, alias, etc]',
+      templates: {
+        noResults: '<div class="text">[*no matching firstname]</div>'
+      }
+    },
+    showMore: true,
+    cssClasses: {
+      list: 'nav nav-list',
+      count: 'badge pull-right',
+      active: 'active'
+    }
+  })
+);
+
+search.addWidget(
+  instantsearch.widgets.refinementList({
+    container: '#locations',
+    attributeName: 'locations',
+    operator: 'and',
+    limit: 10,
+    cssClasses: {
+      list: 'nav nav-list',
+      count: 'badge pull-right',
+      active: 'active'
+    }
+  })
+);
+
+search.addWidget(
+  instantsearch.widgets.refinementList({
+    container: '#dates',
+    attributeName: 'dates',
+    operator: 'and',
+    limit: 10,
+    cssClasses: {
+      list: 'nav nav-list',
+      count: 'badge pull-right',
+      active: 'active'
+    }
+  })
+);
+
+search.start();
+  
+</script>
+</body>
