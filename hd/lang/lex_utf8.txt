@@ -36,6 +36,10 @@ fr: données extraites de la base
 en: search a firstname, alias, etc
 fr: rechercher un prénom, alias, etc
 
+    search a location
+en: search a location
+fr: rechercher un lieu
+
     algolia search
 en: search with Algolia/search with Algolia
 fr: rechercher<br>avec Algolia/rechercher avec Algolia

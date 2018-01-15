@@ -46,7 +46,7 @@ echo "--- Starting for $BASE, start=$START, size=$SIZE"
 
 # Crées une version fraîche de $BASE.gw (sources au format lisible geneweb)
 
-Python3 ./Algolia.py --password=$PASSWD --base=$BASE --size=$SIZE --index=$START  --password=$PASSWD
+python3 ./Algolia.py --password=$PASSWD --base=$BASE --size=$SIZE --index=$START  --password=$PASSWD
 check_errs $? "Make-algolia failed"
 
 echo "---Done---"

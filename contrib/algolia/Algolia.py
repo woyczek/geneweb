@@ -84,13 +84,13 @@ def clean_data (data) :
   data = clean (data)
   data = data.replace ('\n,',': ')
   data = data.replace ('\n"','"')
-  data = data.replace (' ,', ', ')
-  data = data.replace ('\n',' ')
-  data = data.replace ('  ', ' ')
-  data = data.replace ('": ", ', '": "')
-  data = data.replace (' ", ', '", ')
-  data = data.replace (',", ', '", ')
-  data = data.replace ('}, ', '},')
+  #data = data.replace (' ,', ', ')
+  #data = data.replace ('\n',' ')
+  #data = data.replace ('  ', ' ')
+  #data = data.replace ('": ", ', '": "')
+  #data = data.replace (' ", ', '", ')
+  #data = data.replace (',", ', '", ')
+  #data = data.replace ('}, ', '},')
   return (data)
   
 def clean (html):
@@ -155,7 +155,7 @@ while i < startIndex+maxIndex :
   errorf = data.find('Requête incorrecte')
   errore = data.find('Incorrect request')
   if errorf < 0 and errore < 0:
-    yes = data.find('rainier.0.grimaldixxxx')
+    yes = data.find('pierre+marie.0.de+polignacxxxx')
     if yes >=0 : print ('Data1:', data)
     #suppress <a tags
     more = 1
@@ -211,13 +211,13 @@ while i < startIndex+maxIndex :
         data = data[:imgurlb+len(tagpass)]+data[imgurle+8:]
 
     # remplacer tous les " par \"
-    nbeg = 0 
-    if nbeg >= 0 :
-      nbeg = data.find ('"', nbeg+7)
-      while nbeg >=0 :
-        data = data[:nbeg]+'\\"'+data[nbeg+1:]
-        nbeg = data.find ('"', nbeg+2)
+    data = data.replace ('"', '\\"')
+    data = data.replace ('/separator/|/separator2/', '/separator//separator2/')
+    data = data.replace ('/separator2/', '"')
+    if yes >=0 : print ('Data22:', data)
+    
     # loop on each repetitive attribute (Prénom, Places, Alias) to suppress doubles
+    # beware : "locations": ["aaa, bbb", "ccc", "ddd"]
     data = data.replace (':  ', ': ')
     for attr in ['firstnames', 'locations', 'dates'] :
       if yes >=0 : print ('Attr:', attr)
@@ -226,7 +226,7 @@ while i < startIndex+maxIndex :
       tage = data.find ('/separator/,\n', tagb+1)
       if tagb >= 0 :
         tags = data[tagb+len(tag):tage]
-        tagsList = tags.split (',')
+        tagsList = tags.split ('|')
         for t in tagsList :
           t = t.strip (' ')
         if yes >=0 : print ('TagsL:', tagsList)
@@ -235,22 +235,27 @@ while i < startIndex+maxIndex :
           j = 0
           while j < len(tagsList) :
             if tagsList[j].find(tagsList[k]) >= 0 and k != j :
+              # suppress k if is part of j
               tagsList[k] = ""
             j += 1
           k += 1
         if yes >=0 : print ('TagsL:', tagsList)
+        # Reconstruct tags list
         tagsNew = ""
         for t in tagsList :
-          t = t.strip()
-          if t != "" :
+          if t != "" and tagsNew != "" :
             tagsNew = tagsNew+", "+t
-        tagsNew = tagsNew[1:] # remove first ,
+          else :
+            tagsNew = t
+        if attr == "locations" :
+          tagsNew = '['+tagsNew+']'
         # compute average date
         daterange = ""
         if attr == "dates" :
           tagsNewList = tagsNew.split(',')
           tot = 0
           for d in tagsNewList :
+            d = d.strip()
             if d != "" :
               tot = tot + int(d)
           average = tot/len(tagsNewList)
@@ -259,12 +264,14 @@ while i < startIndex+maxIndex :
           else :
             daterange = ""
           #print ('Dates:', tagsNewList, daterange)
-        # insert daterange 
+        # insert daterange
         data = data[:tagb]+daterange+tag+tagsNew+data[tage:]
       else :
         if yes >=0 : print ('No tagb:', tag, data)
       # compute average date
     if yes >=0 : print ('Data3:', data)
+    data = data.replace ('/separator/[', '[')
+    data = data.replace (']/separator/', ']')
     data = clean_data (data)
     if data != "" :
       outf.write (data+'\n')

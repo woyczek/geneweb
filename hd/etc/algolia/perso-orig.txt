@@ -39,40 +39,40 @@ A future version will produce a clean final file.
 %first_name;%sp;
 %if;has_first_names_aliases;
   %foreach;first_name_alias;
-    , %first_name_alias;%sp;
+    |%first_name_alias;%sp;
   %end
 %end;
 %if;has_qualifiers;
   %foreach;qualifier;
-    , %qualifier;%sp;
+    |%qualifier;%sp;
   %end
 %end;
 %if;has_aliases;
   %foreach;alias;
-    , %alias;%sp;
+    |%alias;%sp;
   %end;
 %end;
 /separator/,<br>%nn;
   
 /separator/dates/separator/: /separator/%nn;
-  %if;has_birth_date;, %birth_date.year;%sp;%end;
-  %if;has_death_date;, %death_date.year;%sp;%end;
+  %if;has_birth_date;|%birth_date.year;%sp;%end;
+  %if;has_death_date;|%death_date.year;%sp;%end;
   %if;has_families;
     %foreach;family;
       %if;(marriage_date!="")
-        , %marriage_date.year;%sp;
+        |%marriage_date.year;%sp;
       %end;
     %end;
   %end;
 /separator/,<br>%nn;
 
 /separator/locations/separator/: /separator/%nn;
-  %if;has_birth_place;, %birth_place;%sp;%end;
-  %if;has_death_place;, %death_place;%sp;%end;
+  %if;has_birth_place;|/separator2/%birth_place;/separator2/%end;
+  %if;has_death_place;|/separator2/%death_place;/separator2/%end;
   %if;has_families;
     %foreach;family;
       %if;(marriage_place!="")
-        , %marriage_place;%sp;
+        |/separator2/%marriage_place;/separator2/
       %end;
     %end;
   %end;
@@ -89,7 +89,6 @@ A future version will produce a clean final file.
   %end;
 /separator/,<br>%nn;
 %end;
-
 
 /separator/dummy/separator/: /separator//separator/<br>%nn;
 },

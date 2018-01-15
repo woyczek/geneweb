@@ -38,6 +38,8 @@
       <div id="locations"></div>
       <h5><i class="fa fa-chevron-right"></i>[*dates]</h5>
       <div id="dates"></div>
+      <h5><i class="fa fa-chevron-right"></i>[*notes]</h5>
+      <div id="notes"></div>
       <div class="thank-you">[*data extracted from base] <a href="%prefix;">%base.name;</a><br></div>
     </aside>
     <article>
@@ -52,8 +54,8 @@
 /* global instantsearch */
 
 var search = instantsearch({
-  appId: 'GMGUNOIT8M',
-  apiKey: 'fee1e6e843a02903383fba1f5bc22245',
+  appId: 'DummyAppId',
+  apiKey: 'DummyApiKey',
   indexName: '%base.name;',
   urlSync: true
 });
@@ -149,6 +151,7 @@ search.addWidget(
         noResults: '<div class="text">[*no matching location]</div>'
       }
     },
+    showMore: true,
     cssClasses: {
       list: 'nav nav-list',
       count: 'badge pull-right',
@@ -167,6 +170,27 @@ search.addWidget(
       active: 'active'
     },
     currency: "",
+  })
+);
+
+search.addWidget(
+  instantsearch.widgets.refinementList({
+    container: '#notes',
+    attributeName: 'notes',
+    operator: 'and',
+    limit: 10,
+    searchForFacetValues: {
+      placeholder: '[*search within a note]',
+      templates: {
+        noResults: '<div class="text">[*no matching note]</div>'
+      }
+    },
+    showMore: true,
+    cssClasses: {
+      list: 'nav nav-list',
+      count: 'badge pull-right',
+      active: 'active'
+    }
   })
 );
 
