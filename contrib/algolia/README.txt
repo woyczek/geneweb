@@ -3,10 +3,10 @@ To install Algolia based search:
 in /etc/hosts add the entry
 127.0.0.1 localweb.fr
 
-In Make-algolia fill-in PASSWD (name:pwd) APPIP and APIKEY 
+In My-params fill-in PASSWD (name:pwd) APPIP and APIKEY 
 Executing Make-algolia will update algolia_search.js with the correct appId and apiKey values.
-After installing a new distribution (make distrib), you should run again this portion of the script
-(lines 38 to 44) to obtain your own version of algolia_search.js.
+After installing a new distribution (make distrib), you should run again My-params
+to obtain your own version of algolia_search.js and algolia/perso.txt.
 
 You may adapt the various attributes in the perso.txt and algolia_search.txt
 
