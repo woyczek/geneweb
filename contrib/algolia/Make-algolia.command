@@ -26,6 +26,7 @@ GW_DIR="$VERS/gw"
 
 #update password, appId and apiKey
 ./My-params.command
+PASSWD="name:password"
 
 # SIZE as reported by GeneWeb
 BASE="Grimaldi700"
@@ -45,7 +46,7 @@ echo "--- Starting for $BASE, start=$START, size=$SIZE"
 
 # Crées une version fraîche de $BASE.gw (sources au format lisible geneweb)
 
-Python3 ./Algolia.py --password=$PASSWD --base=$BASE --size=$SIZE --index=$START
+Python3 ./Algolia.py --password=$PASSWD --base=$BASE --size=$SIZE --index=$START  --password=$PASSWD
 check_errs $? "Make-algolia failed"
 
 echo "---Done---"

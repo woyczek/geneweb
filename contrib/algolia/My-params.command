@@ -6,6 +6,8 @@ cd `dirname $0`
 
 # set PASSWD to the appropriate value
 PASSWD="name:passwd"
+# the PASSSWD line must be replicated in Make-algolia.sh
+
 sed  's/xy:zz/'${PASSWD}'/g' $GW_DIR/etc/algolia/perso-orig.txt > $GW_DIR/etc/algolia/perso.txt
 
 # The lines below up to "---", updated with your own appId and apikey, should be 

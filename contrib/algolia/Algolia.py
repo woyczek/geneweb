@@ -49,7 +49,7 @@ for o, a in opts :
   elif o in ("-b", "--base"):
     basename = a
   elif o in ("-s", "--size"):
-    maxIndex = int(a)
+    size = int(a)
   elif o in ("-i", "--index"):
     startIndex = int(a)
   elif o in ("-i", "--password"):
@@ -60,6 +60,8 @@ for o, a in opts :
     assert False, "unhandled option"
     exit(3)
 
+maxIndex = startIndex + size
+
 #print ('Getopt test')
 
 print ('Arguments : ')
@@ -69,13 +71,28 @@ print ('startIndex : ', startIndex)
 #sys.exit()
 
 print ('Make-algolia starting now : '+stamp)
-
+print ('Params: base: %s, start: %d, size: %d, passwd: %s'%(basename, startIndex, size, password))
   
 # init http connexion
 hostIp = "127.0.0.1"
 #hostIp = "192.168.1.12"
 sleepDelay = 0.000
 
+def clean_data (data) :
+  data = data.replace ('/separator/', '"')
+  data = data.replace ('<li>', ',')
+  data = clean (data)
+  data = data.replace ('\n,',': ')
+  data = data.replace ('\n"','"')
+  data = data.replace (' ,', ', ')
+  data = data.replace ('\n',' ')
+  data = data.replace ('  ', ' ')
+  data = data.replace ('": ", ', '": "')
+  data = data.replace (' ", ', '", ')
+  data = data.replace (',", ', '", ')
+  data = data.replace ('}, ', '},')
+  return (data)
+  
 def clean (html):
   """
     Strip HTML tags from any string and transfrom special entities
@@ -138,7 +155,7 @@ while i < startIndex+maxIndex :
   errorf = data.find('Requête incorrecte')
   errore = data.find('Incorrect request')
   if errorf < 0 and errore < 0:
-    yes = data.find('yvonne.0.theveninxxxxxxx')
+    yes = data.find('rainier.0.grimaldixxxx')
     if yes >=0 : print ('Data1:', data)
     #suppress <a tags
     more = 1
@@ -224,28 +241,31 @@ while i < startIndex+maxIndex :
         if yes >=0 : print ('TagsL:', tagsList)
         tagsNew = ""
         for t in tagsList :
+          t = t.strip()
           if t != "" :
             tagsNew = tagsNew+", "+t
         tagsNew = tagsNew[1:] # remove first ,
-
-        data = data[:tagb+len(tag)]+tagsNew+data[tage:]
+        # compute average date
+        daterange = ""
+        if attr == "dates" :
+          tagsNewList = tagsNew.split(',')
+          tot = 0
+          for d in tagsNewList :
+            if d != "" :
+              tot = tot + int(d)
+          average = tot/len(tagsNewList)
+          if average > 0 :
+            daterange = '/separator/daterange/separator/: /separator/%d/separator/,\n'%average
+          else :
+            daterange = ""
+          #print ('Dates:', tagsNewList, daterange)
+        # insert daterange 
+        data = data[:tagb]+daterange+tag+tagsNew+data[tage:]
       else :
         if yes >=0 : print ('No tagb:', tag, data)
+      # compute average date
     if yes >=0 : print ('Data3:', data)
-    
-    data = data.replace ('/separator/', '"')
-    data = data.replace ('<li>', ',')
-    data = clean (data)
-    data = data.replace ('\n,',': ')
-    data = data.replace ('\n"','"')
-    data = data.replace (',,', ', ')
-    data = data.replace (' ,', ', ')
-    data = data.replace ('\n',' ')
-    data = data.replace ('  ', ' ')
-    data = data.replace ('": ", ', '": "')
-    data = data.replace (' ", ', '", ')
-    data = data.replace (',", ', '", ')
-    data = data.replace ('}, ', '},')
+    data = clean_data (data)
     if data != "" :
       outf.write (data+'\n')
     comma = data.find (',')

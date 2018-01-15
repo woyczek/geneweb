@@ -27,6 +27,7 @@
   </header>
   <section>
     <aside style="overflow-y: auto;">
+      <div id="clear-all"></div>
       <ul class="nav nav-list">
         <li><a href="%prefix;" title="%base.name;"><i class="fa fa-home"> </i>[*home]</a></li>
         <li class="separator"></li>
@@ -142,6 +143,12 @@ search.addWidget(
     attributeName: 'locations',
     operator: 'and',
     limit: 10,
+    searchForFacetValues: {
+      placeholder: '[*search a location]',
+      templates: {
+        noResults: '<div class="text">[*no matching location]</div>'
+      }
+    },
     cssClasses: {
       list: 'nav nav-list',
       count: 'badge pull-right',
@@ -151,16 +158,28 @@ search.addWidget(
 );
 
 search.addWidget(
-  instantsearch.widgets.refinementList({
+  instantsearch.widgets.priceRanges({
     container: '#dates',
-    attributeName: 'dates',
-    operator: 'and',
-    limit: 10,
+    attributeName: 'daterange',
     cssClasses: {
       list: 'nav nav-list',
       count: 'badge pull-right',
       active: 'active'
-    }
+    },
+    currency: "",
+  })
+);
+
+search.addWidget(
+  instantsearch.widgets.clearAll({
+    container: '#clear-all',
+    templates: {
+      link: '<i class="fa fa-eraser"></i> Clear all filters'
+    },
+    cssClasses: {
+      root: 'btn btn-block btn-default'
+    },
+    autoHideContainer: true
   })
 );
 
