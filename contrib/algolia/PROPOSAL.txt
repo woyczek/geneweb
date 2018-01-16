@@ -6,6 +6,7 @@ This note describes what it would take to integrate Algolia search into GeneWeb.
 
 I have a manually managed trial setup for evaluation.
 It can be tested on https://demo.geneweb.tuxfamily.org/gw7/gwd?b=Grimaldi700;
+This demo is imperfetc as links to persons and images are not operative (they point to my localhost version of 
 
 1/ records
 Algolia's solution si based on records and attributes. For GeneWeb, a record would hold
@@ -50,3 +51,14 @@ Note that GeneWeb offers the possibility to execute a function at each update
 (see notify_change in the .gwf file). 
 To be verified: does this cater for multiple record creation?
 
+5/ Security
+Security is an important issue that must be taken into considerations. Algolia is 
+very careful in controlling access to the indexes it serves in the cloud and 
+provides mechanisms to cater for multi level security.
+The case of Roglo is a good test case.
+On first analysis, one solution is to maintain two index, one for visitors and 
+one for friends and wizards. Access to the wizard index can be controlled with
+read-only of read-write access to distinguish friends from wizards.
+It is possible that the public/private attribute can be stored into the index
+and that returned results can be filtered at the source. This needs to be
+investigated further.

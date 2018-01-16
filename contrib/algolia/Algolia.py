@@ -155,7 +155,7 @@ while i < startIndex+maxIndex :
   errorf = data.find('Requête incorrecte')
   errore = data.find('Incorrect request')
   if errorf < 0 and errore < 0:
-    yes = data.find('pierre+marie.0.de+polignacxxxx')
+    yes = data.find('rainier.0.grimaldi')
     if yes >=0 : print ('Data1:', data)
     #suppress <a tags
     more = 1
@@ -194,11 +194,19 @@ while i < startIndex+maxIndex :
     data = data.replace('\n/separator/,', '/separator/,')
     if yes >=0 : print ('Data2:', data)
 
-    bnameb = data.find (':2317/')
-    bnamem = data.find ('_', bnameb)
-    bnamee = data.find ('?', bnamem)
-    if bnamem >= 0 and bnamee >= 0 :
-      data = data[:bnamem]+data[bnamee:]
+    # clean-up http:// to person
+    hrefb = data.find ('http://')
+    nonceb = data.find ('_')
+    noncee = data.find ('?', nonceb)
+    if nonceb >= 0 and noncee >= 0 :
+      data = data[:nonceb]+data[noncee:]
+    # and to image
+    hrefb = data.find ('http://', noncee)
+    nonceb = data.find ('_')
+    noncee = data.find ('?', nonceb)
+    if nonceb >= 0 and noncee >= 0 :
+      data = data[:nonceb]+data[noncee:]
+    dum = """
     image = data.find ('/separator/image/')
     # adjust the url with hostname appearing twice because of image_url!!
     #print ('Image:', image, data)
@@ -209,7 +217,8 @@ while i < startIndex+maxIndex :
       imgurle = data.find ('algolia;', imgurlb)
       if imgurlb >= 0 and imgurle >= 0 :
         data = data[:imgurlb+len(tagpass)]+data[imgurle+8:]
-
+    """
+    
     # remplacer tous les " par \"
     data = data.replace ('"', '\\"')
     data = data.replace ('/separator/|/separator2/', '/separator//separator2/')
@@ -234,7 +243,7 @@ while i < startIndex+maxIndex :
         while k < len(tagsList) :
           j = 0
           while j < len(tagsList) :
-            if tagsList[j].find(tagsList[k]) >= 0 and k != j :
+            if tagsList[j].strip('"').find(tagsList[k].strip('"')) >= 0 and k != j :
               # suppress k if is part of j
               tagsList[k] = ""
             j += 1
@@ -243,12 +252,15 @@ while i < startIndex+maxIndex :
         # Reconstruct tags list
         tagsNew = ""
         for t in tagsList :
-          if t != "" and tagsNew != "" :
-            tagsNew = tagsNew+", "+t
-          else :
-            tagsNew = t
+          if t != "" :
+            if tagsNew != "" :
+              tagsNew = tagsNew+", "+t
+            else :
+              tagsNew = t
         if attr == "locations" :
           tagsNew = '['+tagsNew+']'
+        if yes >=0 : print ('TagsN:', tagsNew)
+
         # compute average date
         daterange = ""
         if attr == "dates" :
