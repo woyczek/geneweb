@@ -1,14 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import os, sys, string, codecs, time, http.client
+import socket
 import getopt
 import requests
 import re
+import json
 
 #import urllib
 from datetime import date
 from time import strftime, sleep
-
+hostname =  socket.gethostname() 
+if hostname == "iMac-H" :
+  from algoliasearch import algoliasearch
 
 #############################################
 # Debut
@@ -20,12 +24,12 @@ now = date.today()
 stamp = strftime("%Y-%m-%d %H:%M:%S")
 
 def usage () :
-  print (" Make-Algolia.py --base --size --index --passwd quiet ")
+  print (" Make-Algolia.py --base --size --index --passwd --chunk quiet ")
   
 basename = 'Chausey'
 
 try:
-  opts, args = getopt.getopt(sys.argv[1:], ":hv", ["help", "base=", "password=", "size=", "index=", "quiet"])
+  opts, args = getopt.getopt(sys.argv[1:], ":hv", ["help", "base=", "password=", "size=", "index=", "chunk=", "quiet"])
 except getopt.GetoptError as err:
   # print help information and exit:
   print(str(err)) # will print something like "option -a not recognized"
@@ -34,6 +38,7 @@ except getopt.GetoptError as err:
   sys.exit(2)
 maxIndex=100
 startIndex=0
+chunkNb=""
 Quiet = False
 
 #print ('Opts : ', opts)
@@ -49,11 +54,19 @@ for o, a in opts :
   elif o in ("-b", "--base"):
     basename = a
   elif o in ("-s", "--size"):
-    size = int(a)
+    if a == "" :
+      size = 0
+    else :
+      size = int(a)
   elif o in ("-i", "--index"):
-    startIndex = int(a)
+    if a == "" :
+      startIndex = 0
+    else :
+      startIndex = int(a)
   elif o in ("-i", "--password"):
     password = a
+  elif o in ("-i", "--chunk"):
+    chunkNb = a
   elif o in ("-q", "--quiet"):
     Quiet = True
   else:
@@ -63,15 +76,10 @@ for o, a in opts :
 maxIndex = startIndex + size
 
 #print ('Getopt test')
-
-print ('Arguments : ')
-print ('Basename : ', basename)
-print ('maxIndex : ', maxIndex)
-print ('startIndex : ', startIndex)
 #sys.exit()
 
 print ('Make-algolia starting now : '+stamp)
-print ('Params: base: %s, start: %d, size: %d, passwd: %s'%(basename, startIndex, size, password))
+print ('Params: base: %s, start: %d, maxIndex: %d, passwd: %s'%(basename, startIndex, maxIndex, password))
   
 # init http connexion
 hostIp = "127.0.0.1"
@@ -129,20 +137,25 @@ def clean (html):
  
   return text  
 
+outFile = './'+basename+'-chunk'+chunkNb+'.json'
 try :
-  outf = open('./'+basename+'-chunk.json', 'w', encoding='utf-8')
+  outf = open(outFile, 'w', encoding='utf-8')
 except IOError :
-  print ('Cannot open ./'+basename+'-chunk.json')
+  print ('Cannot open '+outFile)
   sys.exit(1)
 
 outf.write('[\n')
 i = startIndex
 totLength = 0
-while i < startIndex+maxIndex :
-  dum="http://127.0.0.1:2317/HenriT?p=Helene;n=Desbuissons;templ=Tex;"
-  Url = "http://127.0.0.1:2317/"+basename+"?templ=algolia;w="+password+";i="+str(i)
+while i < maxIndex :
+  if hostname == "iMac-H" :
+    Url = "http://127.0.0.1:2317/"+basename+"?templ=algolia;w="+password+";i="+str(i)
+    time.sleep(0.01) # delays in sec
+  else :
+    #on TuxDemo 
+    Url = "http://demo.geneweb.tuxfamily.org/gw7/gwd?b="+basename+";templ=algolia;w="+password+";i="+str(i)
+    time.sleep(1) # on TuxDemo
   #if not Quiet : print ('----- Doing : %s'%(Url))
-  time.sleep(0.01) # delays 
   try :
     r = requests.get(Url)
     data = r.text
@@ -155,7 +168,7 @@ while i < startIndex+maxIndex :
   errorf = data.find('Requête incorrecte')
   errore = data.find('Incorrect request')
   if errorf < 0 and errore < 0:
-    yes = data.find('rainier.0.grimaldi')
+    yes = data.find('rainier.0.grimaldixxxx')
     if yes >=0 : print ('Data1:', data)
     #suppress <a tags
     more = 1
@@ -272,7 +285,7 @@ while i < startIndex+maxIndex :
               tot = tot + int(d)
           average = tot/len(tagsNewList)
           if average > 0 :
-            daterange = '/separator/daterange/separator/: /separator/%d/separator/,\n'%average
+            daterange = '/separator/daterange/separator/: %d,\n'%average
           else :
             daterange = ""
           #print ('Dates:', tagsNewList, daterange)
@@ -302,6 +315,17 @@ elif totLength < 1000000 :
   print ('Finished: %.2f Kbytes'%totK)
 else:
   print ('Finished: %.2f Mbytes'%totM)
+
+if hostname == "iMac-H" :
+  print ('Start uploading '+outFile+' to Algolia')
+  client = algoliasearch.Client("GMGUNOIT8M", 'd3a0bbe63a35c26867333b184f3b8d26')
+  index = client.init_index(basename)
+
+  batch = json.load(open(outFile))
+  index.add_objects(batch)
+  #index.set_settings({"searchableAttributes": ["names", "firstnames", "locations", "dates", "daterange"]})
+  print ('Finished uploading to Algolia')
+
 
 sys.exit(0)
 
