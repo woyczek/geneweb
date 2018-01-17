@@ -703,6 +703,9 @@ and eval_time_var conf =
 and eval_simple_variable conf =
   fun
   [ "action" -> conf.command
+  |  "algolia_apikey" ->
+    if conf.wizard || conf.friend then "4d0a47ded4477e4ba24ec6426a23eb27"
+    else "4d0a47ded4477e4ba24ec6426a23eb27"
   | "border" -> string_of_int conf.border
   | "charset" -> conf.charset
   | "compilation_time" -> Util.get_compilation_time ()

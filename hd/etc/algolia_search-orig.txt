@@ -55,8 +55,8 @@
 
 var search = instantsearch({
   appId: 'DummyAppId',
-  apiKey: 'DummyApiKey',
-  indexName: '%base.name;',
+  apiKey: '%algolia_apikey;',
+  indexName: '%if;(wizard or friend)%base.name;%else;%base.name;_public%end;',
   urlSync: true
 });
 
