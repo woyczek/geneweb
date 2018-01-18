@@ -20,17 +20,27 @@ HOST=`hostname`
 # Peut être pourrait on le démarrer directement ici
 
 #update password, appId and apiKey
-./My-params.command
 if [ "$HOST" == "iMac-H" ]; then
+  BIN_DIR="$HOME/Genea/GeneWeb"
+  VERS="GeneWeb-7.0a-Mac"
+  GW_DIR="$BIN_DIR/$VERS/gw"
+  P_DIR="$GW_DIR/etc/algolia"
+  # set PASSWD to the appropriate value
   PASSWD="xy:zz"
+  sed  's/xy:zz/'${PASSWD}'/g' $P_DIR/perso-orig.txt > $GW_DIR/etc/algolia/perso.txt
 else
+  BIN_DIR="$HOME/geneweb/demo.geneweb.tuxfamily.org-web/htdocs"
+  VERS="gw7"
+  GW_DIR="$BIN_DIR/$VERS/gw"
+  P_DIR="$BIN_DIR/$VERS/algolia"
   PASSWD="wizard:wizard"
+  sed  's/xy:zz/'${PASSWD}'/g' $P_DIR/perso-orig.txt > $GW_DIR/etc/algolia/perso.txt
 fi
 
 # SIZE as reported by GeneWeb
 
-BASE="Grimaldi700"
-#BASE="Chausey"
+#BASE="Grimaldi700"
+BASE="Chausey"
 #BASE=HenriT
 
 if [ "${1}" == "" ]; then
@@ -39,8 +49,8 @@ else
   START="$1"
 fi
 if [ "${2}" == "" ]; then
-  SIZE="167" # grimaldi
-  #SIZE="3790" # chausey
+  #SIZE="167" # grimaldi
+  SIZE="3790" # chausey
   #SIZE="8827" # henri
 else
   SIZE="$2"
@@ -55,7 +65,7 @@ source Vpy3/bin/activate
 
 python3 --version
 
-python3 ./Algolia.py --password=$PASSWD --base=$BASE --size=$SIZE --index=$START --password=$PASSWD --chunk=$CHUNK
+python3 ./Algolia.py --password=$PASSWD --base=$BASE --size=$SIZE --index=$START --chunk=$CHUNK
 check_errs $? "Make-algolia failed"
 
 echo "---Done---"
