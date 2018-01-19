@@ -11,12 +11,17 @@ The attributes are :
   locations: location associated with birth, death and marraiges
   notes: the note
   dummy: to close the record
+  
+Think about adding a md5 hash to for future verification with base content
 
 The program Make-algolia.py will process the returned data to correct several 
 imperfections (extra \n, spaces, , ...) escapes the " found in notes and removes 
 unwanted html tags.
 
-A future version will produce a clean final file.
+A future ocaml base version will produce directly a clean final file.
+
+Think also about a forum specific index with author, subject and date as facets
+
 %)
 
 %if;(first_name_key!="" and surname_key!="")
@@ -65,6 +70,7 @@ is_not_visible=%is_invisible;%nn;
       %end;
     %end;
   %end;
+  %( generalize for all event dates%)
 /separator/,<br>%nn;
 
 /separator/locations/separator/: /separator/%nn;
@@ -77,17 +83,30 @@ is_not_visible=%is_invisible;%nn;
       %end;
     %end;
   %end;
+  %( generalize for all events places%)
 /separator/,<br>%nn;
 
+%(
+Other possible attributes:
+%has_occupation;
+%has_titles;
+%)
+
 %if;has_notes;
-/separator/notes/separator/: /separator/%notes;/separator/,<br>%nn;
+/separator/notes/separator/: /separator/%nn;
+  %foreach;notes;
+    |%notes;%sp;
+  %end;
+  %( generalize for all notes %)
+/separator/,<br>%nn;
 %end;
 
 %if;has_sources;
 /separator/sources/separator/: /separator/%nn;
   %foreach;source;
-    , %source;%sp;
+    |%source;%sp;
   %end;
+  %( generalize for all sources (and src??, comment) %)
 /separator/,<br>%nn;
 %end;
 

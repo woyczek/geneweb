@@ -24,24 +24,23 @@ if [ "$HOST" == "iMac-H" ]; then
   BIN_DIR="$HOME/Genea/GeneWeb"
   VERS="GeneWeb-7.0a-Mac"
   GW_DIR="$BIN_DIR/$VERS/gw"
-  P_DIR="$GW_DIR/etc/algolia"
+  GW_DIRA="$GW_DIR/etc/algolia"
   # set PASSWD to the appropriate value
   PASSWD="xy:zz"
-  sed  's/xy:zz/'${PASSWD}'/g' $P_DIR/perso-orig.txt > $GW_DIR/etc/algolia/perso.txt
 else
   BIN_DIR="$HOME/geneweb/demo.geneweb.tuxfamily.org-web/htdocs"
   VERS="gw7"
   GW_DIR="$BIN_DIR/$VERS/gw"
   P_DIR="$BIN_DIR/$VERS/algolia"
   PASSWD="wizard:wizard"
-  sed  's/xy:zz/'${PASSWD}'/g' $P_DIR/perso-orig.txt > $GW_DIR/etc/algolia/perso.txt
 fi
+sed  's/xy:zz/'${PASSWD}'/g' $GW_DIRA/perso-orig.txt > $GW_DIRA/perso.txt
 
 # SIZE as reported by GeneWeb
 
 #BASE="Grimaldi700"
-BASE="Chausey"
-#BASE=HenriT
+#BASE="Chausey"
+BASE=HenriT
 
 if [ "${1}" == "" ]; then
   START="0"
@@ -49,8 +48,8 @@ else
   START="$1"
 fi
 if [ "${2}" == "" ]; then
-  #SIZE="167" # grimaldi
-  SIZE="3790" # chausey
+  SIZE="167" # grimaldi
+  #SIZE="3790" # chausey
   #SIZE="8827" # henri
 else
   SIZE="$2"

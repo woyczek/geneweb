@@ -57,8 +57,9 @@ very careful in controlling access to the indexes it serves in the cloud and
 provides mechanisms to cater for multi level security.
 The case of Roglo is a good test case.
 On first analysis, one solution is to maintain two index, one for visitors and 
-one for friends and wizards. Access to the wizard index can be controlled with
-read-only of read-write access to distinguish friends from wizards.
-It is possible that the public/private attribute can be stored into the index
-and that returned results can be filtered at the source. This needs to be
-investigated further.
+one for friends and wizards. The basename.gwf file will contain one or two apiKeys 
+associated with each index. The algolia_search.txt file obtains the correct apiKey
+and indexname according to the status of the user.
+It is possible to organise the queries of friends and wizards to query two index
+(the public and the private one), but in such a setup, results are not ranked across
+the two index resulting in somewhat less significant results.
