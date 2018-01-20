@@ -1,0 +1,114 @@
+%( perso.txt file producing algolia indexing record %)
+%(
+This template creates a record for one individual.
+The attributes are :
+  objectID: unique id
+  url: url to the individual in the base
+  image: url to the individual's image
+  names; name and surname_aliases
+  firstnames: first_name, first_name aliases, aliases  and qualifiers
+  dates: year of several events (birth, death, marriage)
+  locations: location associated with birth, death and marraiges
+  notes: the note
+  dummy: to close the record
+  
+Think about adding a md5 hash to for future verification with base content
+
+The program Make-algolia.py will process the returned data to correct several 
+imperfections (extra \n, spaces, , ...) escapes the " found in notes and removes 
+unwanted html tags.
+
+A future ocaml base version will produce directly a clean final file.
+
+Think also about a forum specific index with author, subject and date as facets
+
+%)
+
+%if;(first_name_key!="" and surname_key!="")
+{%nn;
+<br>is_not_visible=%is_invisible;%nn;
+<br>is_cgi=%if;(cgi)1%else;0%end;%nn;
+<br>|objectID|: |%first_name_key;.%occ;.%surname_key;|,%nn;
+<br>|url|: |http://%bvar.algolia_hostname;:2317/%prefix;w=%bvar.algolia_passwd;;%access;|,%nn;
+%if;has_image;
+<br>|image|: |http://%bvar.algolia_hostname;:2317/%prefix;w=%bvar.algolia_passwd;;%image_url;|,%nn;
+%end;
+<br>|names|: %nn;
+%if;(surname != "")|%surname;%end;
+%if;has_surnames_aliases;(
+  %foreach;surname_alias;
+    %sp;%surname_alias;
+  %end;)%nn;
+%end;%nn;
+|,%nn;
+
+<br>|firstnames|: %nn;
+%if;(first_name != "")|%first_name;%end;
+%if;has_first_names_aliases;
+  %foreach;first_name_alias;
+    |%first_name_alias;
+  %end;%nn;
+%end;%nn;
+%if;has_qualifiers;
+  %foreach;qualifier;
+    |%qualifier;%sp;
+  %end%nn;
+%end;%nn;
+%if;has_aliases;
+  %foreach;alias;
+    |%alias;%sp;
+  %end;%nn;
+%end;%nn;
+|,%nn;
+
+%( generalize for all event dates%)
+<br>|dates|: %if;(not(has_birth_date or has_death_date or has_families))|%end;%nn;
+  %if;has_birth_date;|%birth_date.year;%end;
+  %if;has_death_date;|%death_date.year;%end;
+  %if;has_families;
+    %foreach;family;
+      %if;(marriage_date.year!="")
+        |%marriage_date.year;
+      %end;%nn;
+    %end;%nn;
+  %end;%nn;
+|,%nn;
+
+%( generalize for all events places%)
+<br>|locations|: %if;(not(has_birth_place or has_death_place or has_families))|%end;%nn;
+  %if;has_birth_place;|%birth_place;%end;%nn;
+  %if;has_death_place;|%death_place;%end;%nn;
+  %if;has_families;
+    %foreach;family;
+      %if;(marriage_place!="")
+        |%marriage_place;
+      %end;%nn;
+    %end;%nn;
+  %end;%nn;
+|,%nn;
+
+%(
+Other possible attributes:
+%has_occupation;
+%has_titles;
+%)
+
+%( generalize for all notes %)
+%if;has_notes;
+<br>|notes|: |%nn;
+  %notes;%nn;
+|,%nn;
+%end;
+<br>|notes_end|%nn;
+%( generalize for all sources (and src??, comment) %)
+%if;has_sources;
+<br>|sources|: %if;(not has_sources)|%end;%nn;
+  %foreach;source;
+    |%source;
+  %end;%nn;
+|,%nn;
+%end;
+
+<br>|dummy|: ||%nn;
+<br>},
+%end;

@@ -20,7 +20,7 @@
       </a>
       %if;(bvar.algolia_search = "yes")
         <a role="button" class="btn btn-link text-muted ml-0 p-1" class="is-logo"
-          href="%prefix;m=H;v=algolia_search"%nn;
+          href="%prefix;templ=algolia;m=H;v=algolia_search"%nn;
           title="[*algolia search]0">
           <img src="%image_prefix;/logo-is.png" width="20">%nn;
         </a>

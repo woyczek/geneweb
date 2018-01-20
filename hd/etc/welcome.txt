@@ -217,7 +217,7 @@ fr: Les <strong>droits des magiciens</strong> sont actuellement <strong>suspendu
                 <a class="btn btn-outline-primary mt-2" href="%prefix;m=H;v=advanced">[*advanced request]1</a>
               %end;
               %if;(bvar.algolia_search = "yes")
-                <a class="btn btn-outline-primary mt-2" href="%prefix;m=H;v=algolia_search">[*algolia search]0</a>
+                <a class="btn btn-outline-primary mt-2" href="%prefix;templ=algolia;m=H;v=algolia_search">[*algolia search]0</a>
               %end;
               %if;(wizard and "bvar.propose_add_family" != "no")
                 <a class="btn btn-outline-success mt-4" href="%prefix;m=ADD_FAM" role="button" title="([*wizard/wizards/friend/friends/exterior]0) [*add::family/families]0">[*add::family/families]0</a>

@@ -24,20 +24,18 @@ now = date.today()
 stamp = strftime("%Y-%m-%d %H:%M:%S")
 
 def usage () :
-  print (" Make-Algolia.py --base --size --index --passwd --chunk quiet ")
+  print (" Make-Algolia.py --base --size --index --chunk quiet ")
   
-basename = 'Chausey'
-
 try:
-  opts, args = getopt.getopt(sys.argv[1:], ":hv", ["help", "base=", "password=", "size=", "index=", "chunk=", "quiet"])
+  opts, args = getopt.getopt(sys.argv[1:], ":hv", ["help", "base=", "size=", "index=", "chunk=", "quiet"])
 except getopt.GetoptError as err:
   # print help information and exit:
   print(str(err)) # will print something like "option -a not recognized"
   print ('Funny option', sys.argv)
   usage()
   sys.exit(2)
-maxIndex=100
 startIndex=0
+size=10
 chunkNb=""
 Quiet = False
 
@@ -63,8 +61,6 @@ for o, a in opts :
       startIndex = 0
     else :
       startIndex = int(a)
-  elif o in ("-i", "--password"):
-    password = a
   elif o in ("-i", "--chunk"):
     chunkNb = a
   elif o in ("-q", "--quiet"):
@@ -78,8 +74,6 @@ maxIndex = startIndex + size
 #print ('Getopt test')
 #sys.exit()
 
-print ('Make-algolia starting now : '+stamp)
-print ('Params: base: %s, start: %d, maxIndex: %d, passwd: %s'%(basename, startIndex, maxIndex, password))
   
 # init http connexion
 hostIp = "127.0.0.1"
@@ -137,33 +131,62 @@ def clean (html):
  
   return text  
 
+def get_bvar (param) :
+  bvarb = data.find (param+'=')
+  bvare = data.find ('\n', bvarb+1)
+  if bvarb >= 0 :
+    bvar = data[bvarb+len(param)+1:bvare]
+  else :
+    print ('Missing %s in .gwf file'%param)
+    sys.exit(1)
+  return (bvar)
+
+
+if basename == "" :
+  basename = input ('Basename:')
+  maxIndex = input ('MaxIndex:')
+  startIndex = input('StartIndex:')
+  if startIndex == "" : startIndex = 0
+
+print ('Make-algolia starting now : '+stamp)
+print ('Params: base: %s, start: %d, maxIndex: %d'%(basename, startIndex, maxIndex))
+
+ 
 outFileF = './'+basename+'_private-chunk'+chunkNb+'.json'
-outFileW = './'+basename+'_public-chunk'+chunkNb+'.json'
+outFileV = './'+basename+'_public-chunk'+chunkNb+'.json'
+gwfFile = os.environ['BASE_DIR']+'/'+basename+'.gwf'
 try :
   outf = open(outFileF, 'w', encoding='utf-8')
 except IOError :
   print ('Cannot open '+outFileF)
   sys.exit(1)
 try :
-  outw = open(outFileW, 'w', encoding='utf-8')
+  outv = open(outFileV, 'w', encoding='utf-8')
 except IOError :
-  print ('Cannot open '+outFileW)
+  print ('Cannot open '+outFileV)
   sys.exit(1)
 
+try :
+  gwff = open(gwfFile, 'r', encoding='utf-8')
+except IOError :
+  print ('Cannot open '+gwfFile)
+  sys.exit(1)
+
+data = gwff.read()
+password = get_bvar ('algolia_passwd')
+appId = get_bvar ('algolia_appid')
+apiKey = get_bvar ('wizard_apikey')
+gwff.close()
+
+#print ('Password:', password)
+
 outf.write('[\n')
-outw.write('[\n')
+outv.write('[\n')
 i = startIndex
 totLength = 0
-while i < maxIndex :
-  dum = """
-  if hostname == "iMac-H" :
-    Url = "http://127.0.0.1:2317/"+basename+"?templ=algolia;i="+str(i)
-    time.sleep(0.01) # delays in sec
-  else :
-    #on TuxDemo 
-    Url = "http://demo.geneweb.tuxfamily.org/gw7/gwd?b="+basename+";templ=algolia;i="+str(i)
-    time.sleep(1) # on TuxDemo
-  #if not Quiet : print ('----- Doing : %s'%(Url))
+while i < maxIndex :  
+  Url = "http://127.0.0.1:2317/"+basename+"?templ=algolia;lang=en;w="+password+";i="+str(i)
+  time.sleep(0.01) # delays in sec
   try :
     r = requests.get(Url)
     data = r.text
@@ -172,39 +195,20 @@ while i < maxIndex :
     print ("Sleep 1 sec and try again")
     r = requests.get(Url)
     data = r.text
-  data = data.replace('<br>', '\n')
-  errorfF = data.find('Requête incorrecte')
-  erroreF = data.find('Incorrect request')
-  """
-  
-  if hostname == "iMac-H" :
-    Url = "http://127.0.0.1:2317/"+basename+"?templ=algolia;w="+password+";i="+str(i)
-    time.sleep(0.01) # delays in sec
-  else :
-    #on TuxDemo 
-    Url = "http://demo.geneweb.tuxfamily.org/gw7/gwd?b="+basename+";templ=algolia;w="+password+";i="+str(i)
-    time.sleep(1) # on TuxDemo
-  #if not Quiet : print ('----- Doing : %s'%(Url))
-  try :
-    r = requests.get(Url)
-    data = r.text
-  except requests.exceptions.ConnectionError :
-    time.sleep(1)
-    print ("Sleep 1 sec and try again")
-    r = requests.get(Url)
-    data = r.text
-  data = data.replace('<br>', '\n')
-  errorf = data.find('Requête incorrecte')
+  data = data.replace('<br>', '')
   errore = data.find('Incorrect request')
 
-  if errorf < 0 and errore < 0:
-    yes = data.find('stephanie+marie+elisabeth.0.grimaldixxxxx')
+  if errore < 0:
+    yes = data.find('albert.1.grimaldixxxxxx')
     if yes >=0 : print ('Data1:', data)
 
     is_not_visible = data.find ('is_not_visible=1')
     data = data.replace ('is_not_visible=1', '')
     data = data.replace ('is_not_visible=0', '')
-
+    is_cgi = data.find ('is_cgi=1')
+    data = data.replace ('is_cgi=1', '')
+    data = data.replace ('is_cgi=0', '')
+    if yes >= 0 : print ('Is_cgi:', is_cgi)
     #suppress <a tags
     more = 1
     while more == 1 :
@@ -217,7 +221,7 @@ while i < maxIndex :
         data = data[:abeg]+data[aend1+1:aend2]+data[aend2+4:]
     
     # cleanup image attribute
-    imageb = data.find ('/separator/image/')
+    imageb = data.find ('|image|')
     if imageb >= 0 :
       imbeg = data.find('w='+password, imageb)
       imend = data.find('algolia', imbeg)
@@ -228,7 +232,7 @@ while i < maxIndex :
         data = data[:imbeg+len('w='+password)]+data[imend+len('algolia'):]
     
     # suppress other tags in Notes
-    noteb = data.find ('/separator/notes/')
+    noteb = data.find ('|notes|')
     if yes >= 0 : print ('Noteb:', noteb, data[noteb:noteb+20])
     more = 1
     while more == 1 and noteb >= 0 :
@@ -238,27 +242,15 @@ while i < maxIndex :
         more = 0
       else :
         data = data[:abeg]+data[aend1+1:]
-    data = data.replace('\n\n', '\n')
-    data = data.replace('\n\n', '\n')
-    data = data.replace('\n\n', '\n')
-    data = data.replace('\n\n', '\n')
-    data = data.replace('\n\n', '\n')
-    data = data.replace('\n ', '\n')
-    data = data.replace('\n ', '\n')
-    data = data.replace('\n ', '\n')
-    data = data.replace('\n ', '\n')
-    data = data.replace('\n ', '\n')
-    data = data.replace('\n ', '\n')
-    data = data.replace('\n ', '\n')
-    data = data.replace('/separator/\n', '/separator/')
-    data = data.replace('\n/separator/,', '/separator/,')
+    data = data.replace('|\n', '|')
+    data = data.replace('\n|,', '|,')
     if yes >=0 : print ('Data2:', data)
 
     # clean-up nonce in http:// to person
     # Depending on localhost or CGI mode, the nonce etrminates with ? or ;!!
     hrefb = data.find ('http://')
     nonceb = data.find ('_', hrefb)
-    if hostname == "iMac-H" :
+    if is_cgi <= 0 :
       noncee = data.find ('?', nonceb)
     else :
       noncee = data.find (';', nonceb)
@@ -270,7 +262,7 @@ while i < maxIndex :
     # and to image
     hrefb = data.find ('http://', noncee)
     nonceb = data.find ('_', hrefb)
-    if hostname == "iMac-H" :
+    if is_cgi <= 0 :
       noncee = data.find ('?', nonceb)
     else :
       noncee = data.find (';', nonceb)
@@ -283,18 +275,25 @@ while i < maxIndex :
     
     # remplacer tous les " par \"
     data = data.replace ('"', '\\"')
-    data = data.replace ('/separator/|/separator2/', '/separator//separator2/')
-    data = data.replace ('/separator2/', '"')
-    if yes >=0 : print ('Data23:', data)
+    # In notes, replace | by \|
+    notesb = data.find ('|notes|: ')
+    notese = data.find ('|,|notes_end|')
+    if notesb >= 0 and notese >= 0 :
+      notes = data[notesb+len('|notes|: ')+1:notese] # ignore first and last |
+      notes = notes.replace ('|', '\\|')
+      data = data[:notesb+len('|notes|: ')]+'|'+notes+'|, '+data[notese+len('|,|notes_end|'):]
+    else :
+      data = data.replace ('|notes_end|', '')
+    if yes >=0 : print ('Data23:', notesb, notese, data)
     
     # loop on each repetitive attribute (Prénom, Places, Alias) to suppress doubles
-    # beware : "locations": ["aaa, bbb", "ccc", "ddd"]
+    # beware : "locations": |aaa, bbb|ccc|ddd| -> ["aaa, bbb", "ccc", "ddd"]
     data = data.replace (':  ', ': ')
-    for attr in ['firstnames', 'locations', 'dates'] :
+    for attr in ['firstnames', 'locations', 'dates', 'sources'] :
       if yes >=0 : print ('Attr:', attr)
-      tag = '/separator/'+attr+'/separator/: /separator/'
+      tag = '|'+attr+'|:'
       tagb = data.find (tag)
-      tage = data.find ('/separator/,\n', tagb+1)
+      tage = data.find ('|,', tagb+1)
       if tagb >= 0 :
         tags = data[tagb+len(tag):tage]
         tagsList = tags.split ('|')
@@ -313,14 +312,19 @@ while i < maxIndex :
         if yes >=0 : print ('TagsL:', tagsList)
         # Reconstruct tags list
         tagsNew = ""
+        tagsCnt = 1
+        if attr == 'firstnames' or attr == 'dates' :
+          quotes = ''
+        else :
+          quotes = '"'
         for t in tagsList :
-          if t != "" :
-            if tagsNew != "" :
-              tagsNew = tagsNew+", "+t
+          t = t.strip()
+          if t != '' :
+            if tagsNew != '' :
+              tagsNew = tagsNew+', '+quotes+t+quotes
             else :
-              tagsNew = t
-        if attr == "locations" :
-          tagsNew = '['+tagsNew+']'
+              tagsNew = quotes+t+quotes
+            tagsCnt += 1
         if yes >=0 : print ('TagsN:', tagsNew)
 
         # compute average date
@@ -330,37 +334,50 @@ while i < maxIndex :
           tot = 0
           for d in tagsNewList :
             d = d.strip()
+            d = d.strip('"')
             if d != "" :
               tot = tot + int(d)
           average = tot/len(tagsNewList)
           if average > 0 :
-            daterange = '/separator/daterange/separator/: %d,\n'%average
+            daterange = '"daterange": %d,\n'%average
           else :
             daterange = ""
           #print ('Dates:', tagsNewList, daterange)
         # insert daterange
-        data = data[:tagb]+daterange+tag+tagsNew+data[tage:]
+        if attr == 'firstnames' or attr == 'dates' :
+          tagsCnt = 1
+        if tagsCnt > 1 :
+          data = data[:tagb]+daterange+tag+' ['+tagsNew+']'+data[tage+1:]
+        else :
+          data = data[:tagb]+daterange+tag+' "'+tagsNew+'"'+data[tage+1:] 
       else :
         if yes >=0 : print ('No tagb:', tag, data)
 
+    data = data.replace ('\\|', '§temporary_replacement§')
+    data = data.replace ('|', '"')
+    data = data.replace ('§temporary_replacement§', '|')
+
+    data = data.replace (', "dummy": ""', '')
+    data = data.replace ('"[', '[')
+    data = data.replace (']"', ']')
+    data = data.replace ('\n', ' ')
+    data = data.replace ('  ', ' ')
     if yes >=0 : print ('Data3:', data)
-    data = data.replace ('/separator/[', '[')
-    data = data.replace (']/separator/', ']')
     data = clean_data (data)
     if data != "" :
       if is_not_visible >= 0 :
-        outw.write (data+'\n')
+        outv.write (data+'\n')
       else :
         outf.write (data+'\n')
     comma = data.find (',')
-    print ('I=', i, data[12:comma])
+    print ('I=', i, data[:comma])
     totLength = totLength + len(data)
   i += 1
-
-outf.write ('{ "objectID": "dummy-record", "dummy": ""}\n]\n')
-outw.write ('{ "objectID": "dummy-record", "dummy": ""}\n]\n')
+# Dummy record to close the chunk
+outf.write ('{ "objectID": "dummy-record"}\n]\n')
+outv.write ('{ "objectID": "dummy-record"}\n]\n')
 outf.close()
-outw.close()
+outv.close()
 totK = totLength/1000
 totM = totLength/1000000
 if totLength < 1000 :
@@ -370,15 +387,19 @@ elif totLength < 1000000 :
 else:
   print ('Finished: %.2f Mbytes'%totM)
 
-if hostname == "iMac-Hxx" and basename != "Grimaldi700" :
-  print ('Start uploading '+outFileF+' and '+outFileW+' to Algolia')
-  client = algoliasearch.Client("GMGUNOIT8M", 'd3a0bbe63a35c26867333b184f3b8d26')
-  index = client.init_index(basename+'_private')
+if hostname == "iMac-H" and basename != "Grimaldi700" :
+  print ('Start uploading '+outFileF+' and '+outFileV+' to Algolia')
+  client = algoliasearch.Client(appId, apiKey)
+  index = client.init_index(basename)
+  index.clear_index()
   batch = json.load(open(outFileF))
+  index.add_objects(batch)
+  batch = json.load(open(outFileV))
   index.add_objects(batch)
 
   index = client.init_index(basename+'_public')
-  batch = json.load(open(outFileW))
+  batch = json.load(open(outFileV))
+  index.clear_index()
   index.add_objects(batch)
   #index.set_settings({"searchableAttributes": ["names", "firstnames", "locations", "dates", "daterange"]})
   print ('Finished uploading to Algolia')
