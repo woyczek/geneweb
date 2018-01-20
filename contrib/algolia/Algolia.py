@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import os, sys, string, codecs, time, http.client
 import socket
@@ -6,13 +6,13 @@ import getopt
 import requests
 import re
 import json
+hostname =  socket.gethostname() 
+if hostname == "iMac-H" :
+  from algoliasearch import algoliasearch
 
 #import urllib
 from datetime import date
 from time import strftime, sleep
-hostname =  socket.gethostname() 
-if hostname == "iMac-H" :
-  from algoliasearch import algoliasearch
 
 #############################################
 # Debut
@@ -34,6 +34,8 @@ except getopt.GetoptError as err:
   print ('Funny option', sys.argv)
   usage()
   sys.exit(2)
+  
+basename = ""
 startIndex=0
 size=10
 chunkNb=""
@@ -143,9 +145,9 @@ def get_bvar (param) :
 
 
 if basename == "" :
-  basename = input ('Basename:')
-  maxIndex = input ('MaxIndex:')
-  startIndex = input('StartIndex:')
+  basename = input ('Basename: ')
+  maxIndex = int(input ('MaxIndex: '))
+  startIndex = int(input('StartIndex: '))
   if startIndex == "" : startIndex = 0
 
 print ('Make-algolia starting now : '+stamp)
@@ -173,9 +175,11 @@ except IOError :
   sys.exit(1)
 
 data = gwff.read()
+hostname = get_bvar ('algolia_hostname')
 password = get_bvar ('algolia_passwd')
 appId = get_bvar ('algolia_appid')
 apiKey = get_bvar ('wizard_apikey')
+is_cgi = get_bvar ('is_cgi')
 gwff.close()
 
 #print ('Password:', password)
@@ -184,9 +188,13 @@ outf.write('[\n')
 outv.write('[\n')
 i = startIndex
 totLength = 0
-while i < maxIndex :  
-  Url = "http://127.0.0.1:2317/"+basename+"?templ=algolia;lang=en;w="+password+";i="+str(i)
-  time.sleep(0.01) # delays in sec
+while i < maxIndex :
+  if is_cgi != "yes" :
+    Url = "http://"+hostname+":2317/"+basename+"?templ=algolia;lang=en;w="+password+";i="+str(i)
+    time.sleep(0.01) # delays in sec
+  else :
+    Url = "http://"+hostname+"/gwd?b="+basename+";templ=algolia;lang=en;w="+password+";i="+str(i)
+    time.sleep(1) # delays in sec
   try :
     r = requests.get(Url)
     data = r.text
@@ -205,7 +213,6 @@ while i < maxIndex :
     is_not_visible = data.find ('is_not_visible=1')
     data = data.replace ('is_not_visible=1', '')
     data = data.replace ('is_not_visible=0', '')
-    is_cgi = data.find ('is_cgi=1')
     data = data.replace ('is_cgi=1', '')
     data = data.replace ('is_cgi=0', '')
     if yes >= 0 : print ('Is_cgi:', is_cgi)
@@ -219,18 +226,7 @@ while i < maxIndex :
         more = 0
       else :
         data = data[:abeg]+data[aend1+1:aend2]+data[aend2+4:]
-    
-    # cleanup image attribute
-    imageb = data.find ('|image|')
-    if imageb >= 0 :
-      imbeg = data.find('w='+password, imageb)
-      imend = data.find('algolia', imbeg)
-      if imbeg >= 0 and imend >= 0 :
-        if yes >= 0 :
-          print ('Part1:', imbeg, data[imbeg-20:imbeg+len('w='+password)])
-          print ('Part2:', imend, data[imend+len('algolia'):imend+100])
-        data = data[:imbeg+len('w='+password)]+data[imend+len('algolia'):]
-    
+
     # suppress other tags in Notes
     noteb = data.find ('|notes|')
     if yes >= 0 : print ('Noteb:', noteb, data[noteb:noteb+20])
@@ -248,9 +244,11 @@ while i < maxIndex :
 
     # clean-up nonce in http:// to person
     # Depending on localhost or CGI mode, the nonce etrminates with ? or ;!!
+    # http://localhost:2317/Grimaldi700_xmpnlttxa?w=w
+    # http://demo.geneweb.tuxfamily.org/gw7/gwd?b=Grimaldi700_xmpnlttxa;
     hrefb = data.find ('http://')
     nonceb = data.find ('_', hrefb)
-    if is_cgi <= 0 :
+    if is_cgi != "yes" :
       noncee = data.find ('?', nonceb)
     else :
       noncee = data.find (';', nonceb)
@@ -262,7 +260,7 @@ while i < maxIndex :
     # and to image
     hrefb = data.find ('http://', noncee)
     nonceb = data.find ('_', hrefb)
-    if is_cgi <= 0 :
+    if is_cgi != "yes" :
       noncee = data.find ('?', nonceb)
     else :
       noncee = data.find (';', nonceb)
@@ -272,6 +270,9 @@ while i < maxIndex :
     
     # Remove templ=algolia; if any left
     data = data.replace ('templ=algolia;', '')
+    # and :2317 in CGI mode
+    if is_cgi == "yes" :
+      data = data.replace (':2317', '')
     
     # remplacer tous les " par \"
     data = data.replace ('"', '\\"')
@@ -387,7 +388,7 @@ elif totLength < 1000000 :
 else:
   print ('Finished: %.2f Mbytes'%totM)
 
-if hostname == "iMac-H" and basename != "Grimaldi700" :
+if apiKey != "" and basename != "Grimaldi700xxx" :
   print ('Start uploading '+outFileF+' and '+outFileV+' to Algolia')
   client = algoliasearch.Client(appId, apiKey)
   index = client.init_index(basename)
