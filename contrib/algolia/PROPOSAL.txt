@@ -30,7 +30,7 @@ the whole record, and/or refined through facets.
 3/ queries
 Queries can be of two kinds:
 - simple (word1 word2 word3) meaning words1 OR word2 OR word3
-- complex (wodr1 "word2" -word3) meaning maybe word1, certainly word2 AND NOT word3
+- complex (word1 "word2" -word3) meaning maybe word1, certainly word2 AND NOT word3
 See Algolia for details.
 
 4/ Updating
@@ -63,3 +63,16 @@ and indexname according to the status of the user.
 It is possible to organise the queries of friends and wizards to query two index
 (the public and the private one), but in such a setup, results are not ranked across
 the two index resulting in somewhat less significant results.
+
+6/ Future
+Delivering this solution across GeneWeb users is not trivial given the SaaS option 
+of Algolia and the necessity of obtaining appId and apiKeys. I will explore with Algolia
+what they mean by "free for Open source", and to what extent it allows a widespread distribution.
+The case of Roglo (and of other few large GeneWeb bases like pierfit) is a separate issue.
+GeneaNet is not part of this analysis. Given their commercial position, they fall into
+the "regular customer" category. 
+
+7/ Alternatives
+Alternatives are possible, using open source solutions such as Lucene. Exploring
+and deploying such alternatives is a somewhat larger project which I am not ready 
+to embark upon. Algolia's ease of use has really shown its power.
