@@ -36,8 +36,8 @@ fi
 
 # SIZE as reported by GeneWeb
 
-BASE="Grimaldi700"
-#BASE="Chausey"
+#BASE="Grimaldi700"
+BASE="Chausey"
 #BASE=HenriT
 
 if [ "${1}" == "" ]; then
@@ -46,8 +46,8 @@ else
   START="$1"
 fi
 if [ "${2}" == "" ]; then
-  SIZE="167" # grimaldi
-  #SIZE="3790" # chausey
+  #SIZE="167" # grimaldi
+  SIZE="3790" # chausey
   #SIZE="8827" # henri
 else
   SIZE="$2"

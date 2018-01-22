@@ -17,7 +17,7 @@ from time import strftime, sleep
 #############################################
 # Debut
 #############################################
-    
+
 # mettre à jour "../Chausey-CD/Gw/etc/Chausey/trl.txt"
 
 now = date.today()
@@ -34,7 +34,7 @@ except getopt.GetoptError as err:
   print ('Funny option', sys.argv)
   usage()
   sys.exit(2)
-  
+
 basename = ""
 startIndex=0
 size=10
@@ -76,33 +76,17 @@ maxIndex = startIndex + size
 #print ('Getopt test')
 #sys.exit()
 
-  
 # init http connexion
 hostIp = "127.0.0.1"
 #hostIp = "192.168.1.12"
 sleepDelay = 0.000
 
-def clean_data (data) :
-  data = data.replace ('/separator/', '"')
-  data = data.replace ('<li>', ',')
-  data = clean (data)
-  data = data.replace ('\n,',': ')
-  data = data.replace ('\n"','"')
-  #data = data.replace (' ,', ', ')
-  #data = data.replace ('\n',' ')
-  #data = data.replace ('  ', ' ')
-  #data = data.replace ('": ", ', '": "')
-  #data = data.replace (' ", ', '", ')
-  #data = data.replace (',", ', '", ')
-  #data = data.replace ('}, ', '},')
-  return (data)
-  
-def clean (html):
+def clean_html (html):
   """
     Strip HTML tags from any string and transfrom special entities
   """
   text = html
- 
+
   # apply rules in given order!
   rules = [
     { r'>\s+' : u'>'},                  # remove spaces after a tag opens or closes
@@ -116,7 +100,7 @@ def clean (html):
     { r'^\s+' : u'' },                  # remove spaces at the beginning
     { r'\n\n' : u'\n' }                 # remove double \n
   ]
- 
+
   for rule in rules:
     for (k,v) in rule.items():
       regex = re.compile (k)
@@ -130,7 +114,7 @@ def clean (html):
  
   for (k,v) in special.items():
     text = text.replace (k, v)
- 
+
   return text  
 
 def get_bvar (param) :
@@ -142,7 +126,6 @@ def get_bvar (param) :
     print ('Missing %s in .gwf file'%param)
     sys.exit(1)
   return (bvar)
-
 
 if basename == "" :
   basename = input ('Basename: ')
@@ -207,7 +190,7 @@ while i < maxIndex :
   errore = data.find('Incorrect request')
 
   if errore < 0:
-    yes = data.find('albert.1.grimaldixxxxxx')
+    yes = data.find('caroline.0.de+bailliencourt')
     if yes >=0 : print ('Data1:', data)
 
     is_not_visible = data.find ('is_not_visible=1')
@@ -364,7 +347,7 @@ while i < maxIndex :
     data = data.replace ('\n', ' ')
     data = data.replace ('  ', ' ')
     if yes >=0 : print ('Data3:', data)
-    data = clean_data (data)
+    data = clean_html (data)
     if data != "" :
       if is_not_visible >= 0 :
         outv.write (data+'\n')
@@ -404,7 +387,6 @@ if apiKey != "" and basename != "Grimaldi700xxx" :
   index.add_objects(batch)
   #index.set_settings({"searchableAttributes": ["names", "firstnames", "locations", "dates", "daterange"]})
   print ('Finished uploading to Algolia')
-
 
 sys.exit(0)
 

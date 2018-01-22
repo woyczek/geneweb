@@ -27,11 +27,10 @@ Think also about a forum specific index with author, subject and date as facets
 %if;(first_name_key!="" and surname_key!="")
 {%nn;
 <br>is_not_visible=%is_invisible;%nn;
-<br>is_cgi=%if;(cgi)1%else;0%end;%nn;
-<br>|objectID|: |%first_name_key;.%occ;.%surname_key;|,%nn;
-<br>|url|: |http://%bvar.algolia_hostname;:2317/%prefix;w=%bvar.algolia_passwd;;%access;|,%nn;
+<br>|objectID|: |%first_name_key;.%occ;.%surname_key;|, %nn;
+<br>|url|: |http://%bvar.algolia_hostname;:2317/%prefix;w=%bvar.algolia_passwd;;%access;;|, %nn;
 %if;has_image;
-<br>|image|: |http://%bvar.algolia_hostname;:2317/%prefix;w=%bvar.algolia_passwd;;%image_url;|,%nn;
+<br>|image|: |http://%bvar.algolia_hostname;:2317/%image_url;;w=%bvar.algolia_passwd;;|, %nn;
 %end;
 <br>|names|: %nn;
 %if;(surname != "")|%surname;%end;
@@ -40,7 +39,7 @@ Think also about a forum specific index with author, subject and date as facets
     %sp;%surname_alias;
   %end;)%nn;
 %end;%nn;
-|,%nn;
+|, %nn;
 
 <br>|firstnames|: %nn;
 %if;(first_name != "")|%first_name;%end;
@@ -59,7 +58,7 @@ Think also about a forum specific index with author, subject and date as facets
     |%alias;%sp;
   %end;%nn;
 %end;%nn;
-|,%nn;
+|, %nn;
 
 %( generalize for all event dates%)
 <br>|dates|: %if;(not(has_birth_date or has_death_date or has_families))|%end;%nn;
@@ -72,7 +71,7 @@ Think also about a forum specific index with author, subject and date as facets
       %end;%nn;
     %end;%nn;
   %end;%nn;
-|,%nn;
+|, %nn;
 
 %( generalize for all events places%)
 <br>|locations|: %if;(not(has_birth_place or has_death_place or has_families))|%end;%nn;
@@ -85,7 +84,7 @@ Think also about a forum specific index with author, subject and date as facets
       %end;%nn;
     %end;%nn;
   %end;%nn;
-|,%nn;
+|, %nn;
 
 %(
 Other possible attributes:
@@ -97,16 +96,16 @@ Other possible attributes:
 %if;has_notes;
 <br>|notes|: |%nn;
   %notes;%nn;
-|,%nn;
+|,|notes_end| %nn; %( do not disturb %)
 %end;
-<br>|notes_end|%nn;
+
 %( generalize for all sources (and src??, comment) %)
 %if;has_sources;
 <br>|sources|: %if;(not has_sources)|%end;%nn;
   %foreach;source;
     |%source;
   %end;%nn;
-|,%nn;
+|, %nn;
 %end;
 
 <br>|dummy|: ||%nn;
