@@ -18,10 +18,7 @@ value print conf base p =
     do {
       Wserver.printf "%s" (capitale (transl_decline conf "merge" ""));
       if h then ()
-      else do {
-        Wserver.printf "%s " (transl conf ":");
-        print_someone conf base p;
-      }
+      else do { Wserver.printf "%s " (transl conf ":"); print_someone conf base p; };
     }
   in
   let list = Gutil.find_same_name base p in
@@ -33,48 +30,84 @@ value print conf base p =
   in
   do {
     Perso.interp_notempl_with_menu title "perso_header" conf base p;
-    tag "h2" begin title False; end;
-    Wserver.printf "\n";
-    tag "form" "method=\"get\" action=\"%s\"" conf.command begin
+    tag "div" "id=\"geneweb-merge\"" begin
+      tag "h2" begin title False; end;
       tag "p" begin
-        Util.hidden_env conf;
-        xtag "input" "type=\"hidden\" name=\"m\" value=\"MRG_IND\"";
-        xtag "input" "type=\"hidden\" name=\"i\" value=\"%d\""
-          (Adef.int_of_iper (get_key_index p));
-        Wserver.printf "%s " (capitale (transl_decline conf "with" ""));
-        if list <> [] then do {
-          Wserver.printf "%s" (transl conf ":");
+        Wserver.printf "%s" (transl_decline conf "merge_expl" "");
+      end;
+      Wserver.printf "\n";
+      tag "form" "method=\"get\" action=\"%s\"" conf.command begin
+        tag "h3" begin
+          Wserver.printf "%s" (capitale (transl_decline conf "with" ""));
+        end;
+        tag "p" begin
+          Util.hidden_env conf;
+          xtag "input" "type=\"hidden\" name=\"m\" value=\"MRG_IND\"";
+          xtag "input" "type=\"hidden\" name=\"i\" value=\"%d\""
+            (Adef.int_of_iper (get_key_index p));
+          Wserver.printf "%s%s" (transl_decline conf "merge_search" "") (transl conf ":");
           xtag "br";
-          xtag "input" "\
-type=\"radio\" class=\"form-control\" name=\"select\" value=\"input\" checked";
+          if list <> [] then do {
+            Wserver.printf " ";
+            xtag "input" "type=\"radio\" name=\"select\"\
+              value=\"input\" checked=\"checked\"";
+          }
+          else ();
+          xtag "input" "name=\"n\" size=\"30\" placeholder=\"%s . %s %s\" maxlength=\"200\""
+            (transl_nth conf "first name/first names" 0)
+            (transl conf "number")
+            (transl_nth conf "surname/surnames" 0);
+          Wserver.printf "(%s%s " (transl_decline conf "merge_enter" "") (transl conf ":");
+          Wserver.printf "%s . %s %s)\n"
+            (transl_nth conf "first name/first names" 0) (transl conf "number")
+            (transl_nth conf "surname/surnames" 0);
+          xtag "br";
+        end;
+        if list <> [] then do {
+          Wserver.printf "%s%s" (transl_decline conf "merge_choose" "") (transl conf ":");
+          Wserver.printf
+            "<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n"
         }
         else ();
-        Wserver.printf "(%s.%s %s)%s\n"
-          (transl_nth conf "first name/first names" 0) (transl conf "number")
-          (transl_nth conf "surname/surnames" 0) (transl conf ":");
-        xtag "input" "class=\"form-control\" name=\"n\" size=\"30\" maxlength=\"200\"";
-        xtag "br";
-      end;
-      if list <> [] then
-        Wserver.printf
-          "<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\n"
-      else ();
-      List.iter
-        (fun p ->
-           tag "tr" "align=\"%s\"" conf.left begin
-             tag "td" "valign=\"top\"" begin
-               xtag "input" "type=\"radio\" name=\"select\" value=\"%d\""
-                 (Adef.int_of_iper (get_key_index p));
-             end;
-             tag "td" begin
-               Update.print_person_parents_and_spouses conf base p;
-               xtag "br";
-             end;
-           end)
-        list;
-      if list <> [] then Wserver.printf "</table>\n" else ();
-      tag "button" "type=\"submit\" class=\"btn btn-secondary btn-lg\"" begin 
-        Wserver.printf "%s" (capitale (transl_nth conf "validate/delete" 0));
+        List.iter
+          (fun p ->
+             tag "tr" "align=\"%s\"" conf.left begin
+               tag "td" "valign=\"top\"" begin
+                 xtag "input" "type=\"radio\" name=\"select\" value=\"%d\""
+                   (Adef.int_of_iper (get_key_index p));
+               end;
+               tag "td" begin
+                 stag "a" "target=\"_blank\" href=\"%s%s\"" (commd conf) (acces conf base p) begin
+                   Wserver.printf "%s.%d %s" (sou base (get_first_name p))
+                     (get_occ p) (sou base (get_surname p));
+                 end;
+                 Wserver.printf "%s" (Date.short_dates_text conf base p);
+                 match main_title conf base p with
+                 [ Some t -> Wserver.printf "%s" (one_title_text conf base p t)
+                 | None -> () ];
+                 match get_parents p with
+                 [ Some ifam ->
+                     let cpl = foi base ifam in
+                     Wserver.printf ",\n%s"
+                       (Util.translate_eval
+                         (transl_a_of_b conf
+                            (transl_nth conf "son/daughter/child"
+                               (index_of_sex (get_sex p)))
+                            (person_title_text conf base
+                               (poi base (get_father cpl)) ^
+                               " " ^ transl_nth conf "and" 0 ^ " " ^
+                               person_title_text conf base
+                                 (poi base (get_mother cpl)))))
+                 | None -> () ];
+                 xtag "br";
+               end;
+             end)
+          list;
+        if list <> [] then Wserver.printf "</table>\n" else ();
+        tag "p" begin
+          xtag "input" "type=\"submit\" value=\"%s\""
+            (capitale (transl_decline conf "merge_validate" ""));
+        end;
       end;
     end;
     trailer conf;
