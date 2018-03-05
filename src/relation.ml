@@ -1659,19 +1659,18 @@ value print conf base p =
   | None -> relmenu_print conf base p ]
 ;
 
-(* ************************************************************************** *)
-(*  [Fonc] build_pl : config -> base -> unit                                  *)
-(** [Description] : Construction of a list of persons found in evar.ik
-                    in the url
-    [Args] :
-      - conf : configuration
-      - base : base
-      - assoc_txt : 
-    [Retour] : list of persons
-    [Rem] : Not exported                                                      *)
-(* ************************************************************************** *)
-
-value build_pl conf base assoc_txt =
+value print_multi conf base =
+  let assoc_txt = Hashtbl.create 53 in
+  let p0 =
+    match find_person_in_env conf base "0" with
+    [ Some p ->
+        do {
+          match p_getenv conf.env "t0" with
+          [ Some x -> Hashtbl.add assoc_txt (get_key_index p) x
+          | None -> () ];
+          Some p }
+    | None -> None ]
+  in
   let pl =
     loop [] 1 where rec loop pl i =
       let k = string_of_int i in
@@ -1684,69 +1683,11 @@ value build_pl conf base assoc_txt =
             match p_getenv conf.env ("t" ^ k) with
             [ Some x -> Hashtbl.add assoc_txt (get_key_index p) x
             | None -> () ];
-            loop [p :: pl] (i + 1)
+            match p0 with
+            [ Some p0 -> loop [p :: [ p0 :: pl]] (i + 1)
+            | None -> loop [p :: pl] (i + 1) ]
           }
       | None -> List.rev pl ]
-  in
-  pl
-;
-
-(* ************************************************************************** *)
-(*  [Fonc] build_pl_r : config -> base -> person -> unit                        *)
-(** [Description] : Construction of a list of persons found in evar.ik
-                    in the url. The person p0 in inserted between
-                    each person found in the url
-    [Args] :
-      - conf : configuration
-      - base : base
-      - p0 : person
-      - assoc_txt : 
-    [Retour] : list of persons
-    [Rem] : Not exported                                                      *)
-(* ************************************************************************** *)
-
-value build_pl_r conf base p0 assoc_txt =
-  let pl =
-    loop [] 1 where rec loop pl i =
-      let k = string_of_int i in
-      match find_person_in_env conf base k with
-      [ Some p ->
-          do {
-            match p_getenv conf.env ("t" ^ k) with
-            [ Some x -> Hashtbl.add assoc_txt (get_key_index p) x
-            | None -> () ];
-            let pl = [p0 :: pl] in
-            loop [p :: pl] (i + 1)
-          }
-      | None -> List.rev pl ]
-  in
-  pl
-;
-
-(* ************************************************************************** *)
-(*  [Fonc] print_multi : config -> base                                       *)
-(** [Description] : Construction of a list of persons found in evar.ik 
-                    (k=1 to n) in the url.
-                    Passes this list to print_multi_relation
-                    If evar.i0 is present, insert this pivot person
-                    between each person of the evar.ik list
-    [Args] :
-      - conf : configuration
-      - base : base
-    [Rem] : Not exported                                                      *)
-(* ************************************************************************** *)
-
-value print_multi conf base =
-  let assoc_txt = Hashtbl.create 53 in
-  let pl = match find_person_in_env conf base "0" with
-    [ Some p ->
-        do {
-          match p_getenv conf.env "t0" with
-            [ Some x -> Hashtbl.add assoc_txt (get_key_index p) x
-            | None -> () ];
-          build_pl_r conf base p assoc_txt
-        }
-    | None -> build_pl conf base assoc_txt ]
   in
   let lim =
     match p_getint conf.env "lim" with
@@ -1755,3 +1696,4 @@ value print_multi conf base =
   in
   print_multi_relation conf base pl lim assoc_txt
 ;
+
