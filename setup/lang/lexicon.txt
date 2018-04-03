@@ -61,7 +61,7 @@ sv: Fel
     text/link/vlink
 en: text/link/vlink
 es: texto/enlace/visitado
-fr: texte/lien/visit&eacute;
+fr: texte/lien/visité
 it: testo/link/visitato
 nl: tekst/connectie/bezocht
 
