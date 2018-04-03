@@ -84,7 +84,7 @@ value transl conf w =
 
 value charset conf =
   try Hashtbl.find conf.lexicon " !charset" with
-  [ Not_found -> "iso-8859-1" ]
+  [ Not_found -> "utf-8" ]
 ;
 
 value header_no_page_title conf title =
