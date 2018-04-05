@@ -973,6 +973,23 @@ value gwc2 conf =
   }
 ;
 
+value connex conf =
+  print_file conf "bsc.htm"
+;
+
+value connex_1 conf ok_file =
+  let rc =
+    let comm = stringify (Filename.concat bin_dir.val conf.comm) in
+    exec_f (comm ^ parameters conf.env)
+  in
+  do {
+    eprintf "\n";
+    flush stderr;
+    if rc > 1 then print_file conf "bsi_err.htm" else print_file conf ok_file
+  }
+;
+
+
 value gwu_or_gwb2ged_check suffix conf =
   let in_file =
     match p_getenv conf.env "anon" with
@@ -1774,6 +1791,8 @@ value setup_comm_ok conf =
   | "gwf_1" -> gwf_1 conf
   | "gwd" -> gwd conf
   | "gwd_1" -> gwd_1 conf
+  | "connex" -> connex conf
+  | "connex_1" -> connex_1 conf "connex_ok.htm"
   | x ->
       if start_with x "doc/" || start_with x "images/" || start_with x "css/"
       then raw_file conf x
