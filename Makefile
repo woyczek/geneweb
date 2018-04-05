@@ -109,6 +109,7 @@ distrib:
 	cp ged2gwb/ged2gwb $(DESTDIR)/gw/ged2gwb$(EXE)
 	cp ged2gwb/ged2gwb2 $(DESTDIR)/gw/ged2gwb2$(EXE)
 	cp gwb2ged/gwb2ged $(DESTDIR)/gw/gwb2ged$(EXE)
+	cp contrib/gwbase/etc/connex.out $(DESTDIR)/gw/connex$(EXE)
 	cp setup/setup $(DESTDIR)/gw/gwsetup$(EXE)
 	mkdir $(DESTDIR)/gw/gwtp_tmp
 	mkdir $(DESTDIR)/gw/gwtp_tmp/lang
@@ -118,13 +119,9 @@ distrib:
 	mkdir $(DESTDIR)/gw/setup
 	cp setup/intro.txt $(DESTDIR)/gw/setup/.
 	mkdir $(DESTDIR)/gw/setup/lang
-	if test $(OS_TYPE) = "Win"; then \
-	  cp setup/lang/intro.txt.dos $(DESTDIR)/gw/setup/lang/intro.txt; \
-	else \
-	  cp setup/lang/intro.txt $(DESTDIR)/gw/setup/lang/intro.txt; \
-	fi
 	cp setup/lang/*.htm $(DESTDIR)/gw/setup/lang/.
 	cp setup/lang/lexicon.txt $(DESTDIR)/gw/setup/lang/.
+	cp setup/lang/intro.txt $(DESTDIR)/gw/setup/lang/.
 	cp -R hd/* $(DESTDIR)/gw/.
 	rm -f $(DESTDIR)/exe-version.txt
 	echo "Commit: `git log  -1 | grep commit | cut -c8-15`, `date`"      > $(DESTDIR)/commit.txt

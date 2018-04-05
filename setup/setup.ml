@@ -973,14 +973,52 @@ value gwc2 conf =
   }
 ;
 
-value connex conf =
+value parameters_1 =
+  loop "" where rec loop comm =
+    fun
+    [ [(k, s) :: env] ->
+        let k = strip_spaces (decode_varenv k) in
+        let s = strip_spaces (decode_varenv s) in
+        if k = "" || s = "" then loop comm env
+        else if k = "opt" then loop comm env
+        else if k = "anon" then loop (comm ^ " " ^ stringify s) env
+        else if k = "a" then loop (comm ^ " -a") env
+        else if k = "d" then loop (comm ^ " -d " ^ stringify s ) env
+        else if k = "i" then loop (comm ^ " -i " ^ stringify s) env
+        else if k = "bf" then loop (comm ^ " -bf") env
+        else if k = "del" then loop (comm ^ " -del " ^ stringify s) env
+        else loop comm env
+    | [] -> comm ]
+;
+
+value connex_check conf =
   print_file conf "bsc.htm"
 ;
 
-value connex_1 conf ok_file =
+value connex conf ok_file =
+  let ic = Unix.open_process_in "uname" in
+  let uname = input_line ic in
+  let () = close_in ic in
   let rc =
-    let comm = stringify (Filename.concat bin_dir.val conf.comm) in
-    exec_f (comm ^ parameters conf.env)
+    if uname = "Darwin" then
+      let comm = stringify (Filename.concat bin_dir.val conf.comm) in
+      let commnd = "cd " ^ (Sys.getcwd ()) ^ "; tput bel;" ^
+        comm ^ " " ^ parameters_1 conf.env in
+      let launch = "tell application \"Terminal\" to do script " in
+      Sys.command ("osascript -e '" ^ launch ^ " \" " ^ commnd ^ " \"' " )
+    else if uname = "Linux" then
+      (* non testé ! *)
+      let comm = stringify (Filename.concat bin_dir.val conf.comm) in
+      let commnd = "cd " ^ (Sys.getcwd ()) ^ "; tput bel;" ^
+        comm ^ " " ^ parameters_1 conf.env in
+      Sys.command ("xterm -e \" " ^ commnd ^ " \" ")
+    else if uname = "Win" then
+      (* à compléter et tester ! *)
+      let comm = stringify (Filename.concat bin_dir.val conf.comm) in
+      let commnd = "cd " ^ (Sys.getcwd ()) ^ "; tput bel;" ^
+        comm ^ " " ^ parameters_1 conf.env in
+      Sys.command ("xterm -e \" " ^ commnd ^ " \" ")
+    else 2
   in
   do {
     eprintf "\n";
@@ -988,7 +1026,6 @@ value connex_1 conf ok_file =
     if rc > 1 then print_file conf "bsi_err.htm" else print_file conf ok_file
   }
 ;
-
 
 value gwu_or_gwb2ged_check suffix conf =
   let in_file =
@@ -1791,8 +1828,10 @@ value setup_comm_ok conf =
   | "gwf_1" -> gwf_1 conf
   | "gwd" -> gwd conf
   | "gwd_1" -> gwd_1 conf
-  | "connex" -> connex conf
-  | "connex_1" -> connex_1 conf "connex_ok.htm"
+  | "connex" -> 
+       match p_getenv conf.env "opt" with
+      [ Some "check" -> connex_check conf
+      | _ -> connex conf "connex_ok.htm" ]
   | x ->
       if start_with x "doc/" || start_with x "images/" || start_with x "css/"
       then raw_file conf x
