@@ -1016,8 +1016,8 @@ value connex conf ok_file =
       (* à compléter et tester ! *)
       let comm = stringify (Filename.concat bin_dir.val conf.comm) in
       let commnd = "cd " ^ (Sys.getcwd ()) ^ "; tput bel;" ^
-        comm ^ " " ^ parameters_1 conf.env in
-      Sys.command ("xterm -e \" " ^ commnd ^ " \" ")
+        comm ^ " " ^ parameters_1 conf.env in        
+      Sys.command ("cmd /c start \"Connex\" " ^ commnd )
     else 2
   in
   do {
