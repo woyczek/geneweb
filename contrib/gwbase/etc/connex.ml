@@ -5,6 +5,7 @@ open Def;
 open Gwdb;
 
 value all = ref False;
+value statistics = ref True;
 value detail = ref 0;
 value ignore = ref [];
 value ignore_files = ref True;
@@ -122,6 +123,7 @@ value move base = do {
   let mark = Array.make nb_fam False in
   let min = ref max_int in
   let max = ref 0 in
+  let hts = Hashtbl.create 100 in
   for i = 0 to nb_fam - 1 do {
     let ifam = Adef.ifam_of_int i in
     let fam = foi base ifam in
@@ -158,6 +160,13 @@ value move base = do {
           (sou base origin_file) nb;
         if detail.val == nb then List.iter (print_family base) ifaml
         else print_family base ifam;
+        if statistics.val then
+          try
+            let n = Hashtbl.find hts nb in
+            Hashtbl.replace hts nb (n+1)
+          with
+            [ Not_found -> Hashtbl.add hts nb 1 ]
+        else ();
         flush stdout;
         if ask_for_delete.val > 0 && nb <= ask_for_delete.val then do {
           Printf.eprintf "Delete that branch (y/N) ? ";
@@ -185,12 +194,21 @@ value move base = do {
       else ();
   };
   if ask_for_delete.val > 0 then Gwdb.commit_patches base else ();
+  Printf.printf "\nStatistics: (%s), all: (%s)\n"
+      (if statistics.val then "on" else "off")
+      (if all.val then "on" else "off");
+  if statistics.val then do {
+    Hashtbl.iter (fun nb n -> Printf.printf "%d(%d) " nb n ) hts;
+    Printf.printf "\n"
+  }
+  else ();
 };
 
 value bname = ref "";
 value usage = "usage: " ^ Sys.argv.(0) ^ " <base>";
 value speclist =
   [("-a", Arg.Set all, ": all connex components");
+   ("-s", Arg.Set statistics, ": produce statistics");
    ("-d", Arg.Int (fun x -> detail.val := x),
     "<int> : detail for this length");
    ("-i", Arg.String (fun x -> ignore.val := [x :: ignore.val]),
