@@ -5,7 +5,7 @@ include $(ROOT)/tools/Makefile.common
 # ALL: directories needed to make distribution
 ALL_TARGETS := wserver dag2html src ged2gwb gwb2ged setup gwtp
 # EVERYTHING: any other maintained project
-EVERYTHING_TARGETS :=  contrib/gwpublic contrib/oneshot contrib/misc contrib/gwFix contrib/history contrib/gwdiff contrib/gwbase/etc contrib/lex
+EVERYTHING_TARGETS := contrib/gwpublic contrib/oneshot contrib/misc contrib/gwFix contrib/history contrib/gwdiff contrib/gwbase/etc contrib/lex
 
 suffixed_TARGETS := $(foreach suffix,all clean depend everything opt out,$(ALL_TARGETS:=?$(suffix)) $(EVERYTHING_TARGETS:=?$(suffix)) tools?$(suffix))
 
@@ -17,7 +17,6 @@ clean: $(ALL_TARGETS:=?clean) $(EVERYTHING_TARGETS:=?clean) tools?clean
 depend: $(ALL_TARGETS:=?depend)
 everything: $(ALL_TARGETS:=?everything) $(EVERYTHING_TARGETS:=?everything)
 opt: $(ALL_TARGETS:=?opt)
-opt_everything: $(ALL_TARGETS:=?opt) $(EVERYTHING_TARGETS:=?opt)
 out: $(ALL_TARGETS:=?out)
 
 $(suffixed_TARGETS):
