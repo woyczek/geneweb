@@ -288,6 +288,13 @@ value parse_upto lim =
     | [: `c; a = loop (Buff.store len c) :] -> a ]
 ;
 
+value parse_upto_void lim =
+  loop 0 where rec loop len =
+    parser
+    [ [: `c when c = lim :] -> ()
+    | [: `c; a = loop (Buff.store len c) :] -> a ]
+;
+
 value is_directory x =
   try (Unix.lstat x).Unix.st_kind = Unix.S_DIR with
   [ Unix.Unix_error _ _ _ -> False ]
@@ -497,6 +504,33 @@ value rec copy_from_stream conf print strm =
                   match p_getenv conf.env k with
                   [ Some v -> print v
                   | None -> () ]
+              | 'G' -> print_specific_file_tail conf print "gwsetup.log" strm
+              | 'I' -> (* if evar.x = "on" or != "" then print content of {...} *)
+                  let k = get_variable strm in
+                  match p_getenv conf.env k with
+                  [ Some v ->
+                      if v = "on" || v <> "" then
+                        match strm with parser
+                          [ [: `'{' :] ->
+                              let s = parse_upto '}' strm in
+                              print s
+                          | [: :] -> print (strip_spaces v) ]
+                      else
+                        match strm with parser
+                          [ [: `'{' :] -> parse_upto_void '}' strm
+                          | [: :] -> () ]
+                  | None -> 
+                      match strm with parser
+                      [ [: `'{' :] -> parse_upto_void '}' strm
+                      | [: :] -> () ] ]
+              | 'J' -> (* return the value of evar.x *)
+                  let k = get_variable strm in
+                  match p_getenv conf.env k with
+                  [ Some x ->
+                      if x <> "" then
+                        print x
+                      else ()
+                  | None -> () ]
               | _ ->
                   match p_getenv conf.env (String.make 1 c) with
                   [ Some v ->
@@ -525,6 +559,19 @@ value rec copy_from_stream conf print strm =
   with
   [ Stream.Failure -> () ]
 and print_specific_file conf print fname strm =
+  match Stream.next strm with
+  [ '{' ->
+      let s = parse_upto '}' strm in
+      if Sys.file_exists fname then do {
+        let ic = open_in fname in
+        if in_channel_length ic = 0 then
+          copy_from_stream conf print (Stream.of_string s)
+        else copy_from_stream conf print (Stream.of_channel ic);
+        close_in ic
+      }
+      else copy_from_stream conf print (Stream.of_string s)
+  | _ -> () ]
+and print_specific_file_tail conf print fname strm =
   match Stream.next strm with
   [ '{' ->
       let s = parse_upto '}' strm in
@@ -1000,28 +1047,23 @@ value connex conf ok_file =
   let uname = input_line ic in
   let () = close_in ic in
   let rc =
+    let commnd = "cd " ^ (Sys.getcwd ()) ^ "; tput bel;" ^
+        (stringify (Filename.concat bin_dir.val "connex")) ^ " " ^ parameters_1 conf.env in
     if uname = "Darwin" then
-      let comm = stringify (Filename.concat bin_dir.val conf.comm) in
-      let commnd = "cd " ^ (Sys.getcwd ()) ^ "; tput bel;" ^
-        comm ^ " " ^ parameters_1 conf.env in
       let launch = "tell application \"Terminal\" to do script " in
       Sys.command ("osascript -e '" ^ launch ^ " \" " ^ commnd ^ " \"' " )
     else if uname = "Linux" then
       (* non testé ! *)
-      let comm = stringify (Filename.concat bin_dir.val conf.comm) in
-      let commnd = "cd " ^ (Sys.getcwd ()) ^ "; tput bel;" ^
-        comm ^ " " ^ parameters_1 conf.env in
       Sys.command ("xterm -e \" " ^ commnd ^ " \" ")
-    else if uname = "Win" then
+    else if Sys.os_type = "Win32" then
       (* à compléter et tester ! *)
-      let comm = stringify (Filename.concat bin_dir.val conf.comm) in
-      let commnd = "cd " ^ (Sys.getcwd ()) ^ "; tput bel;" ^
-        comm ^ " " ^ parameters_1 conf.env in        
-      Sys.command ("cmd /c start \"Connex\" " ^ commnd )
-    else 2
+      Sys.command ("cmd /c start " ^ commnd )
+    else do {
+      eprintf "%s (%s) %s (%s)\n" 
+        "Unknown Os_type" Sys.os_type "or wrong uname response" uname;
+      2}
   in
   do {
-    eprintf "\n";
     flush stderr;
     if rc > 1 then print_file conf "bsi_err.htm" else print_file conf ok_file
   }
