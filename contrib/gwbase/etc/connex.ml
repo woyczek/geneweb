@@ -8,6 +8,7 @@ value all = ref False;
 value statistics = ref True;
 value detail = ref 0;
 value ignore = ref [];
+value output = ref [];
 value ignore_files = ref True;
 value ask_for_delete = ref 0;
 
@@ -224,7 +225,10 @@ value speclist =
     "<file> : ignore this file");
    ("-bf", Arg.Clear ignore_files, ": by origin files");
    ("-del", Arg.Int (fun i -> ask_for_delete.val := i),
-    "<int> : ask for deleting branches whose size <= that value")]
+    "<int> : ask for deleting branches whose size <= that value");
+   ("-o", Arg.String (fun x -> output.val := [x :: ignore.val]),
+    "<file> : output to this file")
+]
 ;
 
 value main () =

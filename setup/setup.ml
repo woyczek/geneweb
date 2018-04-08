@@ -1034,6 +1034,7 @@ value parameters_1 =
         else if k = "i" then loop (comm ^ " -i " ^ stringify s) env
         else if k = "bf" then loop (comm ^ " -bf") env
         else if k = "del" then loop (comm ^ " -del " ^ stringify s) env
+        else if k = "o" then loop (comm ^ " > " ^ stringify s) env
         else loop comm env
     | [] -> comm ]
 ;
