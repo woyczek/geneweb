@@ -86,16 +86,28 @@ value utf8_designation base p =
   else s
 ;
 
-value print_family base ifam = do {
+value wiki_designation base basename p =
+  let first_name = p_first_name base p in
+  let surname = p_surname base p in
+  let s = "[[" ^ first_name ^ "/" ^ surname ^ "/" ^ string_of_int (get_occ p) ^ "/" ^
+    first_name ^ "." ^ string_of_int (get_occ p) ^ " " ^ surname ^ "]]" in
+  if first_name = "?" || surname = "?" then
+    s ^ " <a href=\"http://localhost:2317/" ^ basename ^ "?i=" ^
+      (string_of_int (Adef.int_of_iper (get_key_index p))) ^
+      "\">(i=" ^ (string_of_int (Adef.int_of_iper (get_key_index p))) ^ ")</a><br>"
+  else s ^ "<br>"
+;
+
+value print_family base basename ifam = do {
   let fam = foi base ifam in
   let p = poi base (get_father fam) in
   if sou base (get_first_name p) = "?" || sou base (get_surname p) = "?"
   then
     Printf.printf "i=%d" (Adef.int_of_iper (get_key_index p))
-  else Printf.printf "  - %s" (utf8_designation base p);
+  else Printf.printf "  - %s" (wiki_designation base basename p);
   Printf.printf "\n";
   Printf.printf "  - %s\n"
-    (utf8_designation base (poi base (get_mother fam)));
+    (wiki_designation base basename (poi base (get_mother fam)));
 };
 
 value kill_family base fam ip =
@@ -115,11 +127,12 @@ value effective_del base (ifam, fam) = do {
   Gwdb.delete_family base ifam;
 };
 
-value move base = do {
+value move base basename = do {
   load_ascends_array base;
   load_unions_array base;
   load_couples_array base;
   load_descends_array base;
+  Printf.printf "<h3>Connected components of base %s</h3><br>\n" basename;
   let nb_fam = nb_of_families base in
   let mark = Array.make nb_fam False in
   let min = ref max_int in
@@ -157,10 +170,10 @@ value move base = do {
       if nb > 0 && (all.val || nb <= min.val) then do {
         if nb <= min.val then min.val := nb else ();
         if nb >= max.val then max.val := nb else ();
-        Printf.printf "Connex component \"%s\" length %d\n"
+        Printf.printf "Connex component \"%s\" length %d<br>\n"
           (sou base origin_file) nb;
-        if detail.val == nb then List.iter (print_family base) ifaml
-        else print_family base ifam;
+        if detail.val == nb then List.iter (print_family base basename) ifaml
+        else print_family base basename ifam;
         if statistics.val then
           try
             let n = Hashtbl.find hts nb in
@@ -195,7 +208,7 @@ value move base = do {
       else ();
   };
   if ask_for_delete.val > 0 then Gwdb.commit_patches base else ();
-  Printf.printf "\nStatistics: (%s), all: (%s)\n"
+  Printf.printf "<br>\nStatistics: (%s), all: (%s)<br>\n"
       (if statistics.val then "on" else "off")
       (if all.val then "on" else "off");
   if statistics.val then do {
@@ -237,14 +250,14 @@ value main () =
     if ask_for_delete.val > 0 then
       match
         Lock.control (Mutil.lock_file bname.val) False
-          (fun () ->  move (Gwdb.open_base bname.val))
+          (fun () ->  move (Gwdb.open_base bname.val) bname.val)
       with
       [ Some () -> ()
       | None -> do {
           Printf.eprintf "Base locked. Try again.\n";
           flush stdout
         } ]
-    else move (Gwdb.open_base bname.val)
+    else move (Gwdb.open_base bname.val) bname.val
   }
 ;
 
