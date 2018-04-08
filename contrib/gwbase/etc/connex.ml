@@ -198,7 +198,16 @@ value move base = do {
       (if statistics.val then "on" else "off")
       (if all.val then "on" else "off");
   if statistics.val then do {
-    Hashtbl.iter (fun nb n -> Printf.printf "%d(%d) " nb n ) hts;
+    let ls = 
+      Hashtbl.fold (fun nb n ls -> [(nb, n) :: ls] ) hts []
+    in
+    let ls = List.sort compare ls in
+    let ls = List.rev ls in
+    List.iter 
+      (fun item -> 
+        match item with 
+            [(nb, n) -> Printf.printf "%d(%d) " nb n ]
+      ) ls;
     Printf.printf "\n"
   }
   else ();
