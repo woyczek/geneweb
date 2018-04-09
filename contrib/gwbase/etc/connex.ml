@@ -94,13 +94,12 @@ value wiki_designation base basename p =
   let s = "[[" ^ first_name ^ "/" ^ surname ^ "/" ^ string_of_int (get_occ p) ^ "/" ^
     first_name ^ "." ^ string_of_int (get_occ p) ^ " " ^ surname ^ "]]" in
   if first_name = "?" || surname = "?" then
-    s ^ " <a href=\"http://localhost:2317/" ^ basename ^ "?i=" ^
-      (string_of_int (Adef.int_of_iper (get_key_index p))) ^
-      "\">(i=" ^ (string_of_int (Adef.int_of_iper (get_key_index p))) ^ ")</a><br>"
+    let indx = string_of_int (Adef.int_of_iper (get_key_index p)) in
+    s ^ " <a href=\"http://localhost:2317/" ^ basename ^ "?i=" ^ indx ^ "\">(i=" ^ indx ^ ")</a><br>"
   else s ^ "<br>"
 ;
 
-value print_family base basename ifam  = do {
+value print_family base basename ifam = do {
   let fam = foi base ifam in
   let p = poi base (get_father fam) in
   do {
@@ -116,7 +115,9 @@ value print_family base basename ifam  = do {
     } else ();
     if sou base (get_first_name p) = "?" || sou base (get_surname p) = "?"
     then
-      Printf.printf "i=%d" (Adef.int_of_iper (get_key_index p))
+      let indx = (Adef.int_of_iper (get_key_index p)) in
+      Printf.printf "  - <a href=\"http://localhost:2317/%s?i=%d\">i=%d</a><br>"
+        basename indx indx
     else Printf.printf "  - %s" (wiki_designation base basename p);
     Printf.printf "\n";
     Printf.printf "  - %s\n"
@@ -147,6 +148,7 @@ value move base basename = do {
   load_couples_array base;
   load_descends_array base;
   Printf.printf "<h3>Connected components of base %s</h3><br>\n" basename;
+  flush stderr;
   let nb_fam = nb_of_families base in
   let mark = Array.make nb_fam False in
   let min = ref max_int in
@@ -184,9 +186,11 @@ value move base basename = do {
       if nb > 0 && (all.val || nb <= min.val) then do {
         if nb <= min.val then min.val := nb else ();
         if nb >= max.val then max.val := nb else ();
-        Printf.eprintf "Connex component \"%s\" length %d\n"
-          (sou base origin_file) nb;
-        flush stderr;
+        if output.val <> [] then do {
+          Printf.eprintf "Connex component \"%s\" length %d\n"
+            (sou base origin_file) nb;
+          flush stderr;
+        } else ();
         Printf.printf "Connex component \"%s\" length %d<br>\n"
           (sou base origin_file) nb;
         if detail.val == nb then List.iter (print_family base basename) ifaml
