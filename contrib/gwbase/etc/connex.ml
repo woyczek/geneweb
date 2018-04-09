@@ -8,7 +8,7 @@ value all = ref False;
 value statistics = ref False;
 value detail = ref 0;
 value ignore = ref [];
-value output = ref [];
+value output = ref "";
 value ignore_files = ref True;
 value ask_for_delete = ref 0;
 value cnt_for_delete = ref 0;
@@ -103,7 +103,7 @@ value print_family base basename ifam = do {
   let fam = foi base ifam in
   let p = poi base (get_father fam) in
   do {
-    if output.val <> [] then do {
+    if output.val <> "" then do {
       if sou base (get_first_name p) = "?" || sou base (get_surname p) = "?"
       then
         Printf.eprintf "i=%d" (Adef.int_of_iper (get_key_index p))
@@ -148,6 +148,7 @@ value move base basename = do {
   load_couples_array base;
   load_descends_array base;
   Printf.printf "<h3>Connected components of base %s</h3><br>\n" basename;
+  (* Printf.printf "Computed on %s<br>\n" date???; *)
   flush stderr;
   let nb_fam = nb_of_families base in
   let mark = Array.make nb_fam False in
@@ -186,7 +187,7 @@ value move base basename = do {
       if nb > 0 && (all.val || nb <= min.val) then do {
         if nb <= min.val then min.val := nb else ();
         if nb >= max.val then max.val := nb else ();
-        if output.val <> [] then do {
+        if output.val <> "" then do {
           Printf.eprintf "Connex component \"%s\" length %d\n"
             (sou base origin_file) nb;
           flush stderr;
@@ -274,7 +275,7 @@ value speclist =
    ("-cnt", Arg.Int (fun i -> cnt_for_delete.val := i),
     "<int> : delete cnt branches whose size <= -del value");
    ("-exact", Arg.Set exact, ": delete only branches whose size strictly = -del value");
-   ("-o", Arg.String (fun x -> output.val := [x :: output.val]),
+   ("-o", Arg.String (fun x -> output.val := x),
     "<file> : output to this file")
 ]
 ;

@@ -2,7 +2,7 @@
             "http://www.w3.org/TR/REC-html40/loose.dtd">
 <head>
   <!-- Copyright (c) 1998-2006 INRIA - GeneWeb -->
-  <!-- $Id: cleanup.htm,v 5.1 2006-01-01 05:35:06 ddr Exp $ -->
+  <!-- $Id: connex.htm,v 7.00 2018-04-09 05:35:06 hg Exp $ -->
   <meta http-equiv="Content-Type" content="text/html; charset=[ !charset]"%/>
   <meta http-equiv="Content-Style-Type" content="text/css"%/>
   <meta name="robots" content="none"%/>
@@ -28,9 +28,9 @@ fr: Liste des composantes connexes
 </div>
 
 <ul>
-
 <li>
 <form method="get" action="connex">
+<input type=hidden name=opt value=check>
 <input type="hidden" name="lang" value="%l" />
 
 [
@@ -39,7 +39,6 @@ fr: Sélectionnez votre base de données en cliquant sur le bouton associé :
 ]
 
 <p />
-
 <dl><dt><dd><table style="border:1px solid" cellspacing="0" cellpadding="1">
 %b{
 <tr align="left">
@@ -53,8 +52,6 @@ fr: il n'y a aucune base de données actuellement
 </table></dl>
 
 <p />
-
-<p>
 <dl><dt><dd><table style="border:1px solid" width="100%%">
 <tr align="left">
 <td colspan=2 width="15"><input type="checkbox" name="a" id="a" value="on" />
@@ -65,7 +62,7 @@ fr: Toutes les composantes connexes.
 </tr>
 </table></dl>
 
-<p>
+<p />
 <dl><dt><dd><table style="border:1px solid" width="100%%">
 <tr align="left">
 <td colspan=2 width="15"><input type="checkbox" name="s" id="s" value="on" />
@@ -76,11 +73,11 @@ fr: Afficher les statistiques sur les composantes connexes.
 </tr>
 </table></dl>
 
-<p>
+<p />
 <dl><dt><dd><table style="border:1px solid" width="100%%">
 <tr align="left">
 <td colspan=2 width="15">
-<label for="d_1" style="font-family: monospace">-d<br>
+<label for="d_1" style="font-family: monospace">-d&nbsp;&nbsp;
 <input type="input" name="d" size="2" maxlength="2" style="padding-left:4px">
 </label>&nbsp;&nbsp;[
 en: Details for this length.
@@ -89,11 +86,11 @@ fr: Fournir détails pour cette taille.
 </tr>
 </table></dl>
 
-<p>
+<p />
 <dl><dt><dd><table style="border:1px solid" width="100%%">
 <tr align="left">
 <td colspan=2 width="15">
-<label for="i" style="font-family: monospace">-i<br>
+<label for="i" style="font-family: monospace">-i&nbsp;&nbsp;
 <input type="input" name="i" size="20" maxlength="50" style="padding-left:4px"></label>&nbsp;&nbsp;[
 en: Ignore this file.
 fr: Ignorer ce fichier.
@@ -101,7 +98,7 @@ fr: Ignorer ce fichier.
 </tr>
 </table></dl>
 
-<p>
+<p />
 <dl><dt><dd><table style="border:1px solid" width="100%%">
 <tr align="left">
 <td colspan=2 width="15"><input type="checkbox" name="bf" id="bf" value="on" />
@@ -112,11 +109,17 @@ fr: D'après le fichier origine.
 </tr>
 </table></dl>
 
-<p>
+<p />
+[
+en: <span style="color:#FF0000;">WARNING</span>: The following three options result in irreversible deletions. Having a backup archive is recommended.
+fr: <span style="color:#FF0000;">ATTENTION</span> : Les trois commandes qui suivent résultent en la destruction irréversible de familles. Disposer d'une archive serait prudent.
+]
+
+<p />
 <dl><dt><dd><table style="border:1px solid" width="100%%">
 <tr align="left">
 <td colspan=2 width="15">
-<label for="del_1" style="font-family: monospace">-del<br>
+<label for="del_1" style="font-family: monospace">-del
 <input type="input" name="del" size="5" maxlength="2" style="padding-left:4px"></label>&nbsp;&nbsp;[
 en: Ask for deleting branches whose size <= that value.
 fr: Demander à détruire les composantes de taille <= à cette valeur.
@@ -124,11 +127,11 @@ fr: Demander à détruire les composantes de taille <= à cette valeur.
 </tr>
 </table></dl>
 
-<p>
+<p />
 <dl><dt><dd><table style="border:1px solid" width="100%%">
 <tr align="left">
 <td colspan=2 width="15">
-<label for="cnt_1" style="font-family: monospace">-cnt<br>
+<label for="cnt_1" style="font-family: monospace">-cnt
 <input type="input" name="cnt" size="5" maxlength="2" style="padding-left:4px"></label>&nbsp;&nbsp;[
 en: Specifiy the number of branches to be deleted.
 fr: Définit le nombre de branches à supprimer.
@@ -136,7 +139,7 @@ fr: Définit le nombre de branches à supprimer.
 </tr>
 </table></dl>
 
-<p>
+<p />
 <dl><dt><dd><table style="border:1px solid" width="100%%">
 <tr align="left">
 <td colspan=2 width="15"><input type="checkbox" name="exact" id="exact" value="on" />
@@ -147,11 +150,13 @@ fr: Limite la suppression aux branches de taille = -del.
 </tr>
 </table></dl>
 
-<p>
+<p />
+&nbsp;
+<p />
 <dl><dt><dd><table style="border:1px solid" width="100%%">
 <tr align="left">
 <td colspan=2 width="15">
-<label for="o" style="font-family: monospace">-o<br>
+<label for="o" style="font-family: monospace">-o &nbsp;&nbsp;&nbsp;
 <input type="input" name="o" size="20" maxlength="50" style="padding-left:4px"></label>&nbsp;&nbsp;[
 en: Output results to this file.
 fr: Rediriger les résultats vers ce fichier.
@@ -162,7 +167,6 @@ fr: Rediriger les résultats vers ce fichier.
 %v
 
 <p />
-
 <form method="post" action="%d">
 %h
 <dl><dt><dd>
@@ -172,5 +176,4 @@ fr: Rediriger les résultats vers ce fichier.
 </form>
  
 </form>
-
 </ul>
