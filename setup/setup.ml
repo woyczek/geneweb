@@ -1030,11 +1030,14 @@ value parameters_1 =
         else if k = "opt" then loop comm env
         else if k = "anon" then loop (comm ^ " " ^ stringify s) env
         else if k = "a" then loop (comm ^ " -a") env
+        else if k = "s" then loop (comm ^ " -s") env
         else if k = "d" then loop (comm ^ " -d " ^ stringify s ) env
         else if k = "i" then loop (comm ^ " -i " ^ stringify s) env
         else if k = "bf" then loop (comm ^ " -bf") env
         else if k = "del" then loop (comm ^ " -del " ^ stringify s) env
-        else if k = "o" then loop (comm ^ " > " ^ stringify s) env
+        else if k = "cnt" then loop (comm ^ " -cnt " ^ stringify s) env
+        else if k = "exact" then loop (comm ^ " -exact") env
+        else if k = "o" then loop (comm ^ " -o " ^ stringify s ^ " > " ^ stringify s) env
         else loop comm env
     | [] -> comm ]
 ;

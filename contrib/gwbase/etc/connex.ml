@@ -5,12 +5,14 @@ open Def;
 open Gwdb;
 
 value all = ref False;
-value statistics = ref True;
+value statistics = ref False;
 value detail = ref 0;
 value ignore = ref [];
 value output = ref [];
 value ignore_files = ref True;
 value ask_for_delete = ref 0;
+value cnt_for_delete = ref 0;
+value exact = ref False;
 
 value rec merge_families ifaml1f ifaml2f =
   match (ifaml1f, ifaml2f) with
@@ -98,16 +100,28 @@ value wiki_designation base basename p =
   else s ^ "<br>"
 ;
 
-value print_family base basename ifam = do {
+value print_family base basename ifam  = do {
   let fam = foi base ifam in
   let p = poi base (get_father fam) in
-  if sou base (get_first_name p) = "?" || sou base (get_surname p) = "?"
-  then
-    Printf.printf "i=%d" (Adef.int_of_iper (get_key_index p))
-  else Printf.printf "  - %s" (wiki_designation base basename p);
-  Printf.printf "\n";
-  Printf.printf "  - %s\n"
-    (wiki_designation base basename (poi base (get_mother fam)));
+  do {
+    if output.val <> [] then do {
+      if sou base (get_first_name p) = "?" || sou base (get_surname p) = "?"
+      then
+        Printf.eprintf "i=%d" (Adef.int_of_iper (get_key_index p))
+      else Printf.eprintf "  - %s" (utf8_designation base p);
+      Printf.eprintf "\n";
+      Printf.eprintf "  - %s\n"
+        (utf8_designation base (poi base (get_mother fam)));
+      flush stderr;
+    } else ();
+    if sou base (get_first_name p) = "?" || sou base (get_surname p) = "?"
+    then
+      Printf.printf "i=%d" (Adef.int_of_iper (get_key_index p))
+    else Printf.printf "  - %s" (wiki_designation base basename p);
+    Printf.printf "\n";
+    Printf.printf "  - %s\n"
+      (wiki_designation base basename (poi base (get_mother fam)));
+  }
 };
 
 value kill_family base fam ip =
@@ -170,6 +184,9 @@ value move base basename = do {
       if nb > 0 && (all.val || nb <= min.val) then do {
         if nb <= min.val then min.val := nb else ();
         if nb >= max.val then max.val := nb else ();
+        Printf.eprintf "Connex component \"%s\" length %d\n"
+          (sou base origin_file) nb;
+        flush stderr;
         Printf.printf "Connex component \"%s\" length %d<br>\n"
           (sou base origin_file) nb;
         if detail.val == nb then List.iter (print_family base basename) ifaml
@@ -182,11 +199,22 @@ value move base basename = do {
             [ Not_found -> Hashtbl.add hts nb 1 ]
         else ();
         flush stdout;
-        if ask_for_delete.val > 0 && nb <= ask_for_delete.val then do {
-          Printf.eprintf "Delete that branch (y/N) ? ";
+        let check_ask =
+          if exact.val then nb = ask_for_delete.val else nb <= ask_for_delete.val
+        in
+        if ask_for_delete.val > 0 && check_ask then do {
+          (* if -o file, repeat branch definition to stderr! *)
+          Printf.eprintf "Delete up to %d branches of size %s %d ?\n"
+            cnt_for_delete.val (if exact.val then "=" else "<=") ask_for_delete.val;
           flush stderr;
-          let r = input_line stdin in
+          let r = if cnt_for_delete.val > 0 then "y" 
+            else do {
+              Printf.eprintf "Delete that branch (y/N) ?";
+              flush stderr;
+              input_line stdin }
+          in
           if r = "y" then do {
+            decr cnt_for_delete;
             List.iter
               (fun ifam -> do {
                  let fam = foi base ifam in
@@ -239,6 +267,9 @@ value speclist =
    ("-bf", Arg.Clear ignore_files, ": by origin files");
    ("-del", Arg.Int (fun i -> ask_for_delete.val := i),
     "<int> : ask for deleting branches whose size <= that value");
+   ("-cnt", Arg.Int (fun i -> cnt_for_delete.val := i),
+    "<int> : delete cnt branches whose size <= -del value");
+   ("-exact", Arg.Set exact, ": delete only branches whose size strictly = -del value");
    ("-o", Arg.String (fun x -> output.val := [x :: ignore.val]),
     "<file> : output to this file")
 ]
