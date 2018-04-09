@@ -1020,6 +1020,64 @@ value gwc2 conf =
   }
 ;
 
+value parameters_2 =
+  loop "" where rec loop comm =
+    fun
+    [ [(k, s) :: env] ->
+        let k = strip_spaces (decode_varenv k) in
+        let s = strip_spaces (decode_varenv s) in
+        if k = "" || s = "" then loop comm env
+        else if k = "opt" then loop comm env
+        else if k = "anon1" then loop (comm ^ " " ^ stringify s) env
+        else if k = "anon2" then loop (comm ^ " " ^ stringify s) env
+        else if k = "a1" then loop (comm ^ " -1 " ^ stringify s) env
+        else if k = "a2" then loop (comm ^ " " ^ stringify s) env
+        else if k = "a3" then loop (comm ^ " " ^ stringify s) env
+        else if k = "b1" then loop (comm ^ " -2 "  ^ stringify s) env
+        else if k = "b2" then loop (comm ^ " " ^ stringify s) env
+        else if k = "b3" then loop (comm ^ " " ^ stringify s) env
+        else if k = "ad" then loop (comm ^ " -ad ") env
+        else if k = "d" then loop (comm ^ " -d ") env
+        else if k = "mem" then loop (comm ^ " -mem") env
+        else if k = "o" then loop (comm ^ " -o " ^ stringify s ^ " > " ^ stringify s) env
+        else loop comm env
+    | [] -> comm ]
+;
+
+value gwdiff_check conf =
+  print_file conf "bsi.htm"
+;
+
+value gwdiff conf ok_file =
+  let ic = Unix.open_process_in "uname" in
+  let uname = input_line ic in
+  let () = close_in ic in
+  let rc =
+    let commnd = "cd " ^ (Sys.getcwd ()) ^ "; tput bel;" ^
+        (stringify (Filename.concat bin_dir.val "gwdiff")) ^ " " ^
+            parameters_2 conf.env in
+    if uname = "Darwin" then
+      let launch = "tell application \"Terminal\" to do script " in
+      exec_f ("osascript -e '" ^ launch ^ " \" " ^ commnd ^ " \"' " )
+    else if uname = "Linux" then
+      (* non testé ! *)
+      exec_f ("xterm -e \" " ^ commnd ^ " \" ")
+    else if Sys.os_type = "Win32" then
+      (* à compléter et tester ! *)
+      let commnd = (stringify (Filename.concat bin_dir.val "gwdiff")) ^ " " ^
+          parameters_2 conf.env in
+      exec_f ("cmd /c start " ^ commnd )
+    else do {
+      eprintf "%s (%s) %s (%s)\n" 
+        "Unknown Os_type" Sys.os_type "or wrong uname response" uname;
+      2}
+  in
+  do {
+    flush stderr;
+    if rc > 1 then print_file conf "bsi_err.htm" else print_file conf ok_file
+  }
+;
+
 value parameters_1 =
   loop "" where rec loop comm =
     fun
@@ -1881,6 +1939,10 @@ value setup_comm_ok conf =
        match p_getenv conf.env "opt" with
       [ Some "check" -> connex_check conf
       | _ -> connex conf "connex_ok.htm" ]
+  | "gwdiff" -> 
+       match p_getenv conf.env "opt" with
+      [ Some "check" -> gwdiff_check conf
+      | _ -> gwdiff conf "gwdiff_ok.htm" ]
   | x ->
       if start_with x "doc/" || start_with x "images/" || start_with x "css/"
       then raw_file conf x

@@ -274,7 +274,7 @@ value speclist =
    ("-cnt", Arg.Int (fun i -> cnt_for_delete.val := i),
     "<int> : delete cnt branches whose size <= -del value");
    ("-exact", Arg.Set exact, ": delete only branches whose size strictly = -del value");
-   ("-o", Arg.String (fun x -> output.val := [x :: ignore.val]),
+   ("-o", Arg.String (fun x -> output.val := [x :: output.val]),
     "<file> : output to this file")
 ]
 ;

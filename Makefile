@@ -110,6 +110,7 @@ distrib:
 	cp ged2gwb/ged2gwb2 $(DESTDIR)/gw/ged2gwb2$(EXE)
 	cp gwb2ged/gwb2ged $(DESTDIR)/gw/gwb2ged$(EXE)
 	cp contrib/gwbase/etc/connex.out $(DESTDIR)/gw/connex$(EXE)
+	cp contrib/gwdiff/gwdiff.out $(DESTDIR)/gw/gwdiff$(EXE)
 	cp setup/setup $(DESTDIR)/gw/gwsetup$(EXE)
 	mkdir $(DESTDIR)/gw/gwtp_tmp
 	mkdir $(DESTDIR)/gw/gwtp_tmp/lang
