@@ -539,15 +539,6 @@ value rec copy_from_stream conf print strm =
                   in
                   print_specific_file conf print outfile strm;
                   }
-              (*| 'K' -> do { (* print the name of -o filename, prepend bname *)
-                  let outfile = strip_spaces (s_getenv conf.env "o") in
-                  let bname = strip_spaces (s_getenv conf.env "anon") in
-                  let outfile = if bname <> ""
-                    then slashify_linux_dos bname ^ ".gwb" ^ outfile
-                    else outfile
-                  in
-                  print outfile;
-                  }*)
               | 'I' -> (* if evar.x = "on" or != "" then print content of {...} *)
                   let k = get_variable strm in
                   match p_getenv conf.env k with
