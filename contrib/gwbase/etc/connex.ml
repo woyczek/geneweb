@@ -148,7 +148,10 @@ value move base basename = do {
   load_couples_array base;
   load_descends_array base;
   Printf.printf "<h3>Connected components of base %s</h3><br>\n" basename;
-  (* Printf.printf "Computed on %s<br>\n" date???; *)
+  let ic = Unix.open_process_in "date" in
+  let date = input_line ic in
+  let () = close_in ic in
+  Printf.printf "Computed on %s<br><br>\n" date;
   flush stderr;
   let nb_fam = nb_of_families base in
   let mark = Array.make nb_fam False in
@@ -241,9 +244,7 @@ value move base basename = do {
       else ();
   };
   if ask_for_delete.val > 0 then Gwdb.commit_patches base else ();
-  Printf.printf "<br>\nStatistics: (%s), all: (%s)<br>\n"
-      (if statistics.val then "on" else "off")
-      (if all.val then "on" else "off");
+  Printf.printf "<br>\nStatistics:<br>\n";
   if statistics.val then do {
     let ls = 
       Hashtbl.fold (fun nb n ls -> [(nb, n) :: ls] ) hts []

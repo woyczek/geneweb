@@ -9,6 +9,7 @@ value setup_dir = ref ".";
 value bin_dir = ref "";
 value lang_param = ref "";
 value only_file = ref "";
+value bname = ref "";
 
 value slashify s =
   String.init (String.length s) conv_char
@@ -329,6 +330,7 @@ value macro conf =
   | 'm' -> server_string conf
   | 'n' -> referer conf
   | 'o' -> strip_spaces (s_getenv conf.env "o")
+  | 'O' -> Filename.remove_extension (Filename.basename (strip_spaces (s_getenv conf.env "o")))
   | 'p' -> parameters conf.env
   | 'q' -> Version.txt
   | 'u' -> Filename.dirname (abs_setup_dir ())
@@ -336,7 +338,7 @@ value macro conf =
   | 'w' -> slashify (Sys.getcwd ())
   | 'y' -> Filename.basename (only_file_name ())
   | '%' -> "%"
-  | c -> "BAD MACRO " ^ String.make 1 c ]
+  | c -> "BAD MACRO 1 " ^ String.make 1 c ]
 ;
 
 value get_variable strm =
@@ -531,6 +533,9 @@ value rec copy_from_stream conf print strm =
                         print x
                       else ()
                   | None -> () ]
+              | 'O' ->
+                  let fname = Filename.remove_extension (Filename.basename (strip_spaces (s_getenv conf.env "o"))) in
+                  print fname
               | _ ->
                   match p_getenv conf.env (String.make 1 c) with
                   [ Some v ->
@@ -552,7 +557,7 @@ value rec copy_from_stream conf print strm =
                             if v = s then print " checked" else ()
                           }
                       | [: :] -> print (strip_spaces v) ]
-                  | None -> print "BAD MACRO" ] ]
+                  | None -> print "BAD MACRO 2 " ] ]
           | c -> print (macro conf c) ]
       | c -> print (String.make 1 c) ]
     }
@@ -1079,24 +1084,28 @@ value gwdiff conf ok_file =
 ;
 
 value parameters_1 =
-  loop "" where rec loop comm =
+  loop "" "" where rec loop comm bname =
     fun
     [ [(k, s) :: env] ->
         let k = strip_spaces (decode_varenv k) in
         let s = strip_spaces (decode_varenv s) in
-        if k = "" || s = "" then loop comm env
-        else if k = "opt" then loop comm env
-        else if k = "anon" then loop (comm ^ " " ^ stringify s) env
-        else if k = "a" then loop (comm ^ " -a") env
-        else if k = "s" then loop (comm ^ " -s") env
-        else if k = "d" then loop (comm ^ " -d " ^ stringify s ) env
-        else if k = "i" then loop (comm ^ " -i " ^ stringify s) env
-        else if k = "bf" then loop (comm ^ " -bf") env
-        else if k = "del" then loop (comm ^ " -del " ^ stringify s) env
-        else if k = "cnt" then loop (comm ^ " -cnt " ^ stringify s) env
-        else if k = "exact" then loop (comm ^ " -exact") env
-        else if k = "o" then loop (comm ^ " -o " ^ stringify s ^ " > " ^ stringify s) env
-        else loop comm env
+        if k = "" || s = "" then loop comm bname env
+        else if k = "opt" then loop comm bname env
+        else if k = "anon" then loop (comm ^ " " ^ stringify s) (stringify s) env
+        else if k = "a" then loop (comm ^ " -a") bname env
+        else if k = "s" then loop (comm ^ " -s") bname env
+        else if k = "d" then loop (comm ^ " -d " ^ stringify s ) bname env
+        else if k = "i" then loop (comm ^ " -i " ^ stringify s) bname env
+        else if k = "bf" then loop (comm ^ " -bf") bname env
+        else if k = "del" then loop (comm ^ " -del " ^ stringify s) bname env
+        else if k = "cnt" then loop (comm ^ " -cnt " ^ stringify s) bname env
+        else if k = "exact" then loop (comm ^ " -exact") bname env
+        else if k = "o" && (stringify s) <> "" then do {
+              let out = stringify s in
+              let out = if out = "/notes_d/connex.txt" then bname  ^ ".gwb" ^ out else out in
+              loop (comm ^ " -o " ^ out ^ " > " ^ out) bname env
+             }
+        else loop comm bname env
     | [] -> comm ]
 ;
 
