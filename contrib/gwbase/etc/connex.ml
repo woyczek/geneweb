@@ -13,6 +13,9 @@ value ignore_files = ref True;
 value ask_for_delete = ref 0;
 value cnt_for_delete = ref 0;
 value exact = ref False;
+value gwd_port = ref 2317;
+value bname = ref "";
+value server = ref "127.0.0.1";
 
 value rec merge_families ifaml1f ifaml2f =
   match (ifaml1f, ifaml2f) with
@@ -95,7 +98,8 @@ value wiki_designation base basename p =
     first_name ^ "." ^ string_of_int (get_occ p) ^ " " ^ surname ^ "]]" in
   if first_name = "?" || surname = "?" then
     let indx = string_of_int (Adef.int_of_iper (get_key_index p)) in
-    s ^ " <a href=\"http://localhost:2317/" ^ basename ^ "?i=" ^ indx ^ "\">(i=" ^ indx ^ ")</a><br>"
+    s ^ " <a href=\"http://" ^ server.val ^ ":" ^ (string_of_int gwd_port.val) ^ "/" ^
+          basename ^ "?i=" ^ indx ^ "\">(i=" ^ indx ^ ")</a><br>"
   else s ^ "<br>"
 ;
 
@@ -116,8 +120,8 @@ value print_family base basename ifam = do {
     if sou base (get_first_name p) = "?" || sou base (get_surname p) = "?"
     then
       let indx = (Adef.int_of_iper (get_key_index p)) in
-      Printf.printf "  - <a href=\"http://localhost:2317/%s?i=%d\">i=%d</a><br>"
-        basename indx indx
+      Printf.printf "  - <a href=\"http://%s:%d/%s?i=%d\">i=%d</a><br>"
+        server.val gwd_port.val basename indx indx
     else Printf.printf "  - %s" (wiki_designation base basename p);
     Printf.printf "\n";
     Printf.printf "  - %s\n"
@@ -261,10 +265,14 @@ value move base basename = do {
   else ();
 };
 
-value bname = ref "";
 value usage = "usage: " ^ Sys.argv.(0) ^ " <base>";
 value speclist =
-  [("-a", Arg.Set all, ": all connex components");
+  [("-gwd_p", Arg.Int (fun x -> gwd_port.val := x),
+    "<number>: Specify the port number of gwd (default = " ^
+      string_of_int gwd_port.val ^ "); > 1024 for normal users.");
+   ("-server", Arg.String (fun x -> server.val := x ),
+    "<string>: Name of the server (default is 127.0.0.1).");
+   ("-a", Arg.Set all, ": all connex components");
    ("-s", Arg.Set statistics, ": produce statistics");
    ("-d", Arg.Int (fun x -> detail.val := x),
     "<int> : detail for this length");

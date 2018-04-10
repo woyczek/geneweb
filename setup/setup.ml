@@ -4,9 +4,11 @@
 open Printf;
 
 value port = ref 2316;
+value gwd_port = ref 2317;
 value default_lang = ref "en";
 value setup_dir = ref ".";
 value bin_dir = ref "";
+value base_dir = ref "";
 value lang_param = ref "";
 value only_file = ref "";
 value bname = ref "";
@@ -358,6 +360,7 @@ value macro conf =
               else outfile1
           in
           outfile
+   | 'P' -> string_of_int gwd_port.val
    | c -> "BAD MACRO 1 " ^ String.make 1 c ]
 ;
 
@@ -575,6 +578,7 @@ value rec copy_from_stream conf print strm =
                   let fname = Filename.remove_extension (Filename.basename (strip_spaces (s_getenv conf.env "o"))) in
                   let fname = slashify_linux_dos fname in
                   print fname
+              | 'P' -> print (string_of_int gwd_port.val)
               | _ ->
                   match p_getenv conf.env (String.make 1 c) with
                   [ Some v ->
@@ -1130,6 +1134,7 @@ value parameters_1 =
         let s = strip_spaces (decode_varenv s) in
         if k = "" || s = "" then loop comm bname env
         else if k = "opt" then loop comm bname env
+        else if k = "gwd_p" && s <> "" then loop (comm ^ " -gwd_p " ^ stringify s ) bname env
         else if k = "anon" && s <> "" then loop (comm ^ " " ^ stringify s) (stringify s) env
         else if k = "a" then loop (comm ^ " -a") bname env
         else if k = "s" then loop (comm ^ " -s") bname env
@@ -2186,7 +2191,12 @@ value daemon = ref False;
 value usage =
   "Usage: " ^ Filename.basename Sys.argv.(0) ^ " [options] where options are:";
 value speclist =
-  [("-lang", Arg.String (fun x -> lang_param.val := x),
+  [("-bd", Arg.String (fun x -> base_dir.val := x),
+    "<dir>: Directory where the databases are installed.");
+   ("-gwd_p", Arg.Int (fun x -> gwd_port.val := x),
+    "<number>: Specify the port number of gwd (default = " ^
+      string_of_int gwd_port.val ^ "); > 1024 for normal users.");
+   ("-lang", Arg.String (fun x -> lang_param.val := x),
     "<string>: default lang");
    ("-daemon", Arg.Set daemon, ": Unix daemon mode.");
    ("-p", Arg.Int (fun x -> port.val := x),
