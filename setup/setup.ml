@@ -19,6 +19,15 @@ value slashify s =
       | x -> x ]
 ;
 
+value slashify_linux_dos s =
+  String.init (String.length s) conv_char
+    where conv_char i =
+      match s.[i] with
+      [ '/' -> if Sys.unix then '/' else '\\'
+      | x -> x ]
+;
+
+
 value quote_escaped s =
   let rec need_code i =
     if i < String.length s then
@@ -338,7 +347,18 @@ value macro conf =
   | 'w' -> slashify (Sys.getcwd ())
   | 'y' -> Filename.basename (only_file_name ())
   | '%' -> "%"
-  | c -> "BAD MACRO 1 " ^ String.make 1 c ]
+  | 'K' -> (* print the name of -o filename, prepend bname or -o1 filename *)
+          let outfile1 = strip_spaces (s_getenv conf.env "o") in
+          let bname = strip_spaces (s_getenv conf.env "anon") in
+          let outfile2 = strip_spaces (s_getenv conf.env "o1") in
+          let outfile = 
+            if outfile2 <> "" then outfile2
+            else if bname <> ""
+              then slashify_linux_dos bname ^ ".gwb" ^ outfile1
+              else outfile1
+          in
+          outfile
+   | c -> "BAD MACRO 1 " ^ String.make 1 c ]
 ;
 
 value get_variable strm =
@@ -507,6 +527,24 @@ value rec copy_from_stream conf print strm =
                   [ Some v -> print v
                   | None -> () ]
               | 'G' -> print_specific_file_tail conf print "gwsetup.log" strm
+              | 'H' -> do { (* print the content of -o filename, prepend bname *)
+                  let outfile = strip_spaces (s_getenv conf.env "o") in
+                  let bname = strip_spaces (s_getenv conf.env "anon") in
+                  let outfile = if bname <> ""
+                    then slashify_linux_dos bname ^ ".gwb" ^ outfile 
+                    else outfile
+                  in
+                  print_specific_file conf print outfile strm;
+                  }
+              (*| 'K' -> do { (* print the name of -o filename, prepend bname *)
+                  let outfile = strip_spaces (s_getenv conf.env "o") in
+                  let bname = strip_spaces (s_getenv conf.env "anon") in
+                  let outfile = if bname <> ""
+                    then slashify_linux_dos bname ^ ".gwb" ^ outfile
+                    else outfile
+                  in
+                  print outfile;
+                  }*)
               | 'I' -> (* if evar.x = "on" or != "" then print content of {...} *)
                   let k = get_variable strm in
                   match p_getenv conf.env k with
@@ -535,6 +573,7 @@ value rec copy_from_stream conf print strm =
                   | None -> () ]
               | 'O' ->
                   let fname = Filename.remove_extension (Filename.basename (strip_spaces (s_getenv conf.env "o"))) in
+                  let fname = slashify_linux_dos fname in
                   print fname
               | _ ->
                   match p_getenv conf.env (String.make 1 c) with
@@ -1091,26 +1130,31 @@ value parameters_1 =
         let s = strip_spaces (decode_varenv s) in
         if k = "" || s = "" then loop comm bname env
         else if k = "opt" then loop comm bname env
-        else if k = "anon" then loop (comm ^ " " ^ stringify s) (stringify s) env
+        else if k = "anon" && s <> "" then loop (comm ^ " " ^ stringify s) (stringify s) env
         else if k = "a" then loop (comm ^ " -a") bname env
         else if k = "s" then loop (comm ^ " -s") bname env
-        else if k = "d" then loop (comm ^ " -d " ^ stringify s ) bname env
-        else if k = "i" then loop (comm ^ " -i " ^ stringify s) bname env
+        else if k = "d" && s <> "" then loop (comm ^ " -d " ^ stringify s ) bname env
+        else if k = "i" && s <> "" then loop (comm ^ " -i " ^ stringify s) bname env
         else if k = "bf" then loop (comm ^ " -bf") bname env
-        else if k = "del" then loop (comm ^ " -del " ^ stringify s) bname env
-        else if k = "cnt" then loop (comm ^ " -cnt " ^ stringify s) bname env
+        else if k = "del" && s <> "" then loop (comm ^ " -del " ^ stringify s) bname env
+        else if k = "cnt" && s <> "" then loop (comm ^ " -cnt " ^ stringify s) bname env
         else if k = "exact" then loop (comm ^ " -exact") bname env
-        else if k = "o" && (stringify s) <> "" then do {
-              let out = stringify s in
-              let out = if out = "/notes_d/connex.txt" then bname  ^ ".gwb" ^ out else out in
-              loop (comm ^ " -o " ^ out ^ " > " ^ out) bname env
-             }
+        else if k = "o1" && s <> "" then 
+          let out = stringify s in
+          (comm ^ " -o " ^ out ^ " > " ^ out)
+        else if k = "o" && s <> "" then
+          if s = "choice" then loop comm bname env
+          else
+            let out = stringify s in
+            let out = if out = "/notes_d/connex.txt" then bname  ^ ".gwb" ^ out else out in
+            let out = slashify_linux_dos out in
+            (comm ^ " -o " ^ out ^ " > " ^ out)
         else loop comm bname env
     | [] -> comm ]
 ;
 
 value connex_check conf =
-  print_file conf "bsi_2.htm"
+  print_file conf "bsi_connex.htm"
 ;
 
 value connex conf ok_file =
