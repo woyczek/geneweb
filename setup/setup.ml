@@ -12,7 +12,7 @@ value base_dir = ref "";
 value lang_param = ref "";
 value only_file = ref "";
 value bname = ref "";
-
+value commnd = ref "";
 value slashify s =
   String.init (String.length s) conv_char
     where conv_char i =
@@ -260,6 +260,62 @@ value parameters =
     | [] -> comm ]
 ;
 
+value parameters_1 =
+  loop "" "" where rec loop comm bname =
+    fun
+    [ [(k, s) :: env] ->
+        let k = strip_spaces (decode_varenv k) in
+        let s = strip_spaces (decode_varenv s) in
+        if k = "" || s = "" then loop comm bname env
+        else if k = "opt" then loop comm bname env
+        else if k = "gwd_p" && s <> "" then loop (comm ^ " -gwd_p " ^ stringify s ) bname env
+        else if k = "anon" && s <> "" then loop (comm ^ " " ^ stringify s) (stringify s) env
+        else if k = "a" then loop (comm ^ " -a") bname env
+        else if k = "s" then loop (comm ^ " -s") bname env
+        else if k = "d" && s <> "" then loop (comm ^ " -d " ^ stringify s ) bname env
+        else if k = "i" && s <> "" then loop (comm ^ " -i " ^ stringify s) bname env
+        else if k = "bf" then loop (comm ^ " -bf") bname env
+        else if k = "del" && s <> "" then loop (comm ^ " -del " ^ stringify s) bname env
+        else if k = "cnt" && s <> "" then loop (comm ^ " -cnt " ^ stringify s) bname env
+        else if k = "exact" then loop (comm ^ " -exact") bname env
+        else if k = "o1" && s <> "" then 
+          let out = stringify s in
+          (comm ^ " -o " ^ out ^ " > " ^ out)
+        else if k = "o" && s <> "" then
+          if s = "choice" then loop comm bname env
+          else
+            let out = stringify s in
+            let out = if out = "/notes_d/connex.txt" then bname  ^ ".gwb" ^ out else out in
+            let out = slashify_linux_dos out in
+            (comm ^ " -o " ^ out ^ " > " ^ out)
+        else loop comm bname env
+    | [] -> comm ]
+;
+
+value parameters_2 =
+  loop "" where rec loop comm =
+    fun
+    [ [(k, s) :: env] ->
+        let k = strip_spaces (decode_varenv k) in
+        let s = strip_spaces (decode_varenv s) in
+        if k = "" || s = "" then loop comm env
+        else if k = "opt" then loop comm env
+        else if k = "anon1" then loop (comm ^ " " ^ stringify s) env
+        else if k = "anon2" then loop (comm ^ " " ^ stringify s) env
+        else if k = "a1" then loop (comm ^ " -1 " ^ stringify s) env
+        else if k = "a2" then loop (comm ^ " " ^ stringify s) env
+        else if k = "a3" then loop (comm ^ " " ^ stringify s) env
+        else if k = "b1" then loop (comm ^ " -2 "  ^ stringify s) env
+        else if k = "b2" then loop (comm ^ " " ^ stringify s) env
+        else if k = "b3" then loop (comm ^ " " ^ stringify s) env
+        else if k = "ad" then loop (comm ^ " -ad ") env
+        else if k = "d" then loop (comm ^ " -d ") env
+        else if k = "mem" then loop (comm ^ " -mem") env
+        else if k = "o" then loop (comm ^ " -o " ^ stringify s ^ " > " ^ stringify s) env
+        else loop comm env
+    | [] -> comm ]
+;
+
 value rec list_replace k v =
   fun
   [ [] -> [(k, v)]
@@ -361,6 +417,8 @@ value macro conf =
           in
           outfile
    | 'P' -> string_of_int gwd_port.val
+   | 'Q' -> parameters_1 conf.env
+   | 'R' -> parameters_2 conf.env
    | c -> "BAD MACRO 1 " ^ String.make 1 c ]
 ;
 
@@ -570,6 +628,8 @@ value rec copy_from_stream conf print strm =
                   let fname = slashify_linux_dos fname in
                   print fname
               | 'P' -> print (string_of_int gwd_port.val)
+              | 'Q' -> print (parameters_1 conf.env)
+              | 'R' -> print (parameters_2 conf.env)
               | _ ->
                   match p_getenv conf.env (String.make 1 c) with
                   [ Some v ->
@@ -1059,30 +1119,6 @@ value gwc2 conf =
   }
 ;
 
-value parameters_2 =
-  loop "" where rec loop comm =
-    fun
-    [ [(k, s) :: env] ->
-        let k = strip_spaces (decode_varenv k) in
-        let s = strip_spaces (decode_varenv s) in
-        if k = "" || s = "" then loop comm env
-        else if k = "opt" then loop comm env
-        else if k = "anon1" then loop (comm ^ " " ^ stringify s) env
-        else if k = "anon2" then loop (comm ^ " " ^ stringify s) env
-        else if k = "a1" then loop (comm ^ " -1 " ^ stringify s) env
-        else if k = "a2" then loop (comm ^ " " ^ stringify s) env
-        else if k = "a3" then loop (comm ^ " " ^ stringify s) env
-        else if k = "b1" then loop (comm ^ " -2 "  ^ stringify s) env
-        else if k = "b2" then loop (comm ^ " " ^ stringify s) env
-        else if k = "b3" then loop (comm ^ " " ^ stringify s) env
-        else if k = "ad" then loop (comm ^ " -ad ") env
-        else if k = "d" then loop (comm ^ " -d ") env
-        else if k = "mem" then loop (comm ^ " -mem") env
-        else if k = "o" then loop (comm ^ " -o " ^ stringify s ^ " > " ^ stringify s) env
-        else loop comm env
-    | [] -> comm ]
-;
-
 value gwdiff_check conf =
   print_file conf "bsi.htm"
 ;
@@ -1115,38 +1151,6 @@ value gwdiff conf ok_file =
     flush stderr;
     if rc > 1 then print_file conf "bsi_err.htm" else print_file conf ok_file
   }
-;
-
-value parameters_1 =
-  loop "" "" where rec loop comm bname =
-    fun
-    [ [(k, s) :: env] ->
-        let k = strip_spaces (decode_varenv k) in
-        let s = strip_spaces (decode_varenv s) in
-        if k = "" || s = "" then loop comm bname env
-        else if k = "opt" then loop comm bname env
-        else if k = "gwd_p" && s <> "" then loop (comm ^ " -gwd_p " ^ stringify s ) bname env
-        else if k = "anon" && s <> "" then loop (comm ^ " " ^ stringify s) (stringify s) env
-        else if k = "a" then loop (comm ^ " -a") bname env
-        else if k = "s" then loop (comm ^ " -s") bname env
-        else if k = "d" && s <> "" then loop (comm ^ " -d " ^ stringify s ) bname env
-        else if k = "i" && s <> "" then loop (comm ^ " -i " ^ stringify s) bname env
-        else if k = "bf" then loop (comm ^ " -bf") bname env
-        else if k = "del" && s <> "" then loop (comm ^ " -del " ^ stringify s) bname env
-        else if k = "cnt" && s <> "" then loop (comm ^ " -cnt " ^ stringify s) bname env
-        else if k = "exact" then loop (comm ^ " -exact") bname env
-        else if k = "o1" && s <> "" then 
-          let out = stringify s in
-          (comm ^ " -o " ^ out ^ " > " ^ out)
-        else if k = "o" && s <> "" then
-          if s = "choice" then loop comm bname env
-          else
-            let out = stringify s in
-            let out = if out = "/notes_d/connex.txt" then bname  ^ ".gwb" ^ out else out in
-            let out = slashify_linux_dos out in
-            (comm ^ " -o " ^ out ^ " > " ^ out)
-        else loop comm bname env
-    | [] -> comm ]
 ;
 
 value connex_check conf =
