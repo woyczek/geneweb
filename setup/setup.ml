@@ -2116,7 +2116,18 @@ value setup (addr, req) comm env_str =
     flush stderr;
     print_file conf "err_acc.htm"
   }
-  else if conf.comm = "" then print_file conf "welcome.htm"
+  else if conf.comm = "" then do {
+    let benv = read_base_env "gwsetup" in
+    let trailer = "" in
+    let conf =
+      {(conf) with
+        env =
+          (* faut il quote_escaped ?? *)
+          List.map (fun (k, v) -> (k, quote_escaped v)) benv @
+          [("trailer", trailer) :: conf.env]}
+    in
+    print_file conf "welcome.htm"
+    }
   else setup_comm conf comm
 ;
 
