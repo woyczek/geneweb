@@ -121,6 +121,7 @@ distrib:
 	cp setup/intro.txt $(DESTDIR)/gw/setup/.
 	mkdir $(DESTDIR)/gw/setup/lang
 	cp setup/setup.gwf $(DESTDIR)/gw/setup/.
+	cp setup/setup.css $(DESTDIR)/gw/setup/.
 	cp setup/lang/*.htm $(DESTDIR)/gw/setup/lang/.
 	cp setup/lang/lexicon.txt $(DESTDIR)/gw/setup/lang/.
 	cp setup/lang/intro.txt $(DESTDIR)/gw/setup/lang/.

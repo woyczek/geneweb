@@ -494,6 +494,17 @@ value translate_phrase lang lexicon s n =
   [ Not_found -> "[" ^ nth_field s n ^ "]" ]
 ;
 
+value file_contents fname =
+  match try Some (open_in fname) with [ Sys_error _ -> None ] with
+  [ Some ic ->
+      loop 0 where rec loop len =
+        match try Some (input_char ic) with [ End_of_file -> None ] with
+        [ Some '\r' -> loop len
+        | Some c -> loop (Buff.store len c)
+        | None -> do { close_in ic; Buff.get len } ]
+  | None -> "" ]
+;
+
 value rec copy_from_stream conf print strm =
   try
     while True do {
@@ -534,8 +545,8 @@ value rec copy_from_stream conf print strm =
                   conf.env
               }
           | 'f' -> (* see r *)
-              print_specific_file conf print
-                (Filename.concat (Filename.concat setup_dir.val "setup" ) "css.txt") strm
+                print (file_contents
+                  (slashify_linux_dos (bin_dir.val ^ "/setup/setup.css")))
           | 'g' -> print_specific_file conf print "comm.log" strm
           | 'h' ->
               do {
@@ -827,14 +838,8 @@ value read_base_env bname =
               else loop [cut_at_equal s :: env]
           | None -> env ]
       in
-      do { close_in ic; 
-        eprintf " 1/ File xxx.gwf: %s\n" fname; 
-        flush stderr;
-        env }
-  | None -> do {
-        eprintf " 2/ File xxx.gwf: %s\n" fname; 
-        flush stderr;
-    [] } ]
+      do { close_in ic; env }
+  | None -> [] ]
 ;
 
 value print_file conf bname =
@@ -1702,17 +1707,6 @@ value read_gwd_arg () =
         loop [] (List.rev list)
       }
   | None -> [] ]
-;
-
-value file_contents fname =
-  match try Some (open_in fname) with [ Sys_error _ -> None ] with
-  [ Some ic ->
-      loop 0 where rec loop len =
-        match try Some (input_char ic) with [ End_of_file -> None ] with
-        [ Some '\r' -> loop len
-        | Some c -> loop (Buff.store len c)
-        | None -> do { close_in ic; Buff.get len } ]
-  | None -> "" ]
 ;
 
 value gwf conf =
