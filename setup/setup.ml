@@ -607,21 +607,13 @@ value rec copy_from_stream conf print strm =
                       print_if_else conf print (v = k2) strm
                   | None -> 
                       print_if_else conf print False strm ]
-              | 'J' -> (* return the value of evar.x *)
-                  let k = get_variable strm in
-                  match p_getenv conf.env k with
-                  [ Some x ->
-                      if x <> "" then
-                        print x
-                      else ()
-                  | None -> () ]
               | 'O' ->
                   let fname = Filename.remove_extension (Filename.basename (strip_spaces (s_getenv conf.env "o"))) in
                   let fname = slashify_linux_dos fname in
                   print fname
               | 'P' -> print (string_of_int gwd_port.val)
-              | 'Q' -> print (parameters_1 conf.env)
-              | 'R' -> print (parameters_2 conf.env)
+              | 'Q' -> print (parameters_1 conf.env) (* same as p *)
+              | 'R' -> print (parameters_2 conf.env) (* same as p *)
               | _ ->
                   match p_getenv conf.env (String.make 1 c) with
                   [ Some v ->
@@ -848,7 +840,7 @@ value print_file conf bname =
   let conf =
     {(conf) with
         env =
-        List.map (fun (k, v) -> (k, quote_escaped v)) benv }
+        List.map (fun (k, v) -> (k, quote_escaped v)) benv @ conf.env}
   in
   match ic_opt with
   [ Some ic ->
