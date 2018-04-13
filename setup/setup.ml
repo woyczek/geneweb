@@ -602,6 +602,9 @@ value rec copy_from_stream conf print strm =
                   (* var is a evar from url or a bvar from gwsetup.gwf  *)
                   let k1 = get_variable strm in
                   let k2 = get_variable strm in
+                  (* trying to interpret macros on k2 parameter (does not compile)
+                  let k2 = parse_upto ';' strm in
+                  let k2 = copy_from_stream conf print (Stream.of_string k2) in *)
                   match p_getenv conf.env k1 with
                   [ Some v ->
                       print_if_else conf print (v = k2) strm
