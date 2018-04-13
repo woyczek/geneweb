@@ -843,7 +843,11 @@ value print_file conf bname =
   let conf =
     {(conf) with
         env =
-        List.map (fun (k, v) -> (k, quote_escaped v)) benv @ conf.env}
+        List.map (fun (k, v) -> (k, v)) benv @ conf.env}
+        (* suppressed quote_escaped v because there is html in variables (for inst. body_prop) *)
+        (* would be nice to parse data and execute macros such as %a, ... *)
+        (* -> (k, copy_from_stream conf (fun x -> Wserver.printf "%s" x) (Stream.of_string v)) *)
+        (* does not quite do it, but close *)
   in
   match ic_opt with
   [ Some ic ->
@@ -1717,7 +1721,7 @@ value gwf conf =
     let conf =
       {(conf) with
         env =
-          List.map (fun (k, v) -> (k, quote_escaped v)) benv @
+          List.map (fun (k, v) -> (k, v)) benv @
           [("trailer", trailer) :: conf.env]}
     in
     print_file conf "gwf_1.htm"
