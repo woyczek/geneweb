@@ -597,24 +597,16 @@ value rec copy_from_stream conf print strm =
                   in
                   print_specific_file conf print outfile strm;
                   }
-              | 'I' -> (* if evar.x = "on" or != "" then print content of {...} *)
-                  let k = get_variable strm in
-                  match p_getenv conf.env k with
+              | 'I' -> 
+                  (* %Ivar;value;{var = value part|false part}          *)
+                  (* var is a evar from url or a bvar from gwsetup.gwf  *)
+                  let k1 = get_variable strm in
+                  let k2 = get_variable strm in
+                  match p_getenv conf.env k1 with
                   [ Some v ->
-                      if v = "on" || v <> "" then
-                        match strm with parser
-                          [ [: `'{' :] ->
-                              let s = parse_upto '}' strm in
-                              print s
-                          | [: :] -> print (strip_spaces v) ]
-                      else
-                        match strm with parser
-                          [ [: `'{' :] -> parse_upto_void '}' strm
-                          | [: :] -> () ]
+                      print_if_else conf print (v = k2) strm
                   | None -> 
-                      match strm with parser
-                      [ [: `'{' :] -> parse_upto_void '}' strm
-                      | [: :] -> () ] ]
+                      print_if_else conf print False strm ]
               | 'J' -> (* return the value of evar.x *)
                   let k = get_variable strm in
                   match p_getenv conf.env k with
@@ -784,6 +776,14 @@ and print_if conf print cond strm =
       let s = parse_upto '}' strm in
       if cond then copy_from_stream conf print (Stream.of_string s) else ()
   | _ -> () ]
+and print_if_else conf print cond strm =
+  match Stream.next strm with
+  [ '{' ->
+      let s1 = parse_upto '|' strm in
+      let s2 = parse_upto '}' strm in
+      if cond then copy_from_stream conf print (Stream.of_string s1)
+      else copy_from_stream conf print (Stream.of_string s2)
+  | _ -> () ]
 and for_all conf print list strm =
   match Stream.next strm with
   [ '{' ->
@@ -808,12 +808,47 @@ and for_all conf print list strm =
   | _ -> () ]
 ;
 
+value rec cut_at_equal s =
+  try
+    let i = String.index s '=' in
+    (String.sub s 0 i, String.sub s (succ i) (String.length s - succ i))
+  with
+  [ Not_found -> (s, "") ]
+;
+
+value read_base_env bname =
+  let fname = bname ^ ".gwf" in
+  match try Some (open_in fname) with [ Sys_error _ -> None ] with
+  [ Some ic ->
+      let env =
+        loop [] where rec loop env =
+          match try Some (input_line ic) with [ End_of_file -> None ] with
+          [ Some s ->
+              if s = "" || s.[0] = '#' then loop env
+              else loop [cut_at_equal s :: env]
+          | None -> env ]
+      in
+      do { close_in ic; env }
+  | None -> [] ]
+;
+
 value print_file conf bname =
   let dir = Filename.concat setup_dir.val "setup" in
   let fname = Filename.concat (Filename.concat dir "lang") bname in
   let ic_opt =
     try Some (open_in fname) with
     [ Sys_error _ -> None ]
+  in
+  let in_base =
+    match p_getenv conf.env "anon" with
+    [ Some f -> strip_spaces f
+    | None -> "gwsetup" ]
+  in
+  let benv = read_base_env in_base in
+  let conf =
+    {(conf) with
+        env =
+        List.map (fun (k, v) -> (k, quote_escaped v)) benv }
   in
   match ic_opt with
   [ Some ic ->
@@ -1631,30 +1666,6 @@ value merge_1 conf =
   }
 ;
 
-value rec cut_at_equal s =
-  try
-    let i = String.index s '=' in
-    (String.sub s 0 i, String.sub s (succ i) (String.length s - succ i))
-  with
-  [ Not_found -> (s, "") ]
-;
-
-value read_base_env bname =
-  let fname = bname ^ ".gwf" in
-  match try Some (open_in fname) with [ Sys_error _ -> None ] with
-  [ Some ic ->
-      let env =
-        loop [] where rec loop env =
-          match try Some (input_line ic) with [ End_of_file -> None ] with
-          [ Some s ->
-              if s = "" || s.[0] = '#' then loop env
-              else loop [cut_at_equal s :: env]
-          | None -> env ]
-      in
-      do { close_in ic; env }
-  | None -> [] ]
-;
-
 value read_gwd_arg () =
   let fname = Filename.concat setup_dir.val "gwd.arg" in
   match try Some (open_in fname) with [ Sys_error _ -> None ] with
@@ -2116,18 +2127,7 @@ value setup (addr, req) comm env_str =
     flush stderr;
     print_file conf "err_acc.htm"
   }
-  else if conf.comm = "" then do {
-    let benv = read_base_env "gwsetup" in
-    let trailer = "" in
-    let conf =
-      {(conf) with
-        env =
-          (* faut il quote_escaped ?? *)
-          List.map (fun (k, v) -> (k, quote_escaped v)) benv @
-          [("trailer", trailer) :: conf.env]}
-    in
-    print_file conf "welcome.htm"
-    }
+  else if conf.comm = "" then print_file conf "welcome.htm"
   else setup_comm conf comm
 ;
 
