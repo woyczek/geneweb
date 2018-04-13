@@ -813,6 +813,10 @@ value rec cut_at_equal s =
 
 value read_base_env bname =
   let fname = bname ^ ".gwf" in
+  let fname =
+    if Sys.file_exists fname then fname 
+    else bin_dir.val ^ (if Sys.unix then "/setup/setup.gwf" else "\\setup\\setup.gwf")
+  in
   match try Some (open_in fname) with [ Sys_error _ -> None ] with
   [ Some ic ->
       let env =
@@ -823,8 +827,14 @@ value read_base_env bname =
               else loop [cut_at_equal s :: env]
           | None -> env ]
       in
-      do { close_in ic; env }
-  | None -> [] ]
+      do { close_in ic; 
+        eprintf " 1/ File xxx.gwf: %s\n" fname; 
+        flush stderr;
+        env }
+  | None -> do {
+        eprintf " 2/ File xxx.gwf: %s\n" fname; 
+        flush stderr;
+    [] } ]
 ;
 
 value print_file conf bname =
