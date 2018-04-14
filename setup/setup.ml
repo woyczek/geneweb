@@ -505,6 +505,34 @@ value file_contents fname =
   | None -> "" ]
 ;
 
+value rec cut_at_equal s =
+  try
+    let i = String.index s '=' in
+    (String.sub s 0 i, String.sub s (succ i) (String.length s - succ i))
+  with
+  [ Not_found -> (s, "") ]
+;
+
+value read_base_env bname =
+  let fname = bname ^ ".gwf" in
+  let fname =
+    if Sys.file_exists fname then fname 
+    else bin_dir.val ^ (if Sys.unix then "/setup/setup.gwf" else "\\setup\\setup.gwf")
+  in
+  match try Some (open_in fname) with [ Sys_error _ -> None ] with
+  [ Some ic ->
+      let env =
+        loop [] where rec loop env =
+          match try Some (input_line ic) with [ End_of_file -> None ] with
+          [ Some s ->
+              if s = "" || s.[0] = '#' then loop env
+              else loop [cut_at_equal s :: env]
+          | None -> env ]
+      in
+      do { close_in ic; env }
+  | None -> [] ]
+;
+
 value rec copy_from_stream conf print strm =
   try
     while True do {
@@ -545,8 +573,21 @@ value rec copy_from_stream conf print strm =
                   conf.env
               }
           | 'f' -> (* see r *)
-                print (file_contents
-                  (slashify_linux_dos (bin_dir.val ^ "/setup/setup.css")))
+                let in_file = get_variable strm in
+                let s = 
+                  (file_contents
+                  (slashify_linux_dos (bin_dir.val ^ "/setup/" ^ in_file)))
+                in
+                let in_base = strip_spaces (s_getenv conf.env "anon") in
+                let benv = read_base_env in_base in
+                let conf =
+                  {(conf) with
+                    env =
+                    List.map (fun (k, v) -> (k, v)) benv @ conf.env}
+                in
+                (* depending on when %f is called, conf may be sketchy *)
+                (* conf will know bvars from setup.gwf of basename.gwf and evars from url *)
+                copy_from_stream conf print (Stream.of_string s)
           | 'g' -> print_specific_file conf print "comm.log" strm
           | 'h' ->
               do {
@@ -609,13 +650,16 @@ value rec copy_from_stream conf print strm =
                   print_specific_file conf print outfile strm;
                   }
               | 'I' -> 
-                  (* %Ivar;value;{var = value part|false part}          *)
-                  (* var is a evar from url or a bvar from gwsetup.gwf  *)
+                  (* %Ivar;value;{var = value part|false part} *)
+                  (* var is a evar from url or a bvar from basename.gwf or setup.gwf *)
                   let k1 = get_variable strm in
                   let k2 = get_variable strm in
-                  (* trying to interpret macros on k2 parameter (does not compile)
+                  (* 
+                    trying to interpret macros on k2 parameter
+                    need to replace print function by something which accumulates a string
                   let k2 = parse_upto ';' strm in
-                  let k2 = copy_from_stream conf print (Stream.of_string k2) in *)
+                  let k2 = copy_from_stream conf print (Stream.of_string k2) in
+                  *)
                   match p_getenv conf.env k1 with
                   [ Some v ->
                       print_if_else conf print (v = k2) strm
@@ -812,34 +856,6 @@ and for_all conf print list strm =
         if eol then print "\n" else ()
       }
   | _ -> () ]
-;
-
-value rec cut_at_equal s =
-  try
-    let i = String.index s '=' in
-    (String.sub s 0 i, String.sub s (succ i) (String.length s - succ i))
-  with
-  [ Not_found -> (s, "") ]
-;
-
-value read_base_env bname =
-  let fname = bname ^ ".gwf" in
-  let fname =
-    if Sys.file_exists fname then fname 
-    else bin_dir.val ^ (if Sys.unix then "/setup/setup.gwf" else "\\setup\\setup.gwf")
-  in
-  match try Some (open_in fname) with [ Sys_error _ -> None ] with
-  [ Some ic ->
-      let env =
-        loop [] where rec loop env =
-          match try Some (input_line ic) with [ End_of_file -> None ] with
-          [ Some s ->
-              if s = "" || s.[0] = '#' then loop env
-              else loop [cut_at_equal s :: env]
-          | None -> env ]
-      in
-      do { close_in ic; env }
-  | None -> [] ]
 ;
 
 value print_file conf bname =
