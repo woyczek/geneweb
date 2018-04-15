@@ -1754,6 +1754,13 @@ value make_efam conf base ip ifam =
   (fam, cpl, m_auth)
 ;
 
+value remove_first_p s =
+    if (String.length s) > 4 && s.[0] = '<' && s.[1] = 'p' && s.[2] = '>' then
+      String.sub s 3 (String.length s - 3)
+    else s
+;
+
+
 value rec eval_var conf base env ep loc sl =
   try eval_simple_var conf base env ep sl with
   [ Not_found -> eval_compound_var conf base env ep loc sl ]
@@ -1968,6 +1975,7 @@ and eval_simple_str_var conf base env (_, p_auth) =
             in
             let s = Wiki.syntax_links conf wi (String.concat "\n" lines) in
             let s = Util.replace_quotes s in
+            let s = remove_first_p s in
             if conf.pure_xhtml then Util.check_xhtml s else s
           else ""
       | _ -> raise Not_found ]
@@ -2097,6 +2105,7 @@ and eval_simple_str_var conf base env (_, p_auth) =
             in
             let s = Wiki.syntax_links conf wi (String.concat "\n" lines) in
             let s = Util.replace_quotes s in
+            let s = remove_first_p s in
             if conf.pure_xhtml then Util.check_xhtml s else s
           else ""
       | _ -> raise Not_found ]
@@ -2115,6 +2124,7 @@ and eval_simple_str_var conf base env (_, p_auth) =
             in
             let s = Wiki.syntax_links conf wi (String.concat "\n" lines) in
             let s = Util.replace_quotes s in
+            let s = remove_first_p s in
             if conf.pure_xhtml then Util.check_xhtml s else s
           else ""
       | _ -> raise Not_found ]
@@ -3195,6 +3205,7 @@ and eval_str_event_field
         in
         let s = Wiki.syntax_links conf wi (String.concat "\n" lines) in
         let s = Util.replace_quotes s in
+        let s = remove_first_p s in
         if conf.pure_xhtml then Util.check_xhtml s else s
       else ""
   | "src" ->
@@ -3708,6 +3719,7 @@ and eval_str_person_field conf base env ((p, p_auth) as ep) =
         in
         let s = Wiki.syntax_links conf wi (String.concat "\n" lines) in
         let s = Util.replace_quotes s in
+        let s = remove_first_p s in
         if conf.pure_xhtml then Util.check_xhtml s else s
       else ""
   | "baptism_place" ->
@@ -3727,6 +3739,7 @@ and eval_str_person_field conf base env ((p, p_auth) as ep) =
         in
         let s = Wiki.syntax_links conf wi (String.concat "\n" lines) in
         let s = Util.replace_quotes s in
+        let s = remove_first_p s in
         if conf.pure_xhtml then Util.check_xhtml s else s
       else ""
   | "burial_place" ->
@@ -3746,6 +3759,7 @@ and eval_str_person_field conf base env ((p, p_auth) as ep) =
         in
         let s = Wiki.syntax_links conf wi (String.concat "\n" lines) in
         let s = Util.replace_quotes s in
+        let s = remove_first_p s in
         if conf.pure_xhtml then Util.check_xhtml s else s
       else ""
   | "child_name" ->
@@ -3800,6 +3814,7 @@ and eval_str_person_field conf base env ((p, p_auth) as ep) =
         in
         let s = Wiki.syntax_links conf wi (String.concat "\n" lines) in
         let s = Util.replace_quotes s in
+        let s = remove_first_p s in
         if conf.pure_xhtml then Util.check_xhtml s else s
       else ""
   | "died" -> string_of_died conf base env p p_auth
@@ -3966,6 +3981,7 @@ and eval_str_person_field conf base env ((p, p_auth) as ep) =
         in
         let s = Wiki.syntax_links conf wi (String.concat "\n" lines) in
         let s = Util.replace_quotes s in
+        let s = remove_first_p s in
         if conf.pure_xhtml then Util.check_xhtml s else s
       else ""
   | "occ" ->
@@ -4036,6 +4052,7 @@ and eval_str_person_field conf base env ((p, p_auth) as ep) =
         in
         let s = Wiki.syntax_links conf wi (String.concat "\n" lines) in
         let s = Util.replace_quotes s in
+        let s = remove_first_p s in
         if conf.pure_xhtml then Util.check_xhtml s else s
       else ""
   | "slash_burial_date" ->
