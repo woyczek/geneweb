@@ -1755,9 +1755,14 @@ value make_efam conf base ip ifam =
 ;
 
 value remove_first_p s =
+  let s =
     if (String.length s) > 4 && s.[0] = '<' && s.[1] = 'p' && s.[2] = '>' then
       String.sub s 3 (String.length s - 3)
     else s
+  in
+  if (String.length s) > 2 && s.[0] = '\n' then
+      String.sub s 1 (String.length s - 1)
+  else s
 ;
 
 

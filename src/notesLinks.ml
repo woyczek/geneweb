@@ -129,7 +129,7 @@ value misc_notes_link s i =
               let oc1 = try int_of_string name with [ Failure _ -> 0 ] in
               let oc = try int_of_string oc with [ Failure _ -> 0 ] in
               if oc1 = 0 then (fn, sn, oc, name)
-              else (*if Wiki.wi_person_exists (fn, sn, oc) then (fn, sn, oc1, fn ^ " " ^ sn)
+              else (*if Wiki.wi_person_exists (fn, sn, oc1) then (fn, sn, oc1, fn ^ " " ^ sn)
                    else (fn, sn, oc, name)*)
                 (fn, sn, oc1, fn ^ " " ^ sn)
             with
