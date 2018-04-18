@@ -1,5 +1,5 @@
   <!-- Copyright (c) 1998-2006 INRIA - GeneWeb -->
-  <!-- $Id: setup.css,v 7.00 2018-04-10 05:35:06 hg Exp $ -->
+  <!-- $Id: setup.css,v 7.00 2018-04-19 05:35:06 hg Exp $ -->
   <!-- css file for gwsetup (command: %Vv;, base: %Vanon;)-->
 
 <style>
@@ -13,8 +13,25 @@ pre {
  font-family: monospace;
 }
 
-a {
+a.j {
  font-size: 100%%;
  font-family: monospace;
 }
+
+table.setup {
+ border:1px solid;
+ border-radius:4px;
+ border-color:#5bc0de;
+}
+
+div.welcome {
+ width: 750px; 
+ border: solid 2px #5bc0de;
+ border-radius:4px;
+ text-align: left; 
+ overflow: auto; 
+ margin-left: auto; 
+ margin-right: auto; 
+ padding:5px;">
+}          
 </style>

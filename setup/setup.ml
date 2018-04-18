@@ -787,7 +787,7 @@ and print_selector conf print =
       fun
       [ [(d, x) :: list] ->
           do {
-            print "<a href=\"";
+            print "<a class=\"j\" href=\"";
             print conf.comm;
             print "?lang=";
             print conf.lang;
@@ -860,21 +860,6 @@ value print_file conf bname =
   let ic_opt =
     try Some (open_in fname) with
     [ Sys_error _ -> None ]
-  in
-  let in_base =
-    match p_getenv conf.env "anon" with
-    [ Some f -> strip_spaces f
-    | None -> "gwsetup" ]
-  in
-  let benv = read_base_env in_base in
-  let conf =
-    {(conf) with
-        env =
-        List.map (fun (k, v) -> (k, v)) benv @ conf.env}
-        (* suppressed quote_escaped v because there is html in variables (for inst. body_prop) *)
-        (* would be nice to parse data and execute macros such as %a, ... *)
-        (* -> (k, copy_from_stream conf (fun x -> Wserver.printf "%s" x) (Stream.of_string v)) *)
-        (* does not quite do it, but close *)
   in
   match ic_opt with
   [ Some ic ->
@@ -1284,10 +1269,22 @@ value gwu_or_gwb2ged_check suffix conf =
     [ Some f -> strip_spaces f
     | None -> "" ]
   in
+  let od =
+    match p_getenv conf.env "od" with
+    [ Some f -> Filename.basename (strip_spaces f)
+    | None -> "" ]
+  in
   let out_file =
     match p_getenv conf.env "o" with
     [ Some f -> Filename.basename (strip_spaces f)
     | None -> "" ]
+  in
+  let odir =
+    if od = "odir" then
+      match p_getenv conf.env "odir" with
+      [ Some f -> Filename.basename (strip_spaces f)
+      | None -> "" ]
+    else ""
   in
   let out_file =
     if out_file = "" || out_file = Filename.current_dir_name then
@@ -1297,6 +1294,8 @@ value gwu_or_gwb2ged_check suffix conf =
       out_file
     else out_file ^ suffix
   in
+  let conf = conf_with_env conf "od" "" in
+  let conf = conf_with_env conf "odir" odir in
   let conf = conf_with_env conf "o" out_file in
   if in_file = "" then print_file conf "err_miss.htm"
   else print_file conf "bsi.htm"

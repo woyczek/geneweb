@@ -52,7 +52,7 @@ sv: Välj din databas:
 
 <p>
 
-<dl><dt><dd><table style="border:1px solid" cellspacing=0 cellpadding=1>
+<dl><dt><dd><table class="setup" style="cellspacing=0 cellpadding=1">
 
 %b{<tr align=left>
 <td><input type=radio name=anon value="%a">   </td>
@@ -71,6 +71,8 @@ sv: det finns ingen databas för tillfället
 
 <p>
 
+<dl><dt><dd><table class="setup" style="cellspacing=0 cellpadding=1">
+<tr><td>
 [
 de: Gib den Namen ein, den du deiner
     <font color=#2f6400><b>GeneWeb</b></font>-Quelldatei geben
@@ -102,10 +104,30 @@ sv: Skriv in namnet du vill kalla din
     Om du inte skriver någonting, kommer det att bli samma namn som databasen 
     avslutad med "<tt>.gw</tt>".
 ]
-
+</td></tr>
+<p>
+<tr><td>
+<dl><dt><dd><input type="radio" name="od" value="o" checked>&nbsp;<input name=o size=30></dl>
+</td></tr>
 <p>
 
-<dl><dt><dd><input name=o size=30></dl>
+<tr><td>
+<dl><dt><dd>
+[
+en: or ask for recreation of files in original directory.<br>
+    If the base was created by <span style="font-family: monospace">gwc -f *.gw</span>, 
+    then <span style="font-family: monospace">gwu -odir .</span> will recreate the source files.
+fr: ou demandez à reconstruire les fichiers dans le dossier d'origine.<br>
+    Si la base a été créé par <span style="font-family: monospace">gwc -f *.gw</span>,
+    alors <span style="font-family: monospace">gwu -odir .</span> reconstruira les fichiers d'origine.
+]
+</dl>
+</td></tr>
+<tr><td>
+<dl><dt><dd><input type="radio" name="od" value = "odir">&nbsp;<input name=odir size=30 value="." ></dl>
+</td></tr>
+</table>
+</dl>
 
 <p>
 
@@ -121,7 +143,7 @@ sv: Välj de optioner du vill ha:
 
 <p>
 
-<dl><dt><dd><table style="border:1px solid">
+<dl><dt><dd><table class="setup">
 <tr align=left>
 <td><input type=checkbox name=mem value=on>   </td>
 <td>[
@@ -140,7 +162,7 @@ sv: Spara minne under operationen (men det kommer att gå saktare).
 </tr>
 </table></dl>
 
-<dl><dt><dd><table style="border:1px solid">
+<dl><dt><dd><table class="setup">
 <tr align=left><td> </td><td colspan=3>[
 de: Nur die Vorfahren auswählen von…
 en: Extract only the ancestors of…
@@ -185,7 +207,7 @@ sv: Efternamn
 <td colspan=3><input name="a3" size=40 maxlength=200></td></tr>
 </table></dl>
 
-<dl><dt><dd><table style="border:1px solid">
+<dl><dt><dd><table class="setup">
 <tr align=left><td> </td><td colspan=3>[
 de: Nur die Nachkommen auswählen von…
 en: Extract only the descendants of…
