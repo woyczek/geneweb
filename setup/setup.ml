@@ -515,10 +515,6 @@ value rec cut_at_equal s =
 
 value read_base_env bname =
   let fname = bname ^ ".gwf" in
-  let fname =
-    if Sys.file_exists fname then fname 
-    else bin_dir.val ^ (if Sys.unix then "/setup/setup.gwf" else "\\setup\\setup.gwf")
-  in
   match try Some (open_in fname) with [ Sys_error _ -> None ] with
   [ Some ic ->
       let env =
@@ -586,7 +582,7 @@ value rec copy_from_stream conf print strm =
                     List.map (fun (k, v) -> (k, v)) benv @ conf.env}
                 in
                 (* depending on when %f is called, conf may be sketchy *)
-                (* conf will know bvars from setup.gwf of basename.gwf and evars from url *)
+                (* conf will know bvars from basename.gwf and evars from url *)
                 copy_from_stream conf print (Stream.of_string s)
           | 'g' -> print_specific_file conf print "comm.log" strm
           | 'h' ->
@@ -762,7 +758,6 @@ and print_selector conf print =
     print sel;
     print "\">";
     print sel;
-    print "</a>\n";
     let list =
       List.map
         (fun x ->
@@ -786,7 +781,7 @@ and print_selector conf print =
     let min_interv = 2 in
     let line_len = 72 in
     let n_by_line = max 1 ((line_len + min_interv) / (max_len + min_interv)) in
-    let newline () = print "\n          " in
+    let newline () = print "\n" in
     newline ();
     loop 1 list where rec loop i =
       fun
@@ -800,6 +795,7 @@ and print_selector conf print =
             List.iter
               (fun (k, v) ->
                  if k = "sel" then ()
+                 else if k = "body_prop" then ()
                  else do { print k; print "="; print v; print ";" })
               conf.env;
             print "sel=";
@@ -1075,11 +1071,21 @@ value simple2 conf =
 ;
 
 value gwc_or_ged2gwb out_name_of_in_name conf =
+  let fname =
+    match p_getenv conf.env "fname" with
+    [ Some f -> strip_spaces f
+    | None -> "" ]
+  in
   let in_file =
     match p_getenv conf.env "anon" with
     [ Some f -> strip_spaces f
     | None -> "" ]
   in
+  let in_file =
+    if fname = "" then in_file
+    else in_file ^ ( if Sys.unix then "/" else "\\" ) ^ fname
+  in
+  let conf = conf_with_env conf "anon" in_file in
   let out_file =
     match p_getenv conf.env "o" with
     [ Some f -> strip_spaces f
@@ -1088,19 +1094,34 @@ value gwc_or_ged2gwb out_name_of_in_name conf =
   let out_file =
     if out_file = "" then out_name_of_in_name in_file else out_file
   in
+  (* clean up env *)
+  let conf = conf_with_env conf "body_prop" "" in
+  let conf = conf_with_env conf "fname" "" in
+  
   let conf = conf_with_env conf "o" out_file in
   if in_file = "" || out_file = "" then print_file conf "err_miss.htm"
-  else if not (Sys.file_exists in_file) then print_file conf "err_unkn.htm"
+  else if not (Sys.file_exists in_file) && not (String.contains fname '*')
+    then print_file conf "err_unkn.htm"
   else if not (good_name out_file) then print_file conf "err_name.htm"
   else print_file conf "bso.htm"
 ;
 
 value gwc2_or_ged2gwb2 out_name_of_in_name conf =
+  let fname =
+    match p_getenv conf.env "fname" with
+    [ Some f -> strip_spaces f
+    | None -> "" ]
+  in
   let in_file =
     match p_getenv conf.env "anon" with
     [ Some f -> strip_spaces f
     | None -> "" ]
   in
+  let in_file =
+    if fname = "" then in_file
+    else in_file ^ ( if Sys.unix then "/" else "\\" ) ^ fname
+  in
+  let conf = conf_with_env conf "anon" in_file in
   let out_file =
     match p_getenv conf.env "o" with
     [ Some f -> strip_spaces f
@@ -1109,9 +1130,14 @@ value gwc2_or_ged2gwb2 out_name_of_in_name conf =
   let out_file =
     if out_file = "" then out_name_of_in_name in_file else out_file
   in
+  (* clean up env *)
+  let conf = conf_with_env conf "body_prop" "" in
+  let conf = conf_with_env conf "fname" "" in
+  
   let conf = conf_with_env conf "o" out_file in
   if in_file = "" || out_file = "" then print_file conf "err_miss.htm"
-  else if not (Sys.file_exists in_file) then print_file conf "err_unkn.htm"
+  else if not (Sys.file_exists in_file) && not (String.contains fname '*')
+    then print_file conf "err_unkn.htm"
   else if not (good_name out_file) then print_file conf "err_name.htm"
   else print_file conf "bso.htm"
 ;
