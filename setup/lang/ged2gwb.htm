@@ -1,14 +1,8 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
-            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!DOCTYPE html>
 <head>
   <!-- Copyright (c) 1998-2006 INRIA - GeneWeb -->
-  <!-- $Id: ged2gwb.htm,v 5.1 2006-01-01 05:35:06 ddr Exp $ -->
-  <meta http-equiv="Content-Type" content="text/html; charset=[ !charset]"%/>
-  <meta http-equiv="Content-Style-Type" content="text/css"%/>
-  <meta name="robots" content="none"%/>
-  <link rel="shortcut icon" href="images/favicon_gwsetup.png"%/>
-
-<title>
+  <!-- $Id: ged2gwb.htm,v 7.00 2018-04-19 05:35:06 ddr Exp $ -->
+    <title>
 [
 de: GEDCOM-Datei importieren
 en: Import a GEDCOM file
@@ -45,7 +39,7 @@ sv: Importera en GEDCOM-fil
 <input type=hidden name=lang value=%l>
 
 <p>
-<dl><dt><dd>
+<ul><li>
 [
 de: Bitte eingeben vollständiger Name deiner GEDCOM-Datei.
 en: Select your GEDCOM file:
@@ -60,11 +54,8 @@ sv: Skriv det kompletta namnet på din GEDCOM-fil.
 <br><span style="font-family: monospace">   -f 
 </span>
 %j
-</dl>
 
-<dl><dt><dd><table width="100%%">
-<tr align="left">
-<td colspan=2 width="15">
+<li>
 [
 de: Name, den du deiner <font color=#2f6400><b>GeneWeb</b></font>-Datenbank
     geben möchtest. Wenn du hier nichts eingibst, wird der
@@ -98,12 +89,9 @@ fr: nom
 it: nome
 sv: namnet
 ]">
-</td>
-</tr>
-</table></dl>
 
 <p>
-<dl><dt><dd>
+<li>
 [
 de: Sofern gewünscht, wähle bitte aus den folgenden Optionen:
 en: Select the options you want:
@@ -113,23 +101,22 @@ it: Selezionate le opzioni desiderate:
 lv: Iezîmçjiet nepiecieðmâs papildus iespçjas:
 sv: Välj de optioner du vill ha:
 ]
-</dl>
 
 <p>
-<dl><dt><dd><table style="border:1px solid" width="100%%">
+<table class="setup">
 <tr align="left">
-<td colspan=2 width="15"><input type="checkbox" name="uin" id="uin" value="on" />
+<td><input type="checkbox" name="uin" id="uin" value="on" />
 <label for="uin" style="font-family: monospace">-uin          | </label>[
 en: Put untreated GEDCOM tags in notes.
 fi: Pistä käsittelemättömät GEDCOM merkit lainausmerkkeihin.
 fr: Sauvegarder les tags GEDCOM non reconnus dans les notes.
 ]</td>
 </tr>
-</table></dl>
-
-<dl><dt><dd><table style="border:1px solid" width="100%%">
+</table>
+<p>
+<table class="setup">
 <tr align="left">
-<td colspan=2 width="15"><input type="checkbox" name="lf" id="lf" value="on" />
+<td><input type="checkbox" name="lf" id="lf" value="on" />
 <label for="lf" style="font-family: monospace">-lf           | </label>[
 de: Vornamen in Kleinbuchstaben wandeln, nur Anfangsbuchstaben in
     groß.
@@ -143,11 +130,11 @@ lv: Pârveidot personvârdus uz mazajiem burtiem ar pirmajiem lielajiem.
 sv: Forcera gemena förnamn, bara initialer behålls som versaler.
 ]</td>
 </tr>
-</table></dl>
-
-<dl><dd><table style="border:1px solid" width="100%%">
+</table>
+<p>
+<table class="setup">
 <tr align=left>
-<td colspan=2 width="15"><input type="checkbox" name="ls" id="ls" value="on">
+<td><input type="checkbox" name="ls" id="ls" value="on">
 <label for="ls" style="font-family: monospace">-ls           | </label>[
 de: Nachnamen in Kleinbuchstaben wandeln, nur Anfangsbuchstaben in
     groß. Kleinschreibung von Partikeln möglichst
@@ -165,9 +152,9 @@ lv: Pârveidot uzvârdus  uz mazajiem burtiem ar pirmajiem lielajiem. Mçginât
     saglabât partikulus ar mazajiem burtiem.
 sv: Forcera gemena efternamn, bara initialer behålls som versaler.
 ]</td></tr>
-</table></dl>
-
-<dl><dt><dd><table style="border:1px solid" width="100%%">
+</table>
+<p>
+<table class="setup">
 <tr align=left><td>     [
 de: Wenn der GEDCOM-Vorname mehrere, durch Kommata getrennte Namen
     enthält, soll beim Anlegen einer Person der erste dieser Namen der
@@ -213,9 +200,9 @@ lv: Ieslçgt ðo iespçju
 sv: Sätt denna option.
 ]</td>
 </tr>
-</table></dl>
-
-<dl><dt><dd><table style="border:1px solid" width="100%%">
+</table>
+<p>
+<table class="setup">
 <tr align=left><td>   </td>
 <td>[
 en: "first names enclosed": the -fne option must be followed by a
@@ -241,9 +228,9 @@ en:  (do not enter the quotes "" in the input zone).
 fr:  (ne pas inclure les guilemets "" dans le champ de saisie).
 ]
 </td></tr>
-</table></dl>
-
-<dl><dt><dd><table style="border:1px solid" width="100%%">
+</table>
+<p>
+<table class="setup">
 <tr align=left><td colspan=2>    
 [
 de: Normalerweise wird beim Anlegen einer Person, deren GEDCOM-Vorname wie ein
@@ -313,7 +300,7 @@ sv: Denna option är förvald: när man skapar en person, om GEDCOM-filens
 ]
 
 <tr align=left>
-<td colspan=2 width="15"><input type="checkbox" name="no_epn" id="no_epn" value="on">
+<td><input type="checkbox" name="no_epn" id="no_epn" value="on">
 <label for="no_epn" style="font-family: monospace">-no_epn        | </label>[
 de: Diese Option abschalten.
 en: Cancel this option.
@@ -324,20 +311,20 @@ lv: Izslçgt ðo iespçju
 sv: Välj bort denna option.
 ]</td>
 </tr>
-</table></dl>
-
-<dl><dt><dd><table style="border:1px solid" width="100%%">
-<td colspan=2 width="15"><input type="checkbox" name="no_pit" id="no_pit" value="on">
+</table>
+<p>
+<table class="setup">
+<td><input type="checkbox" name="no_pit" id="no_pit" value="on">
 <label for="no_pit" style="font-family: monospace">-no_pit        | </label>[
 en: Not public even if titles (see -epn option).
 fr: Ne pas considérer comme public si un titre a été détecté (voir option -epn).
 ]</td>
 </tr>
-</table></dl>
+</table>
 
-<dl><dt><dd><table style="border:1px solid" width="100%%">
+<table class="setup">
 <tr align=left>
-<td colspan=2 width="15"><input type="checkbox" name="tnd" id="tnd" value="on">
+<td><input type="checkbox" name="tnd" id="tnd" value="on">
 <label for="tnd" style="font-family: monospace">-tnd           | </label>[
 de: Negative Datumsangaben erzeugen, falls Inkonsistenzen erkannt werden
     (z. B. Geburt nach Tod).
@@ -354,10 +341,10 @@ sv: Sätt negativt datum när datumen är motsägande varandra (tex födelse
     efter död).
 ]</td>
 </tr>
-</table></dl>
-
-<dl><dt><dd><table style="border:1px solid" width="100%%">
-<td colspan=2 width="15"><input type="checkbox" name="no_nd" id="no_nd" value="on">
+</table>
+<p>
+<table class="setup">
+<td><input type="checkbox" name="no_nd" id="no_nd" value="on">
 <label for="no_nd" style="font-family: monospace">-no_nd         | </label>[
 de: Keine negativen Datumsangaben: Ein Jahr mit vorangestelltem Minuszeichen
     soll nicht als negative Jahresangabe interpretiert werden. 
@@ -375,29 +362,29 @@ sv: Inga negativa datum: tolka inte ett år med minus tecken framför som ett
     negativt år.
 ]</td>
 </tr>
-</table></dl>
-
-<dl><dt><dd><table style="border:1px solid" width="100%%">
+</table>
+<p>
+<table class="setup">
 <tr align=left>
-<td colspan=2 width="15"><input type="checkbox" name="nc" id="nc" value="on">
+<td><input type="checkbox" name="nc" id="nc" value="on">
 <label for="nc" style="font-family: monospace">-nc            | </label>[
 en: No consistency check.
 fr: Ne pas contrôler la cohérence des données.
 ]</td>
 </tr>
-</table></dl>
-
-<dl><dt><dd><table style="border:1px solid" width="100%%">
+</table>
+<p>
+<table class="setup">
 <tr align=left>
-<td colspan=2 width="15"><input type="checkbox" name="nopicture" id="nopicture" value="on">
+<td><input type="checkbox" name="nopicture" id="nopicture" value="on">
 <label for="nopicture" style="font-family: monospace">-nopicture     | </label>[
 en: Don't extract individual picture.
 fr: Ne pas extraire d’images individuelles.
 ]</td>
 </tr>
-</table></dl>
-
-<dl><dt><dd><table style="border:1px solid" width="100%%">
+</table>
+<p>
+<table class="setup">
 <tr align=left>
 <td><input type="checkbox" name="rs_no_mention" id="rs_no_mention" value="on">
 <label for="rs_no_mention" style="font-family: monospace">-rs_no_mention | </label>[
@@ -406,10 +393,10 @@ fr: Marquer les relations comme « Sans mention »
     (par défaut « Mariés »).
 ]</td>
 </tr>
-</table></dl>
-
-<dl><dt><dd><table style="border:1px solid" width="100%%">
-<tr align=left><td colspan=2 width="15">   
+</table>
+<p>
+<table class="setup">
+<tr align=left><td>   
 [
 en: Default source:
 fr: Source par défaut  :
@@ -420,10 +407,9 @@ fr: Source par défaut  :
 <span style="font-family: monospace">   -ds          </span>
 <input name="ds" size="100%%" style="padding-left:4px" placeholder="source"></td>
 </tr>
-</table></dl>
-
-
-<dl><dt><dd><table style="border:1px solid" width="100%%">
+</table>
+<p>
+<table class="setup">
 <tr align=left>
 <td colspan=2>     [
 de: GEDCOM-Dateien enthalten manchmal numerische Monatsangaben (von 1 bis
@@ -505,9 +491,9 @@ lv: Pieòemt ðo datumus kâ "mçnesis/diena/gads"
 sv: Tolka dessa datum som "månad/dag/år".
 ]</label></td>
 </tr>
-</table></dl>
-
-<dl><dt><dd><table style="border:1px solid" width="100%%">
+</table>
+<p>
+<table class="setup">
 <tr align=left>
 <td colspan=2>     [
 de: Die Kodierung für Sonderzeichen ist normalerweise im Kopf der
@@ -577,10 +563,9 @@ lv: Uzsvçrtie burti ir MSDOS kodçjumâ.
 sv: De accentuerade tecknen är MS-DOS kodade.
 ]</label></td>
 </tr>
-</table></dl>
-
+</table>
 <p>
-<dl><dt><dd>
+<li>
 [
 de: Dann drücke auf "OK".
 en: Then click on "OK".

@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html lang="%if;(bvar.default_lang!="" and evar.lang="")%bvar.default_lang;%elseif;(evar.lang!="")%evar.lang;%else;en%end;">
 <head>
   <!-- Copyright (c) 1998-2006 INRIA - GeneWeb -->
-  <!-- $Id: gwb2ged.htm,v 5.1 2006-01-01 05:35:06 ddr Exp $ -->
+  <!-- $Id: gwb2ged.htm,v 7.00 2018-04-19 05:35:06 ddr Exp $ -->
     <title>
 [
 de: GEDCOM-Datei extrahieren
@@ -14,10 +13,10 @@ it: Estrazione di un file GEDCOM
 lv: Izveidot GEDCOM datni
 sv: Exportera en GEDCOM-fil
 ]</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=[ !charset]"%/>
-  <meta http-equiv="Content-Style-Type" content="text/css"%/>
-  <meta name="robots" content="none"%/>
-  <link rel="shortcut icon" href="images/favicon_gwsetup.png"%/>
+  <meta http-equiv="Content-Type" content="text/html; charset=[ !charset]">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="robots" content="none">
+  <link rel="shortcut icon" href="images/favicon_gwsetup.png">
 %fsetup.css;
 </head>
 <body %Vbody_prop;>
@@ -37,9 +36,9 @@ sv: Exportera en GEDCOM-fil
 </div>
 
 <form method="get" action="gwb2ged">
-<input type="hidden" name="opt" value="check" />
-<input type="hidden" name="lang" value="%l" />
-
+<input type="hidden" name="opt" value="check">
+<input type="hidden" name="lang" value="%l">
+<ul><li>
 [
 de: Wähle deine Datenbank:
 en: Select your database:
@@ -51,12 +50,12 @@ lv: Izvçlieties datu bâzi:
 sv: Välj din databas:
 ]
 
-<p />
+<p>
 
-<dl><dt><dd><table style="border:1px solid" cellspacing="0" cellpadding="1">
+<dl><dt><dd><table class="setup">
 
 %b{<tr align="left">
-<td><input type="radio" name="anon" id="anon%a" value="%a" />   
+<td><input type="radio" name="anon" id="anon%a" value="%a">   
 <label for="anon%a">%a</label></td></tr>|
 <tr align="left"><td>- [
 de: Keine Datenbank vorhanden
@@ -71,8 +70,8 @@ sv: det finns ingen databas för tillfället
 
 </table></dl>
 
-<p />
-
+<p>
+<li>
 [
 de: Gib den Namen ein, den du deiner GEDCOM-Datei geben möchtest.
     Falls du nichts eingibst, verwenden wir den Namen deiner Datenbank,
@@ -96,13 +95,15 @@ sv: Skriv namnet du vill kalla din GEDCOM-fil. Om du inte skriver
     någonting, kommer det att bli samma namn som databasen avslutat med
 ] "<tt>.ged</tt>".
 
-<p />
-
-<dl><dt><dd>-o<br>
-<input name="o" size="30" /></dl>
-
-<p />
-
+<p>
+<dl><dt><dd><table class="setup">
+<tr align=left><td>
+-o<br>
+<input name="o" size="30">
+</td></tr>
+</table></dl>
+<p>
+<li>
 [
 de: Wähle die gewünschten Optionen:
 en: Select the options you want:
@@ -114,12 +115,9 @@ lv: Ivçlçties nepiecieðamos izveides parametrus:
 sv: Välj de optioner du vill ha:
 ]
 
-<p />
-
-<dl><dt><dd><table style="border:1px solid">
-
+<p>
+<dl><dt><dd><table class="setup">
 <tr><td>-charset</td></tr>
-
 <tr align="left"><td>
 <input type="radio" name="charset" value="ASCII" id="ASCII"/>   
 <label for="ASCII">[
@@ -135,7 +133,7 @@ sv: Koda tecknen i ASCII.
 </tr>
 
 <tr align="left"><td>
-<input type="radio" name="charset" value="UTF-8" id="UTF-8" checked="checked" />   
+<input type="radio" name="charset" value="UTF-8" id="UTF-8" checked="checked">   
 <label for="UTF-8">[
 de: Kodiere die Zeichen in UTF-8.
 en: Encode the characters in UTF-8.
@@ -160,10 +158,9 @@ lv: Burti ANSEL kodçjumâ.
 sv: Koda tecknen i ANSEL.
 ]</label></td>
 </tr>
-
 </table></dl>
-
-<dl><dt><dd><table style="border:1px solid">
+<p>
+<dl><dt><dd><table class="setup">
 <tr align=left>
 <td><input type=checkbox name=mem value=on id=mem>   
 <label for=mem>-mem</label>[
@@ -181,8 +178,8 @@ sv: : spara minne under operationen (men det kommer att gå saktare).
 ]</td>
 </tr>
 </table></dl>
-
-<dl><dt><dd><table style="border:1px solid">
+<p>
+<dl><dt><dd><table class="setup">
 <tr align=left>
 <td><input type=checkbox name=nn id=nn value=on>   
 <label for=nn>-nn</label>[
@@ -191,8 +188,8 @@ fr:  : ne pas extraire les notes.
 ]</td>
 </tr>
 </table></dl>
-
-<dl><dt><dd><table style="border:1px solid">
+<p>
+<dl><dt><dd><table class="setup">
 <tr align=left>
 <td><input type=checkbox name=nopicture id=nopicture value=on>   
 <label for=nopicture>-nopicture</label>[
@@ -201,8 +198,8 @@ fr:  : ne pas extraire les images individuelles (portraits).
 ]</td>
 </tr>
 </table></dl>
-
-<dl><dt><dd><table style="border:1px solid">
+<p>
+<dl><dt><dd><table class="setup">
 <tr align=left>
 <td><input type=checkbox name=picture-path id=picture-path value=on>   
 <label for=picture-path>-picture-path</label>[
@@ -211,14 +208,13 @@ fr:  : extraire le chemin des images individuelles (portraits).
 ]</td>
 </tr>
 </table></dl>
-
+<p>
 <dl><dt><dd>[
 en: In the boxes below, always enter a value in the Num entry (occurence) ("0" possibly).
 fr: Dans les cadres ci-dessous, toujours fournir une occurence pour le champs "Num" (éventuellement "0").
 ]</dl>
-
-
-<dl><dt><dd><table style="border:1px solid">
+<p>
+<dl><dt><dd><table class="setup">
 <tr align=left><td> </td>
 <td colspan=3>
 -a[
@@ -275,8 +271,8 @@ it:
 lv: <tr align=left><td> </td><td colspan=3>…vecâkus</td></tr>
 sv: 
 ]</table></dl>
-
-<dl><dt><dd><table style="border:1px solid">
+<p>
+<dl><dt><dd><table class="setup">
 <tr align=left><td> </td><td colspan=3>
 -d[
 de: : nur die Nachkommen auswählen von…
@@ -321,7 +317,7 @@ lv: Uzvârds
 
 </tr>
 </table></dl>
-
+<p>
 <dl><dt><dd>[
 de: Falls du oben beide Optionen gewählt hast, wird die Schnittmenge
     extrahiert: Alle Personen die <em>gleichzeitig</em> Vorfahren des
@@ -346,8 +342,8 @@ sv: Om du väljer de båda valen ovan, kommer
     överlappning att antas: personer <em>som samtidigt</em> är
     anor av den ena och ättlingar av den andra.
 ]</dl>
-
-<dl><dt><dd><table style="border:1px solid">
+<p>
+<dl><dt><dd><table class="setup">
 <tr align=left><td> </td><td colspan=3>
 -aws[
 en: : Extract ancestors with siblings of…
@@ -388,8 +384,8 @@ lv: Uzvârds
 
 </tr>
 </table></dl>
-
-<dl><dt><dd><table style="border:1px solid">
+<p>
+<dl><dt><dd><table class="setup">
 <tr align=left><td> </td><td colspan=3>
 -s[
 en: : extract surname (usable several times).
@@ -410,8 +406,8 @@ lv: Uzvârds
 
 </tr>
 </table></dl>
-
-<dl><dt><dd><table style="border:1px solid">
+<p>
+<dl><dt><dd><table class="setup">
 <tr align=left><td> </td><td colspan=3>
 -c[
 en: : When a person is born less than <num> years ago, it is not exported unless it is Public.<br> 
@@ -430,8 +426,8 @@ fr: Années
 
 </tr>
 </table></dl>
-
-<dl><dt><dd><table style="border:1px solid">
+<p>
+<dl><dt><dd><table class="setup">
 <tr align=left>
 <td><input type=checkbox name=nsp id=nsp value=on>   
 <label for=nsp>-nsp</label>[
@@ -442,7 +438,7 @@ fr:  : ne pas extraire les parents des époux (pour les options -s et -d).
 </table></dl>
 
 <p>
-
+<li>
 [
 de: Dann drücke diesen Knopf:
 en: Then push this button:
@@ -464,5 +460,5 @@ it: Estrarre
 lv: Extract
 sv: Exportera
 ]">
-
+</ul>
 </form>

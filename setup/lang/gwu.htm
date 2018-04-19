@@ -1,19 +1,16 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
-            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!DOCTYPE html>
 <head>
   <!-- Copyright (c) 1998-2006 INRIA - GeneWeb -->
-  <!-- $Id: gwu.htm,v 5.1 2006-01-01 05:35:06 ddr Exp $ -->
-  <meta http-equiv="Content-Type" content="text/html; charset=[ !charset]"%/>
-  <meta http-equiv="Content-Style-Type" content="text/css"%/>
-  <meta name="robots" content="none"%/>
-  <link rel="shortcut icon" href="images/favicon_gwsetup.png"%/>
+  <!-- $Id: gwu.htm,v 7.00 2018-04-19 05:35:06 ddr Exp $ -->
+  <meta name="robots" content="none">
+  <link rel="shortcut icon" href="images/favicon_gwsetup.png">
 
   <title>[
 de: GeneWeb-Quelldatei extrahieren
-en: <title>Extract a GeneWeb source file
-es: Extracción de una fuente GeneWeb
-fr: Extraction d’un fichier source GeneWeb
-it: Estrazione di un file sorgente GeneWeb
+en: <title>Extract a GeneWeb file
+es: Extracción de una fichero GeneWeb
+fr: Extraction d’un fichier GeneWeb
+it: Estrazione di un file GeneWeb
 lv: Izveidot GeneWeb datni
 sv: Exportera en GeneWeb källfil
 ]</title>
@@ -26,10 +23,10 @@ sv: Exportera en GeneWeb källfil
 <h1 style="margin:0;">
 [
 de: GeneWeb-Quelldatei extrahieren
-en: Extract a GeneWeb source file
-es: Extracción de un fichero fuente GeneWeb
-fr: Extraction d’un fichier source GeneWeb
-it: Estrazione di un file sorgente GeneWeb
+en: Extract a GeneWeb file
+es: Extracción de un fichero GeneWeb
+fr: Extraction d’un fichier GeneWeb
+it: Estrazione di un file GeneWeb
 lv: Izveidot GeneWeb datni
 sv: Exportera en GeneWeb källfil
 ]
@@ -40,6 +37,7 @@ sv: Exportera en GeneWeb källfil
 <input type=hidden name=opt value=check>
 <input type=hidden name=lang value=%l>
 
+<ul><li>
 [
 de: Wähle deine Datenbank:
 en: Select your database:
@@ -52,7 +50,7 @@ sv: Välj din databas:
 
 <p>
 
-<dl><dt><dd><table class="setup" style="cellspacing=0 cellpadding=1">
+<table class="setup" style="cellspacing=0 cellpadding=1">
 
 %b{<tr align=left>
 <td><input type=radio name=anon value="%a">   </td>
@@ -67,11 +65,11 @@ lv: nav nevienas datu bâzes
 sv: det finns ingen databas för tillfället
 ]</tr></td>}
 
-</table></dl>
+</table>
 
 <p>
 
-<dl><dt><dd><table class="setup" style="cellspacing=0 cellpadding=1">
+<table class="setup" style="cellspacing=0 cellpadding=1">
 <tr><td>
 [
 de: Gib den Namen ein, den du deiner
@@ -130,7 +128,7 @@ fr: ou demandez à reconstruire les fichiers dans le dossier d'origine.<br>
 </dl>
 
 <p>
-
+<li>
 [
 de: Wähle die gewünschten Optionen:
 en: Select the options you want:
@@ -143,7 +141,7 @@ sv: Välj de optioner du vill ha:
 
 <p>
 
-<dl><dt><dd><table class="setup">
+<table class="setup">
 <tr align=left>
 <td><input type=checkbox name=mem value=on>   </td>
 <td>[
@@ -160,9 +158,9 @@ lv: Taupît operatîvo atmiòu (process notiks lçnâk).
 sv: Spara minne under operationen (men det kommer att gå saktare).
 ]</td>
 </tr>
-</table></dl>
-
-<dl><dt><dd><table class="setup">
+</table>
+<p>
+<table class="setup">
 <tr align=left><td> </td><td colspan=3>[
 de: Nur die Vorfahren auswählen von…
 en: Extract only the ancestors of…
@@ -205,9 +203,9 @@ lv: Uzvârds
 sv: Efternamn
 ]</td>
 <td colspan=3><input name="a3" size=40 maxlength=200></td></tr>
-</table></dl>
-
-<dl><dt><dd><table class="setup">
+</table>
+<p>
+<table class="setup">
 <tr align=left><td> </td><td colspan=3>[
 de: Nur die Nachkommen auswählen von…
 en: Extract only the descendants of…
@@ -250,9 +248,9 @@ lv: Uzvârds
 sv: Efternamn
 ]</td>
 <td colspan=3><input name="d3" size=40 maxlength=200></td></tr>
-</table></dl>
-
-<dl><dt><dd>[
+</table>
+<p>
+[
 de: Falls du oben beide Optionen gewählt hast, wird die Schnittmenge
     extrahiert: Alle Personen die <em>gleichzeitig</em> Vorfahren des
     einen und Nachkommen des anderen sind.
@@ -274,10 +272,10 @@ lv: Ja Jûs lietosiet abus iepriekðçjos nosacîjumus, tad tiks atlasîti
 sv: Om du väljer de båda valen ovan, kommer överlappning att antas:
     personer <em>som samtidigt</em> är anor av den ena och ättlingar av
     den andra.
-]</dl>
+]
 
 <p>
-
+<li>
 [
 de: Dann drücke diesen Knopf:
 en: Then push this button:
@@ -300,5 +298,5 @@ it: Estrazione
 lv: Izveidot
 sv: Exportera
 ]">
-
+</ul>
 </form>

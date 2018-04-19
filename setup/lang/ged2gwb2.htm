@@ -1,14 +1,9 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
-            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!DOCTYPE html>
 <head>
   <!-- Copyright (c) 1998-2006 INRIA - GeneWeb -->
-  <!-- $Id: ged2gwb2.htm,v 5.1 2006-01-01 05:35:06 ddr Exp $ -->
-  <meta http-equiv="Content-Type" content="text/html; charset=[ !charset]"%/>
-  <meta http-equiv="Content-Style-Type" content="text/css"%/>
-  <meta name="robots" content="none"%/>
-  <link rel="shortcut icon" href="images/favicon_gwsetup.png"%/>
-
-  <title>[
+  <!-- $Id: ged2gwb2.htm,v 7.00 2018-04-19 05:35:06 ddr Exp $ -->
+    <title>
+[
 de: GEDCOM-Datei importieren
 en: Import a GEDCOM file
 es: Importación de un fichero GEDCOM
@@ -86,13 +81,10 @@ sv: Namnet du vill kalla din <font color=#2f6400><b>GeneWeb</b></font>
 ]
 
 <p>
-
 <input name="o" size="30">
 
-</ul>
-
 <p>
-
+<li>
 [
 de: Sofern gewünscht, wähle bitte aus den folgenden Optionen:
 en: Select the options you want:
@@ -105,20 +97,20 @@ sv: Välj de optioner du vill ha:
 
 <p>
 
-<dl><dt><dd><table style="border:1px solid" width="100%%">
+<table class="setup">
 <tr align="left">
-<td width="15"><input type="checkbox" name="uin" value="on" />   </td>
+<td><input type="checkbox" name="uin" value="on" />   </td>
 <td>[
 en: Put untreated GEDCOM tags in notes.
 fi: Pistä käsittelemättömät GEDCOM merkit lainausmerkkeihin.
 fr: Sauvegarder les tags GEDCOM non reconnus dans les notes.
 ]</td>
 </tr>
-</table></dl>
-
-<dl><dt><dd><table style="border:1px solid" width="100%%">
+</table>
+<p>
+<table class="setup">
 <tr align="left">
-<td width="15"><input type="checkbox" name="lf" value="on" />   </td>
+<td><input type="checkbox" name="lf" value="on" />   </td>
 <td>[
 de: Vornamen in Kleinbuchstaben wandeln, nur Anfangsbuchstaben in
     groß.
@@ -132,11 +124,11 @@ lv: Pârveidot personvârdus uz mazajiem burtiem ar pirmajiem lielajiem.
 sv: Forcera gemena förnamn, bara initialer behålls som versaler. 
 ]</td>
 </tr>
-</table></dl>
-
-<dl><dd><table style="border:1px solid" width="100%%">
+</table>
+<p>
+<table class="setup">
 <tr align=left>
-<td width="15"><input type=checkbox name=ls value=on>   </td>
+<td><input type=checkbox name=ls value=on>   </td>
 <td>[
 de: Nachnamen in Kleinbuchstaben wandeln, nur Anfangsbuchstaben in
     groß. Kleinschreibung von Partikeln möglichst
@@ -154,9 +146,9 @@ lv: Pârveidot uzvârdus  uz mazajiem burtiem ar pirmajiem lielajiem. Mçginât
     saglabât partikulus ar mazajiem burtiem.
 sv: Forcera gemena efternamn, bara initialer behålls som versaler.
 ]</td></tr>
-</table></dl>
-
-<dl><dt><dd><table style="border:1px solid" width="100%%">
+</table>
+<p>
+<table class="setup">
 <tr align=left><td> </td>
 <td>[
 de: Wenn der GEDCOM-Vorname mehrere, durch Kommata getrennte Namen
@@ -190,7 +182,7 @@ sv: När man skapar en person, om förnamnen i GEDCOM-filen innehåller flera
 ]</td>
 
 <tr align=left>
-<td width="15"><input type=checkbox name=efn value=on>   </td>
+<td><input type=checkbox name=efn value=on>   </td>
 <td>[
 de: Diese Option aktivieren.
 en: Set this option.
@@ -201,9 +193,9 @@ lv: Ieslçgt ðo iespçju
 sv: Sätt denna option.
 ]</td>
 </tr>
-</table></dl>
-
-<dl><dt><dd><table style="border:1px solid" width="100%%">
+</table>
+<p>
+<table class="setup">
 <tr align=left><td> </td>
 <td>[
 de: Normalerweise wird beim Anlegen einer Person, deren GEDCOM-Vorname wie
@@ -265,7 +257,7 @@ sv: Denna option är förvald: när man skapar en person, om GEDCOM-filens
 ]
 
 <tr align=left>
-<td width="15"><input type=checkbox name=no_epn value=on>   </td>
+<td><input type=checkbox name=no_epn value=on>   </td>
 <td>[
 de: Diese Option abschalten.
 en: Cancel this option.
@@ -276,11 +268,11 @@ lv: Izslçgt ðo iespçju
 sv: Välj bort denna option.
 ]</td>
 </tr>
-</table></dl>
-
-<dl><dt><dd><table style="border:1px solid" width="100%%">
+</table>
+<p>
+<table class="setup">
 <tr align=left>
-<td width="15"><input type=checkbox name=tnd value=on>   </td>
+<td><input type=checkbox name=tnd value=on>   </td>
 <td>[
 de: Negative Datumsangaben erzeugen, falls Inkonsistenzen erkannt werden
     (z. B. Geburt nach Tod).
@@ -297,11 +289,11 @@ sv: Sätt negativt datum när datumen är motsägande varandra (tex födelse
     efter död).
 ]</td>
 </tr>
-</table></dl>
-
-<dl><dt><dd><table style="border:1px solid" width="100%%">
+</table>
+<p>
+<table class="setup">
 <tr align=left>
-<td width="15"><input type=checkbox name=no_nd value=on>   </td>
+<td><input type=checkbox name=no_nd value=on>   </td>
 <td>[
 de: Keine negativen Datumsangaben: Ein Jahr mit vorangestelltem Minuszeichen
     soll nicht als negative Jahresangabe interpretiert werden. 
@@ -319,9 +311,9 @@ sv: Inga negativa datum: tolka inte ett år med minus tecken framför som ett
     negativt år.
 ]</td>
 </tr>
-</table></dl>
-
-<dl><dt><dd><table style="border:1px solid" width="100%%">
+</table>
+<p>
+<table class="setup">
 <tr align=left><td> </td>
 <td>[
 de: GEDCOM-Dateien enthalten manchmal numerische Monatsangaben (von 1 bis
@@ -344,7 +336,7 @@ fr: Certains fichiers GEDCOM écrivent parfois les dates en mettant
     les mois avec des nombres (de 1 à 12). Le standard GEDCOM 5.5
     exige que les mois soient représentés par des
     identificateurs (ex: "MAY 1912" et non pas "05/1912"). La notation
-    "02/05/1912" est ambiguë (peut signifier "2 mai 1912" ou "5
+    "02/05/1912" est ambigue (peut signifier "2 mai 1912" ou "5
     février 1912" suivant les pays).
 it: Certi files GEDCOM scrivono talvolta le date indicando il mese
     con un numero (da 1 a 12); lo standard GEDCOM 5.5 esige
@@ -364,7 +356,7 @@ sv: En del GEDCOM-filer innehåller ibland datum med numrerade månader (från
 ]</td></tr>
 
 <tr align=left>
-<td width="15"><input type=radio name=dates value=none checked>   </td>
+<td><input type=radio name=dates value=none checked>   </td>
 <td>[
 de: Aus solchen Daten soll nur die Jahreszahl verwendet werden.
 en: For these dates, extract only the "year" part.
@@ -377,7 +369,7 @@ sv: För dessa datum, extrahera endast "år" delen.
 </tr>
 
 <tr align=left>
-<td width="15"><input type=radio name=dates value="_dm">   </td>
+<td><input type=radio name=dates value="_dm">   </td>
 <td>[
 de: Interpretiere solche Daten als "Tag/Monat/Jahr".
 en: Interpret these dates as "day/month/year".
@@ -390,7 +382,7 @@ sv: Tolka dessa datum som "dag/månad/år".
 </tr>
 
 <tr align=left>
-<td width="15"><input type=radio name=dates value="_md">   </td>
+<td><input type=radio name=dates value="_md">   </td>
 <td>[
 de: Interpretiere solche Daten als "Monat/Tag/Jahr".
 en: Interpret these dates as "month/day/year".
@@ -401,9 +393,9 @@ lv: Pieòemt ðo datumus kâ "mçnesis/diena/gads"
 sv: Tolka dessa datum som "månad/dag/år".
 ]</td>
 </tr>
-</table></dl>
-
-<dl><dt><dd><table style="border:1px solid" width="100%%">
+</table>
+<p>
+<table class="setup">
 <tr align=left><td> </td>
 <td>[
 de: Die Kodierung für Sonderzeichen ist normalerweise im Kopf der
@@ -422,7 +414,7 @@ sv: Hur de accentuerade tecknen är kodade är normalt specifierat i
 ]</td></tr>
 
 <tr align=left>
-<td width="15"><input type=radio name=charset value=none checked>   </td>
+<td><input type=radio name=charset value=none checked>   </td>
 <td>[
 de: Beachte die Hinweise aus der GEDCOM-Datei.
 en: Follow the indications of the GEDCOM header.
@@ -435,7 +427,7 @@ sv: Följ GEDCOM-huvudets information.
 </tr>
 
 <tr align=left>
-<td width="15"><input type=radio name=charset value=ANSEL>   </td>
+<td><input type=radio name=charset value=ANSEL>   </td>
 <td>[
 de: Die Sonderzeichen folgen der ANSEL-Kodierung.
 en: The accentuated characters are in ANSEL encoding.
@@ -447,7 +439,7 @@ sv: De accentuerade tecknen är ANSEL kodade.
 ]</td></tr>
 
 <tr align=left>
-<td width="15"><input type=radio name=charset value=ASCII>   </td>
+<td><input type=radio name=charset value=ASCII>   </td>
 <td>[
 de: Die Sonderzeichen folgen der ASCII-Kodierung .
 en: The accentuated characters are in ASCII encoding.
@@ -459,7 +451,7 @@ sv: De accentuerade tecknen är ASCII kodade.
 ]</td></tr>
 
 <tr align=left>
-<td width="15"><input type=radio name=charset value=MSDOS>   </td>
+<td><input type=radio name=charset value=MSDOS>   </td>
 <td>[
 de: Die Sonderzeichen folgen der MSDOS-Kodierung.
 en: The accentuated characters are in MSDOS encoding.
@@ -469,10 +461,9 @@ it: I caratteri accentuati sono codificati in MSDOS.
 lv: Uzsvçrtie burti ir MSDOS kodçjumâ.
 sv: De accentuerade tecknen är MS-DOS kodade.
 ]</td></tr>
-</table></dl>
-
+</table>
 <p>
-
+<li>
 [
 de: Dann drücke auf "Ok".
 en: Then click on "Ok".
@@ -483,9 +474,9 @@ lv: Tad nospiediet "Ok".
 sv: Klicka sedan på "OK".
 lv: Tad nospiediet "Ok".
 ]
-
+</ul>
 <p>
 
-<input type=submit value="Ok">
+<dl><dt><dd><input type=submit value="Ok"></dl>
 
 </form>
