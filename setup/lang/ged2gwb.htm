@@ -42,19 +42,38 @@ sv: Importera en GEDCOM-fil
 <ul><li>
 [
 de: Bitte eingeben vollständiger Name deiner GEDCOM-Datei.
-en: Select your GEDCOM file:
+en: Select your GEDCOM file by clicking on the file or navigating in your folders.
 es: Agregue Ud el nombre completo de su fichero GEDCOM.
-fr: Sélectionnez votre fichier GEDCOM.
+fr: Sélectionnez votre fichier GEDCOM en cliquant sur son nom ou en navigant dans les dossiers.
 it: Selezionate il vostro file GEDCOM.
 lv: Ievadiet pilnu GEDCOM datnes nosaukumu.
 sv: Skriv det kompletta namnet på din GEDCOM-fil.
 ]
-
-
-<br><span style="font-family: monospace">   -f 
-</span>
+<p>
+<table class="setup">
+<tr><td>
 %j
-
+</td></tr>
+</table>
+<span style="font-size:80%%">
+<table>
+<tr><td valign="top">[
+en: Note:
+fr: Note :
+]</td>
+<td>[
+en: ../ allows you to reach the parent directory.<br>
+    In the Windows world, this will be
+    insufficient to change the drive letter (C: -> D:), but you can do this directly
+    in the url in your navigator.
+fr: ../ vous permet de naviguer vers le dossier parent.<br>
+    Dans le monde Windows, ceci ne
+    vous permettra pas de changer la lettre du disque (C: -> D:), mais vous pouvez faire
+    ce changement directement dans l'url dans le navigateur.
+]</td></tr>
+</table>
+</span>
+<p>
 <li>
 [
 de: Name, den du deiner <font color=#2f6400><b>GeneWeb</b></font>-Datenbank
@@ -79,7 +98,10 @@ sv: Namnet du vill kalla din <font color=#2f6400><b>GeneWeb</b></font>
     databas. Om namnet utelämnas, kommer det att bli härlätt från
     GEDCOM-filens namn.
 ]
-<br><span style="font-family: monospace">
+<p>
+<table class="setup">
+<tr><td>
+<span style="font-family: monospace">
    -o          </span>
 <input name="o" size="30" style="padding-left:4px"
 placeholder="[
@@ -89,7 +111,8 @@ fr: nom
 it: nome
 sv: namnet
 ]">
-
+</td></tr>
+</table>
 <p>
 <li>
 [
@@ -155,7 +178,8 @@ sv: Forcera gemena efternamn, bara initialer behålls som versaler.
 </table>
 <p>
 <table class="setup">
-<tr align=left><td>     [
+<tr align=left><td>    </td>
+<td>[
 de: Wenn der GEDCOM-Vorname mehrere, durch Kommata getrennte Namen
     enthält, soll beim Anlegen einer Person der erste dieser Namen der
     "Vorname" werden, während der vollständige GEDCOM-Vorname als
@@ -186,10 +210,10 @@ sv: När man skapar en person, om förnamnen i GEDCOM-filen innehåller flera
     namn separerade med mellanslag, kan du be att den första av dessa blir
     en persons "förnamn" och GEDCOM-filens kompletta förnamnsdel blir ett
     "förnnamns alias".
-]</td>
+]</td></tr>
 
 <tr align=left>
-<td colspan=2width="15"><input type="checkbox" name="efn" id="efn" value="on">
+<td colspan=2 width="15"><input type="checkbox" name="efn" id="efn" value="on">
 <label for="efn" style="font-family: monospace">-efn          | </label>[
 de: Diese Option aktivieren.
 en: Set this option.
@@ -203,7 +227,7 @@ sv: Sätt denna option.
 </table>
 <p>
 <table class="setup">
-<tr align=left><td>   </td>
+<tr align=left><td>    </td>
 <td>[
 en: "first names enclosed": the -fne option must be followed by a
     two characters string "be". When creating a person, if the GEDCOM first
@@ -217,7 +241,7 @@ fr: L’option <i>first names enclosed</i> doit être suivie par une
     le prénom usuel.<br>
     Exemples : <span  style="font-family: monospace">-fne "\\"</span> ou
     <span style="font-family: monospace"> -fne "()"</span>.
-]</td>
+]</td></tr>
 
 <tr align=left>
 <td colspan=2><span style="font-family: monospace">
@@ -231,8 +255,8 @@ fr:  (ne pas inclure les guilemets "" dans le champ de saisie).
 </table>
 <p>
 <table class="setup">
-<tr align=left><td colspan=2>    
-[
+<tr align=left><td>    </td>
+<td>[
 de: Normalerweise wird beim Anlegen einer Person, deren GEDCOM-Vorname wie ein
     öffentlicher Name aussieht, d.h. falls er folgendes beinhaltet:
     <ul> <li>Eine Zahl oder eine eine römische Zahl, von der angenommen
@@ -259,22 +283,15 @@ es: Por defecto, al crear una persona, si el campo nombre en el fichero GEDCOM
     GEDCOM se transforma en un "nombre público" y la primera palabra del
     campo nombre va en el
     campo "nombre".
-fr: Par défaut, au moment de la création d’une personne, si
-    la partie prénom dans le GEDCOM ressemble à un nom public,
-    c’est-à-dire si elle contien contient :<br>
-           – un nombre normal ou en
+fr: Par défaut, au moment de la création d’une personne, si la partie prénom dans le
+    GEDCOM ressemble à un nom public, c’est-à-dire si elle contien contient :<ul>
+    <li> un nombre normal ou en
     chiffres romains, censé être un numéro d’un titre
-    de noblesse (exemple : Louis XIV) ;<br>
-           – un des mots :
-    « der », « den »,
-    « die », « el »,
-    « le », « la »,
-    « the », censé être le début
-    d’un qualificatif (exemple : Guillaume
-    le Conquérant) ;<br>      alors le
-    prénom dans le GEDCOM devient un « nom public» 
-    et le premier mot de la partie prénom va dans la partie
-    « prénom» 
+    de noblesse (exemple : Louis XIV) ;
+    <li> un des mots : « der », « den », « die », « el », « le », « la », « the »,
+    censé être le début d’un qualificatif (exemple : Guillaume le Conquérant) ;
+    </ul> alors le prénom dans le GEDCOM devient un « nom public »
+    et le premier mot de la partie prénom va dans la partie « prénom»
     (-epn par défaut).
 it: Come settaggio standard, al momento della creazione di una persona, se la
     parte nome nel GEDCOM somiglia a un nome pubblico, cioè contiene:
@@ -298,9 +315,9 @@ sv: Denna option är förvald: när man skapar en person, om GEDCOM-filens
     (tex William the Conqueror) </ul> då blir GEDCOM-filens förnamnsdel
     personens "officiellanamn" och första ordet dess "förnamn".
 ]
-
+</td></tr>
 <tr align=left>
-<td><input type="checkbox" name="no_epn" id="no_epn" value="on">
+<td colspan=2><input type="checkbox" name="no_epn" id="no_epn" value="on">
 <label for="no_epn" style="font-family: monospace">-no_epn        | </label>[
 de: Diese Option abschalten.
 en: Cancel this option.
@@ -411,7 +428,8 @@ fr: Source par défaut  :
 <p>
 <table class="setup">
 <tr align=left>
-<td colspan=2>     [
+<td>    </td>
+<td colspan=2>[
 de: GEDCOM-Dateien enthalten manchmal numerische Monatsangaben (von 1 bis
     12). Der GEDCOM-Standard 5.5  schreibt aber vor, daß Monate durch
     Kürzel dargestellt werden (z. B. "MAY 1912" und nicht
@@ -451,9 +469,10 @@ sv: En del GEDCOM-filer innehåller ibland datum med numrerade månader (från
     skrivas med identifierare (tex "MAY 1912" och inte "05/1912").
     Notationen "02/05/1912" är tvetydig (den kan antingen betyda "May 2,
     1912" eller "February 5, 1912" beroende på land).
-]</td></tr>
-
-<td width="150px"><span style="font-family: monospace"></span></td>
+]</td><td></td>
+</tr>
+<td>    </td>
+<td width="120px"><span style="font-family: monospace"></span></td>
 <td><input type="radio" name="dates" id="dates" value="none" checked>
 <label for="dates">[
 de: Aus solchen Daten soll nur die Jahreszahl verwendet werden.
@@ -466,7 +485,9 @@ sv: För dessa datum, extrahera endast "år" delen.
 ]</label></td>
 </tr>
 
-<tr align=left><td><span style="font-family: monospace">   -dates_dm</span></td>
+<tr align=left>
+<td>    </td>
+<td><span style="font-family: monospace">-dates_dm</span></td>
 <td><input type="radio" name="dates" id="dates_dm" value="_dm">
 <label for="dates_dm">[
 de: Interpretiere solche Daten als "Tag/Monat/Jahr".
@@ -479,7 +500,9 @@ sv: Tolka dessa datum som "dag/månad/år".
 ]</label></td>
 </tr>
 
-<tr align=left><td><span style="font-family: monospace">   -dates_md</span></td>
+<tr align=left>
+<td>    </td>
+<td><span style="font-family: monospace">-dates_md</span></td>
 <td><input type=radio name=dates value="_md" id="dates_md">
 <label for="dates_md">[
 de: Interpretiere solche Daten als "Monat/Tag/Jahr".
@@ -495,7 +518,8 @@ sv: Tolka dessa datum som "månad/dag/år".
 <p>
 <table class="setup">
 <tr align=left>
-<td colspan=2>     [
+<td>    </td>
+<td colspan=2>[
 de: Die Kodierung für Sonderzeichen ist normalerweise im Kopf der
     GEDCOM-Datei angegeben.
 en: The accentuated characters encoding is normally specified in the GEDCOM
@@ -509,10 +533,11 @@ it: La codifica dei caratteri accentuati è normalmente indicata
 lv: Uzsvçrtie burti parsti ir norâdîti GEDCOM datnes galvgaïa aprakstâ.
 sv: Hur de accentuerade tecknen är kodade är normalt specifierat i
     GEDCOM-huvudet.
-]</td></tr>
+]</td><td></td></tr>
 
 <tr align=left>
-<td width="150px"><span style="font-family: monospace">   -charset</span></td>
+<td>    </td>
+<td width="120px"><span style="font-family: monospace">-charset</span></td>
 <td><input type="radio" name="charset" id="GEDCOM" value="none" checked>
 <label for="GEDCOM">[
 de: Beachte die Hinweise aus der GEDCOM-Datei.
@@ -526,6 +551,7 @@ sv: Följ GEDCOM-huvudets information.
 </tr>
 
 <tr align=left><td></td>
+<td>    </td>
 <td ><input type="radio" name="charset" value="ANSEL" id="ANSEL">
 <label for="ANSEL">[
 de: Die Sonderzeichen folgen der ANSEL-Kodierung.
@@ -539,6 +565,7 @@ sv: De accentuerade tecknen är ANSEL kodade.
 </tr>
 
 <tr align=left><td></td>
+<td>    </td>
 <td><input type="radio" name="charset" value="ASCII" id="ASCII">
 <label for="ASCII">[
 de: Die Sonderzeichen folgen der ASCII-Kodierung .
@@ -552,6 +579,7 @@ sv: De accentuerade tecknen är ASCII kodade.
 </tr>
 
 <tr align=left><td></td>
+<td>    </td>
 <td><input type="radio" name="charset" value="MSDOS" id="MSDOS">
 <label for="MSDOS">[
 de: Die Sonderzeichen folgen der MSDOS-Kodierung.

@@ -33,13 +33,14 @@ fr: Détection des différences entre deux bases
 <table>
 <tr>
 <td>
+<ul><li>
 [
 en: Select your first database:
 fr: Sélectionnez la première base de données :
 ]
 
 <p>
-<dl><dt><dd><table style="border:1px solid" cellspacing=0 cellpadding=1>
+<table class="setup">
 %b{<tr align=left>
 <td><input type=radio name=anon1 value="%a">   </td>
 <td>%a</td></tr>|
@@ -52,9 +53,9 @@ it: attualmente non esiste nessuna base di dati
 lv: nav nevienas datu bâzes
 sv: det finns ingen databas för tillfället
 ]</tr></td>}
-</table></dl>
-
-<dl><dt><dd><table style="border:1px solid">
+</table>
+<p>
+<table class="setup">
 <tr align=left><td> </td><td colspan=3>[
 en: Starting person in first base.
 fr: Personne racine dans la première base.
@@ -92,25 +93,25 @@ lv: Uzvârds
 sv: Efternamn
 ]</td>
 <td colspan=3><input name="a3" size=40 maxlength=200></td></tr>
-</table></dl>
-
+</table>
+</ul>
 </td>
 <td>&nbsp;&nbsp;&nbsp;</td>
 <td>
+<ul><li>
 [
 en: Select your second database:
 fr: Sélectionnez la seconde base de données :
 ]
-
 <p>
-<dl><dt><dd><table style="border:1px solid" cellspacing=0 cellpadding=1>
+<table class="setup">
 %b{<tr align=left>
 <td><input type=radio name=anon2 value="%a">   </td>
 <td>%a</td></tr>|
 }
-</table></dl>
-
-<dl><dt><dd><table style="border:1px solid">
+</table>
+<p>
+<table class="setup">
 <tr align=left><td> </td><td colspan=3>[
 en: Starting person in second base.
 fr: Personne racine dans la seconde base.
@@ -148,13 +149,13 @@ lv: Uzvârds
 sv: Efternamn
 ]</td>
 <td colspan=3><input name="b3" size=40 maxlength=200></td></tr>
-</table></dl>
-
+</table>
+</ul>
 </td>
 </tr>
 </table>
-
 <p>
+<li>
 [
 de: Wähle die gewünschten Optionen:
 en: Select the options you want:
@@ -164,9 +165,8 @@ it: Selezionate le opzioni desiderate:
 lv: Iezîmçjiet atbilstoðos datnes izveides parametrus:
 sv: Välj de optioner du vill ha:
 ]
-
 <p>
-<dl><dt><dd><table style="border:1px solid">
+<dl><dt><dd><table class="setup">
 <tr align=left>
 <td><input type=checkbox name=ad value=on>-ad &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 <td>[
@@ -176,7 +176,7 @@ fr: Vérifier tous les descendants des ascendants.
 </tr>
 </table></dl>
 
-<dl><dt><dd><table style="border:1px solid">
+<dl><dt><dd><table class="setup">
 <tr align=left>
 <td><input type=checkbox name=d value=on>-d &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 <td>[
@@ -186,7 +186,7 @@ fr: Vérifier les descendants (par défaut).
 </tr>
 </table></dl>
 
-<dl><dt><dd><table style="border:1px solid">
+<dl><dt><dd><table class="setup">
 <tr align=left>
 <td><input type=checkbox name=mem value=on>-mem &nbsp;</td>
 <td>[
@@ -206,18 +206,18 @@ sv: Spara minne under operationen (men det kommer att gå saktare).
 </table></dl>
 
 <p>
-<dl><dt><dd><table style="border:1px solid" width="100%%">
+<dl><dt><dd><table class="setup">
 <tr align="left">
-<td colspan=2 width="15">
-<label for="o" style="font-family: monospace">-o<br>
+<td>
+<label for="o">-o&nbsp;
 <input type="input" name="o" size="20" maxlength="50" style="padding-left:4px"></label>&nbsp;&nbsp;[
 en: Output results to this file.
 fr: Rediriger les résultats vers ce fichier.
 ]</td>
 </tr>
 </table></dl>
-
 <p>
+<li>
 [
 de: Dann drücke diesen Knopf:
 en: Then push this button:
@@ -234,5 +234,5 @@ sv: Tryck sedan på denna knapp:
 en: Compare
 fr: Comparer
 ]">
-
+</ul>
 </form>

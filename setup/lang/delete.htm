@@ -1,12 +1,9 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
-            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!DOCTYPE html>
 <head>
   <!-- Copyright (c) 1998-2006 INRIA - GeneWeb -->
-  <!-- $Id: delete.htm,v 5.1 2006-01-01 05:35:06 ddr Exp $ -->
-  <meta http-equiv="Content-Type" content="text/html; charset=[ !charset]"%/>
-  <meta http-equiv="Content-Style-Type" content="text/css"%/>
-  <meta name="robots" content="none"%/>
-  <link rel="shortcut icon" href="images/favicon_gwsetup.png"%/>
+  <!-- $Id: delete.htm,v 7.00 2018-04-20 05:35:06 ddr Exp $ -->
+  <meta name="robots" content="none">
+  <link rel="shortcut icon" href="images/favicon_gwsetup.png">
 
   <title>[
 de: Datenbanken löschen
@@ -40,7 +37,7 @@ sv: Radering av databaser
 
 <form method="get" action="delete">
 <input type="hidden" name="lang" value="%l" />
-
+<ul><li>
 [
 de: Wähle die Datenbanken, die du löschen möchtest, mit
     dem zugehörigen Schalter.
@@ -61,7 +58,7 @@ sv: Välj den databas eller de databaser du vill radera, genom att klicka på
 
 <p>
 
-<dl><dt><dd><table style="border:1px solid" cellspacing="0" cellpadding="1">
+<table class="setup">
 %b{
 <tr align="left">
 <td><a href="http://%m:%P/%a">%a</a></td>
@@ -77,10 +74,9 @@ it: attualmente non esiste nessuna base di dati
 lv: patreiz nav nevienas datubâzes
 sv: det finns ingen databas för tillfället
 ]</tr></td>}
-</table></dl>
-
-<p />
-
+</table>
+<p>
+<li>
 [
 de: Dann drücke diesen Knopf:
 en: Then push this button:
@@ -91,9 +87,7 @@ it: Poi cliccate su questo bottone:
 lv: Tad nospiediet ðo podziòu:
 sv: Tryck sedan på denna knapp:
 ]
-
-<p />
-
+<p>
 <input type="submit" value="[
 de: Prüfen
 en: Check
@@ -104,5 +98,5 @@ it: Verificare
 lv: Pârbaudît
 sv: Radera
 ]">
-
+</ul>
 </form>
