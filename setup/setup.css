@@ -22,9 +22,9 @@ table.setup {
 }
 
 div.welcome {
- width: 750px; 
+ width: 730px; 
  border: solid 2px #5bc0de;
- border-radius:4px;
+ border-radius:6px;
  text-align: left; 
  overflow: auto; 
  margin-left: auto; 
