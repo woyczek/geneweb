@@ -248,8 +248,9 @@ value move base basename = do {
       else ();
   };
   if ask_for_delete.val > 0 then Gwdb.commit_patches base else ();
-  Printf.printf "<br>\nStatistics:<br>\n";
+
   if statistics.val then do {
+    Printf.printf "<br>\nStatistics:<br>\n";
     let ls = 
       Hashtbl.fold (fun nb n ls -> [(nb, n) :: ls] ) hts []
     in
