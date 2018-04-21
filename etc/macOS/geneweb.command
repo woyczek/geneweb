@@ -24,6 +24,7 @@ pids=""
 trap 'kill $pids' 1 2
 killall gwd
 killall gwsetup
+killall ocamlrun
 
 if [ -f gwsetup.log ]; then
   mv gwsetup.log gwseup.log.old
