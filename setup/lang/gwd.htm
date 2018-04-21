@@ -1,12 +1,11 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
-            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!DOCTYPE html>
 <head>
   <!-- Copyright (c) 1998-2006 INRIA - GeneWeb -->
-  <!-- $Id: gwd.htm,v 5.1 2006-01-01 05:35:06 ddr Exp $ -->
-  <meta http-equiv="Content-Type" content="text/html; charset=[ !charset]"%/>
-  <meta http-equiv="Content-Style-Type" content="text/css"%/>
-  <meta name="robots" content="none"%/>
-  <link rel="shortcut icon" href="images/favicon_gwsetup.png"%/>
+  <!-- $Id: gwd.htm,v 7.001 2018-01-01 05:35:06 ddr Exp $ -->
+  <meta http-equiv="Content-Type" content="text/html; charset=[ !charset]">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="robots" content="none">
+  <link rel="shortcut icon" href="images/favicon_gwsetup.png">
 
   <title>[
 de: Parameter für "gwd"
@@ -43,7 +42,7 @@ sv: Parametrar för "gwd"
 <input type=hidden name=setup_link value="">
 
 <p>
-
+<ul><li>
 [
 de: Hier sind die Parameter für das Kommando "gwd". 
     Du kannst die folgenden Werte änder:
@@ -63,7 +62,7 @@ sv: Här är parametrarna för kommandot "gwd". Ändra dem som du anser
 
 <p>
 
-<dl><dt><dd><table style="border:1px solid" width="100%%">
+<table class="setup">
 <tr align=left>
 <td valign=top><strong>-lang</strong></td>
 <td>[
@@ -184,9 +183,9 @@ sv: Om "-" är valt, är det franska.
 </select>
 </td>
 </tr>
-</table></dl>
-
-<dl><dt><dd><table style="border:1px solid" width="100%%">
+</table>
+<p>
+<table class="setup">
 <tr align=left>
 <td valign=top><strong>-only</strong></td>
 <td>[
@@ -223,16 +222,16 @@ de: Um herauszufinden, welchen Wert du hier für deinen Rechner einsetzen
     machst. Du mußt das eintragen, was dort hinter "From:" ausgegeben
     wird.
 en: To know which value put for your computer, look at the traces of the
-    command "gwd" which are displayed each time you navigate in your
-    databases. You have to put what you see behind the "From:".
+    command "gwd" which are displayed in the log file (see below) each time 
+    you navigate in your databases. You have to put what you see behind the "From:".
 es: Para saber el valor a utilizar en su ordinador, mire Ud. las
     trazas del comando "gwd", que se presentan en la pantalla cada vez que
     Ud. explora una base de datos. Utilise lo que Ud. ve después
     de "From:".
 fr: Pour savoir quelle valeur mettre pour votre ordinateur, regardez les
-    traces de la commande "gwd" qui s’affichent chaque fois que vous
-    naviguez dans une base de données. Il faut mettre ce que vous
-    voyez derrière le "From:".
+    traces de la commande "gwd" qui s’affichent dans le fichier log (voir ci-dessous)
+    chaque fois que vous naviguez dans une base de données.
+    Il faut mettre ce que vous voyez derrière le "From:".
 it: Per sapere quale valore mettere per il vostro computer, osservate le
     tracce del comando "gwd", che vengono visualizzate sullo schermo
     ogni volta che navigate nella base di dati. Bisogna mettere quello che
@@ -252,9 +251,9 @@ sv: För att veta vilket värde du ska skriva in för din dator, titta på
 <td> </td>
 <td><input name=only value="%Vonly;" size=40>
 </tr>
-</table></dl>
-
-<dl><dt><dd><table style="border:1px solid" width="100%%">
+</table>
+<p>
+<table class="setup">
 <tr align=left>
 <td valign=top><strong>-log</strong></td>
 <td>[
@@ -344,9 +343,9 @@ sv: Om du istället vill att utskriften går till en fil, skriv namnet
 <td> </td>
 <td><input name=log value="%Vlog;" size=40>
 </tr>
-</table></dl>
-
-<dl><dt><dd>[
+</table>
+<p>
+[
 de: Es gibt noch weitere Parameter für das Kommando "gwd",
     aber diese sind hier nicht konfigurierbar, weil sie die
     Ausführung des "gwsetup" beeinträchtigen können.
@@ -367,9 +366,9 @@ lv: Citi "gwd" komandas parametri ðeit nav izmainâmi, jo tie var ietekmçt
 sv: Det finns andra parametrar för kommandot "gwd", men
     de kan inte konfigureras här ifrån, därför att de kan hindra
     operationen av "gwsetup".
-]</dl>
-
-<dl><dt><dd>[
+]
+<p>
+[
 de: In der Tat ist die Navigation mittels des "gwsetup" dazu gedacht, die
     Benutzung von <font color=#2f6400><b>GeneWeb</b></font> einfacher zu
     machen, nicht um alle Möglichkeiten auszuprobieren.
@@ -411,10 +410,10 @@ sv: Faktiskt, navigation med "gwsetup" är huvudsakligen för att göra
     det tillåter inte att utnyttja alla möjligheter. För att finna de andra
     parametrarna och deras användning, måste du vara lite av en "datahacker":
     en del av informationen kan hittas i dokumentationen.
-]</dl>
+]
 
 <p>
-
+<li>
 [
 de: Dann drücke diesen Knopf:
 en: Then push this button:
@@ -436,5 +435,5 @@ it: Configurare
 lv: Configure
 sv: Konfigurera
 ]">
-
+</ul>
 </form>

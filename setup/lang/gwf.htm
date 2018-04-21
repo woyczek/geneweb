@@ -1,12 +1,11 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
-            "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!DOCTYPE html>
 <head>
   <!-- Copyright (c) 1998-2006 INRIA - GeneWeb -->
-  <!-- $Id: gwf.htm,v 5.1 2006-01-01 05:35:06 ddr Exp $ -->
-  <meta http-equiv="Content-Type" content="text/html; charset=[ !charset]"%/>
-  <meta http-equiv="Content-Style-Type" content="text/css"%/>
-  <meta name="robots" content="none"%/>
-  <link rel="shortcut icon" href="images/favicon_gwsetup.png"%/>
+  <!-- $Id: gwf.htm,v 7.00 2018-01-01 05:35:06 ddr Exp $ -->
+  <meta http-equiv="Content-Type" content="text/html; charset=[ !charset]">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <meta name="robots" content="none">
+  <link rel="shortcut icon" href="images/favicon_gwsetup.png">
 
   <title>[
 de: Parameter
@@ -40,7 +39,7 @@ sv: Parametrar
 
 <form method=GET action="gwf">
 <input type=hidden name=lang value=%l>
-
+<ul><li>
 [
 de: Bitte wähle deine Datenbank mit dem zugehörigen Schalter:
 en: Select your database by clicking on the corresponding button:
@@ -55,7 +54,7 @@ sv: Välj din databas genom att klicka på motsvarande knapp:
 
 <p>
 
-<dl><dt><dd><table style="border:1px solid" cellspacing=0 cellpadding=1>
+<table class="setup">
 %b{
 <tr align=left>
 <td><input type=radio name=anon value="%a">   </td>
@@ -70,10 +69,10 @@ it: attualmente non esiste nessuna base di dati
 lv: patreiz nav nevienas datu bazes
 sv: det finns ingen databas för tillfället
 ]</tr></td>}
-</table></dl>
+</table>
 
 <p>
-
+<li>
 [
 de: Dann drücke diesen Knopf:
 en: Then push this button:
@@ -95,5 +94,5 @@ it: Configurare
 lv: Darîts
 sv: Konfigurera
 ]">
-
+</ul>
 </form>
