@@ -44,6 +44,30 @@ type wiki_link =
   | WLnone ]
 ;
 
+value test_p =
+  Some ""
+;
+
+type case =
+  [ NoCase
+  | LowerCase
+  | UpperCase ]
+;
+
+type showsosa =
+  [ NoSosa
+  | YesSosa ]
+;
+
+
+value applycase_surname s mode =
+  match mode with
+  [ NoCase -> "gouraud"
+  | LowerCase -> "Gouraud"
+  | UpperCase -> "GOURAUD" ]
+;
+
+
 value misc_notes_link s i =
   let slen = String.length s in
   if i < slen - 2 && s.[i] = '[' && s.[i+1] = '[' then
@@ -71,6 +95,63 @@ value misc_notes_link s i =
         [ Some pg_path -> WLpage j pg_path fname anchor text
         | None -> WLnone ]
       else WLnone
+    else if s.[i+2] = '#' then
+      let (d, snmode, somode) = 
+        match (s.[i+3], s.[i+4]) with
+        [ ('l', '-') | ('-', 'l') -> (2, LowerCase, NoSosa)
+        | ('u', '-') | ('-', 'u') -> (2, UpperCase, NoSosa)
+        | ('l', _) -> (1, LowerCase, YesSosa)
+        | ('u', _) -> (1, UpperCase, YesSosa)
+        | ('-', _) -> (1, NoCase, NoSosa)
+        | (_, _) -> (0, NoCase, YesSosa)]
+      in
+      let j =
+        loop (i + 2) where rec loop j =
+          if j = slen then j
+          else if j < slen -2 && s.[j] = ']' && s.[j+1] = ']' then j + 2
+          else loop (j + 1)
+      in
+      let b = String.sub s (i + 2 + d + 1) (j - i - 4 - d - 1) in (* d skip -lu, 1 skip # *)
+      let (b, text) =
+        try
+          let i = String.rindex b ';' in
+          (String.sub b 0 i,
+           Some (String.sub b (i + 1) (String.length b - i - 1)))
+        with
+        [ Not_found -> (b, None) ]
+      in
+      try
+        let k = 0 in
+        let (so, name) =
+          try 
+            let l = String.index_from b k '/' in
+              (String.sub b k (l - k),
+               Some (String.sub b (l + 1) (String.length b - l - 1 - k)))
+          with
+          [ Not_found -> (String.sub b k (String.length b - k), None) ]
+        in
+        (* find person of sosa so *)
+        (* manque conf et base, et connait on p ? *)
+        (* match Perso.get_p_of_sosa conf base (Sosa.of_string so) p with *)
+          match test_p with
+          [ Some p ->
+              let fn = "Xavier" in (*conf base get_first_name p in*)
+              let sn = "gouraud" in (*conf base get_first_name p in*)
+              let sn = applycase_surname sn snmode in
+              let oc = 0 in (*conf base get_oc p in*)
+              let name = 
+                match (name, somode) with
+                [ (Some name, NoSosa) -> name
+                | (Some name, YesSosa) -> "Sosa " ^ so ^ " " ^ name
+                | (None, NoSosa) -> fn ^ " " ^ sn
+                | (None, YesSosa) -> "Sosa " ^ so ^ " " ^ fn ^ " " ^ sn ]
+              in
+              let fn = Name.lower fn in
+              let sn = Name.lower sn in
+              WLperson j (fn, sn, oc) name text
+          | None -> WLnone ]
+      with
+      [ Not_found -> WLnone ]
     else
       let j =
         loop (i + 2) where rec loop j =
