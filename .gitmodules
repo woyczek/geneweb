@@ -1,0 +1,3 @@
+[submodule "contrib/GenewParse"]
+	path = contrib/GenewParse
+	url = https://github.com/woyczek/GenewParse.git
